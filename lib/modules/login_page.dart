@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/signup_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'homepage.dart';
 
 
   class LoginPage extends StatefulWidget{
@@ -12,11 +18,11 @@ import 'package:flutter/material.dart';
   
 
 class _LoginPageState extends State<LoginPage>{
-  
+
     final key = GlobalKey<FormState>();
-    final  nameController =  TextEditingController();
-    final  passwordController =  TextEditingController();
-    bool _isLoading = false;
+     TextEditingController contactNumber =  TextEditingController();
+      TextEditingController passwordController =  TextEditingController();
+    
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +51,7 @@ class _LoginPageState extends State<LoginPage>{
                 children: <Widget>[
                   SizedBox(height: 180,),
                   TextFormField(
-                    controller: nameController,
+                    controller: contactNumber,
                     decoration: InputDecoration(
                       labelText: "Name",
                       labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400),
@@ -98,10 +104,9 @@ class _LoginPageState extends State<LoginPage>{
                     height: 50,
                     width: double.infinity,
                     child: FlatButton(
-                    onPressed:
-                     nameController.text == "" || passwordController.text == "" ? null : () {
-                          
-                           },
+                      
+                      onPressed:  _login,
+
                       padding: EdgeInsets.all(0),
                       child: Ink(
                         decoration: BoxDecoration(
@@ -147,7 +152,8 @@ class _LoginPageState extends State<LoginPage>{
                           return SignupPage();
                         }));
                       },
-                      child: Text("Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xffffb400)),),
+                      child: Text("Sign up",style:
+                       TextStyle(fontWeight: FontWeight.bold,color: Color(0xffffb400)),),
                     )
                   ],
                 ),
@@ -160,14 +166,32 @@ class _LoginPageState extends State<LoginPage>{
     );
   }
 
-  void _LogIn(){
+void _login() async{
+    var data = {
+        'contactNumber' : contactNumber.text, 
+        'password' : passwordController.text
+    };
+    
+    var res = await ApiCall().postData(data,'/login');
+    var body = json.decode(res.body);
+    if(body['success']){
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setString('token', body['token']);
+      localStorage.setString('user', json.encode(body['user']));
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => Home()));
+      print('success Login');
+    }else{
+      print(body['message']);
+    }
+   
+
   
-  setState((){
 
-    _isLoading = true;
 
-  });
+  }
 
-}
 }
 

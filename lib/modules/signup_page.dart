@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:WhereTo/api/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'homepage.dart';
 
 
 class SignupPage extends StatefulWidget{
@@ -13,16 +16,15 @@ class SignupPage extends StatefulWidget{
 class _SignupPageState extends State<SignupPage>{
   
   final formkey = GlobalKey<FormState>();
-    final TextEditingController fulname = new TextEditingController();
-    final TextEditingController ownNumber = new TextEditingController();
-    final TextEditingController ownAddress = new TextEditingController(); 
-    final TextEditingController ownpass = new TextEditingController();
-    final TextEditingController ownconpass = new TextEditingController();
+    final TextEditingController fulname  = TextEditingController();
+     TextEditingController ownNumber = TextEditingController();
+      TextEditingController ownAddress =  TextEditingController();
+      TextEditingController ownpass = TextEditingController();
+      TextEditingController ownconpass =TextEditingController();
+      
+
   @override
   Widget build(BuildContext context) {
-
-    
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -41,12 +43,13 @@ class _SignupPageState extends State<SignupPage>{
                   SizedBox(height: 6,),
                   Text("Create an Account to get started!",style: TextStyle(fontSize: 20,color: Colors.grey.shade400),),
                 ],
-              ),
-              Column(
+                ),
+               
+                Form(child:
+                  Column(
                 key: formkey,
                 children: <Widget>[
                   SizedBox(height: 70,),
-                  
                   TextField(
                     controller: fulname,
                     decoration: InputDecoration(
@@ -62,7 +65,9 @@ class _SignupPageState extends State<SignupPage>{
                       ),
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                     ),
+                    
                   ),
+                  
                   SizedBox(height: 16,),
 
                    TextField(
@@ -146,7 +151,9 @@ class _SignupPageState extends State<SignupPage>{
                   Container(
                     height: 50,
                     child: FlatButton(
+                      
                       onPressed:  _signingIn,
+
                       padding: EdgeInsets.all(0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -167,7 +174,7 @@ class _SignupPageState extends State<SignupPage>{
                         child: Container(
                           alignment: Alignment.center,
                           constraints: BoxConstraints(minHeight: 50,maxWidth: double.infinity),
-                          child: Text("Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,),
+                          child: Text( "Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,),
                         ),
                       ),
                     ),
@@ -175,18 +182,23 @@ class _SignupPageState extends State<SignupPage>{
                   SizedBox(height: 16,),
                 ],
               ),
+              ),
+              
+             
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: 150,),
-                    Text("I'm already a member.",style: TextStyle(fontWeight: FontWeight.bold),),
+                    Text("I'm already a member.",style:
+                     TextStyle(fontWeight: FontWeight.bold),),
                     GestureDetector(
                       onTap: (){
                         Navigator.pop(context);
                       },
-                      child: Text("Sign in.",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
+                      child: Text("Sign in.",
+                      style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
                     )
                   ],
                 ),
@@ -200,6 +212,7 @@ class _SignupPageState extends State<SignupPage>{
   }
 
 void _signingIn() async {
+
   var data = {
 
         'name' : fulname.text,
@@ -210,12 +223,21 @@ void _signingIn() async {
 
 
     };
+    
+  var res = await ApiCall().postData(data,'/register');
+  var body = json.decode(res.body);
+ if(body['success']){
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setString('token', body['token']);
+      localStorage.setString('user', json.encode(body['user']));
+       Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => Home()));
+    }
 
-    var freshdate = await ApiCall().postData(data, 'register');
-    var body = json.decode(freshdate.body);
-    print(body);
+
+
 
 }
-
-
 }
