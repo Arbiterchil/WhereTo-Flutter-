@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage>{
                               shape: BoxShape.circle
                             ),
                             child: CircleAvatar(
-                              backgroundImage: AssetImage("asset/img/app.png"),
+                              backgroundImage: AssetImage("asset/img/app.jpg"),
                             ),
                           ),
                         ),

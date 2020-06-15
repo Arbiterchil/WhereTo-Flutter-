@@ -3,6 +3,7 @@ import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/restaurants/carousel_rest.dart';
 import 'package:WhereTo/restaurants/featured_rest.dart';
 import 'package:WhereTo/restaurants/restaurant.dart';
+import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import '../bloc.Navigation_bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -327,14 +328,21 @@ class _RestDel extends State<RestDel>{
                                                 color: Color(0xFF262AAA),
                                               ),
                                             ),
-                                            Text(
-                                            'Show More...',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 17.0,
-                                                decoration: TextDecoration.none,
-                                                fontWeight: FontWeight.bold,
+                                            GestureDetector(
+                                              onTap: (){
+                                                Navigator.push(context, MaterialPageRoute(builder: (context){
+                                        return SearchDepo();
+                                      }));
+                                              },
+                                              child: Text(
+                                              'Show More...',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 17.0,
+                                                  decoration: TextDecoration.none,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ],
