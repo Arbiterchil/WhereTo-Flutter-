@@ -1,3 +1,4 @@
+import '../bloc.Navigation_bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'homepage.dart';
@@ -7,7 +8,7 @@ TextEditingController address = TextEditingController();
 TextEditingController contactNumber = TextEditingController();
 TextEditingController passwordController = TextEditingController();
 
-class Edit extends StatefulWidget {
+class Edit extends StatefulWidget with NavigationStates{
   @override
   _EditState createState() => _EditState();
 }
@@ -117,7 +118,7 @@ class _EditState extends State<Edit> {
                               obscureText: true,
                               decoration: InputDecoration(
                                 prefixIcon: Icon(
-                                  Icons.vpn_key,
+                                  Icons.phone,
                                   color: Colors.grey,
                                 ),
                                 hintText: "Contact Number",
@@ -132,6 +133,7 @@ class _EditState extends State<Edit> {
                               padding: const EdgeInsets.all(10.0),
                               child: FlatButton(
                                   child: Padding(
+
                                     padding: EdgeInsets.only(
                                         top: 8, bottom: 8, left: 10, right: 10),
                                     child: Text(
@@ -149,7 +151,7 @@ class _EditState extends State<Edit> {
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
                                           new BorderRadius.circular(20.0)),
-                                  onPressed: () {}),
+                                  onPressed: updateme),
                             ),
                           ],
                         ),
@@ -187,4 +189,11 @@ class _EditState extends State<Edit> {
       ),
     );
   }
+
+void updateme() async{}
+
+
+
+
+
 }

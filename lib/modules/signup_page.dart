@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +22,13 @@ class _SignupPageState extends State<SignupPage>{
       TextEditingController ownAddress =  TextEditingController();
       TextEditingController ownpass = TextEditingController();
       TextEditingController ownconpass =TextEditingController();
+
+         bool loading = false;    
+
+
       
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +52,20 @@ class _SignupPageState extends State<SignupPage>{
                 ],
                 ),
                
-                Form(child:
+                Form(
+                  key: formkey,
+                  child:
                   Column(
-                key: formkey,
                 children: <Widget>[
                   SizedBox(height: 70,),
-                  TextField(
+
+                  TextFormField(
+                    validator: (val){
+                      if(val.isEmpty){
+                        return "Empty Field";
+                      }
+                      return null;
+                    },
                     controller: fulname,
                     decoration: InputDecoration(
                       labelText: "Full Name",
@@ -70,8 +85,14 @@ class _SignupPageState extends State<SignupPage>{
                   
                   SizedBox(height: 16,),
 
-                   TextField(
+                   TextFormField(
                      controller: ownAddress,
+                     validator: (val){
+                        if(val.isEmpty){
+                          return "Empty";
+                        }
+                        return null;
+                     },
                     decoration: InputDecoration(
                       labelText: "Address",
                       labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400,fontWeight: FontWeight.w600),
@@ -88,8 +109,9 @@ class _SignupPageState extends State<SignupPage>{
                   ),
                   SizedBox(height: 16,),
 
-                  TextField(
+                  TextFormField(
                     controller: ownpass,
+                    validator: (input) => ownpass.text.length < 8 ?  'Password to Short' : null,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: "Password",
@@ -107,8 +129,17 @@ class _SignupPageState extends State<SignupPage>{
                   ),
                   SizedBox(height: 30,),
 
-                  TextField(
+                  TextFormField(
                     controller: ownconpass,
+                    validator: (val){
+                      if(val.isEmpty){
+                        return "Empty";
+                      }if(val != ownpass.text){
+                        return "Password not Match";
+                      }
+                      return null;
+                    },
+                    onSaved: (val) => ownconpass.text = val,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: "Confirm Password",
@@ -126,9 +157,11 @@ class _SignupPageState extends State<SignupPage>{
                   ),
                   SizedBox(height: 30,),
 
-                  TextField(
+                  TextFormField(
                     controller: ownNumber,
-                    
+                    keyboardType: TextInputType.number,
+                    validator: (val) => ownNumber.text.length < 11 ? 'Mobile Number Consist of 11 Digits' : null,
+                    onSaved: (val) => ownNumber.text = val,
                     decoration: InputDecoration(
                       
                       labelText: "Contact Number",
@@ -143,6 +176,7 @@ class _SignupPageState extends State<SignupPage>{
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(color: Colors.red),
                       ),
+                      
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                     ),
                   ),
@@ -174,7 +208,8 @@ class _SignupPageState extends State<SignupPage>{
                         child: Container(
                           alignment: Alignment.center,
                           constraints: BoxConstraints(minHeight: 50,maxWidth: double.infinity),
-                          child: Text( "Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,),
+                          child: Text( 
+                            loading ? 'Creating Account' : "Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,),
                         ),
                       ),
                     ),
@@ -194,8 +229,10 @@ class _SignupPageState extends State<SignupPage>{
                     Text("I'm already a member.",style:
                      TextStyle(fontWeight: FontWeight.bold),),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.pop(context);
+                     onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return LoginPage();
+                        }));
                       },
                       child: Text("Sign in.",
                       style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
@@ -213,19 +250,22 @@ class _SignupPageState extends State<SignupPage>{
 
 void _signingIn() async {
 
-  var data = {
+  setState(() {
+    loading = true;
+  });
 
+  if(formkey.currentState.validate()){
+      formkey.currentState.save();
+      var data = {
         'name' : fulname.text,
         'contactNumber' : ownNumber.text,
         'address' : ownAddress.text,
         'password' : ownpass.text 
-        
+            };
+      var res = await ApiCall().postData(data,'/register');
 
-
-    };
-    
-  var res = await ApiCall().postData(data,'/register');
-  var body = json.decode(res.body);
+  if(res.statusCode == 200){
+     var body = json.decode(res.body);
  if(body['success']){
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', body['token']);
@@ -234,10 +274,44 @@ void _signingIn() async {
         context,
         new MaterialPageRoute(
             builder: (context) => Home()));
-    }
+    }else{
+      _showDial();
+      throw Exception('Failed to Save');
+          
+    } 
+  }else{
+     _showDial();
+    throw Exception('Failed to Save');  
+        }
+
+    
 
 
+  }
+
+  setState(() {
+    loading = false;
+  });
 
 
 }
+
+void _showDial(){
+  showDialog(
+    context: context,
+    builder: (BuildContext context){
+      return AlertDialog(
+          title: Text("Contant Number Already Exist."),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          actions: <Widget>[
+                FlatButton(onPressed: () => Navigator.of(context).pop(),
+                child: const Text("OK",textAlign: TextAlign.center,),),
+              ],
+           
+        );
+    },);
+}
+
 }
