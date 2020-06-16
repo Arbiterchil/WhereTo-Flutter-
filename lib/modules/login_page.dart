@@ -32,10 +32,11 @@ class _LoginPageState extends State<LoginPage>{
       // backgroundColor: Colors.white,
       body:  Container(
           decoration: BoxDecoration(
-            image: DecorationImage(
-               image: AssetImage("asset/img/bgback.png"),
-            fit: BoxFit.cover,
-              ),
+            color: Color(0xFF3936ea),
+            // image: DecorationImage(
+            //    image: AssetImage("asset/img/bgback.png"),
+            // fit: BoxFit.cover,
+            //   ),
           ),
           child: SingleChildScrollView(
             child: SafeArea(

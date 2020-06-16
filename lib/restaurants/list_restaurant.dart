@@ -1,22 +1,41 @@
+import 'package:WhereTo/restaurants/restaurant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ListStatic extends StatefulWidget {
-  @override
-  _ListStaticState createState() => _ListStaticState();
-}
+class ListStatic extends StatelessWidget {
+    final Restaurant restaurant;
 
-class _ListStaticState extends State<ListStatic> {
+    ListStatic(this.restaurant);
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+
+        title: Text(restaurant.restaurantName,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 22.0,
+          fontWeight: FontWeight.bold
+        ),),
+      ),
         body: Container(
-          child: Stack(
-            children: <Widget>[
-              
-            ],
-          ),        ),
+          decoration: BoxDecoration(
+            color: Color(0xFFF7F7F7)
+          ),
+          child: SafeArea(
+            child: Column(
+              children: <Widget>[
+
+
+                  
+
+
+              ],
+            ),
+          ),
+        ),
     );
   }
 }

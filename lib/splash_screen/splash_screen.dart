@@ -38,10 +38,11 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("asset/img/bgback.png"),
-            fit: BoxFit.cover,
-          ),
+          color: Color(0xFF3936ea),
+          // image: DecorationImage(
+          //   image: AssetImage("asset/img/bgback.png"),
+          //   fit: BoxFit.cover,
+          // ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

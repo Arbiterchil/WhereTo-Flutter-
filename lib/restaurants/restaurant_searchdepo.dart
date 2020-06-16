@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/restaurant.dart';
 import 'package:flutter/material.dart';
 
@@ -69,10 +70,8 @@ TextEditingController search = new TextEditingController();
 
   }
 
-
-
-
-    Widget backButt(){
+    
+    backButt(){
         return new Container(
           child: SafeArea(
             child: Align(
@@ -114,7 +113,7 @@ TextEditingController search = new TextEditingController();
         );
     }
     
-    Widget listData(){
+    listData(){
         return Padding(
           padding: const EdgeInsets.only(top: 150.0),
           child: new Container(
@@ -142,7 +141,15 @@ TextEditingController search = new TextEditingController();
                       itemBuilder: (BuildContext context , int index){
                           return snapshot.data[index].restaurantName.contains(searchit)
                           |snapshot.data[index].address.contains(searchit) ? GestureDetector(
-                            onTap: (){},
+                            onTap: (){
+
+                              Navigator.push(context,
+                                new MaterialPageRoute(builder: (context) 
+                                => ListStatic(snapshot.data[index])
+                                )
+                                );
+
+                            },
                             child: Padding(
                               padding: const EdgeInsets.only(left:30.0,right: 30.0,top: 20.0,),
                               child: Container(
