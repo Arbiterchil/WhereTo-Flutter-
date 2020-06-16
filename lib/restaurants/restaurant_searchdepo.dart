@@ -145,7 +145,7 @@ TextEditingController search = new TextEditingController();
 
                               Navigator.push(context,
                                 new MaterialPageRoute(builder: (context) 
-                                => ListStatic(snapshot.data[index])
+                                => ListStactic(restaurant: snapshot.data[index])
                                 )
                                 );
 
