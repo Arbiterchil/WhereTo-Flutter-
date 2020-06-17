@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:WhereTo/api/api.dart';
+
 import '../bloc.Navigation_bloc/navigation_bloc.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,6 +36,7 @@ class _SideBarState extends State<SideBarHome> with SingleTickerProviderStateMix
     
 
   }
+
 
  
 
@@ -171,7 +174,22 @@ class _SideBarState extends State<SideBarHome> with SingleTickerProviderStateMix
                       MenuItem(
                         iconData: Icons.exit_to_app,
                         icontext: "Logout",
-                        onTap: logout,
+                        onTap: () async {
+                          var res = await ApiCall().getData('/logout');
+                          var body = json.decode(res.body);
+                          if(body['success']){
+                             SharedPreferences localStorage = await SharedPreferences.getInstance();
+                             localStorage.remove('user');
+                             localStorage.remove('token');
+                             print(body);
+                              Navigator.pushReplacement(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => LoginPage()));
+                          }else{
+                            print(body);
+                          }
+                        },
                       ),
                     ],
                   ),
@@ -215,10 +233,22 @@ class _SideBarState extends State<SideBarHome> with SingleTickerProviderStateMix
    void logout() async{
     
 
+      // var res = await ApiCall().getData('/logout');
+      // var body = json.decode(res.body);
+      // if(body['success']){
+      //    SharedPreferences localStorage = await SharedPreferences.getInstance();
+      //    localStorage.remove('user');
+      //    localStorage.remove('token');
+      //   //   Navigator.push(
+      //   // context,
+      //   // new MaterialPageRoute(
+      //   //     builder: (context) => LoginPage()));
+      // }
        SharedPreferences localStorage = await SharedPreferences.getInstance();
          localStorage.remove('user');
          localStorage.remove('token');
-          Navigator.push(
+        
+          Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
             builder: (context) => LoginPage()));

@@ -270,14 +270,13 @@ void _signingIn() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
-       Navigator.push(
+       Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
             builder: (context) => Home()));
     }else{
       _showDial();
       throw Exception('Failed to Save');
-          
     } 
   }else{
      _showDial();

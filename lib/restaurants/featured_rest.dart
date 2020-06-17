@@ -22,7 +22,11 @@ class FearturedRestaurant extends StatefulWidget {
       
       for(var bods in bods){
         
-        Restaurant rest = Restaurant(bods["id"],bods["restaurantName"],bods["address"],bods["contactNumber"],bods["isFeatured"]);
+        Restaurant rest = Restaurant(bods["id"],
+        bods["restaurantName"],
+        bods["address"],
+        bods["contactNumber"],
+        bods["isFeatured"]);
         rests.add(rest);
         // rest.add(Restaurant.fromJson(bods));
       }
@@ -33,16 +37,8 @@ class FearturedRestaurant extends StatefulWidget {
 class _FearturedRestaurantState extends State<FearturedRestaurant> {
   @override
   Widget build(BuildContext context) {
-    //  _getRest().then((value) {
-    //     if(mounted){
-    //        setState(() {
-    //       _rest.addAll(value);
-    //     });
-    //     }
-        
-    //   });
+  
     return Container(
-        // color: Color(0xFF3936ea),
         child:  Padding(
           padding: const EdgeInsets.only(left: 10.0 , right: 10.0),
           child: _buildAxisHorin(),

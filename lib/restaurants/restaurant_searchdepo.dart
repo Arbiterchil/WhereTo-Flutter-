@@ -46,6 +46,10 @@ TextEditingController search = new TextEditingController();
   
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
   
 
   @override
@@ -77,7 +81,7 @@ TextEditingController search = new TextEditingController();
             child: Align(
               alignment: Alignment.topCenter,
               child: Padding(
-                padding: const EdgeInsets.only(left: 40.0, right: 40.0,top: 5.0),
+                padding: const EdgeInsets.only(left: 40.0, right: 40.0,top: 35.0),
                 child: Container(
                   height: 50.0,
                   decoration: BoxDecoration(
@@ -112,7 +116,6 @@ TextEditingController search = new TextEditingController();
           ),
         );
     }
-    
     listData(){
         return Padding(
           padding: const EdgeInsets.only(top: 150.0),
@@ -148,7 +151,6 @@ TextEditingController search = new TextEditingController();
                                 => ListStactic(restaurant: snapshot.data[index])
                                 )
                                 );
-
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(left:30.0,right: 30.0,top: 20.0,),

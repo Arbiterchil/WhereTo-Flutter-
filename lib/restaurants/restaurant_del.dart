@@ -319,34 +319,36 @@ class _RestDel extends State<RestDel>{
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
-              child:  Row(
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(right: 10),
-                                              child: Icon(
-                                                Icons.arrow_downward,
-                                                color: Color(0xFF262AAA),
-                                              ),
-                                            ),
-                                            GestureDetector(
-                                              onTap: (){
-                                                Navigator.push(context, MaterialPageRoute(builder: (context){
+              child:  GestureDetector(
+                onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
                                         return SearchDepo();
                                       }));
-                                              },
-                                              child: Text(
-                                              'Show More...',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 17.0,
-                                                  decoration: TextDecoration.none,
-                                                  fontWeight: FontWeight.bold,
+                },
+                child: Row(
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: const EdgeInsets.only(right: 10),
+                                                child: Icon(
+                                                  Icons.arrow_downward,
+                                                  color: Color(0xFF262AAA),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
+                                              
+                                                Text(
+                                                'Show More...',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 17.0,
+                                                    decoration: TextDecoration.none,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              
+                                            ],
+                                          ),
+              ),
               ),
                   ),
                                 SizedBox(height: 30.0),
