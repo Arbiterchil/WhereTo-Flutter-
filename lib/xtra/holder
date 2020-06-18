@@ -358,4 +358,68 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 TabBar(
+                             controller: tabs,
+                           unselectedLabelColor: Colors.black,
+                           indicator: BoxDecoration(
+                             color: Color(0xFF3936ea),
+                             borderRadius: BorderRadius.only(
+                               topLeft: Radius.circular(20),
+                               topRight: Radius.circular(20),
+                             ),
+                             ),
+                         isScrollable: true,
+                         tabs: snapshot.data.map<Widget>((TyepCateg ty) {
+                              return Container(
+                                width: 80.0,
+                                child: Tab(
+                                text: ty.categoryName,
+                              ),
+                              );
+                         }).toList(),
+                     ),
+                      TabBarView(
+                        children:snapshot.data.map<Widget>((TyepCateg ty) {
+                              return Container(
+                                width: 80.0,
+                                child: Tab(
+                                text: ty.categoryName,
+                              ),
+                              );
+                         }).toList(),),
+
+
+
+
       

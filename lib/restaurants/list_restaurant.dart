@@ -21,45 +21,103 @@ class ListStactic extends StatefulWidget {
 
 class _ListStacticState extends State<ListStactic> with SingleTickerProviderStateMixin {
   
-  // final List<TyepCateg> typesong;
-  // _ListStacticState(this.typesong);
 
-  TabController tabsControl;
-   int haha;
+Future<List<TyepCateg>> _categRest() async{
+
+      var response = await ApiCall().getCategory('/getCategories');
+
+      List<TyepCateg> categ = [];
+      var body = json.decode(response.body);
+
+      for(var body in body){
+
+          TyepCateg mens = TyepCateg(
+            body['id'],
+            body['categoryName'],
+          );
+        categ.add(mens);
+
+      }
+      print(categ.length);
+      return categ;
+    }
+
   
 
   @override
   void initState() {
     super.initState();
-
-    // tabsControl = TabController(vsync: this,length: categ.length);
+  
   }
 
   @override
   Widget build(BuildContext context) {
 
     // int getmeouts = widget.restaurant.id;
-      
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.restaurant.restaurantName,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 22.0,
-          fontWeight: FontWeight.bold
-        ),
-        ),
-        
-      ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: Colors.amber,
-        ),
-        child: CategList(),
-      ),
-           
-    );
+     return Container(
+        child: FutureBuilder(
+          future: _categRest(),
+          builder: (BuildContext context,AsyncSnapshot snapshot){
+              if(snapshot.data == null){
+                  return Container(
+                    child: Text("Loading..."),
+                  );
+              }else{
+                return DefaultTabController(
+                  length: snapshot.data.length,
+                   child: Scaffold(
+                     backgroundColor: Color(0xFF3936ea),
+                     appBar: AppBar(
+                       backgroundColor: Colors.amber,
+                       title: Text( widget.restaurant.restaurantName,
+                       textAlign: TextAlign.center,
+                       style: TextStyle(
+                         color: Colors.black,
+                         fontSize: 24.0,
+                         fontWeight: FontWeight.bold
+                       ),),
+                       bottom: TabBar(
+                           unselectedLabelColor: Colors.black,
+                           indicator: BoxDecoration(
+                             color: Color(0xFF3936ea),
+                             borderRadius: BorderRadius.only(
+                               topLeft: Radius.circular(20),
+                               topRight: Radius.circular(20),
+                             ),
+                             ),
+                         isScrollable: true,
+                         tabs: snapshot.data.map<Widget>((TyepCateg ty) {
+                              return Container(
+                                width: 80.0,
+                                child: Tab(
+                                text: ty.categoryName,
+                              ),
+                              );
+                         }).toList(),
+                     ),
+                     ), 
+                      body: TabBarView(
+                        children:snapshot.data.map<Widget>((TyepCateg ty) {
+                         
+                              return Container(
+                                width: 80.0,
+                                child: Tab(
+                                text: ty.categoryName,
+                              ),
+                              );
+                         
+                         }).toList(),),  
+                       
+
+            
+                   ),
+                   
+                   );
+              }
+        },
+        ),      
+    );     
+    
   }
 
 }
