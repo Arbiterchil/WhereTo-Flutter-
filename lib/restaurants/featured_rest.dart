@@ -19,6 +19,7 @@ Future<List<Restaurant>> _getRest() async{
       var bods = json.decode(response.body);
       
       for(var bods in bods){
+        
         Restaurant rest = Restaurant
         (bods["id"],
         bods["restaurantName"],

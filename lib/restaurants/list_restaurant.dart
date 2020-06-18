@@ -59,8 +59,18 @@ Future<List<TyepCateg>> _categRest() async{
           future: _categRest(),
           builder: (BuildContext context,AsyncSnapshot snapshot){
               if(snapshot.data == null){
-                  return Container(
-                    child: Text("Loading..."),
+                  return Scaffold(
+                    backgroundColor: Colors.white,
+                    body: Center(
+                        child: Container(
+                          width: 40.0,
+                          height: 40.0,
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.white,
+                        strokeWidth: 3.0,
+                        ),
+                        ),  
+                    ),
                   );
               }else{
                 return DefaultTabController(
