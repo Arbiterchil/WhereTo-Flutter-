@@ -1,7 +1,5 @@
-
-
-// import 'package:WhereTo/restaurants/resmoderator_api.dart';
-// import 'package:WhereTo/restaurants/restaurant_response.dart';
+// import 'package:WhereTo/xtra/resmoderator_api.dart';
+// import 'package:WhereTo/xtra/restaurant_response.dart';
 // import 'package:rxdart/rxdart.dart';
 
 // class RestaurantListBloc {

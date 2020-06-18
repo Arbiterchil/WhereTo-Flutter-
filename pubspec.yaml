@@ -66,6 +66,7 @@ flutter:
   - asset/img/KFC.png
   - asset/img/Penongs.png
   - asset/img/bgback.png
+  - asset/img/Chowking.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

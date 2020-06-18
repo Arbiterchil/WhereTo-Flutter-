@@ -9,7 +9,8 @@
 //   RestaurantResponse(this.restaurants,this.error);
 
 //   RestaurantResponse.fromJson(Map<String,dynamic>json)
-//   : restaurants = (json["restaurant"] as List).map((e) => new Restaurant.fromJson(e)).toList(),error = "" ;
+//   : restaurants =  (json["results"] as List).map((i) => new Restaurant.fromJson(i)).toList(),
+//         error = "";
 
 //   RestaurantResponse.withError(String errorvalue)
 //   : restaurants = List(),

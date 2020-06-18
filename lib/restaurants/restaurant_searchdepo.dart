@@ -148,7 +148,9 @@ TextEditingController search = new TextEditingController();
 
                               Navigator.push(context,
                                 new MaterialPageRoute(builder: (context) 
-                                => ListStactic(restaurant: snapshot.data[index])
+                                => ListStactic(
+                                  restaurant: snapshot.data[index]
+                                  )
                                 )
                                 );
                             },

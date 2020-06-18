@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/restaurants/restaurant.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,9 +8,8 @@ class FearturedRestaurant extends StatefulWidget {
   @override
   _FearturedRestaurantState createState() => _FearturedRestaurantState();
 }
-//  List<Restaurant> _rest = List<Restaurant>();
 
- Future<List<Restaurant>> _getRest() async{
+Future<List<Restaurant>> _getRest() async{
 
     var response = await ApiCall().getRestarant('/getFeaturedRestaurant');
     
@@ -21,23 +19,23 @@ class FearturedRestaurant extends StatefulWidget {
       var bods = json.decode(response.body);
       
       for(var bods in bods){
-        
-        Restaurant rest = Restaurant(bods["id"],
+        Restaurant rest = Restaurant
+        (bods["id"],
         bods["restaurantName"],
         bods["address"],
         bods["contactNumber"],
         bods["isFeatured"]);
         rests.add(rest);
-        // rest.add(Restaurant.fromJson(bods));
       }
       print(rests.length);
       return rests;
-    // return rest;
  }
+
+
+
 class _FearturedRestaurantState extends State<FearturedRestaurant> {
   @override
   Widget build(BuildContext context) {
-  
     return Container(
         child:  Padding(
           padding: const EdgeInsets.only(left: 10.0 , right: 10.0),

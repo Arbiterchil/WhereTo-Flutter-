@@ -2,7 +2,7 @@
 // import 'dart:convert';
 // import 'package:WhereTo/api/api.dart';
 // import 'package:WhereTo/restaurants/restaurant.dart';
-// import 'package:WhereTo/restaurants/restaurant_response.dart';
+// import 'package:WhereTo/xtra/restaurant_response.dart';
 // import 'package:http/http.dart' as http;
 // import 'package:http/http.dart';
 
@@ -15,9 +15,9 @@
 //     //  String url = 'http://10.0.2.2:8000/api/getFeaturedRestaurant';
 //       try{
 
-//         var response = await ApiCall().getRestarant('/getFeaturedRestaurant');
-//         var bods = (json.decode(response.body) as List).map((e) => new Restaurant.fromJson(e)).toList();
-//       return RestaurantResponse.fromJson(bods);
+//         final response = await ApiCall().getRestarant('/getFeaturedRestaurant');
+        
+//       return RestaurantResponse.fromJson(json.decode(response.body));
        
         
 
