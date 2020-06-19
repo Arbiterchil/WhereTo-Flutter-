@@ -42,11 +42,19 @@ Future<List<TyepCateg>> _categRest() async{
       return categ;
     }
 
-  
+    TabController tabs;
 
   @override
   void initState() {
     super.initState();
+
+    setState(() {
+      _categRest().then((value) {
+
+        tabs = TabController(vsync: this,length: value.length);
+
+      });
+    });
   
   }
 
@@ -87,6 +95,7 @@ Future<List<TyepCateg>> _categRest() async{
                          fontWeight: FontWeight.bold
                        ),),
                        bottom: TabBar(
+                         controller: tabs,
                            unselectedLabelColor: Colors.black,
                            indicator: BoxDecoration(
                              color: Color(0xFF3936ea),
@@ -96,24 +105,34 @@ Future<List<TyepCateg>> _categRest() async{
                              ),
                              ),
                          isScrollable: true,
+                         onTap: (dataClick){
+                           
+                         },
                          tabs: snapshot.data.map<Widget>((TyepCateg ty) {
                               return Container(
                                 width: 80.0,
                                 child: Tab(
-                                text: ty.categoryName,
+                                text: ty.categoryName.toUpperCase(),
                               ),
                               );
                          }).toList(),
                      ),
                      ), 
                       body: TabBarView(
+                        controller: tabs,
                         children:snapshot.data.map<Widget>((TyepCateg ty) {
                          
-                              return Container(
-                                width: 80.0,
-                                child: Tab(
-                                text: ty.categoryName,
-                              ),
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 20.0,),
+                                child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    width: 80.0,
+                                    child: Tab(
+                                    text: ty.categoryName,
+                                  ),
+                                  ),
+                                ),
                               );
                          
                          }).toList(),),  
