@@ -149,7 +149,7 @@ TextEditingController search = new TextEditingController();
                               Navigator.push(context,
                                 new MaterialPageRoute(builder: (context) 
                                 => ListStactic(
-                                  restaurant: snapshot.data[index]
+                                  restaurant: snapshot.data[index], nameRestau: snapshot.data[index].restaurantName.toString(),
                                   )
                                 )
                                 );

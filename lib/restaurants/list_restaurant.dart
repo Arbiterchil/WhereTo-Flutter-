@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:WhereTo/MenuRestaurant/categ_list.dart';
 import 'package:WhereTo/MenuRestaurant/categ_type.dart';
 import 'package:WhereTo/MenuRestaurant/restaurant_categ.dart';
+import 'package:WhereTo/MenuRestaurant/restaurant_menu_list.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,8 @@ import 'package:WhereTo/restaurants/restaurant.dart';
 class ListStactic extends StatefulWidget {
   
    final Restaurant restaurant;
-  
-  const ListStactic({Key key, this.restaurant,}) : super(key: key);
+   final String nameRestau;
+  const ListStactic({Key key, this.restaurant, this.nameRestau}) : super(key: key);
  
   @override
   _ListStacticState createState() => _ListStacticState();
@@ -34,6 +35,7 @@ Future<List<TyepCateg>> _categRest() async{
           TyepCateg mens = TyepCateg(
             body['id'],
             body['categoryName'],
+
           );
         categ.add(mens);
 
@@ -62,7 +64,8 @@ Future<List<TyepCateg>> _categRest() async{
   Widget build(BuildContext context) {
 
     // int getmeouts = widget.restaurant.id;
-     return Container(
+     return Scaffold(
+       body: Container(
         child: FutureBuilder(
           future: _categRest(),
           builder: (BuildContext context,AsyncSnapshot snapshot){
@@ -81,6 +84,7 @@ Future<List<TyepCateg>> _categRest() async{
                     ),
                   );
               }else{
+                
                 return DefaultTabController(
                   length: snapshot.data.length,
                    child: Scaffold(
@@ -143,9 +147,11 @@ Future<List<TyepCateg>> _categRest() async{
                    
                    );
               }
+             
         },
         ),      
-    );     
+    ),
+     );
     
   }
 
