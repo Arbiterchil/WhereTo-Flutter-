@@ -15,6 +15,7 @@ class ListStactic extends StatefulWidget {
   _ListStacticState createState() => _ListStacticState();
 }
 class _ListStacticState extends State<ListStactic> with SingleTickerProviderStateMixin {
+  
 Future<List<TyepCateg>> _categRest() async{
       var response = await ApiCall().getCategory('/getCategories');
       List<TyepCateg> categ = [];
