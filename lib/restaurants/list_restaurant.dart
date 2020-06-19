@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:WhereTo/MenuRestaurant/categ_list.dart';
 import 'package:WhereTo/MenuRestaurant/categ_type.dart';
 import 'package:WhereTo/MenuRestaurant/restaurant_categ.dart';
+import 'package:WhereTo/MenuRestaurant/restaurant_menu_list.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,8 @@ import 'package:WhereTo/restaurants/restaurant.dart';
 class ListStactic extends StatefulWidget {
   
    final Restaurant restaurant;
-  
-  const ListStactic({Key key, this.restaurant,}) : super(key: key);
+   final String nameRestau;
+  const ListStactic({Key key, this.restaurant, this.nameRestau}) : super(key: key);
  
   @override
   _ListStacticState createState() => _ListStacticState();
@@ -34,6 +35,7 @@ Future<List<TyepCateg>> _categRest() async{
           TyepCateg mens = TyepCateg(
             body['id'],
             body['categoryName'],
+
           );
         categ.add(mens);
 
@@ -42,6 +44,22 @@ Future<List<TyepCateg>> _categRest() async{
       return categ;
     }
 
+  Future<List<RestaurantMenu>> _menuList(int id) async{
+  var response = await ApiCall().getCategory('/getMenuCategory/$id');
+  List<RestaurantMenu> restaurant =[];
+  var body =json.decode(response.body);
+  for(var body in body){
+      RestaurantMenu restaurantMenu =RestaurantMenu(
+      body['id'], body['restaurantName'], body['menuName'], body['description'], body['price'],
+      );
+      if(body['restaurantName'].toString().contains(widget.nameRestau)){
+        restaurant.add(restaurantMenu);
+      }
+     
+  }
+    print("Restaurant length: ${restaurant.length}");
+    return restaurant;
+}
   
 
   @override
@@ -54,7 +72,8 @@ Future<List<TyepCateg>> _categRest() async{
   Widget build(BuildContext context) {
 
     // int getmeouts = widget.restaurant.id;
-     return Container(
+     return Scaffold(
+       body: Container(
         child: FutureBuilder(
           future: _categRest(),
           builder: (BuildContext context,AsyncSnapshot snapshot){
@@ -73,6 +92,7 @@ Future<List<TyepCateg>> _categRest() async{
                     ),
                   );
               }else{
+                
                 return DefaultTabController(
                   length: snapshot.data.length,
                    child: Scaffold(
@@ -108,12 +128,43 @@ Future<List<TyepCateg>> _categRest() async{
                      ), 
                       body: TabBarView(
                         children:snapshot.data.map<Widget>((TyepCateg ty) {
-                         
                               return Container(
-                                width: 80.0,
-                                child: Tab(
-                                text: ty.categoryName,
-                              ),
+                              child: FutureBuilder(
+                              future: _menuList(ty.id), 
+                              builder: (BuildContext context, AsyncSnapshot datasnapshot){
+                              if(datasnapshot.data ==null){
+                                return Scaffold(
+                                backgroundColor: Colors.white,
+                                body: Center(
+                                    child: Container(
+                                      width: 40.0,
+                                      height: 40.0,
+                                      child: CircularProgressIndicator(
+                                        backgroundColor: Colors.white,
+                                    strokeWidth: 3.0,
+                                    ),
+                                    ),  
+                                ),
+                              );
+                              }else{
+                               return ListView.builder(
+                                 itemCount: datasnapshot.data.length,
+                                 itemBuilder: (context, index){
+                                   return Padding(padding: EdgeInsets.all(20),
+                                   child: Card(
+                                     elevation: 15.6,
+                                     clipBehavior: Clip.antiAlias,
+                                     child: ListTile(
+                                       title: Text(datasnapshot.data[index].menuName),
+                                       subtitle:Text(datasnapshot.data[index].description),
+                                       trailing: Text("₱"+" "+datasnapshot.data[index].price.toString()),
+                                     ),
+                                   ),
+                                   );
+                                 });
+                              
+                                }
+                              }),
                               );
                          
                          }).toList(),),  
@@ -124,9 +175,11 @@ Future<List<TyepCateg>> _categRest() async{
                    
                    );
               }
+             
         },
         ),      
-    );     
+    ),
+     );
     
   }
 
