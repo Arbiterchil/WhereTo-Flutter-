@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:WhereTo/MenuRestaurant/categ_list.dart';
 import 'package:WhereTo/MenuRestaurant/categ_type.dart';
-import 'package:WhereTo/MenuRestaurant/restaurant_categ.dart';
 import 'package:WhereTo/MenuRestaurant/restaurant_menu_list.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:flutter/cupertino.dart';

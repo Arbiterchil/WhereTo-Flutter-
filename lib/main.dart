@@ -1,10 +1,5 @@
 import 'package:WhereTo/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'modules/homepage.dart';
-import 'modules/login_page.dart';
-
 void main() {
   runApp(MyApp());
 }

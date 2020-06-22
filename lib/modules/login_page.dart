@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/modules/editProfileScreen.dart';
 import 'package:WhereTo/modules/signup_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

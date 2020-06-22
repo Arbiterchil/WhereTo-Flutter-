@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/restaurants/carousel_rest.dart';
 import 'package:WhereTo/restaurants/featured_rest.dart';
-import 'package:WhereTo/restaurants/restaurant.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import '../bloc.Navigation_bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';

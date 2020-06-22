@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:WhereTo/path.dart';
-import 'package:WhereTo/startpage/start_inputpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
