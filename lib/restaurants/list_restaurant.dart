@@ -105,6 +105,8 @@ Future<List<TyepCateg>> _categRest() async{
                          }).toList(),
                      ),
                      ), 
+
+
                       body: TabBarView(
                         children:snapshot.data.map<Widget>((TyepCateg ty) {
                               return Container(
@@ -128,15 +130,22 @@ Future<List<TyepCateg>> _categRest() async{
                               }else{
                                return ListView.builder(
                                  itemCount: datasnapshot.data.length,
+                                 
                                  itemBuilder: (context, index){
                                    return Padding(padding: EdgeInsets.all(20),
-                                   child: Card(
-                                     elevation: 15.6,
-                                     clipBehavior: Clip.antiAlias,
-                                     child: ListTile(
-                                       title: Text(datasnapshot.data[index].menuName),
-                                       subtitle:Text(datasnapshot.data[index].description),
-                                       trailing: Text("₱"+" "+datasnapshot.data[index].price.toString()),
+                                   child: InkWell(
+                                     onTap: (){
+                                       
+                                     },
+                                     child: Card(
+                                      
+                                       elevation: 15.6,
+                                       clipBehavior: Clip.antiAlias,
+                                       child: ListTile(
+                                         title: Text(datasnapshot.data[index].menuName),
+                                         subtitle:Text(datasnapshot.data[index].description),
+                                         trailing: Text("₱"+" "+datasnapshot.data[index].price.toString()),
+                                       ),
                                      ),
                                    ),
                                    );
@@ -153,4 +162,5 @@ Future<List<TyepCateg>> _categRest() async{
     ),
      );
   }
+
 }
