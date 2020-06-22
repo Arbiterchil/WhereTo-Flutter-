@@ -26,6 +26,7 @@ Future<List<Restaurant>> _getRest() async{
         bods["address"],
         bods["contactNumber"],
         bods["isFeatured"]);
+
         rests.add(rest);
       }
       print(rests.length);
@@ -58,7 +59,9 @@ class _FearturedRestaurantState extends State<FearturedRestaurant> {
                 if(snapshot.data == null){
                   return Container(
                     child: Center(
+
                       child: Text("Getting the Data Please Wait..."),
+                      
                     ),
                   );
                 }else{
