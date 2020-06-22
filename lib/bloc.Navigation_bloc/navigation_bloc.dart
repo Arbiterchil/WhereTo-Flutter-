@@ -18,7 +18,8 @@ abstract class NavigationStates{
 class NavigationBloc extends Bloc<NavigationEvents,NavigationStates>{
   @override
   NavigationStates get initialState => Profile();
-
+     
+     
   @override
   Stream<NavigationStates> mapEventToState(NavigationEvents event) async* {
     switch(event){

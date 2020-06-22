@@ -8,6 +8,8 @@ class Restaurant{
   final String contactNumber;
   final int isFeatured;
 
+
+
 Restaurant(
   this.id,
   this.restaurantName,
