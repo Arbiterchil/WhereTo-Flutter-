@@ -16,14 +16,4 @@ Restaurant(
   this.isFeatured
 );
 
-Restaurant.fromJson(Map<String,dynamic>json)
-: id = json['id'],
-  restaurantName = json['restaurantName'],
-  address = json['address'],
-  contactNumber = json['contactNumber'],
-  isFeatured = json["isFeatured"];
-
-
-
-
 }
