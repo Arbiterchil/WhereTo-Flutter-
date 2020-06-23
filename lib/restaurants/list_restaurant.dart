@@ -8,6 +8,12 @@ import 'package:WhereTo/api_restaurant_bloc/bloc.provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:WhereTo/restaurants/restaurant.dart';
+
+
+
+
+
+
 class ListStactic extends StatefulWidget {
    final Restaurant restaurant;
    final String nameRestau;

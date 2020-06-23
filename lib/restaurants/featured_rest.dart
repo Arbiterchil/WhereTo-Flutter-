@@ -59,9 +59,7 @@ class _FearturedRestaurantState extends State<FearturedRestaurant> {
                 if(snapshot.data == null){
                   return Container(
                     child: Center(
-
-                      child: Text("Getting the Data Please Wait..."),
-                      
+                      child: Text("Getting the Data Please Wait..."),    
                     ),
                   );
                 }else{
