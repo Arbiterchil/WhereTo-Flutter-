@@ -4,27 +4,27 @@ import 'package:WhereTo/api/api.dart';
 
 class CallCateg{
 
-Future<List<TyepCateg>> _categRest() async{
+// Future<List<TyepCateg>> _categRest() async{
 
-      var response = await ApiCall().getCategory('/getCategories');
+//       var response = await ApiCall().getCategory('/getCategories');
 
-      List<TyepCateg> categ = [];
-      var body = json.decode(response.body);
+//       List<TyepCateg> categ = [];
+//       var body = json.decode(response.body);
 
-      for(var body in body){
+//       for(var body in body){
 
-          TyepCateg mens = TyepCateg(
-            body['id'],
-            body['categoryName'],
-          );
-        categ.add(mens);
+//           TyepCateg mens = TyepCateg(
+//             body['id'],
+//             body['categoryName'],
+//           );
+//         categ.add(mens);
 
-      }
-      print(categ.length);
-      return categ;
-    }
+//       }
+//       print(categ.length);
+//       return categ;
+//     }
 
-}
+// }
 
 
 
@@ -144,3 +144,4 @@ Future<List<TyepCateg>> _categRest() async{
 //     );
 //   }
 // }
+}

@@ -37,6 +37,15 @@ dependencies:
   flutter_bloc: ^4.0.0
   carousel_slider: ^1.3.0
   solid_bottom_sheet: ^0.1.9
+  google_fonts: ^0.3.10
+  momentum: ^1.2.7
+  stepper_counter_swipe: ^0.0.5
+  flutter_counter: ^1.0.3
+  mobx: ^1.2.1+1
+  build_runner: ^1.10.0
+  provider: ^4.1.3
+  argon_buttons_flutter: ^1.0.2
+  badges: ^1.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

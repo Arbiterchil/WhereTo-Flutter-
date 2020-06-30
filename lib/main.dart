@@ -1,9 +1,20 @@
 
-import 'package:WhereTo/api_restaurant_bloc/bloc.Restaurant.dart';
+
+
 import 'package:WhereTo/api_restaurant_bloc/bloc.provider.dart';
+import 'package:WhereTo/api_restaurant_bloc/bloc.transaction.dart';
+import 'package:WhereTo/api_restaurant_bloc/computation.dart';
+import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
+
 import 'package:WhereTo/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:provider/provider.dart';
+
+import 'api_restaurant_bloc/orderblocdelegate.dart';
 void main() {
+  BlocSupervisor.delegate =OrderBlocDelegate();
   runApp(MyApp());
 }
 class MyApp extends StatefulWidget {
@@ -33,14 +44,24 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      bloc: Blocrestaurant(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create:(BuildContext context){
+            return OrderBloc();
+          } 
+        ),
+      ],
+      
       child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home:BlocProviders(
+        bloc: BlocTransaction(),
+        child: Scaffold(
          body: SplashScreen(),
         // body: _isLoggedIn ? Home() :  LoginPage(),
-      ),
+        ),
+        ),
       
     ),
     );
