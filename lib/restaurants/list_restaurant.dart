@@ -282,7 +282,11 @@ class _ListStacticState extends State<ListStactic>
                                                                 price: data
                                                                     .data[index]
                                                                     .price,
-                                                                quantity: 0),
+                                                                quantity: 1,
+                                                                id: data
+                                                                    .data[index]
+                                                                    .id
+                                                                ),
                                                           ),
                                                         );
 

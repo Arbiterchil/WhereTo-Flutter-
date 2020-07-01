@@ -2,13 +2,14 @@ import 'package:WhereTo/Transaction/orders.dart';
 import 'package:flutter/foundation.dart';
 
 
-enum EventType{add,delete,deleteAll}
+enum EventType{add,delete,deleteAll,total}
 
 class Computation {
 TransactionOrders transactionOrders;
 int index;
 EventType eventType;
 List<TransactionOrders> order;
+
 
 Computation();
 
@@ -24,7 +25,9 @@ Computation.delete(int index){
 Computation.deleteAll(){
   this.eventType =EventType.deleteAll;
 }
-
+Computation.total(){
+  this.eventType =EventType.total;
+}
 }
 
 class TransactionOrders{
@@ -32,8 +35,8 @@ class TransactionOrders{
   String description;
   int price;
   int quantity;
-  
-
-  TransactionOrders({this.name, this.description, this.price, this.quantity});
+  int total;
+  int id;
+  TransactionOrders({this.name, this.description, this.price, this.quantity, this.total, this.id});
 
 }

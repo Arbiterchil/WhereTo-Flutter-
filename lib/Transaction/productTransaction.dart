@@ -72,10 +72,12 @@ class _TransactionListState extends State<TransactionList> {
                                       onTap: () {
                                         if (snapshot[index].quantity > 0) {
                                           setState(() {
-                                            snapshot[index].quantity =
+                                              snapshot[index].quantity =
                                                 snapshot[index].quantity - 1;
-                                            print(
-                                                ' ${snapshot[index].name.toString()} ${snapshot[index].quantity.toString()}');
+                                                 print(
+                                                ' ${snapshot[index].id.toString()} ${snapshot[index].quantity.toString()}');
+                                            
+                                           
                                           });
                                         }
                                       },
@@ -101,8 +103,8 @@ class _TransactionListState extends State<TransactionList> {
                                         setState(() {
                                           snapshot[index].quantity =
                                               snapshot[index].quantity + 1;
-                                          print(
-                                              ' ${snapshot[index].name.toString()} ${snapshot[index].quantity.toString()}');
+                                           print(
+                                                ' ${snapshot[index].id.toString()} ${snapshot[index].quantity.toString()}');
                                         });
                                       },
                                       child: Container(
@@ -136,14 +138,33 @@ class _TransactionListState extends State<TransactionList> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
-                      Text(
-                        "Total: " ,
-                        style: GoogleFonts.archivo(
-                            color: Colors.white,
-                            letterSpacing: 2,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700),
-                      ),
+                      Container(
+                          child:
+                            BlocConsumer<OrderBloc, List<TransactionOrders>>(
+                            builder: (context, datasnapshot) {
+                              int total = 0;
+                             for(int z=0;z<datasnapshot.length;z++){
+                              total+=snapshot[z].price*snapshot[z].quantity;
+                              //  if(snapshot[z].quantity==0){
+                              //    total+=snapshot[z].price*1;
+                              //  }
+                             }
+                              return Text(
+                              "Total: ${total.toString()}" ,
+                              style: GoogleFonts.archivo(
+                                  color: Colors.white,
+                                  letterSpacing: 2,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700),
+                            );
+                            },
+                            listener: (BuildContext context, order) {
+                                  // Scaffold.of(context).showSnackBar(
+                                  // SnackBar(content: Text("Order Remove")));
+                                },
+                          ),
+                        ),
+                     
                       Padding(
                         padding: EdgeInsets.only(left : 150),
                         child: Text(
@@ -166,8 +187,8 @@ class _TransactionListState extends State<TransactionList> {
                   ),
                   color: Colors.blue,
                   onTap: (startLoading, stopLoading, btnState) {
-                    // BlocProvider.of<OrderBloc>(context)
-                    // .add(Computation.deleteAll());
+                    BlocProvider.of<OrderBloc>(context)
+                    .add(Computation.deleteAll());
                   },
                 ),
               ),
