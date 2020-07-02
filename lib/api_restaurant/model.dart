@@ -47,7 +47,6 @@ class RestaurantList {
         description: json["description"],
         price: json["price"],
     );
-
     Map<String, dynamic> toJson() => {
         "id": id,
         "restaurantName": restaurantName,
@@ -55,4 +54,6 @@ class RestaurantList {
         "description": description,
         "price": price,
     };
+
+    
 }

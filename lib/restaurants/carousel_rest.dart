@@ -30,46 +30,50 @@ class _CarouselState extends State<CarouselSex> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width,
       child: Stack(
         children: <Widget>[
               Column(
                 children: <Widget>[
-                   CarouselSlider(
-              height: 200.0,
-              autoPlayCurve: Curves.fastOutSlowIn,
-              initialPage: 0,
-              enlargeCenterPage: true,
-              autoPlay: true,
-              reverse: false,
-              enableInfiniteScroll: true,
-              autoPlayInterval: Duration(seconds: 2),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              pauseAutoPlayOnTouch: Duration(seconds: 5),
-              onPageChanged: (index){
-                  setState(() {
-                    cur = index;
-                  });
-              },
-              items: img.map((index){
-                return Builder(
-                  builder:(BuildContext context){
-                    return Container(
-                      decoration: BoxDecoration(
-                        // border: Border.all(color: Colors.black, width: 5.0),
-                      ),
-                      child: Container(
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: CarouselSlider(
+                height: 200.0,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                initialPage: 0,
+                enlargeCenterPage: true,
+                autoPlay: true,
+                reverse: false,
+                enableInfiniteScroll: true,
+                autoPlayInterval: Duration(seconds: 2),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                pauseAutoPlayOnTouch: Duration(seconds: 5),
+                onPageChanged: (index){
+                    setState(() {
+                      cur = index;
+                    });
+                },
+                items: img.map((index){
+                  return Builder(
+                    builder:(BuildContext context){
+                      return Container(
                         
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 0.0),
-                        child: Image.asset(
-                          index,
-                          fit: BoxFit.cover,
-                          width: MediaQuery.of(context).size.width,),
-                      ),
-                    );
-                  });  
-              }).toList(),   
+                        decoration: BoxDecoration(
+                          // border: Border.all(color: Colors.black, width: 5.0),
+                        ),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.symmetric(horizontal: 0.0),
+                          child: Image.asset(
+                            index,
+                            fit: BoxFit.cover,
+                            ),
+                        ),
+                      );
+                    });  
+                }).toList(),   
             ),
+              ),
               SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
