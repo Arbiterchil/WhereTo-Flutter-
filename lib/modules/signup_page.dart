@@ -1,9 +1,13 @@
 import 'dart:convert';
 
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/api_restaurant_bloc/bloc.provider.dart';
+import 'package:WhereTo/api_restaurant_bloc/computation.dart';
+import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'homepage.dart';
@@ -264,9 +268,9 @@ void _signingIn() async {
             };
       var res = await ApiCall().postData(data,'/register');
 
-  if(res.statusCode == 200){
+     if(res.statusCode == 200){
      var body = json.decode(res.body);
- if(body['success']){
+      if(body['success']){
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));

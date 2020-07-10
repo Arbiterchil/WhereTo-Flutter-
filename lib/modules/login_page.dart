@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/api_restaurant_bloc/computation.dart';
+import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/modules/signup_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'homepage.dart';
@@ -228,11 +231,14 @@ void _login() async{
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
+      localStorage.setString('userID', body['user'][0]);
       Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
             builder: (context) => Home()));
       print('success Login');
+
+      print(body['user'][0]);
     }else{
       _showDial();
     }

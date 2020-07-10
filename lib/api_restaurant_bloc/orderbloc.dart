@@ -13,11 +13,14 @@ class OrderBloc extends Bloc<Computation, List<TransactionOrders>>{
      case EventType.add:
       List<TransactionOrders> order =List.from(state);
       if(event.transactionOrders !=null){
-        order.add(event.transactionOrders);
+       order.add(event.transactionOrders);
+       
+       
+       
       }
-       yield order;
-       break;
-     case EventType.deleteAll:
+      yield order;
+      break;
+      case EventType.deleteAll:
       List<TransactionOrders> order =List.from(state);
       order.clear();
       yield order;
@@ -30,7 +33,25 @@ class OrderBloc extends Bloc<Computation, List<TransactionOrders>>{
       default:
       throw Exception('Event not found $event');
    }
-    
+  }
+
+}
+class UserIDBloc extends Bloc<Userid, List<UserID>>{
+  @override
+  List<UserID> get initialState => List<UserID>();
+
+  @override
+  Stream<List<UserID>> mapEventToState(Userid event) async* {
+        switch(event.eventType){
+        case GetType.getuserID:
+        List<UserID> order =List.from(state);
+        if(event.userID !=null){
+          order.add(event.userID);
+        }
+        yield order;
+        break;
+        }
+
   }
 
 }

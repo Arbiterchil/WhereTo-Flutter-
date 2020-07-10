@@ -17,7 +17,7 @@ class _Profile extends State<Profile> {
     _getUserInfo();
     super.initState();
   }
-
+  
   void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var userJson = localStorage.getString('user'); 
@@ -25,7 +25,6 @@ class _Profile extends State<Profile> {
       setState(() {
         userData = user;
       });
-
   }
   @override
   Widget build(BuildContext context) {
