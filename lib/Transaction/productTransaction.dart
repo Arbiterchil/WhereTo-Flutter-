@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
@@ -205,17 +206,31 @@ class _TransactionListState extends State<TransactionList> {
                   var userJson = localStorage.getString('user'); 
                   var user = json.decode(userJson);
                   
-                    snapshot.forEach((element) { 
+                    snapshot.forEach((element) async{ 
                       setState(() {
                         id=element.id;
                         quantity =element.quantity;
                         
                       });
-                       print("userID:${user['id']} menuID: $id quantity: $quantity optionalAddress: Davao");
+                       var data ={
+                         'userId': user['id'],
+                         'order':[{
+                           'menuId': '$id', 'quantity': '$quantity' 
+                         }],
+                         'optionalAddress': 'Tagum'
+                       };
+                       var res =await ApiCall().postData(data, '/putOrder');
+                       if(res.statusCode ==200){
+                       var body = json.decode(res.body);
+                       if(body['success']){
+                         SharedPreferences localStorage = await SharedPreferences.getInstance();
+                         localStorage.setString('token', body['token']);
+                         print("Success");
+                       }
+                       }
+                       print("userId:${user['id']} menuId: $id quantity: $quantity optionalAddress: Davao");
                       });
-                   
-                  
-                    
+                    // getAll.add(Computation.getAll());
 
                   },
                 ),
