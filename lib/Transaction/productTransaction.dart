@@ -1,9 +1,15 @@
+import 'dart:convert';
+
+import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
 
 class TransactionList extends StatefulWidget {
   @override
@@ -11,6 +17,13 @@ class TransactionList extends StatefulWidget {
 }
 
 class _TransactionListState extends State<TransactionList> {
+  @override
+  void setState(fn) {
+    super.setState(fn);
+    
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -186,9 +199,39 @@ class _TransactionListState extends State<TransactionList> {
                         fontWeight: FontWeight.w700),
                   ),
                   color: Colors.blue,
-                  onTap: (startLoading, stopLoading, btnState) {
-                    BlocProvider.of<OrderBloc>(context)
-                    .add(Computation.deleteAll());
+                  onTap: (startLoading, stopLoading, btnState) async{
+                  var id;
+                  var quantity;
+                  SharedPreferences localStorage = await SharedPreferences.getInstance();
+                  var userJson = localStorage.getString('user'); 
+                  var user = json.decode(userJson);
+                  
+                    snapshot.forEach((element) async{ 
+                      setState(() {
+                        id=element.id;
+                        quantity =element.quantity;
+                        
+                      });
+                       var data ={
+                         'userId': user['id'],
+                         'order':[{
+                           'menuId': '$id', 'quantity': '$quantity' 
+                         }],
+                         'optionalAddress': 'Tagum'
+                       };
+                       var res =await ApiCall().postData(data, '/putOrder');
+                       if(res.statusCode ==200){
+                      //  var body = json.decode(res.body);
+                      
+                      //    SharedPreferences localStorage = await SharedPreferences.getInstance();
+                      //    localStorage.setString('token', body['token']);
+                         print("Success");
+                       
+                       }
+                       print("userId:${user['id']} menuId: $id quantity: $quantity optionalAddress: Davao");
+                      });
+                    // getAll.add(Computation.getAll());
+
                   },
                 ),
               ),
@@ -197,7 +240,7 @@ class _TransactionListState extends State<TransactionList> {
         );
       }, listener: (BuildContext context, orderList) {
         Scaffold.of(context).showSnackBar(
-          SnackBar(content: Text("Order Added")),
+          SnackBar(content: Text("Order Remove")),
         );
       }),
     );
