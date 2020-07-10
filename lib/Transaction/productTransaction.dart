@@ -221,12 +221,12 @@ class _TransactionListState extends State<TransactionList> {
                        };
                        var res =await ApiCall().postData(data, '/putOrder');
                        if(res.statusCode ==200){
-                       var body = json.decode(res.body);
-                       if(body['success']){
-                         SharedPreferences localStorage = await SharedPreferences.getInstance();
-                         localStorage.setString('token', body['token']);
+                      //  var body = json.decode(res.body);
+                      
+                      //    SharedPreferences localStorage = await SharedPreferences.getInstance();
+                      //    localStorage.setString('token', body['token']);
                          print("Success");
-                       }
+                       
                        }
                        print("userId:${user['id']} menuId: $id quantity: $quantity optionalAddress: Davao");
                       });
