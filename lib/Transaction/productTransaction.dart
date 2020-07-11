@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:WhereTo/Transaction/orderList.dart';
+import 'package:WhereTo/Transaction/orders.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
@@ -202,35 +204,42 @@ class _TransactionListState extends State<TransactionList> {
                   onTap: (startLoading, stopLoading, btnState) async{
                   var id;
                   var quantity;
+                  Map<String, dynamic> string;
+                  Map<String, dynamic> post;
+                  List<dynamic> order =[];
                   SharedPreferences localStorage = await SharedPreferences.getInstance();
                   var userJson = localStorage.getString('user'); 
                   var user = json.decode(userJson);
                   
-                    snapshot.forEach((element) async{ 
+                    snapshot.forEach((element)async { 
                       setState(() {
                         id=element.id;
                         quantity =element.quantity;
-                        
+                        string ={
+                        'menuId': '$id', 'quantity': '$quantity' 
+                        };
+                        order.add(string);
                       });
-                       var data ={
-                         'userId': user['id'],
-                         'order':[{
-                           'menuId': '$id', 'quantity': '$quantity' 
-                         }],
-                         'optionalAddress': 'Tagum'
-                       };
-                       var res =await ApiCall().postData(data, '/putOrder');
-                       if(res.statusCode ==200){
-                      //  var body = json.decode(res.body);
                       
-                      //    SharedPreferences localStorage = await SharedPreferences.getInstance();
-                      //    localStorage.setString('token', body['token']);
-                         print("Success");
-                       
-                       }
-                       print("userId:${user['id']} menuId: $id quantity: $quantity optionalAddress: Davao");
                       });
-                    // getAll.add(Computation.getAll());
+                      // print(order);   
+                      setState(() {
+                        post ={
+                          'userId': user['id'],
+                           'order':order,
+                          'optionalAddress': 'Davao'
+                        };
+                        // print(post);
+                      });
+                      var res =await ApiCall().postData(post, '/putOrder');
+                      if(res.statusCode ==200){
+                      print("Success");
+                                   
+                      }
+                      
+                        
+                    //  BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
+                    
 
                   },
                 ),
@@ -245,4 +254,5 @@ class _TransactionListState extends State<TransactionList> {
       }),
     );
   }
+  
 }
