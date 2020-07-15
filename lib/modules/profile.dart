@@ -23,10 +23,12 @@ class _Profile extends State<Profile> {
   }
   
 void configSignal() async {
+
+      await OneSignal.shared.setLocationShared(true);
+      await OneSignal.shared.promptLocationPermission();
       await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
       OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
       OneSignal.shared.setNotificationReceivedHandler(( OSNotification notification) {
-
        });
        var status = await OneSignal.shared.getPermissionSubscriptionState();
     String url = 'https://onesignal.com/api/v1/notifications';
@@ -45,12 +47,8 @@ void configSignal() async {
     headers: headers,
     body: json.encode(contents)
     );
-
       print(repo.body);
-
-  
   }
-
 
 
 
