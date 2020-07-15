@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import '../bloc.Navigation_bloc/navigation_bloc.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,12 +17,38 @@ class _Profile extends State<Profile> {
   @override
   void initState() {
     _getUserInfo();
-    super.initState();
     configSignal();
+    super.initState();
+    
   }
   
 void configSignal() async {
       await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+      OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+      OneSignal.shared.setNotificationReceivedHandler(( OSNotification notification) {
+
+       });
+       var status = await OneSignal.shared.getPermissionSubscriptionState();
+    String url = 'https://onesignal.com/api/v1/notifications';
+    var playerId = status.subscriptionStatus.userId;
+    var contents = {
+      "include_player_ids" : [playerId],
+      "contents":{"en":"Payat ko aya palag"},
+      "headings":{"en":"Jayce Mico Trial"},
+      "include_segments" : ["All"],
+      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+      };
+  Map<String,String> headers = {'Content-Type':'application/json',
+  'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
+    var repo = await http.post(
+    url,
+    headers: headers,
+    body: json.encode(contents)
+    );
+
+      print(repo.body);
+
+  
   }
 
 
