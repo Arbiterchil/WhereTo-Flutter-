@@ -26,7 +26,6 @@ void configSignal() async {
       await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
       OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
       OneSignal.shared.setNotificationReceivedHandler(( OSNotification notification) {
-
        });
        var status = await OneSignal.shared.getPermissionSubscriptionState();
     String url = 'https://onesignal.com/api/v1/notifications';
@@ -47,8 +46,6 @@ void configSignal() async {
     );
 
       print(repo.body);
-
-  
   }
 
 
