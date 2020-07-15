@@ -12,12 +12,8 @@ class FearturedRestaurant extends StatefulWidget {
 Future<List<Restaurant>> _getRest() async{
 
     var response = await ApiCall().getRestarant('/getFeaturedRestaurant');
-    
       List<Restaurant> rests = [];
-    
-
       var bods = json.decode(response.body);
-      
       for(var bods in bods){
         
         Restaurant rest = Restaurant

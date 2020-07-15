@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "678769921266",
+    "firebase_url": "https://whereto-c43c0.firebaseio.com",
+    "project_id": "whereto-c43c0",
+    "storage_bucket": "whereto-c43c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678769921266:android:7b1870101ef816673b946b",
+        "android_client_info": {
+          "package_name": "com.example.WhereToRider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678769921266-3fjuv2c84hiopohpo7hp948ttivh1fc0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKLXkgswzuJF52oamRs7xChqjoDtqUY6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678769921266-3fjuv2c84hiopohpo7hp948ttivh1fc0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

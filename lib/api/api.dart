@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ApiCall{
 
     // final String url = 'http://10.0.2.2:8000/api';
-    final String url = 'http://192.168.1.3:8000/api';
+    final String url = 'http://192.168.1.9:8000/api';
   
     postData(data ,api) async {
     var fullurl = url+api+ await _getToken();

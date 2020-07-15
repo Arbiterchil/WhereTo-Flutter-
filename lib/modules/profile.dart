@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+
 import '../bloc.Navigation_bloc/navigation_bloc.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -16,8 +18,26 @@ class _Profile extends State<Profile> {
   void initState() {
     _getUserInfo();
     super.initState();
+    configSignal();
   }
   
+void configSignal() async {
+      await OneSignal.shared.init('61147e88-b566-4802-a161-74d552fc58f2');
+      OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+      OneSignal.shared.setNotificationReceivedHandler(( OSNotification notification) {
+
+        // setState(() {
+        //   cons = notification.jsonRepresentation().replaceAll('\\n', '\n');        });
+
+
+
+       });
+
+  }
+
+
+
+
   void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var userJson = localStorage.getString('user'); 
