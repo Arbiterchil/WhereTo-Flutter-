@@ -22,17 +22,7 @@ class _Profile extends State<Profile> {
   }
   
 void configSignal() async {
-      await OneSignal.shared.init('61147e88-b566-4802-a161-74d552fc58f2');
-      OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
-      OneSignal.shared.setNotificationReceivedHandler(( OSNotification notification) {
-
-        // setState(() {
-        //   cons = notification.jsonRepresentation().replaceAll('\\n', '\n');        });
-
-
-
-       });
-
+      await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
   }
 
 
