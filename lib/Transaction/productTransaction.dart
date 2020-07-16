@@ -8,6 +8,7 @@ import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -202,43 +203,46 @@ class _TransactionListState extends State<TransactionList> {
                   ),
                   color: Colors.blue,
                   onTap: (startLoading, stopLoading, btnState) async{
-                  var id;
-                  var quantity;
-                  Map<String, dynamic> string;
-                  Map<String, dynamic> post;
-                  List<dynamic> order =[];
-                  SharedPreferences localStorage = await SharedPreferences.getInstance();
-                  var userJson = localStorage.getString('user'); 
-                  var user = json.decode(userJson);
+                  // var id;
+                  // var quantity;
+                  // Map<String, dynamic> string;
+                  // Map<String, dynamic> post;
+                  // List<dynamic> order =[];
+                  // SharedPreferences localStorage = await SharedPreferences.getInstance();
+                  // var userJson = localStorage.getString('user'); 
+                  // var user = json.decode(userJson);
                   
-                    snapshot.forEach((element)async { 
-                      setState(() {
-                        id=element.id;
-                        quantity =element.quantity;
-                        string ={
-                        'menuId': '$id', 'quantity': '$quantity' 
-                        };
-                        order.add(string);
-                      });
+                  //   snapshot.forEach((element)async { 
+                  //     setState(() {
+                  //       id=element.id;
+                  //       quantity =element.quantity;
+                  //       string ={
+                  //       'menuId': '$id', 'quantity': '$quantity' 
+                  //       };
+                  //       order.add(string);
+                  //     });
                       
-                      });
-                      // print(order);   
-                      setState(() {
-                        post ={
-                          'userId': user['id'],
-                           'order':order,
-                          'optionalAddress': 'Davao'
-                        };
-                        // print(post);
-                      });
-                      var res =await ApiCall().postData(post, '/putOrder');
-                      if(res.statusCode ==200){
-                      print("Success");
+                  //     });
+                  //     // print(order);   
+                  //     setState(() {
+                  //       post ={
+                  //         'userId': user['id'],
+                  //          'order':order,
+                  //         'optionalAddress': 'Davao'
+                  //       };
+                  //       // print(post);
+                  //     });
+                  //     var res =await ApiCall().postData(post, '/putOrder');
+                  //     if(res.statusCode ==200){
+                  //     print("Success");
                                    
-                      }
+                  //     }
                       
-                        
-                    //  BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
+                        final query ="Penongs Quirante II, Tagum, Davao del Norte";
+                        var addresses =await Geocoder.local.findAddressesFromQuery(query);
+                        var first =addresses.first;
+                        print("${first.featureName} ${first.coordinates}");
+                     
                     
 
                   },
