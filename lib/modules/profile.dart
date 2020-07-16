@@ -14,6 +14,7 @@ class Profile extends StatefulWidget with NavigationStates{
 
 class _Profile extends State<Profile> {
   var userData;
+  var constant;
   @override
   void initState() {
     _getUserInfo();
@@ -21,37 +22,7 @@ class _Profile extends State<Profile> {
     super.initState();
     
   }
-  
-void configSignal() async {
-
-      await OneSignal.shared.setLocationShared(true);
-      await OneSignal.shared.promptLocationPermission();
-
-      await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-
-
-      OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
-      OneSignal.shared.setNotificationReceivedHandler(( OSNotification notification) {
-       });
-       var status = await OneSignal.shared.getPermissionSubscriptionState();
-    String url = 'https://onesignal.com/api/v1/notifications';
-    var playerId = status.subscriptionStatus.userId;
-    var contents = {
-      "include_player_ids" : [playerId],
-      "contents":{"en":"Payat ko aya palag"},
-      "headings":{"en":"Jayce Mico Trial"},
-      "include_segments" : ["All"],
-      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-      };
-  Map<String,String> headers = {'Content-Type':'application/json',
-  'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
-    var repo = await http.post(
-    url,
-    headers: headers,
-    body: json.encode(contents)
-    );
-      print(repo.body);
-  }
+ 
 
 
 
@@ -63,6 +34,57 @@ void configSignal() async {
         userData = user;
       });
   }
+
+
+ 
+void configSignal() async {
+
+      await OneSignal.shared.setLocationShared(true);
+      await OneSignal.shared.promptLocationPermission();
+
+      await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+
+
+      OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+      OneSignal.shared.setNotificationReceivedHandler(( OSNotification notification) {
+
+          setState(() {
+             constant = notification.payload.additionalData;
+          });
+         
+          
+       });
+
+       var status = await OneSignal.shared.getPermissionSubscriptionState();
+    String url = 'https://onesignal.com/api/v1/notifications';
+    var playerId = status.subscriptionStatus.userId;
+    var contents = {
+      "include_player_ids" : [playerId],
+      "contents":{"en":"hehhehehehehhe"},
+      "headings":{"en":"Jayce Mico Trial"},
+      "include_segments" : ["All"],
+      "data":{
+          userData["name"]
+      },
+      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+      };
+  Map<String,String> headers = {'Content-Type':'application/json',
+  'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
+    var repo = await http.post(
+    url,
+    headers: headers,
+    body: json.encode(contents)
+    );
+      print(repo.body);
+
+
+    
+
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -265,6 +287,7 @@ void configSignal() async {
                           ),
                         ),
                          SizedBox(height: 10.0,),
+                        Text("The Message Is "+constant.toString()),
                         ],
                         ),
                       ),
