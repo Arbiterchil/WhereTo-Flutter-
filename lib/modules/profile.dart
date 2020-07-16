@@ -27,7 +27,6 @@ void configSignal() async {
       await OneSignal.shared.setLocationShared(true);
       await OneSignal.shared.promptLocationPermission();
 
-      2
       await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
 
 
