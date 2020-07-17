@@ -268,38 +268,14 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.1"
-<<<<<<< HEAD
-  geolocator:
-    dependency: "direct main"
-    description:
-      name: geolocator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.3.2+2"
-  glob:
-    dependency: transitive
-=======
   geodesy:
     dependency: "direct main"
->>>>>>> 1961d4c3d9dc6b357b4d937d8f88cc6199fb92f5
     description:
       name: geodesy
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.2.0"
-  google_api_availability:
-    dependency: transitive
-    description:
-      name: google_api_availability
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.4"
-  google_fonts:
-=======
     version: "0.3.2"
   geolocator:
->>>>>>> 1961d4c3d9dc6b357b4d937d8f88cc6199fb92f5
     dependency: "direct main"
     description:
       name: geolocator
