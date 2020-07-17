@@ -1,6 +1,9 @@
-import 'dart:convert';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:location/location.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '../bloc.Navigation_bloc/navigation_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
@@ -20,7 +23,7 @@ class _Profile extends State<Profile> {
     _getUserInfo();
     configSignal();
     super.initState();
-    
+    getUserLocation();
   }
  
 
@@ -36,38 +39,107 @@ class _Profile extends State<Profile> {
   }
 
 
+    getUserLocation() async {
+      var currentLocation;
+      LocationData myLocation;
+      String error;
+      Location location = new Location();
+      try {
+        myLocation = await location.getLocation();
+      } on PlatformException catch (e) {
+        if (e.code == 'PERMISSION_DENIED') {
+          error = 'please grant permission';
+          print(error);
+        }
+        if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
+          error = 'permission denied- please enable it from app settings';
+          print(error);
+        }
+        myLocation = null;
+      }
+      currentLocation = myLocation;
+      final coordinates = new Coordinates(
+          myLocation.latitude, myLocation.longitude);
+      var addresses = await Geocoder.local.findAddressesFromCoordinates(
+          coordinates);
+      var first = addresses.first;
+      print(' ${first.locality}, ${first.adminArea},${first.subLocality}, ${first.subAdminArea},${first.addressLine}, ${first.featureName},${first.thoroughfare}, ${first.subThoroughfare}');
+      print(currentLocation.toString());
+      return first;
+  
+  }
+
  
 void configSignal() async {
 
       await OneSignal.shared.setLocationShared(true);
       await OneSignal.shared.promptLocationPermission();
 
+      
+
       await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
 
-
       OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+     
+      
 
-      OneSignal.shared.setNotificationReceivedHandler(( OSNotification notification) {
+      OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
 
           setState(() {
-             constant = notification.payload.additionalData;
+            //  constant = notification.payload.additionalData;
           });
-         
+
+          
           
        });
+         
+
+          await OneSignal.shared.setSubscription(true);
+
+          var tags = await OneSignal.shared.getTags();
+          print(tags);
 
        var status = await OneSignal.shared.getPermissionSubscriptionState();
     String url = 'https://onesignal.com/api/v1/notifications';
     var playerId = status.subscriptionStatus.userId;
+
+
+//      await OneSignal.shared.postNotification(OSCreateNotification(
+//   playerIds: [playerId],
+//   content: "this is a test from OneSignal's Flutter SDK",
+//   heading: "Test Notification",
+//   buttons: [
+//     OSActionButton(text: "test1", id: "id1"),
+//     OSActionButton(text: "test2", id: "id2")
+//   ]
+// ));
+// "include_player_ids" : [playerId],
+//       // "include_segments" : ["Penongs","Subscribed Users"],
+//       // "excluded_segments":[],
+//       "contents":{"en":"hehhehehehehhe"},
+//       "headings":{"en":"Jayce Mico Trial"},
+//       // "data":{"test":userData["name"]},
+//       "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+
+ await OneSignal.shared.sendTags({"Test": "Value"});
     var contents = {
       "include_player_ids" : [playerId],
+      "include_segments" : ["Penongs Users"],
+      "excluded_segments":[],
       "contents":{"en":"hehhehehehehhe"},
       "headings":{"en":"Jayce Mico Trial"},
-      "include_segments" : ["All"],
-      "data":{
-
-      },
+      // "data":{"test":userData["name"]},
+      "filter":
+      [
+        {
+          "field": "tag","key":"Test","relation":"=","value":"Value"
+        },
+        {
+          "field": "location","radius":"50","lat":"7.4281606","long":"125.8067263"
+        }
+        ],
       "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+
       };
   Map<String,String> headers = {'Content-Type':'application/json',
   'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
@@ -287,7 +359,7 @@ void configSignal() async {
                           ),
                         ),
                          SizedBox(height: 10.0,),
-                        Text("The Message Is "+constant.toString()),
+                        // Text("The Message Is "+constant.toString()),
                         ],
                         ),
                       ),
