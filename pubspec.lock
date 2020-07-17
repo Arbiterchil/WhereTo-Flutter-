@@ -397,8 +397,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-<<<<<<< HEAD
-=======
   latlong:
     dependency: transitive
     description:
@@ -406,7 +404,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.1"
->>>>>>> 1961d4c3d9dc6b357b4d937d8f88cc6199fb92f5
   location:
     dependency: "direct main"
     description:
