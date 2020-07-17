@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.39.10"
+  ansicolor:
+    dependency: transitive
+    description:
+      name: ansicolor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   archive:
     dependency: transitive
     description:
@@ -155,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.12"
+  console_log_handler:
+    dependency: transitive
+    description:
+      name: console_log_handler
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.6"
   convert:
     dependency: transitive
     description:
@@ -237,13 +251,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  flutter_plugin_android_lifecycle:
-    dependency: transitive
-    description:
-      name: flutter_plugin_android_lifecycle
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.8"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -261,7 +268,38 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.1"
+<<<<<<< HEAD
   geolocator:
+    dependency: "direct main"
+    description:
+      name: geolocator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.3.2+2"
+  glob:
+    dependency: transitive
+=======
+  geodesy:
+    dependency: "direct main"
+>>>>>>> 1961d4c3d9dc6b357b4d937d8f88cc6199fb92f5
+    description:
+      name: geodesy
+      url: "https://pub.dartlang.org"
+    source: hosted
+<<<<<<< HEAD
+    version: "1.2.0"
+  google_api_availability:
+    dependency: transitive
+    description:
+      name: google_api_availability
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.4"
+  google_fonts:
+=======
+    version: "0.3.2"
+  geolocator:
+>>>>>>> 1961d4c3d9dc6b357b4d937d8f88cc6199fb92f5
     dependency: "direct main"
     description:
       name: geolocator
@@ -289,20 +327,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.10"
-  google_maps_flutter:
-    dependency: "direct main"
-    description:
-      name: google_maps_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.28+1"
-  google_maps_flutter_platform_interface:
-    dependency: transitive
-    description:
-      name: google_maps_flutter_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
   graphs:
     dependency: transitive
     description:
@@ -373,6 +397,16 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+<<<<<<< HEAD
+=======
+  latlong:
+    dependency: transitive
+    description:
+      name: latlong
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.1"
+>>>>>>> 1961d4c3d9dc6b357b4d937d8f88cc6199fb92f5
   location:
     dependency: "direct main"
     description:
@@ -763,6 +797,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  validate:
+    dependency: transitive
+    description:
+      name: validate
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.7.0"
   vector_math:
     dependency: transitive
     description:
@@ -814,4 +855,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.16.3 <2.0.0"
+  flutter: ">=1.16.0 <2.0.0"

@@ -50,10 +50,16 @@ dependencies:
   onesignal_flutter: ^2.6.0
   workmanager: ^0.2.3
   url_launcher: ^5.5.0
-  google_maps_flutter: ^0.5.28+1
   geocoder: ^0.2.1
+<<<<<<< HEAD
   location: ^3.0.2
   geolocator: ^5.3.2+2
+=======
+  geolocator: ^5.3.2+2
+  location: ^3.0.2
+  geodesy: ^0.3.2
+
+>>>>>>> 1961d4c3d9dc6b357b4d937d8f88cc6199fb92f5
 dev_dependencies:
   flutter_test:
     sdk: flutter

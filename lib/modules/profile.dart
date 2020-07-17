@@ -72,6 +72,9 @@ class _Profile extends State<Profile> {
  
 void configSignal() async {
 
+       
+void configSignal() async {
+
       await OneSignal.shared.setLocationShared(true);
       await OneSignal.shared.promptLocationPermission();
 
@@ -92,9 +95,9 @@ void configSignal() async {
           
           
        });
-         
+          
 
-          await OneSignal.shared.setSubscription(true);
+        await OneSignal.shared.setSubscription(true);
 
           var tags = await OneSignal.shared.getTags();
           print(tags);
@@ -149,6 +152,9 @@ void configSignal() async {
     body: json.encode(contents)
     );
       print(repo.body);
+
+
+  }
 
 
     
