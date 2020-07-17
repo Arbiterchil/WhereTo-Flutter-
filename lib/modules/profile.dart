@@ -116,7 +116,12 @@ void configSignal() async {
       "contents":{"en":"hehhehehehehhe"},
       "headings":{"en":"Jayce Mico Trial"},
       // "data":{"test":userData["name"]},
-     
+     "filter":
+      [
+        {"field": "location","radius":"50","lat":"7.4281606","long":"125.8067263"},
+        {"operator": "AND"},
+        {"field": "tag","key":"Test","relation":"=","value":"Value"}
+      ],
       "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
 
       };
@@ -136,9 +141,9 @@ void configSignal() async {
     };
 
     var repo = await http.post(
-    createSegment,
+    url,
     headers: headers,
-    body: json.encode(segment)
+    body: json.encode(contents)
     );
       print(repo.body);
 
