@@ -40,33 +40,35 @@ class _Profile extends State<Profile> {
 
 
     getUserLocation() async {
-      var currentLocation;
-      LocationData myLocation;
-      String error;
-      Location location = new Location();
-      try {
-        myLocation = await location.getLocation();
-      } on PlatformException catch (e) {
-        if (e.code == 'PERMISSION_DENIED') {
-          error = 'please grant permission';
-          print(error);
-        }
-        if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
-          error = 'permission denied- please enable it from app settings';
-          print(error);
-        }
-        myLocation = null;
+    //call this async method from whereever you need
+    LocationData currentLocation;
+    LocationData myLocation;
+    String error;
+    Location location = new Location();
+    try {
+      myLocation = await location.getLocation();
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        error = 'please grant permission';
+        print(error);
       }
-      currentLocation = myLocation;
-      final coordinates = new Coordinates(
-          myLocation.latitude, myLocation.longitude);
-      var addresses = await Geocoder.local.findAddressesFromCoordinates(
-          coordinates);
-      var first = addresses.first;
-      print(' ${first.locality}, ${first.adminArea},${first.subLocality}, ${first.subAdminArea},${first.addressLine}, ${first.featureName},${first.thoroughfare}, ${first.subThoroughfare}');
-      print(currentLocation.toString());
-      return first;
-  
+      if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
+        error = 'permission denied- please enable it from app settings';
+        print(error);
+      }
+      myLocation = null;
+    }
+    currentLocation = myLocation;
+    final coordinates =
+        new Coordinates(myLocation.latitude, myLocation.longitude);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var first = addresses.first;
+    
+    print(
+        ' ${first.locality}, ${first.adminArea},${first.subLocality}, ${first.subAdminArea},${first.addressLine}, ${first.featureName},${first.thoroughfare}, ${first.subThoroughfare}');
+    print("${currentLocation.latitude},${currentLocation.longitude} ");
+    return first;
   }
 
  

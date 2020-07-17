@@ -1,5 +1,6 @@
 import 'dart:convert';
 // import 'package:geodesy/geodesy.dart';
+import 'package:WhereTo/Transaction/payload.dart';
 import 'package:http/http.dart' as http;
 import 'package:WhereTo/Transaction/orderList.dart';
 import 'package:WhereTo/Transaction/orders.dart';
@@ -26,11 +27,12 @@ class _TransactionListState extends State<TransactionList> {
   @override
   void setState(fn) {
     super.setState(fn);
+    getUserLocation();
   }
 
   getUserLocation() async {
     //call this async method from whereever you need
-    var currentLocation;
+    LocationData currentLocation;
     LocationData myLocation;
     String error;
     Location location = new Location();
@@ -53,14 +55,11 @@ class _TransactionListState extends State<TransactionList> {
     var addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
+
     print(
         ' ${first.locality}, ${first.adminArea},${first.subLocality}, ${first.subAdminArea},${first.addressLine}, ${first.featureName},${first.thoroughfare}, ${first.subThoroughfare}');
-    print(currentLocation.toString());
+    print("${currentLocation.latitude},${currentLocation.longitude} ");
     return first;
-  }
-
-  getNotif() async{
-
   }
 
   @override
@@ -275,11 +274,18 @@ class _TransactionListState extends State<TransactionList> {
                     //     print("Success");
 
                     //     }
-
-                    // final query ="Penongs Quirante II, Tagum, Davao del Norte";
-                    // var addresses =await Geocoder.local.findAddressesFromQuery(query);
+                    final street = "Penongs Quirante II";
+                    // final query ="Penongs $street, Tagum, Davao del Norte";
+                    // final coordinates4 =new Coordinates(7.4281297, 125.8066161);
+                    // final coordinates5 =new Coordinates(7.4282444, 125.8067206);
+                    // final coordinates =new Coordinates(7.4492403,125.81070700000001);
+                    // var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
                     // var first =addresses.first;
-                    // print("${first.featureName} ${first.coordinates}");
+                    // print("${first.featureName}, ${first.adminArea} ${first.locality}, ${first.subAdminArea}");
+                    // var queryaddresses =await Geocoder.local.findAddressesFromQuery(query);
+                    // var second =queryaddresses.first;
+                    sentNotif(street);
+
                     // await OneSignal.shared.setLocationShared(true);
                     // await OneSignal.shared.promptLocationPermission();
 
@@ -310,7 +316,6 @@ class _TransactionListState extends State<TransactionList> {
                     // var repo = await http.post(url,
                     //     headers: headers, body: json.encode(contents));
                     // print(repo.body);
-                    
                   },
                 ),
               ),
@@ -323,5 +328,50 @@ class _TransactionListState extends State<TransactionList> {
         );
       }),
     );
+  }
+
+  sentNotif(String restoStreet) async {
+    await OneSignal.shared.setLocationShared(true);
+    await OneSignal.shared.promptLocationPermission();
+
+    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    await OneSignal.shared.setSubscription(true);
+   
+
+    var tags = await OneSignal.shared.getTags();
+    print(tags);
+    await OneSignal.shared.deleteTags(["Penongs Quirante II", "TRUE"]);
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    String url = 'https://onesignal.com/api/v1/notifications';
+    var playerId = status.subscriptionStatus.userId;
+
+    await OneSignal.shared.sendTags({"$restoStreet": "TRUE"});
+    var contents = {
+      "include_player_ids": [playerId],
+      "include_segments": ["Penongs Quirante II"],
+      "excluded_segments": [],
+      "contents": {"en": "New Order"},
+      "headings": {"en": "Penongs Building Quirante II"},
+      // "data":{"test":userData["name"]},
+      "filter": [
+        {
+          "field": "tag",
+          "key": "$restoStreet",
+          "relation": "=",
+          "value": "TRUE"
+        },
+      ],
+      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+    };
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+    };
+    var repo =
+        await http.post(url, headers: headers, body: json.encode(contents));
+    print(repo.body);
   }
 }
