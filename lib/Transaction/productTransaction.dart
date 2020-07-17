@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:geodesy/geodesy.dart';
+// import 'package:geodesy/geodesy.dart';
 import 'package:http/http.dart' as http;
 import 'package:WhereTo/Transaction/orderList.dart';
 import 'package:WhereTo/Transaction/orders.dart';
@@ -235,12 +235,12 @@ class _TransactionListState extends State<TransactionList> {
                   ),
                   color: Colors.blue,
                   onTap: (startLoading, stopLoading, btnState) async {
-                    Geodesy geodesy = Geodesy();
-                    Position _currentPosition;
-                    final point =LatLng(7.4281587, 125.8067275);
-                    final c =<LatLng>[];
-                    final destination = geodesy.pointsInRange(point, c, 100);
-                    print("Points: ${destination} ${destination}");
+                    // Geodesy geodesy = Geodesy();
+                    // Position _currentPosition;
+                    // final point =LatLng(7.4281587, 125.8067275);
+                    // final c =<LatLng>[];
+                    // final destination = geodesy.pointsInRange(point, c, 100);
+                    // print("Points: ${destination} ${destination}");
                     // var id;
                     // var quantity;
                     // Map<String, dynamic> string;
