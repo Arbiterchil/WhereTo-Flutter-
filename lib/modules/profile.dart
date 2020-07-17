@@ -70,10 +70,11 @@ class _Profile extends State<Profile> {
   }
 
  
-void configSignal() async {
 
        
 void configSignal() async {
+        
+
 
       await OneSignal.shared.setLocationShared(true);
       await OneSignal.shared.promptLocationPermission();
@@ -104,34 +105,40 @@ void configSignal() async {
 
        var status = await OneSignal.shared.getPermissionSubscriptionState();
     String url = 'https://onesignal.com/api/v1/notifications';
+    String createSegment = "https://onesignal.com/api/v1/apps/:2348f522-f77b-4be6-8eae-7c634e4b96b2/segments";
     var playerId = status.subscriptionStatus.userId;
 
  await OneSignal.shared.sendTags({"Test": "Value"});
     var contents = {
       "include_player_ids" : [playerId],
-      "include_segments" : ["Penongs Users"],
+      "include_segments" : ["Jayce Mico Trials"],
       "excluded_segments":[],
       "contents":{"en":"hehhehehehehhe"},
       "headings":{"en":"Jayce Mico Trial"},
       // "data":{"test":userData["name"]},
-      "filter":
-      [
-        {
-          "field": "tag","key":"Test","relation":"=","value":"Value"
-        },
-        {
-          "field": "location","radius":"50","lat":"7.4281606","long":"125.8067263"
-        }
-        ],
+     
       "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
 
       };
   Map<String,String> headers = {'Content-Type':'application/json',
   'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
+
+    var segment =
+    {
+      "name": "Jayce Mico Trials",
+      "filter":
+      [
+        {"field": "location","radius":"50","lat":"7.4281606","long":"125.8067263"},
+        {"operator": "AND"},
+        {"field": "tag","key":"Test","relation":"=","value":"Value"}
+      ],
+
+    };
+
     var repo = await http.post(
-    url,
+    createSegment,
     headers: headers,
-    body: json.encode(contents)
+    body: json.encode(segment)
     );
       print(repo.body);
 
@@ -142,7 +149,7 @@ void configSignal() async {
     
 
 
-  }
+  
 
 
   @override
