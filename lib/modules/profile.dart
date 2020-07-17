@@ -106,24 +106,6 @@ void configSignal() async {
     String url = 'https://onesignal.com/api/v1/notifications';
     var playerId = status.subscriptionStatus.userId;
 
-
-//      await OneSignal.shared.postNotification(OSCreateNotification(
-//   playerIds: [playerId],
-//   content: "this is a test from OneSignal's Flutter SDK",
-//   heading: "Test Notification",
-//   buttons: [
-//     OSActionButton(text: "test1", id: "id1"),
-//     OSActionButton(text: "test2", id: "id2")
-//   ]
-// ));
-// "include_player_ids" : [playerId],
-//       // "include_segments" : ["Penongs","Subscribed Users"],
-//       // "excluded_segments":[],
-//       "contents":{"en":"hehhehehehehhe"},
-//       "headings":{"en":"Jayce Mico Trial"},
-//       // "data":{"test":userData["name"]},
-//       "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-
  await OneSignal.shared.sendTags({"Test": "Value"});
     var contents = {
       "include_player_ids" : [playerId],
