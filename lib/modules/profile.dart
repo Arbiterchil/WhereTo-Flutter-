@@ -130,18 +130,6 @@ void configSignal() async {
   Map<String,String> headers = {'Content-Type':'application/json',
   'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
 
-    var segment =
-    {
-      "name": "Jayce Mico Trials",
-      "filter":
-      [
-        {"field": "location","radius":"50","lat":"7.4281606","long":"125.8067263"},
-        {"operator": "AND"},
-        {"field": "tag","key":"Test","relation":"=","value":"Value"}
-      ],
-
-    };
-
     var repo = await http.post(
     url,
     headers: headers,
