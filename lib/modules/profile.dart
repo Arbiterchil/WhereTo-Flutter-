@@ -117,7 +117,6 @@ void configSignal() async {
       "excluded_segments":[],
       "contents":{"en":"hehhehehehehhe"},
       "headings":{"en":"Jayce Mico Trial"},
-      // "data":{"test":userData["name"]},
      "filter":
       [
         {"field": "location","radius":"50","lat":"7.4281606","long":"125.8067263"},
