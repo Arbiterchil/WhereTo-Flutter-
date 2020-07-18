@@ -109,36 +109,39 @@ void configSignal() async {
     String url = 'https://onesignal.com/api/v1/notifications';
     String createSegment = "https://onesignal.com/api/v1/apps/:2348f522-f77b-4be6-8eae-7c634e4b96b2/segments";
     var playerId = status.subscriptionStatus.userId;
+      // var mico = 
+      await OneSignal.shared.sendTags({"Penongs Quirante II": "TRUE"});
+      // var chil =  await OneSignal.shared.sendTags({"Test": "Value"});
+      // await OneSignal.shared.deleteTags(["Penongs Quirante II","TRUE","Test","Value"]);
 
- await OneSignal.shared.sendTags({"Penongs Quirante II": "TRUE"});
-    // var contents = {
-    //   "include_player_ids" : [playerId],
-    //   "include_segments" : ["Jayce Mico Trials"],
-    //   "excluded_segments":[],
-    //   "contents":{"en":"Dis is a Test"},
-    //   "headings":{"en":"Jayce Mico Trial"},
-    //  "filter":
-    //   [
-    //     // {"field": "location","radius":"50","lat":"7.4281606","long":"125.8067263"},
-    //     // {"operator": "AND"},
-    //     {"field": "tag","key":"Test","relation":"=","value":"Value"}
-    //   ],
-    //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+    var contents = {
+      "include_player_ids" : [playerId],
+      // "include_segments" : ["Jayce Mico Trials"],
+      "excluded_segments":[],
+      "contents":{"en":"Dis is a Test"},
+      "headings":{"en":"Jayce Mico Trial"},
+     "filter":
+      [
+        // {"field": "location","radius":"50","lat":"7.4281606","long":"125.8067263"},
+        // {"operator": "AND"},
+        {"field": "tag","key":"Test","relation":"=","value":"Value"}
+      ],
+      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
 
-    //   };
-     var contents = {
-                      "include_player_ids": [playerId],
-                      "include_segments": ["Penongs Quirante II"],
-                      "excluded_segments": [],
-                      "contents": {"en": "Send Dis Shit to me."},
-                      "headings": {"en": "Jayce Mico Trial"},
-                      "filter":[
-                        {"field": 
-                        "tag", "key":"Penongs Quirante II",
-                         "relation":"=",
-                         "value":"TRUE"}],
-                      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-                    };
+      };
+    //  var contents = {
+    //                   "include_player_ids": [playerId],
+    //                   "include_segments": ["Penongs Quirante II"],
+    //                   "excluded_segments": [],
+    //                   "contents": {"en": "Send Dis Shit to me."},
+    //                   "headings": {"en": "Jayce Mico Trial"},
+    //                   "filter":[
+    //                     {"field": 
+    //                     "tag", "key":"Penongs Quirante II",
+    //                      "relation":"=",
+    //                      "value":"TRUE"}],
+    //                   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+    //                 };
                    
   Map<String,String> headers = {'Content-Type':'application/json',
   'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
