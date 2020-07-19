@@ -8,7 +8,13 @@ import 'package:flutter/material.dart';
 
 
 
-class RestDel extends StatefulWidget with NavigationStates{
+// class RestDel extends StatefulWidget with NavigationStates{
+
+//   @override
+// _RestDel createState() => _RestDel();
+// }
+
+class RestDel extends StatefulWidget{
 
   @override
 _RestDel createState() => _RestDel();

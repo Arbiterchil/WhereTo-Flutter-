@@ -1,3 +1,5 @@
+import 'package:WhereTo/modules/profile.dart';
+
 import '../bloc.Navigation_bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -8,11 +10,15 @@ TextEditingController address = TextEditingController();
 TextEditingController contactNumber = TextEditingController();
 TextEditingController passwordController = TextEditingController();
 
-class Edit extends StatefulWidget with NavigationStates{
+// class Edit extends StatefulWidget with NavigationStates{
+//   @override
+//   _EditState createState() => _EditState();
+// }
+
+class Edit extends StatefulWidget {
   @override
   _EditState createState() => _EditState();
 }
-
 class _EditState extends State<Edit> {
   @override
   Widget build(BuildContext context) {
@@ -166,7 +172,7 @@ class _EditState extends State<Edit> {
                           Navigator.push(
                               context,
                               new MaterialPageRoute(
-                                  builder: (context) => Home()));
+                                  builder: (context) => Profile()));
                         },
                         child: Text(
                           'Home',

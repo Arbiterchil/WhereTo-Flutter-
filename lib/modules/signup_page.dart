@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/login_page.dart';
+import 'package:WhereTo/modules/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,20 +10,42 @@ import '../styletext.dart';
 import 'homepage.dart';
 
 
+class MyChoice{
+
+    String pickchoice;
+    int numberpick;
+    MyChoice({this.pickchoice,this.numberpick});
+}
+
+
+
 class SignupPage extends StatefulWidget{
   @override
   _SignupPageState createState() => _SignupPageState();
 }
 
+ 
+
 class _SignupPageState extends State<SignupPage>{
   
+    
+    String default_pick = "Customer";
+    int default_number = 0;
+
+    List<MyChoice> picks = [
+      MyChoice(numberpick: 0,pickchoice: "Customer"),
+      MyChoice(numberpick: 1,pickchoice: "Rider")
+    ];
+
+
+
   final formkey = GlobalKey<FormState>();
     final TextEditingController fulname  = TextEditingController();
      TextEditingController ownNumber = TextEditingController();
       TextEditingController ownAddress =  TextEditingController();
       TextEditingController ownpass = TextEditingController();
       TextEditingController ownconpass =TextEditingController();
-
+      
         bool loading = false;
 
         phoneValidate(String val){
@@ -211,7 +234,37 @@ class _SignupPageState extends State<SignupPage>{
                 ),
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(height: 10.0,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 115.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: picks.map((e) => RadioListTile(
+                  title: Text('${e.pickchoice}',style:TextStyle(
+                    color: Colors.white,
+                  fontFamily: 'OpenSans',
+                  fontSize: 14.0
+                  ) ,),
+                  groupValue: default_number,
+                  value: e.numberpick,
+                  activeColor: Colors.white,
+                  onChanged: (val){
+                    setState(() {
+                      default_pick  = e.pickchoice;
+                      default_number = e.numberpick;
+                    });
+                  },
+                )).toList(),
+              ),
+            ),
+            // Text('$default_number',
+            //    style: TextStyle(
+            //       color: Colors.white,
+            //       fontFamily: 'OpenSans',
+            //       fontSize: 18.0
+            // ),),
+           
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -247,7 +300,7 @@ class _SignupPageState extends State<SignupPage>{
  Widget _botDownSignIn(){
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                                         return LoginPage();
                                       }));
       },
@@ -275,8 +328,6 @@ class _SignupPageState extends State<SignupPage>{
       ),
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -309,6 +360,7 @@ class _SignupPageState extends State<SignupPage>{
                           SizedBox(height: 25.0,),
                           _formRegister(context),
                           SizedBox(height: 25.0,),
+
                           _botDownSignIn(),
                        ],
                      ),
@@ -343,7 +395,7 @@ void _signingIn() async {
        Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
-            builder: (context) => Home()));
+            builder: (context) => Profile()));
     }else{
       _showDial();
       throw Exception('Failed to Save');

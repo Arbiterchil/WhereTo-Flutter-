@@ -14,6 +14,25 @@ Color white = Colors.white70.withOpacity(0.050);
 
 
 
+BoxDecoration eBox1 = BoxDecoration(
+  borderRadius: BorderRadius.all(Radius.circular(10)),
+  color: Colors.grey[300],
+  boxShadow: [
+    BoxShadow(
+      color: Colors.grey,
+      offset: Offset(4.0, 4.0),
+      blurRadius: 15.0,
+      spreadRadius: 1.0,
+    ),
+    BoxShadow(
+     color: Colors.white,
+      offset: Offset(-4.0, -4.0),
+      blurRadius: 15.0,
+      spreadRadius: 1.0,
+    ),
+  ],
+);
+
 BoxDecoration eBox = BoxDecoration(
   borderRadius: BorderRadius.circular(15),
   color: b1,
@@ -24,10 +43,23 @@ BoxDecoration eBox = BoxDecoration(
       blurRadius: 10
     ),
     BoxShadow(
-      color: b0,
+      color: Colors.blue[500],
       offset: Offset(-10, -10),
       blurRadius: 10
     )
+  ],
+);
+BoxDecoration eInvertBox = BoxDecoration(
+  borderRadius: BorderRadius.circular(15),
+  color: b1,
+  boxShadow: [
+    BoxShadow(
+      color: sb3,
+      offset: Offset(4, 4),
+      blurRadius: 4,
+      spreadRadius: -4
+    ),
+    
   ],
 );
 BoxDecoration eCBox = BoxDecoration(
@@ -80,13 +112,15 @@ final eBoxDecorationStyle = BoxDecoration(
   boxShadow: [
     BoxShadow(
       color: sb3,
-      offset: Offset(10, 10),
-      blurRadius: 10
+     offset: Offset(4.0, 4.0),
+      blurRadius: 15.0,
+      spreadRadius: 1.0,
     ),
     BoxShadow(
       color: white,
-      offset: Offset(-10,-10),
-      blurRadius: 10
+     offset: Offset(-4.0, -4.0),
+      blurRadius: 15.0,
+      spreadRadius: 1.0,
     )
   ],
 );

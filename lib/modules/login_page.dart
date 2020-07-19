@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/modules/signup_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,6 @@ import 'homepage.dart';
 
   }
 
-  
 
 class _LoginPageState extends State<LoginPage>{
 
@@ -203,7 +203,7 @@ class _LoginPageState extends State<LoginPage>{
   Widget _botDownSignUp(){
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
         return SignupPage();
         }));
       },
@@ -318,7 +318,7 @@ void _login() async{
       Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
-            builder: (context) => Home()));
+            builder: (context) => Profile()));
       print('success Login');
     }else{
       _showDial();
