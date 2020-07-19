@@ -1,15 +1,11 @@
 import 'dart:convert';
-
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/api_restaurant_bloc/bloc.provider.dart';
-import 'package:WhereTo/api_restaurant_bloc/computation.dart';
-import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../styletext.dart';
 import 'homepage.dart';
 
 
@@ -27,115 +23,137 @@ class _SignupPageState extends State<SignupPage>{
       TextEditingController ownpass = TextEditingController();
       TextEditingController ownconpass =TextEditingController();
 
-         bool loading = false;    
+        bool loading = false;
+
+        phoneValidate(String val){
+
+          Pattern pattern = r'^([+0]9)?[0-9]{10,11}$';
+          RegExp regExp = new RegExp(pattern);
+          if (val.length == 0 ){
+            return 'Please enter your number';
+          }else if (val.length < 11){
+            return 'Mobile Number Consist of 11 Digits';
+          }
+          else if(!regExp.hasMatch(val)){
+            return 'Enter A Valid Contact Number';
+          }
+          else{
+            return null;
+          }
+
+    }   
 
 
-      
+      Widget _formRegister(BuildContext context){
 
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.only(left: 16,right: 16),
-          child:  SingleChildScrollView(
-            child:  Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 50,),
-                  Text("Sign Up With Us,",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 6,),
-                  Text("Create an Account to get started!",style: TextStyle(fontSize: 20,color: Colors.grey.shade400),),
-                ],
+            return Form(
+              key: formkey,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  textDirection: TextDirection.ltr,
+                  children: <Widget>[
+                     Text('Full Name',
+                    style: eLabelStyle,
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                controller: fulname,
+                validator: (val) => val.isEmpty ? ' Please Put Your Full Name' : null,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'OpenSans',
                 ),
-               
-                Form(
-                  key: formkey,
-                  child:
-                  Column(
-                children: <Widget>[
-                  SizedBox(height: 70,),
-
-                  TextFormField(
-                    validator: (val){
-                      if(val.isEmpty){
-                        return "Empty Field";
-                      }
-                      return null;
-                    },
-                    controller: fulname,
-                    decoration: InputDecoration(
-                      labelText: "Full Name",
-                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400,fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    ),
-                    
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: Colors.white,
                   ),
-                  
-                  SizedBox(height: 16,),
-
-                   TextFormField(
-                     controller: ownAddress,
-                     validator: (val){
-                        if(val.isEmpty){
-                          return "Empty";
-                        }
-                        return null;
-                     },
-                    decoration: InputDecoration(
-                      labelText: "Address",
-                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400,fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  hintText: 'Full Name',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+                SizedBox(height: 15.0,),
+                 Text('Address',
+                    style: eLabelStyle,
                     ),
+                    SizedBox(height: 10.0,),
+                    Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                controller: ownAddress,
+                validator: (val) => val.isEmpty ? ' Please Put Your Address' : null,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'OpenSans',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.my_location,
+                    color: Colors.white,
                   ),
-                  SizedBox(height: 16,),
-
-                  TextFormField(
-                    controller: ownpass,
-                    validator: (input) => ownpass.text.length < 8 ?  'Password to Short' : null,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400,fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  hintText: 'Address',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+             SizedBox(height: 15.0,),
+                 Text('Password',
+                    style: eLabelStyle,
                     ),
+                    SizedBox(height: 10.0,),
+                    Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                controller: ownpass,
+                validator: (input) => ownpass.text.length < 8 ?  'Password to Short' : null,
+                obscureText: true,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'OpenSans',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.white,
                   ),
-                  SizedBox(height: 30,),
-
-                  TextFormField(
-                    controller: ownconpass,
-                    validator: (val){
+                  hintText: '********',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+            SizedBox(height: 15.0,),
+                 Text('Confirm Password',
+                    style: eLabelStyle,
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                controller: ownconpass,
+                validator:(val){
                       if(val.isEmpty){
                         return "Empty";
                       }if(val != ownpass.text){
@@ -143,112 +161,160 @@ class _SignupPageState extends State<SignupPage>{
                       }
                       return null;
                     },
-                    onSaved: (val) => ownconpass.text = val,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "Confirm Password",
-                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400,fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    ),
+                obscureText: true,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'OpenSans',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.white,
                   ),
-                  SizedBox(height: 30,),
-
-                  TextFormField(
-                    controller: ownNumber,
-                    keyboardType: TextInputType.number,
-                    validator: (val) => ownNumber.text.length < 11 ? 'Mobile Number Consist of 11 Digits' : null,
+                  hintText: '********',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+             SizedBox(height: 15.0,),
+                 Text('Contact Number',
+                    style: eLabelStyle,
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+              keyboardType: TextInputType.number,
+                controller: ownNumber,
+                validator: (val)=> phoneValidate(ownNumber.text = val),
                     onSaved: (val) => ownNumber.text = val,
-                    decoration: InputDecoration(
-                      
-                      labelText: "Contact Number",
-                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400,fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-        
-                      ),
                     
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    ),
+                
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'OpenSans',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.phone_android,
+                    color: Colors.white,
                   ),
-                  SizedBox(height: 16,),
-
-                  Container(
-                    height: 50,
-                    child: FlatButton(
-                      
-                      onPressed:  _signingIn,
-
-                      padding: EdgeInsets.all(0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Ink(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                             Color(0xffffb400),
-                              Color(0xffff5f6d),
-                              Color(0xffffb400),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          constraints: BoxConstraints(minHeight: 50,maxWidth: double.infinity),
-                          child: Text( 
-                            loading ? 'Creating Account' : "Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,),
-                        ),
-                      ),
-                    ),
+                  hintText: '09**********',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+            SizedBox(height: 20.0,),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(vertical: 25.0),
+                child: RaisedButton(
+                  onPressed: (){
+                    _signingIn();
+                  },
+                  elevation: 5.0,
+                  padding: EdgeInsets.all(8.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
-                  SizedBox(height: 16,),
-                ],
+                  color: Colors.white,
+                  child: Text(  loading ? 'Loading....' : 'Register',
+                  style: TextStyle(
+                    color: Color(0xFF527DAA),
+                    letterSpacing: 1.5,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),),
+                  ),
               ),
-              ),
-              
-             
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: 150,),
-                    Text("I'm already a member.",style:
-                     TextStyle(fontWeight: FontWeight.bold),),
-                    GestureDetector(
-                     onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context){
-                          return LoginPage();
-                        }));
-                      },
-                      child: Text("Sign in.",
-                      style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
-                    )
+
+
                   ],
                 ),
-              )
-            ],
-          ),
-          ),
+              ),
+            );
+
+
+        }  
+ Widget _botDownSignIn(){
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+                                        return LoginPage();
+                                      }));
+      },
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: 'Have an Account? ',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            TextSpan(
+              text: 'Sign In',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+     body: Container(
+        height: MediaQuery.of(context).size.height,
+         width: MediaQuery.of(context).size.width,
+         decoration: BoxDecoration(
+                    color: Color(0xFF398AE5),
+                  ),
+                  child: SafeArea(
+                    child: SingleChildScrollView(
+                       physics: AlwaysScrollableScrollPhysics(),
+                     padding: EdgeInsets.symmetric(
+                       horizontal: 40.0,
+                       vertical: 80.0,
+                     ),
+                     child: Column(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: <Widget>[
+                          Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 25.0,),
+                          _formRegister(context),
+                          SizedBox(height: 25.0,),
+                          _botDownSignIn(),
+                       ],
+                     ),
+                    ),
+                    ),
+     ),
     );
   }
 

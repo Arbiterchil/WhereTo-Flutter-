@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:WhereTo/path.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
-
-
 }
 class _SplashScreenState extends State<SplashScreen> {
     @override
@@ -16,7 +16,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     startTime();
   }
-
   startTime() async{
     var duration = Duration(seconds: 4);
     return Timer(duration,route);
@@ -31,42 +30,31 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: Colors.blueAccent,
-          // image: DecorationImage(
-          //   image: AssetImage("asset/img/bgback.png"),
-          //   fit: BoxFit.cover,
-          // ),
+          color:  
+          Color(0xFF398AE5)
         ),
-        child: Column(
+        child:  Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              width: 200.0,
-              height: 200.0,
-              child: Image.asset("asset/img/nc.png"),
+            
+            Align(
+                alignment: Alignment.center,
+                  child: Container(
+                    width: 200.0,
+                    height: 200.0,
+                    padding: EdgeInsets.all(20.0),
+                    decoration: eCBox,
+                    child: Container(
+                    child: Image.asset("asset/img/logo.png"),
             ),
-            SizedBox(height: 30.0,),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0,), 
-               ),
-            Text("Where to Muertos",
-              style: TextStyle(
-                fontSize: 28.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0
-                ),
-                 ),
-                 CircularProgressIndicator(
-                   backgroundColor: Colors.white,
-                   strokeWidth: 3.0,
-                 ),  
+                  ),
+            ),
           ],
         ),
       ),
     );
   }
+
+  
+
 }

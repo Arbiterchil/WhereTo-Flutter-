@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+
+Color b0 =  Color(0xFF73AEF5);
+Color b1 = Color(0xFF398AE5);
+Color b2 = Color(0xFF478DE0);
+Color b3 = Color(0xFF61A4F1);
+Color b1s = Color(0xFF398AE5).withOpacity(0.075);
+Color b2s = Color(0xFF478DE0).withOpacity(0.65);
+Color b2s1 = Color(0xFF478DE0).withOpacity(.45);
+Color sb3 = Colors.blue.shade700;
+Color sb4 = Colors.blueAccent;
+Color white = Colors.white70.withOpacity(0.050);
+
+
+
+
+BoxDecoration eBox = BoxDecoration(
+  borderRadius: BorderRadius.circular(15),
+  color: b1,
+  boxShadow: [
+    BoxShadow(
+      color: sb3,
+      offset: Offset(10, 10),
+      blurRadius: 10
+    ),
+    BoxShadow(
+      color: b0,
+      offset: Offset(-10, -10),
+      blurRadius: 10
+    )
+  ],
+);
+BoxDecoration eCBox = BoxDecoration(
+  borderRadius: BorderRadius.circular(110),
+  color: b1,
+  boxShadow: [
+    BoxShadow(
+      color: sb3,
+      offset: Offset(10, 10),
+      blurRadius: 10
+    ),
+    BoxShadow(
+      color: white,
+      offset: Offset(-10, -10),
+      blurRadius: 10
+    )
+  ],
+);
+
+
+BoxDecoration eMBox = BoxDecoration(
+  borderRadius: BorderRadius.circular(15),
+  color: b1,
+  boxShadow: [
+    BoxShadow(
+      color: b2,
+      offset: Offset(-10, -10),
+      blurRadius: 10,
+      spreadRadius: -3,
+    )
+  ],
+);
+
+BoxDecoration eMBoxActive = eMBox.copyWith(color: b2s);
+
+final eHintStyle = TextStyle(
+  color: Colors.white54,
+  fontFamily: 'OpenSans',
+);
+
+final eLabelStyle = TextStyle(
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontFamily: 'OpenSans',
+);
+
+final eBoxDecorationStyle = BoxDecoration(
+  color:  Color(0xFF398AE5),
+  borderRadius: BorderRadius.circular(10.0),
+  boxShadow: [
+    BoxShadow(
+      color: sb3,
+      offset: Offset(10, 10),
+      blurRadius: 10
+    ),
+    BoxShadow(
+      color: white,
+      offset: Offset(-10,-10),
+      blurRadius: 10
+    )
+  ],
+);

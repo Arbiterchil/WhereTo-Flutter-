@@ -21,9 +21,9 @@ class _Profile extends State<Profile> {
   @override
   void initState() {
     _getUserInfo();
-    configSignal();
+    // configSignal();
     super.initState();
-    getUserLocation();
+    // getUserLocation();
   }
  
 

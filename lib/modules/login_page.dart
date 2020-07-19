@@ -1,14 +1,11 @@
 import 'dart:convert';
-
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/api_restaurant_bloc/computation.dart';
-import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/modules/signup_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../styletext.dart';
 import 'homepage.dart';
 
 
@@ -22,207 +19,294 @@ import 'homepage.dart';
 
 class _LoginPageState extends State<LoginPage>{
 
+  bool isLoading = false;
     final key = GlobalKey<FormState>();
      TextEditingController contactNumber =  TextEditingController();
       TextEditingController passwordController =  TextEditingController();
+
+      phoneValidate(String val){
+
+          Pattern pattern = r'^([+0]9)?[0-9]{10,11}$';
+          RegExp regExp = new RegExp(pattern);
+          if (val.length == 0 ){
+            return 'Please enter your number';
+          }
+          else if(!regExp.hasMatch(val)){
+            return 'Enter A Valid Contact Number';
+          }
+          else{
+            return null;
+          }
+
+    }
+    Widget _formGet(BuildContext context){
+      return Form(
+        key: key,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          textDirection: TextDirection.ltr,
+          children: <Widget>[
+           Text('Contact Number',
+            style: eLabelStyle,
+            ),
+            SizedBox(height: 10.0,),
+             Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                controller: contactNumber,
+                validator: (val){
+                  return phoneValidate(val);
+                },
+                keyboardType: TextInputType.number,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'OpenSans',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.phone_android,
+                    color: Colors.white,
+                  ),
+                  hintText: 'Contact Number',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+            SizedBox(height: 30.0,),
+             Text('Password',
+            style: eLabelStyle,
+            ),
+            SizedBox(height: 10.0,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                controller: passwordController,
+                validator: (val) => val.isEmpty ? ' Please Put Your Password' : null,
+                obscureText: true,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'OpenSans',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.white,
+                  ),
+                  hintText: '******',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+            SizedBox(height: 10.0,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerRight,
+              child: FlatButton(
+                onPressed: (){},
+                padding: EdgeInsets.only(right: 0.0),
+                 child: Text('Forget Password',
+                 style: eLabelStyle,
+                 ),
+                 ),
+            ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(vertical: 25.0),
+                child: RaisedButton(
+                  onPressed: (){
+                    _login();
+                  },
+                  elevation: 5.0,
+                  padding: EdgeInsets.all(8.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  color: Colors.white,
+                  child: Text(  isLoading ? 'Loading....' : 'LOGIN',
+                  style: TextStyle(
+                    color: Color(0xFF527DAA),
+                    letterSpacing: 1.5,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),),
+                  ),
+              ),
+          ],
+        ),
+        ),
+      );
+  }
+
+     Widget _buildSocialBtn(Function onTap, AssetImage logo) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 60.0,
+        width: 60.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+      color: sb3,
+      offset: Offset(10, 10),
+      blurRadius: 10
+    ),
+    BoxShadow(
+      color: b2,
+      offset: Offset(-10, -10),
+      blurRadius: 10
+    )
+          ],
+          image: DecorationImage(
+            image: logo,
+          ),
+        ),
+      ),
+    );
+  }
+  Widget _buildSocialBtnRow() {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 30.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          _buildSocialBtn(
+            () => print('Login with Facebook'),
+            AssetImage(
+              'asset/img/fb.png',
+            ),
+          ),
+          _buildSocialBtn(
+            () => print('Login with Google'),
+            AssetImage(
+              'asset/img/gmail.png',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget _botDownSignUp(){
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+        return SignupPage();
+        }));
+      },
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: 'Don\'t have an Account? ',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            TextSpan(
+              text: 'Sign Up',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      // backgroundColor: Color(0xFF205AFF),
-      // backgroundColor: Colors.white,
-      body:  Container(
-          decoration: BoxDecoration(
-            color: Color(0xFF3936ea),
-            // image: DecorationImage(
-            //    image: AssetImage("asset/img/bgback.png"),
-            // fit: BoxFit.cover,
-            //   ),
-          ),
-          child: SingleChildScrollView(
-            child: SafeArea(
-              child: Stack(
-                children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top:40.0,),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Container(
-                            width: 200.0,
-                            height: 200.0,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle
-                            ),
-                            child: CircleAvatar(
-                              backgroundImage: AssetImage("asset/img/app.jpg"),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 500.0,
-                        margin: const EdgeInsets.only(top: 290.0,),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(110.0),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 40.0,left: 20.0, right: 20.0),
-                          child: Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                             width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.all(20.0),
-                              child:
-                              
-                               Form(
-                                key: key,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                     TextFormField(
-                      validator: (val)=> contactNumber.text.length < 11 ? 'Mobile Number Consists of 11 Digits' :null,
-                      controller: contactNumber,
-                      decoration: InputDecoration(
-                        labelText: "Mobile Number",
-                        labelStyle: TextStyle(fontSize: 14,color: Color(0xFF205AFF),),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: Color(0xFF205AFF),
-                          ),  
-                        ),
-                        
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Color(0xFF205AFF),
-                            )
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      
-                    ),
-                                      SizedBox(height: 25.0,),
-                                      TextFormField(
-                      validator: (val) => val.isEmpty ? ' Empty' : null,
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                        labelStyle: TextStyle(fontSize: 14,color: Color(0xFF205AFF),),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: Color(0xFF205AFF),
-                          ),
-                          
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Color(0xFF205AFF),
-                              
-                            )
-                        ),
-                      ),
-                    ),
-                                     SizedBox(height: 15.0,),
+ body: Container(
+         width: MediaQuery.of(context).size.width,
+         decoration: BoxDecoration(
+                   color:  Color(0xFF398AE5)
+                  ),
+                 child: SafeArea(
+                   child: SingleChildScrollView(
+                     physics: AlwaysScrollableScrollPhysics(),
+                     padding: EdgeInsets.symmetric(
+                       horizontal: 40.0,
+                       vertical: 80.0,
+                     ),
                      
-                                    Align(
-                      alignment: Alignment.topRight,
-                      child: Text("Forgot Password ?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),),
-                    ),
-                                    SizedBox(height: 50.0,),
-                                    Container(
-                      height: 50,
-                      width: double.infinity,
-                      child: FlatButton(    
-                        onPressed:  _login,
-                        padding: EdgeInsets.all(0),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                               Color(0xFF205AFF),
-                                Color(0xFF1261A0),
-                              Color(0xFF205AFF),
-                              ],
-                            ),
-                          ),
-                        
-                          child: Container(
-                            alignment: Alignment.center,
-                            constraints: BoxConstraints(maxWidth: double.infinity,minHeight: 50),
-            
-                            child: Text("Sign In",
+                       child: Column(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: <Widget>[
+                             Text(
+                            'Sign In',
                             style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,),
-                          ),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100.0),
-                        ),
-                      ),
-                    ),
-                                    SizedBox(height: 50.0,),
-                                     Padding(
-                              padding: EdgeInsets.only(bottom: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("I'm a new user.",style: TextStyle(fontWeight: FontWeight.bold),),
-                                  GestureDetector(
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                                        return SignupPage();
-                                      }));
-                                    },
-                                    child: Text("Sign Up",style:
-                                    TextStyle(fontWeight: FontWeight.bold,color: Color(0xffffb400)),),
-                                  )
-                                ],
-                              ),
+                              fontFamily: 'OpenSans',
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
                             ),
-                                  ],
-                                ),
-                              ),
-
-                            ),
-                          ), 
                           ),
-                      ),
-                   
-                      
-
-                   
-                ],
-              ),
-            ),
-          ),
-        
-      ),
+                          SizedBox(height: 20.0),
+                          Container(
+                            width: 130.0,
+                            height: 130.0,
+                            child: Image.asset("asset/img/logo.png"),
+                          ),
+                          _formGet(context),
+                          SizedBox(height: 15.0,),
+                          Text(
+                            '- OR -',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(height: 20.0),
+                          Text(
+                            'Sign in with',
+                            style: eLabelStyle,
+                          ),
+                          _buildSocialBtnRow(),
+                          SizedBox(height: 20.0),
+                          _botDownSignUp(),
+                        
+                         ],
+                     ),
+                   ),
+                 ), 
+       ),
     );
   }
 
 void _login() async{
+ setState(() {
+      isLoading = true;
+    });
 
     if(key.currentState.validate()){
       key.currentState.save();
        var data = {
         'contactNumber' : contactNumber.text, 
         'password' : passwordController.text
-    };
+        ,};
     
+
+
     var res = await ApiCall().postData(data,'/login');
     
     if(res.statusCode == 200){
@@ -231,14 +315,11 @@ void _login() async{
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
-      localStorage.setString('userID', body['user'][0]);
       Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
             builder: (context) => Home()));
       print('success Login');
-
-      print(body['user'][0]);
     }else{
       _showDial();
     }
@@ -249,6 +330,10 @@ void _login() async{
    
     }
 
+
+   setState(() {
+     isLoading =false;
+   });
 
    
 

@@ -1,3 +1,4 @@
+import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/startpage/start_inputpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _PathWayState extends State<PathWay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _isLoggedIn ? Home() :  InputMobileNumber(),
+      body: _isLoggedIn ? Home() :  LoginPage(),
     );
   }
 }
