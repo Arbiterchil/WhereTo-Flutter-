@@ -1,9 +1,13 @@
 import 'dart:convert';
 
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/restaurant.dart';
+import 'package:WhereTo/restaurants/restaurant_del.dart';
 import 'package:flutter/material.dart';
+
+import '../designbuttons.dart';
 
 class SearchDepo extends StatefulWidget {
   @override
@@ -54,71 +58,138 @@ TextEditingController search = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    
-
-
+  
     return Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            color: Colors.amber,
-          ),
+
+      backgroundColor:Color(0xFF398AE5),
+      body: WillPopScope(
+        onWillPop: () async => false,
+        child: Container(
           width: MediaQuery.of(context).size.width,
-          child: Stack(
-            children: <Widget>[
-                backButt(),
+          height: MediaQuery.of(context).size.height,
+          child: SafeArea(
+            child: Stack(
+              children: <Widget>[
+                newListUp(),
                 listData(),
-            ],
-          ),
-        ),
+              ],
+            ),
+              ),),
+      ),
+      
+
     );
 
   }
 
-    
-    backButt(){
-        return new Container(
-          child: SafeArea(
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 40.0, right: 40.0,top: 35.0),
-                child: Container(
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                      alignment: Alignment.centerLeft,
-                      child: TextField(
-                        controller: search,
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.only(top:14.0,),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.black,
+    Widget newListUp(){
+        return Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 140,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Stack(
+                            children: <Widget>[
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: DesignButton(
+                                  height: 55,
+                                  width: 55,
+                                  color: Color(0xFF398AE5),
+                                  offblackBlue: Offset(-4, -4),
+                                  offsetBlue: Offset(4, 4),
+                                  blurlevel: 4.0,
+                                  icon: Icons.arrow_back,
+                                  iconSize: 30.0,
+                                  onTap: ()  {
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                          return Profile();
+                                        }));
+                              },
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: DesignButton(
+                                  height: 55,
+                                  width: 55,
+                                  color: Color(0xFF398AE5),
+                                  offblackBlue: Offset(-4, -4),
+                                  offsetBlue: Offset(4, 4),
+                                  blurlevel: 4.0,
+                                  icon: Icons.view_list,
+                                  iconSize: 30.0,
+                                  onTap: (){
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                          return RestDel();
+                                        }));
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
-                          hintText: "Search",
                         ),
-                        onChanged: (input){
-                          setState(() {
-                              searchit = input;
-                          });
-                        },
-                      )
-                ),
-              
+                        SizedBox(height: 25.0,),
+                      Container(
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          color: Colors.blueGrey[50],
+                          borderRadius: BorderRadius.circular(30.0),
+                          boxShadow: [
+                             BoxShadow(
+                            color:  Colors.blue[500],
+                            blurRadius: 6,
+                            offset: Offset(-6, -6),
+                            ),
+                            BoxShadow(
+                              color:Colors.blue.shade700,
+                              blurRadius: 6,
+                              offset: Offset(6, 6),
+                            ),
+                            ],
+                            ),
+                            alignment: Alignment.centerLeft,
+                            child: TextField(
+                              controller: search,
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding: const EdgeInsets.only(top:14.0,),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Color(0xFF398AE5),
+                                ),
+                                hintText: "Search",
+                              ),
+                              onChanged: (input){
+                                setState(() {
+                                    searchit = input;
+                                });
+                              },
+                            )
+                      ),
+
+                ],
               ),
             ),
           ),
         );
-    }
-    listData(){
+
+
+    }  
+    
+    Widget listData(){
         return Padding(
-          padding: const EdgeInsets.only(top: 150.0),
+          padding: const EdgeInsets.only(top: 180.0),
           child: new Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,

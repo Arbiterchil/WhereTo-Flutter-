@@ -332,40 +332,43 @@ class _SignupPageState extends State<SignupPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     body: Container(
-        height: MediaQuery.of(context).size.height,
-         width: MediaQuery.of(context).size.width,
-         decoration: BoxDecoration(
-                    color: Color(0xFF398AE5),
-                  ),
-                  child: SafeArea(
-                    child: SingleChildScrollView(
-                       physics: AlwaysScrollableScrollPhysics(),
-                     padding: EdgeInsets.symmetric(
-                       horizontal: 40.0,
-                       vertical: 80.0,
-                     ),
-                     child: Column(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: <Widget>[
-                          Text(
-                            'Sign Up',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'OpenSans',
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
+     body: WillPopScope(
+       onWillPop: () async => false,
+       child: Container(
+          height: MediaQuery.of(context).size.height,
+           width: MediaQuery.of(context).size.width,
+           decoration: BoxDecoration(
+                      color: Color(0xFF398AE5),
+                    ),
+                    child: SafeArea(
+                      child: SingleChildScrollView(
+                         physics: AlwaysScrollableScrollPhysics(),
+                       padding: EdgeInsets.symmetric(
+                         horizontal: 40.0,
+                         vertical: 80.0,
+                       ),
+                       child: Column(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: <Widget>[
+                            Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'OpenSans',
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 25.0,),
-                          _formRegister(context),
-                          SizedBox(height: 25.0,),
+                            SizedBox(height: 25.0,),
+                            _formRegister(context),
+                            SizedBox(height: 25.0,),
 
-                          _botDownSignIn(),
-                       ],
-                     ),
-                    ),
-                    ),
+                            _botDownSignIn(),
+                         ],
+                       ),
+                      ),
+                      ),
+       ),
      ),
     );
   }

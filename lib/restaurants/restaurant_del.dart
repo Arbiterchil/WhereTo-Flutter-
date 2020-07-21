@@ -128,18 +128,7 @@ class _RestDel extends State<RestDel>{
                                             ),
                                           ],
                                         ),
-                                        //   Padding(
-                                        //   padding: const EdgeInsets.only(left: 45 ,),
-                                        //   child: Text("Likod sa Amung Balai rani. Street",
-                                        //     textAlign: TextAlign.center,
-                                        //     style: TextStyle(
-                                        //       color: Color(0xFF9b9b9b),
-                                        //       fontSize: 15.0,
-                                        //       decoration: TextDecoration.none,
-                                        //       fontWeight: FontWeight.normal,
-                                        //     ),
-                                        //   ),
-                                        // ),
+                                      
                                       ],
                                     ),
                                   ),
@@ -183,18 +172,7 @@ class _RestDel extends State<RestDel>{
                                             ),
                                           ],
                                         ),
-                                        //   Padding(
-                                        //   padding: const EdgeInsets.only(left: 45 ,),
-                                        //   child: Text("Likod sa Amung Balai rani. Street",
-                                        //     textAlign: TextAlign.center,
-                                        //     style: TextStyle(
-                                        //       color: Color(0xFF9b9b9b),
-                                        //       fontSize: 15.0,
-                                        //       decoration: TextDecoration.none,
-                                        //       fontWeight: FontWeight.normal,
-                                        //     ),
-                                        //   ),
-                                        // ),
+                                        
                                       ],
                                     ),
                                   ),
@@ -238,18 +216,7 @@ class _RestDel extends State<RestDel>{
                                             ),
                                           ],
                                         ),
-                                        //   Padding(
-                                        //   padding: const EdgeInsets.only(left: 45 ,),
-                                        //   child: Text("Likod sa Amung Balai rani. Street",
-                                        //     textAlign: TextAlign.center,
-                                        //     style: TextStyle(
-                                        //       color: Color(0xFF9b9b9b),
-                                        //       fontSize: 15.0,
-                                        //       decoration: TextDecoration.none,
-                                        //       fontWeight: FontWeight.normal,
-                                        //     ),
-                                        //   ),
-                                        // ),
+                                        
                                       ],
                                     ),
                                   ),
@@ -293,18 +260,7 @@ class _RestDel extends State<RestDel>{
                                             ),
                                           ],
                                         ),
-                                        //   Padding(
-                                        //   padding: const EdgeInsets.only(left: 45 ,),
-                                        //   child: Text("Likod sa Amung Balai rani. Street",
-                                        //     textAlign: TextAlign.center,
-                                        //     style: TextStyle(
-                                        //       color: Color(0xFF9b9b9b),
-                                        //       fontSize: 15.0,
-                                        //       decoration: TextDecoration.none,
-                                        //       fontWeight: FontWeight.normal,
-                                        //     ),
-                                        //   ),
-                                        // ),
+                                        
                                       ],
                                     ),
                                   ),

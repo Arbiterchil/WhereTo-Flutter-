@@ -51,13 +51,14 @@ BoxDecoration eBox = BoxDecoration(
 );
 BoxDecoration eInvertBox = BoxDecoration(
   borderRadius: BorderRadius.circular(15),
-  color: b1,
+  color: Colors.blue[500],
   boxShadow: [
+  
     BoxShadow(
-      color: sb3,
-      offset: Offset(4, 4),
-      blurRadius: 4,
-      spreadRadius: -4
+      color: white,
+      offset: Offset(3, 3),
+      blurRadius: 3,
+      spreadRadius: -3
     ),
     
   ],
@@ -124,3 +125,4 @@ final eBoxDecorationStyle = BoxDecoration(
     )
   ],
 );
+

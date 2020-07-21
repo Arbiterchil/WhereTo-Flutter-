@@ -36,37 +36,6 @@ class ListStactic extends StatefulWidget {
 class _ListStacticState extends State<ListStactic>
     with SingleTickerProviderStateMixin {
   num _defaultValue = 0;
-// Future<List<TyepCateg>> _categRest() async{
-//       var response = await ApiCall().getCategory('/getCategories');
-//       List<TyepCateg> categ = [];
-//       var body = json.decode(response.body);
-//       for(var body in body){
-//           TyepCateg mens = TyepCateg(
-//             id: body['id'], categoryName:body['categoryName'],
-//           );
-//         categ.add(mens);
-//       }
-//       print(categ.length);
-//       return categ;
-//     }
-
-//   Future<List<RestaurantMenu>> _menuList(int id, String menuName) async{
-//   var response = await ApiCall().getCategory('/getMenuCategory/$id');
-//   List<RestaurantMenu> restaurant = [];
-//   var body =json.decode(response.body);
-//   for(var body in body){
-
-//       RestaurantMenu restaurantMenu =RestaurantMenu(
-//       id: body['id'], restaurantName: body['restaurantName'], menuName: body['menuName'], description: body['description'], price: body['price'],
-//       );
-//       if(body['restaurantName'].toString().contains(widget.nameRestau) && body['menuName'].toString().contains(menuName)){
-//         restaurant.add(restaurantMenu);
-//       }
-//   }
-//     print("Restaurant length: ${restaurant.length}");
-//     return restaurant;
-// }
-
   Future<List<TyepCateg>> _categRest() async {
     final response = await ApiCall().getCategory('/getCategories');
     final List<TyepCateg> category = tyepCategFromJson(response.body);
