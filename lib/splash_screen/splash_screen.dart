@@ -1,28 +1,45 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:WhereTo/path.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 class _SplashScreenState extends State<SplashScreen> {
+  var userData;
+  String hens;
     @override
   void initState() {
     super.initState();
     startTime();
+    _getUserInfo();
   }
+
+  void _getUserInfo() async {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var userJson = localStorage.getString('user'); 
+      var user = json.decode(userJson);
+      setState(() {
+        userData = user;
+      });
+  }
+
+
+
   startTime() async{
     var duration = Duration(seconds: 4);
     return Timer(duration,route);
   }
   route(){
     Navigator.pushReplacement(context, MaterialPageRoute(
-      builder: (context) => PathWay()));
+      builder: (context) => PathWay( getStringthis: userData == null ? "0" :hens = userData['status'].toString(),)));
   }
   @override
   Widget build(BuildContext context) {

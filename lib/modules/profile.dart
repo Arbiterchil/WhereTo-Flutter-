@@ -1,5 +1,7 @@
 
 import 'dart:convert';
+import 'package:WhereTo/AnCustom/alert_dialog.dart';
+import 'package:WhereTo/AnCustom/dialogHelp.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/designbuttons.dart';
 import 'package:WhereTo/modules/login_page.dart';
@@ -142,20 +144,6 @@ void configSignal() async {
       "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
 
       };
-    //  var contents = {
-    //                   "include_player_ids": [playerId],
-    //                   "include_segments": ["Penongs Quirante II"],
-    //                   "excluded_segments": [],
-    //                   "contents": {"en": "Send Dis Shit to me."},
-    //                   "headings": {"en": "Jayce Mico Trial"},
-    //                   "filter":[
-    //                     {"field": 
-    //                     "tag", "key":"Penongs Quirante II",
-    //                      "relation":"=",
-    //                      "value":"TRUE"}],
-    //                   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-    //                 };
-                   
   Map<String,String> headers = {'Content-Type':'application/json',
   'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
 
@@ -173,7 +161,8 @@ void configSignal() async {
     return Scaffold(
         backgroundColor:Color(0xFF398AE5),
         body: WillPopScope(
-          onWillPop: () async => false,
+          onWillPop: () async
+          { return await Dialog_Helper.exit(context);},
           child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
@@ -203,21 +192,8 @@ void configSignal() async {
                                   blurlevel: 4.0,
                                   icon: Icons.exit_to_app,
                                   iconSize: 30.0,
-                                  onTap: () async {
-                            var res = await ApiCall().getData('/logout');
-                            var body = json.decode(res.body);
-                            if(body['success']){
-                               SharedPreferences localStorage = await SharedPreferences.getInstance();
-                               localStorage.remove('user');
-                               localStorage.remove('token');
-                               print(body);
-                                Navigator.pushReplacement(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
-                            }else{
-                              print(body);
-                            }
+                                  onTap: ()  {
+                                 Dialog_Helper.exit(context);
                               },
                                 ),
                               ),
@@ -348,6 +324,9 @@ void configSignal() async {
                                   blurlevel: 4.0,
                                   icon: Icons.account_box,
                                   iconSize: 30.0,
+                                  onTap: (){
+                               
+                                  },
                                 ),
                     
                                 
@@ -364,6 +343,7 @@ void configSignal() async {
 
 
           ),
+        
         ),
 
 
@@ -393,13 +373,19 @@ class NCard extends StatelessWidget {
           children: <Widget>[
             Icon(icon,color: Colors.white),
             SizedBox(width: 20.0,),
-            Text(label,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-              fontSize: 16.0,
-              fontFamily: 'OpenSans'
-            ),)
+            Expanded(
+              flex: 1,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(label,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16.0,
+                  fontFamily: 'OpenSans'
+                ),),
+              ),
+            )
           ],
         ),
       ),

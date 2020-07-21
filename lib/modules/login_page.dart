@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/modules/signup_page.dart';
+import 'package:WhereTo/path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +19,7 @@ import 'homepage.dart';
 
 
 class _LoginPageState extends State<LoginPage>{
-
+  var userData;
   bool isLoading = false;
     final key = GlobalKey<FormState>();
      TextEditingController contactNumber =  TextEditingController();
@@ -294,6 +295,9 @@ class _LoginPageState extends State<LoginPage>{
   }
 
 void _login() async{
+ String hens ;
+ 
+
  setState(() {
       isLoading = true;
     });
@@ -315,10 +319,19 @@ void _login() async{
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
+      var userJson = localStorage.getString('user'); 
+      var user = json.decode(userJson);
+      setState(() {
+        userData = user;
+      });
+      hens = userData['status'].toString();
       Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
-            builder: (context) => Profile()));
+            builder: (context) => 
+            PathWay(
+              getStringthis: hens,
+            )));
       print('success Login');
     }else{
       _showDial();

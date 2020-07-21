@@ -30,21 +30,23 @@ class _SignupPageState extends State<SignupPage>{
   
     
     String default_pick = "Customer";
-    int default_number = 0;
+    int default_number = 1;
 
     List<MyChoice> picks = [
-      MyChoice(numberpick: 0,pickchoice: "Customer"),
-      MyChoice(numberpick: 1,pickchoice: "Rider")
+      MyChoice(numberpick: 1,pickchoice: "Customer"),
+      MyChoice(numberpick: 2,pickchoice: "Rider")
     ];
 
 
 
   final formkey = GlobalKey<FormState>();
-    final TextEditingController fulname  = TextEditingController();
-     TextEditingController ownNumber = TextEditingController();
-      TextEditingController ownAddress =  TextEditingController();
-      TextEditingController ownpass = TextEditingController();
-      TextEditingController ownconpass =TextEditingController();
+  
+    TextEditingController fulname  = TextEditingController();
+    TextEditingController email = TextEditingController();
+    TextEditingController ownNumber = TextEditingController();
+    TextEditingController ownAddress =  TextEditingController();
+    TextEditingController ownpass = TextEditingController();
+    TextEditingController ownconpass =TextEditingController();
       
         bool loading = false;
 
@@ -66,6 +68,15 @@ class _SignupPageState extends State<SignupPage>{
 
     }   
 
+    emailValidate(String value){
+      Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value))
+      return 'Enter Valid Email';
+    else
+      return null;
+    }
 
       Widget _formRegister(BuildContext context){
 
@@ -101,6 +112,36 @@ class _SignupPageState extends State<SignupPage>{
                     color: Colors.white,
                   ),
                   hintText: 'Full Name',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+            SizedBox(height: 15.0,),
+            Text('Email',
+                    style: eLabelStyle,
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                controller: email,
+                validator: (val)=> emailValidate(email.text = val),
+                    onSaved: (val) => email.text = val,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'OpenSans',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: Colors.white,
+                  ),
+                  hintText: 'Email',
                   hintStyle: eHintStyle,
                 ),
               ),
@@ -383,9 +424,10 @@ void _signingIn() async {
       formkey.currentState.save();
       var data = {
         'name' : fulname.text,
+        'email': email.text,
         'contactNumber' : ownNumber.text,
         'address' : ownAddress.text,
-        'password' : ownpass.text 
+        'password' : ownpass.text, 
             };
       var res = await ApiCall().postData(data,'/register');
 
