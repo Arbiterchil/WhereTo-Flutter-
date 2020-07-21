@@ -55,6 +55,10 @@ dependencies:
   location: ^3.0.2
   geodesy: ^0.3.2
 
+
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

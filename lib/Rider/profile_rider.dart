@@ -1,50 +1,41 @@
-
 import 'dart:convert';
-import 'package:WhereTo/AnCustom/alert_dialog.dart';
+
 import 'package:WhereTo/AnCustom/dialogHelp.dart';
-import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/designbuttons.dart';
-import 'package:WhereTo/modules/login_page.dart';
-import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
-import 'package:flutter/services.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:location/location.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
-import '../bloc.Navigation_bloc/navigation_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../designbuttons.dart';
 import '../styletext.dart';
 
-// class Profile extends StatefulWidget with NavigationStates{
-//   @override
-//   _Profile createState() => _Profile();
-// }
-
-class Profile extends StatefulWidget{
+class RiderProfile extends StatefulWidget {
+ 
   @override
-  _Profile createState() => _Profile();
+  _RiderProfileState createState() => _RiderProfileState();
 }
 
-class _Profile extends State<Profile> {
-  var userData;
-  var constant;
-  bool casting;
-  @override
+class _RiderProfileState extends State<RiderProfile> {
+ var userData;
+ bool online = false;
+var constant;
+    @override
   void initState() {
     _getUserInfo();
-    casting = false;
-    // configSignal();
     super.initState();
-    // getUserLocation();
   }
- 
 
+void toOnline(bool e){
 
+setState(() {
+  if(e){
+    online = e;
+  }else{
+    online = e;
+  }
+});
 
-  void _getUserInfo() async {
+}
+
+void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var userJson = localStorage.getString('user'); 
       var user = json.decode(userJson);
@@ -54,94 +45,6 @@ class _Profile extends State<Profile> {
   }
 
 
-    getUserLocation() async {
-    //call this async method from whereever you need
-    LocationData currentLocation;
-    LocationData myLocation;
-    String error;
-    Location location = new Location();
-    try {
-      myLocation = await location.getLocation();
-    } on PlatformException catch (e) {
-      if (e.code == 'PERMISSION_DENIED') {
-        error = 'please grant permission';
-        print(error);
-      }
-      if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
-        error = 'permission denied- please enable it from app settings';
-        print(error);
-      }
-      myLocation = null;
-    }
-    currentLocation = myLocation;
-    final coordinates =
-        new Coordinates(myLocation.latitude, myLocation.longitude);
-    var addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = addresses.first;
-    
-    print(
-        ' ${first.locality}, ${first.adminArea},${first.subLocality}, ${first.subAdminArea},${first.addressLine}, ${first.featureName},${first.thoroughfare}, ${first.subThoroughfare}');
-    print("${currentLocation.latitude},${currentLocation.longitude} ");
-    return first;
-  }    
-
-    
-
-
-void configSignal() async {
-      await OneSignal.shared.setLocationShared(true);
-      await OneSignal.shared.promptLocationPermission();
-      await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-      OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
-      OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
-          setState(() {
-            //  constant = notification.payload.additionalData;
-          });
-       });
-          
-
-        await OneSignal.shared.setSubscription(true);
-
-          var tags = await OneSignal.shared.getTags();
-          print(tags);
-
-       var status = await OneSignal.shared.getPermissionSubscriptionState();
-    String url = 'https://onesignal.com/api/v1/notifications';
-    String createSegment = "https://onesignal.com/api/v1/apps/:2348f522-f77b-4be6-8eae-7c634e4b96b2/segments";
-    var playerId = status.subscriptionStatus.userId;
-      // var mico = 
-      await OneSignal.shared.sendTags({"Penongs Quirante II": "TRUE"});
-      // var chil =  await OneSignal.shared.sendTags({"Test": "Value"});
-      // await OneSignal.shared.deleteTags(["Penongs Quirante II","TRUE","Test","Value"]);
-
-    var contents = {
-      "include_player_ids" : [playerId],
-      // "include_segments" : ["Jayce Mico Trials"],
-      "excluded_segments":[],
-      "contents":{"en":"Dis is a Test"},
-      "headings":{"en":"Jayce Mico Trial"},
-     "filter":
-      [
-        // {"field": "location","radius":"50","lat":"7.4281606","long":"125.8067263"},
-        // {"operator": "AND"},
-        {"field": "tag","key":"Test","relation":"=","value":"Value"}
-      ],
-      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-
-      };
-  Map<String,String> headers = {'Content-Type':'application/json',
-  'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
-
-    var repo = await http.post(
-    url,
-    headers: headers,
-    body: json.encode(contents)
-    );
-      print(repo.body);
-
-
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,21 +88,32 @@ void configSignal() async {
                               ),
                               Align(
                                 alignment: Alignment.topRight,
-                                child: DesignButton(
+                                child: Container(
+                                  width: 66,
                                   height: 55,
-                                  width: 55,
-                                  color: Color(0xFF398AE5),
-                                  offblackBlue: Offset(-4, -4),
-                                  offsetBlue: Offset(4, 4),
-                                  blurlevel: 4.0,
-                                  icon: Icons.search,
-                                  iconSize: 30.0,
-                                  onTap: (){
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                          return SearchDepo();
-                                        }));
-                                  },
-                                ),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF398AE5),
+                                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color:  Colors.blue[500],
+                                        blurRadius: 6,
+                                        offset: Offset(-6, -6),
+
+                                      ),
+                                      BoxShadow(
+                                        color:Colors.blue.shade700,
+                                        blurRadius: 6,
+                                        offset: Offset(6, 6),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Switch(
+                                    value: online,
+                                    activeColor: Colors.lightGreen,
+                                   onChanged: (bool e) => toOnline(e)),
+                                   
+                                )
                               ),
                             ],
                           ),
@@ -277,7 +191,7 @@ void configSignal() async {
                                   iconSize: 30.0,
                                   onTap: (){
                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                          return Profile();
+                                          return RiderProfile();
                                           }));
                                   },
                                 ),
@@ -288,7 +202,7 @@ void configSignal() async {
                                   offblackBlue: Offset(-4, -4),
                                   offsetBlue: Offset(4, 4),
                                   blurlevel: 4.0,
-                                  icon: Icons.track_changes,
+                                  icon: Icons.restaurant,
                                   iconSize: 30.0,
                                 ),
                                 DesignButton(

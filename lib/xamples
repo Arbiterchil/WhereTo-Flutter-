@@ -1,88 +1,51 @@
-Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Stack(
-                          children: <Widget>[
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: DesignButton(
-                                height: 55,
-                                width: 55,
-                                color: Color(0xFF398AE5),
-                                offblackBlue: Offset(-4, -4),
-                                offsetBlue: Offset(4, 4),
-                                blurlevel: 4.0,
-                                icon: Icons.exit_to_app,
-                                iconSize: 30.0,
-                                onTap: ()  {
-                         
-                            },
+Padding(
+                              padding: const EdgeInsets.only(left:30.0,right: 30.0,top: 20.0,),
+                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                height: 90.0,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                        height: 80.0,
+                                        width: 80.0,
+                                        child: CircleAvatar(
+                                          backgroundImage: AssetImage("asset/img/${snapshot.data[index].restaurantName}.png"),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 20.0,),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: <Widget>[
+                                         Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(snapshot.data[index].restaurantName,
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),),
+                                    ),
+                                    SizedBox(height: 15.0,),
+                                     Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Text(snapshot.data[index].address,
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.bold,
+                                      ),),
+                                    ),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: DesignButton(
-                                height: 55,
-                                width: 55,
-                                color: Color(0xFF398AE5),
-                                offblackBlue: Offset(-4, -4),
-                                offsetBlue: Offset(4, 4),
-                                blurlevel: 4.0,
-                                icon: Icons.search,
-                                iconSize: 30.0,
-                                onTap: (){
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                        return SearchDepo();
-                                      }));
-                                },
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 40.0, right: 40.0,top: 35.0),
-                    child: Container(
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey[50],
-                        borderRadius: BorderRadius.circular(30.0),
-                        boxShadow: [
-                           BoxShadow(
-                          color:  Colors.blue[500],
-                          blurRadius: 6,
-                          offset: Offset(-6, -6),
-                          ),
-                          BoxShadow(
-                            color:Colors.blue.shade700,
-                            blurRadius: 6,
-                            offset: Offset(6, 6),
-                          ),
-                          ],
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: TextField(
-                            controller: search,
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(top:14.0,),
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Color(0xFF398AE5),
-                              ),
-                              hintText: "Search",
-                            ),
-                            onChanged: (input){
-                              setState(() {
-                                  searchit = input;
-                              });
-                            },
-                          )
-                    ),
-                  
-                  ),
-                ),

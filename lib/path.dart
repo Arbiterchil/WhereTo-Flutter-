@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/modules/signup_page.dart';
@@ -48,7 +49,7 @@ class _PathWayState extends State<PathWay> {
       }else  if(customer.contains(value)){
         return  _isLoggedIn  ? Profile() :  LoginPage();
       }else if(rider.contains(value)){
-        return _isLoggedIn  ? SignupPage() :  LoginPage();
+        return _isLoggedIn  ? RiderProfile() :  LoginPage();
       }
 
    }

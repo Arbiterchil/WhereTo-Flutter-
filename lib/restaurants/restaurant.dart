@@ -7,6 +7,8 @@ class Restaurant{
   final String address;
   final String contactNumber;
   final int isFeatured;
+  final String openTime;
+  final String closingTime;
 
 
 
@@ -15,7 +17,9 @@ Restaurant(
   this.restaurantName,
   this.address,
   this.contactNumber,
-  this.isFeatured
+  this.isFeatured,
+  this.openTime,
+  this.closingTime
 );
 
 }

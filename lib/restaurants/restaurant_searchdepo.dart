@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/AnCustom/restaurant_front.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
@@ -32,7 +33,9 @@ class SearchDepo extends StatefulWidget {
         bods["restaurantName"],
         bods["address"],
         bods["contactNumber"],
-        bods["isFeatured"]);
+        bods["isFeatured"],
+        bods["openTime"],
+        bods["closingTime"]);
         rests.add(rest);
       }
       print(rests.length);
@@ -217,70 +220,30 @@ TextEditingController search = new TextEditingController();
                           |snapshot.data[index].address.contains(searchit) ? GestureDetector(
                             onTap: (){
 
-                              Navigator.push(context,
+                              // Navigator.push(context,
+                              //   new MaterialPageRoute(builder: (context) 
+                              //   => ListStactic(
+                              //      nameRestau: snapshot.data[index].restaurantName.toString(),
+                              //     )
+                              //   )
+                              //   );    
+                            },
+                            child: RestaurantFront(
+                              image: "asset/img/${snapshot.data[index].restaurantName}.png",
+                              restaurantName:snapshot.data[index].restaurantName ,
+                              restaurantAddress: snapshot.data[index].address,
+                              openAndclose: snapshot.data[index].openTime+"-"+snapshot.data[index].closingTime,
+                              onTap: (){
+                                Navigator.push(context,
                                 new MaterialPageRoute(builder: (context) 
                                 => ListStactic(
                                    nameRestau: snapshot.data[index].restaurantName.toString(),
                                   )
                                 )
-                                );
-
-
-
-                                
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left:30.0,right: 30.0,top: 20.0,),
-                              child: Container(
-                                padding: const EdgeInsets.all(8.0),
-                                height: 90.0,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Row(
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Container(
-                                        height: 80.0,
-                                        width: 80.0,
-                                        child: CircleAvatar(
-                                          backgroundImage: AssetImage("asset/img/${snapshot.data[index].restaurantName}.png"),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 20.0,),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: <Widget>[
-                                         Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(snapshot.data[index].restaurantName,
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),),
-                                    ),
-                                    SizedBox(height: 15.0,),
-                                     Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(snapshot.data[index].address,
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        color: Colors.black54,
-                                        fontWeight: FontWeight.bold,
-                                      ),),
-                                    ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              ),
-                          ) : Container();
+                                ); 
+                              },
+                            ),
+                          ): Container();
                         },
                       );
 

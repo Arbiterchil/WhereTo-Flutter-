@@ -21,7 +21,9 @@ Future<List<Restaurant>> _getRest() async{
         bods["restaurantName"],
         bods["address"],
         bods["contactNumber"],
-        bods["isFeatured"]);
+        bods["isFeatured"],
+        bods["openTime"],
+        bods["closingTime"]);
         rests.add(rest);
       }
       print(rests.length);
