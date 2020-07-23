@@ -52,7 +52,7 @@ class TransactionOrders{
   int quantity;
   int total;
   int id;
-  TransactionOrders({this.name, this.description, this.price, this.quantity, this.total, this.id,});
+  TransactionOrders({this.name, this.description, this.price, this.quantity, this.total, this.id});
 }
 class UserID{
   String userID;

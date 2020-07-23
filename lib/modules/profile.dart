@@ -36,7 +36,7 @@ class _Profile extends State<Profile> {
   void initState() {
     _getUserInfo();
     casting = false;
-    // configSignal();
+    configSignal();
     super.initState();
     // getUserLocation();
   }
@@ -111,7 +111,7 @@ void configSignal() async {
     String createSegment = "https://onesignal.com/api/v1/apps/:2348f522-f77b-4be6-8eae-7c634e4b96b2/segments";
     var playerId = status.subscriptionStatus.userId;
       // var mico = 
-      await OneSignal.shared.sendTags({"Penongs Quirante II": "TRUE"});
+      await OneSignal.shared.sendTags({"UR": "TRUE"});
       // var chil =  await OneSignal.shared.sendTags({"Test": "Value"});
       // await OneSignal.shared.deleteTags(["Penongs Quirante II","TRUE","Test","Value"]);
 
@@ -125,7 +125,7 @@ void configSignal() async {
       [
         // {"field": "location","radius":"50","lat":"7.4281606","long":"125.8067263"},
         // {"operator": "AND"},
-        {"field": "tag","key":"Test","relation":"=","value":"Value"}
+        {"field": "tag","key":"UR","relation":"=","value":"TRUE"}
       ],
       "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
 

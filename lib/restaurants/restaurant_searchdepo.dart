@@ -6,6 +6,7 @@ import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/restaurant.dart';
 import 'package:WhereTo/restaurants/restaurant_del.dart';
+import 'package:WhereTo/restaurants/searchRestaurant.dart';
 import 'package:flutter/material.dart';
 
 import '../designbuttons.dart';
@@ -17,30 +18,14 @@ class SearchDepo extends StatefulWidget {
 
     
 
-   Future<List<Restaurant>> _getRest() async{
 
-    var response = await ApiCall().getRestarant('/getFeaturedRestaurant');
-    
-      List<Restaurant> rests = [];
-    
-
-      var bods = json.decode(response.body);
-      
-      for(var bods in bods){
-        
-        Restaurant rest = Restaurant
-        (bods["id"],
-        bods["restaurantName"],
-        bods["address"],
-        bods["contactNumber"],
-        bods["isFeatured"],
-        bods["openTime"],
-        bods["closingTime"]);
-        rests.add(rest);
-      }
-      print(rests.length);
-      return rests;
+   Future<List<SearchDeposition>> getRest() async{
+   final response =await ApiCall().getRestarant('/getFeaturedRestaurant');
+   List<SearchDeposition> search =searchDepoFromJson(response.body);
+   return search;
  }
+
+ 
 
 
 class _SearchDepoState extends State<SearchDepo> {
@@ -115,6 +100,7 @@ TextEditingController search = new TextEditingController();
                                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                                           return Profile();
                                         }));
+                                     
                               },
                                 ),
                               ),
@@ -203,7 +189,7 @@ TextEditingController search = new TextEditingController();
               ),
             ),
             child: FutureBuilder(
-              future: _getRest(),
+              future: getRest(),
               builder: (BuildContext context, AsyncSnapshot snapshot){
                     if(snapshot.data == null){
                   return Container(
@@ -237,6 +223,7 @@ TextEditingController search = new TextEditingController();
                                 Navigator.push(context,
                                 new MaterialPageRoute(builder: (context) 
                                 => ListStactic(
+                                    restauID: snapshot.data[index].id.toString(),
                                    nameRestau: snapshot.data[index].restaurantName.toString(),
                                   )
                                 )

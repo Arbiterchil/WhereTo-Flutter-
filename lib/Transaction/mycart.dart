@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 
 class MyCart extends StatefulWidget {
    final String nameRestau;
-   MyCart({ this.nameRestau});
+   final String restauID;
+   MyCart({ this.nameRestau, this.restauID});
   @override
   _MyCartState createState() => _MyCartState();
 }
@@ -31,7 +32,7 @@ class _MyCartState extends State<MyCart> {
         title: Text("My Cart", style: TextStyle(),),
         
       ),
-      body: TransactionList(),
+      body: TransactionList(restauID: widget.restauID,),
     );
   }
 }

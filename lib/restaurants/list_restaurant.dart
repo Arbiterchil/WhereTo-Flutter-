@@ -1,34 +1,24 @@
-import 'dart:convert';
+
 import 'package:WhereTo/MenuRestaurant/categ_type.dart';
 import 'package:WhereTo/MenuRestaurant/restaurant_menu_list.dart';
 import 'package:WhereTo/Transaction/mycart.dart';
 import 'package:WhereTo/Transaction/myorders.dart';
-import 'package:WhereTo/Transaction/product.description.dart';
-import 'package:WhereTo/Transaction/test.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/api_restaurant/model.dart';
-import 'package:WhereTo/api_restaurant_bloc/bloc.Restaurant.dart';
-import 'package:WhereTo/api_restaurant_bloc/bloc.provider.dart';
-import 'package:WhereTo/api_restaurant_bloc/bloc.transaction.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
-import 'package:WhereTo/Transaction/productTransaction.dart';
-import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:WhereTo/restaurants/restaurant.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_counter/flutter_counter.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
-import 'package:stepper_counter_swipe/stepper_counter_swipe.dart';
-import 'package:momentum/momentum.dart';
+
 
 class ListStactic extends StatefulWidget {
   final String nameRestau;
-  const ListStactic({Key key, this.nameRestau}) : super(key: key);
+  final String restauID;
+  const ListStactic({Key key, this.nameRestau, this.restauID}) : super(key: key);
   @override
   _ListStacticState createState() => _ListStacticState();
 }
@@ -115,8 +105,8 @@ class _ListStacticState extends State<ListStactic>
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => MyCart(
-                                                    nameRestau:
-                                                        widget.nameRestau,
+                                                    restauID: widget.restauID,
+                                                    nameRestau:widget.nameRestau,
                                                   )));
                                     }),
                               );
@@ -254,7 +244,8 @@ class _ListStacticState extends State<ListStactic>
                                                                 quantity: 1,
                                                                 id: data
                                                                     .data[index]
-                                                                    .id
+                                                                    .id,
+                                                                 
                                                                 ),
                                                           ),
                                                         );
