@@ -88,7 +88,7 @@ class _DialogCustomMadeState extends State<DialogCustomMade> {
                 onPressed: () async{
                   var res = await ApiCall().getData('/logout');
                             var body = json.decode(res.body);
-                            if(body['success']){
+                           
                                SharedPreferences localStorage = await SharedPreferences.getInstance();
                                localStorage.remove('user');
                                localStorage.remove('token');
@@ -98,9 +98,8 @@ class _DialogCustomMadeState extends State<DialogCustomMade> {
                               // new MaterialPageRoute(
                               //     builder: (context) => LoginPage()));
                               exit(0);
-                            }else{
                               print(body);
-                            }
+                            
                 },
                 
                 child: Text ( "Yes", style :TextStyle(
