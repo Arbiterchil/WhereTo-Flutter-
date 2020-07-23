@@ -276,29 +276,29 @@ class _SignupPageState extends State<SignupPage>{
               ),
             ),
             SizedBox(height: 10.0,),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 115.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: picks.map((e) => RadioListTile(
-                  title: Text('${e.pickchoice}',style:TextStyle(
-                    color: Colors.white,
-                  fontFamily: 'OpenSans',
-                  fontSize: 14.0
-                  ) ,),
-                  groupValue: default_number,
-                  value: e.numberpick,
-                  activeColor: Colors.white,
-                  onChanged: (val){
-                    setState(() {
-                      default_pick  = e.pickchoice;
-                      default_number = e.numberpick;
-                    });
-                  },
-                )).toList(),
-              ),
-            ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   height: 115.0,
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: picks.map((e) => RadioListTile(
+            //       title: Text('${e.pickchoice}',style:TextStyle(
+            //         color: Colors.white,
+            //       fontFamily: 'OpenSans',
+            //       fontSize: 14.0
+            //       ) ,),
+            //       groupValue: default_number,
+            //       value: e.numberpick,
+            //       activeColor: Colors.white,
+            //       onChanged: (val){
+            //         setState(() {
+            //           default_pick  = e.pickchoice;
+            //           default_number = e.numberpick;
+            //         });
+            //       },
+            //     )).toList(),
+            //   ),
+            // ),
             // Text('$default_number',
             //    style: TextStyle(
             //       color: Colors.white,

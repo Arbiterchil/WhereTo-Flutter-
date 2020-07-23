@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   route(){
     Navigator.pushReplacement(context, MaterialPageRoute(
-      builder: (context) => PathWay( getStringthis: userData == null ? "0" :hens = userData['status'].toString(),)));
+      builder: (context) => PathWay( getStringthis: userData == null ? "1" :hens = userData['userType'].toString(),)));
   }
   @override
   Widget build(BuildContext context) {

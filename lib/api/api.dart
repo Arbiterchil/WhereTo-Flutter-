@@ -16,6 +16,8 @@ class ApiCall{
     );
   }
 
+ 
+
   getData(api) async{
     var fullurl = url + api + await _getToken();
     // print(fullurl);
@@ -56,6 +58,13 @@ class ApiCall{
     );
   }
 
+ viewTransac(api) async {
+    var fullurl = url+api;
+    return http.get(
+    fullurl,
+    headers: _setHeaders()
+    );
+  }
 
 
   _setHeaders() => {

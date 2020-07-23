@@ -324,7 +324,9 @@ void _login() async{
       setState(() {
         userData = user;
       });
-      hens = userData['status'].toString();
+
+      hens = userData['userType'].toString();
+      
       Navigator.pushReplacement(
         context,
         new MaterialPageRoute(

@@ -84,7 +84,8 @@ class _FearturedRestaurantState extends State<FearturedRestaurant> {
                             shape: BoxShape.rectangle,
                             image: DecorationImage(
                               image: 
-                              AssetImage("asset/img/${snapshot.data[index].restaurantName}.png"),fit: BoxFit.cover,
+                              AssetImage("asset/img/${snapshot.data[index].restaurantName}.png"),
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),

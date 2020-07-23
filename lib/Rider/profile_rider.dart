@@ -1,7 +1,9 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:WhereTo/AnCustom/dialogHelp.dart';
+import 'package:WhereTo/Rider_viewTransac/rider_viewtransac.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../designbuttons.dart';
@@ -16,11 +18,12 @@ class RiderProfile extends StatefulWidget {
 class _RiderProfileState extends State<RiderProfile> {
  var userData;
  bool online = false;
-var constant;
+String constant = "";
     @override
   void initState() {
     _getUserInfo();
     super.initState();
+    configSignal();
   }
 
 void toOnline(bool e){
@@ -44,6 +47,44 @@ void _getUserInfo() async {
       });
   }
 
+void configSignal() async {
+      await OneSignal.shared.setLocationShared(true);
+      await OneSignal.shared.promptLocationPermission();
+      await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+
+      await OneSignal.shared.setSubscription(true);
+      var tags = await OneSignal.shared.getTags();
+      var sendtag = await OneSignal.shared.sendTags({'UR':'TRUE'});
+      var status = await OneSignal.shared.getPermissionSubscriptionState();
+    
+    String url = 'https://onesignal.com/api/v1/notifications';
+    var playerId = status.subscriptionStatus.userId;
+
+    var numb = "2";
+    var contents = {
+      "include_player_ids" : [playerId],
+      "include_segments" : ["All"],
+      "excluded_segments":[],
+      "contents":{"en":"This is a test."},
+      "headings":{"en":numb},
+      "filter":[{"field": "tag","key":"UR","relation":"=","value":"TRUE"},],
+     "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+      };
+     Map<String,String> headers = {'Content-Type':'application/json',
+    'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
+     var repo = await http.post(
+     url,
+     headers: headers,
+     body: json.encode(contents)
+     );
+      
+          // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
+          print(tags);
+          print(sendtag);
+          print(repo.body);
+          
+       
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -204,6 +245,11 @@ void _getUserInfo() async {
                                   blurlevel: 4.0,
                                   icon: Icons.restaurant,
                                   iconSize: 30.0,
+                                  onTap: (){
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                          return RiderTransaction();
+                                          }));
+                                  },
                                 ),
                                 DesignButton(
                                   height: 55,
@@ -243,7 +289,6 @@ void _getUserInfo() async {
 
 
           ),
-        
         ),
 
 
