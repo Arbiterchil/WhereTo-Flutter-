@@ -9,14 +9,14 @@ class RiderApi {
   var constant;
 
   Future<RiderResponse> getViewTransac() async{
-
-    try{
-      OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
       OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
           
             constant = notification.payload.title;
           
        });
+    try{
+      
 
        print(constant);
         final response = await ApiCall().viewTransac('/getTransactionDetails/$constant');

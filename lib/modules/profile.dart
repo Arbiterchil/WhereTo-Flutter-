@@ -90,9 +90,10 @@ class _Profile extends State<Profile> {
     OneSignal.shared
         .setNotificationReceivedHandler((OSNotification notification) {
       setState(() {
-        //  constant = notification.payload.additionalData;
+         constant = notification.payload.additionalData;
       });
     });
+   
 
     await OneSignal.shared.setSubscription(true);
     var tags = await OneSignal.shared.getTags();
@@ -127,6 +128,7 @@ class _Profile extends State<Profile> {
     print(sendtag);
     print(playerId);
     print(repo.body);
+     print(constant.toString());
   }
 
   @override
