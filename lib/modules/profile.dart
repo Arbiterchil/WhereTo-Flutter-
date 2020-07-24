@@ -106,11 +106,11 @@ class _Profile extends State<Profile> {
     var numb = "2";
     var contents = {
       "include_player_ids": [playerId],
-      "include_segments": ["All"],
+      "include_segments": ["Users Notif"],
       "excluded_segments": [],
       "contents": {"en": "This is a test."},
-      "data": {"foo": "bar"},
-      "headings": {"en": numb},
+      "data": {"id": numb},
+      "headings": {"en": "Erchil Testings"},
       "filter": [
         {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
       ],
@@ -123,7 +123,8 @@ class _Profile extends State<Profile> {
     var repo =
         await http.post(url, headers: headers, body: json.encode(contents));
 
-    await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
+    // await OneSignal.shared.deleteTags(["userID","2","transactionID",
+    // "2","Penongs Quirante II", "TRUE", "Test" ,"Value"]);
     print(tags);
     print(sendtag);
     print(playerId);

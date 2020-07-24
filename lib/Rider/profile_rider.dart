@@ -19,6 +19,7 @@ class _RiderProfileState extends State<RiderProfile> {
  var userData;
  bool online = false;
 var constant;
+var finalID;
     @override
   void initState() {
     _getUserInfo();
@@ -60,20 +61,25 @@ void configSignal() async {
          constant = notification.payload.additionalData;
       });
     });
+    OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+      
+          finalID  = result.notification.payload.additionalData;
+      });
    
 
     await OneSignal.shared.setSubscription(true);
-    var tags = await OneSignal.shared.getTags();
-    var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
-    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    // var tags = await OneSignal.shared.getTags();
+    // var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
+    // var status =
+     await OneSignal.shared.getPermissionSubscriptionState();
 
-    String url = 'https://onesignal.com/api/v1/notifications';
-    var playerId = status.subscriptionStatus.userId;
+    // String url = 'https://onesignal.com/api/v1/notifications';
+    // var playerId = status.subscriptionStatus.userId;
 
     // var numb = "2";
     // var contents = {
     //   "include_player_ids": [playerId],
-    //   "include_segments": ["All"],
+    //   "include_segments": ["Users Notif"],
     //   "excluded_segments": [],
     //   "contents": {"en": "This is a test."},
     //   "data": {"id":numb },
@@ -91,9 +97,9 @@ void configSignal() async {
     //     await http.post(url, headers: headers, body: json.encode(contents));
 
     // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
-    print(tags);
-    print(sendtag);
-    print(playerId);
+    // print(tags);
+    // print(sendtag);
+    // print(playerId);
     // print(repo.body);
      print(constant.toString());
   }
