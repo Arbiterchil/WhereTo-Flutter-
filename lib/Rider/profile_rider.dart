@@ -18,12 +18,13 @@ class RiderProfile extends StatefulWidget {
 class _RiderProfileState extends State<RiderProfile> {
  var userData;
  bool online = false;
-String constant = "";
+var constant;
     @override
   void initState() {
     _getUserInfo();
     super.initState();
     configSignal();
+    
   }
 
 void toOnline(bool e){
@@ -48,54 +49,59 @@ void _getUserInfo() async {
   }
 
 void configSignal() async {
-      await OneSignal.shared.setLocationShared(true);
-      await OneSignal.shared.promptLocationPermission();
-      await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+     await OneSignal.shared.setLocationShared(true);
+    await OneSignal.shared.promptLocationPermission();
+    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared
+        .setNotificationReceivedHandler((OSNotification notification) {
+      setState(() {
+         constant = notification.payload.additionalData;
+      });
+    });
+   
 
-      await OneSignal.shared.setSubscription(true);
-      var tags = await OneSignal.shared.getTags();
-      var sendtag = await OneSignal.shared.sendTags({'UR':'TRUE'});
-      // var status =
-       await OneSignal.shared.getPermissionSubscriptionState();
-    
+    await OneSignal.shared.setSubscription(true);
+    var tags = await OneSignal.shared.getTags();
+    var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+
     String url = 'https://onesignal.com/api/v1/notifications';
-    // var playerId = status.subscriptionStatus.userId;
+    var playerId = status.subscriptionStatus.userId;
 
     // var numb = "2";
     // var contents = {
-    //   "include_player_ids" : [playerId],
-    //   "include_segments" : ["All"],
-    //   "excluded_segments":[],
-    //   "contents":{"en":"This is a test."},
-    //   "headings":{"en":numb},
-    //   "filter":[{"field": "tag","key":"UR","relation":"=","value":"TRUE"},],
-    //  "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-    //   };
-    //  Map<String,String> headers = {'Content-Type':'application/json',
-    // 'authorization':'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'};
-    //  var repo = await http.post(
-    //  url,
-    //  headers: headers,
-    //  body: json.encode(contents)
-    //  );
+    //   "include_player_ids": [playerId],
+    //   "include_segments": ["All"],
+    //   "excluded_segments": [],
+    //   "contents": {"en": "This is a test."},
+    //   "data": {"id":numb },
+    //   "headings": {"en": "Erchil Testings"},
+    //   "filter": [
+    //     {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+    //   ],
+    //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+    // };
+    // Map<String, String> headers = {
+    //   'Content-Type': 'application/json',
+    //   'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+    // };
+    // var repo =
+    //     await http.post(url, headers: headers, body: json.encode(contents));
 
-     OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
-      OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
-          
-            setState(() {
-            constant = notification.payload.title;
-            });
-          
-       });
-      
-          // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
-          print(tags);
-          print(sendtag);
-          // print(repo.body);
-          print(constant);
-          
-       
+    // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
+    print(tags);
+    print(sendtag);
+    print(playerId);
+    // print(repo.body);
+     print(constant.toString());
   }
+
+    
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -258,7 +264,7 @@ void configSignal() async {
                                   iconSize: 30.0,
                                   onTap: (){
                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                          return RiderTransaction(number: constant.toString(),);
+                                          return RiderTransaction(number: constant['id'].toString(),);
                                           }));
                                   },
                                 ),
