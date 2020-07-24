@@ -1,17 +1,67 @@
+import 'dart:convert';
+
 import 'package:WhereTo/Rider/profile_rider.dart';
+import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_class.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_views.dart';
+import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
+import 'package:WhereTo/api/api.dart';
 import 'package:flutter/material.dart';
 
 import '../designbuttons.dart';
 
+
+
 class RiderTransaction extends StatefulWidget {
+
+   final String number;
+
+  const RiderTransaction({Key key, this.number}) : super(key: key);
+
+
 
 
   @override
   _RiderTransactionState createState() => _RiderTransactionState();
 }
 
+  
+
+  
+
+
 class _RiderTransactionState extends State<RiderTransaction> {
+
+  var constants;
+
+  @override
+  void initState() {
+    
+    super.initState();
+  }
+
+  Future<List<RiderViewClass>> getTransac() async {
+
+        
+
+        final response = await ApiCall().viewTransac('/getTransactionDetails/${widget.number}');
+        List<RiderViewClass> riderme = [];
+        
+        var body = json.decode(response.body);
+        for (var body in body){
+            RiderViewClass riderViewClass = RiderViewClass
+          (
+            id: body["id"],
+            name: body["name"],
+            restaurantName: body["restaurantName"],
+            address: body["address"],
+            deliveryAddress: body["deliveryAddress"],);
+
+            riderme.add(riderViewClass);
+        }
+        print(riderme.length);
+        return riderme;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +121,8 @@ class _RiderTransactionState extends State<RiderTransaction> {
                                 ),
                               ),
                      SizedBox(height: 40.0,),
-                     RiderViewing(),
+                    //  RiderViewing(),
+                    _viewRider(),
                   ],
                 ),
               ),
@@ -82,4 +133,62 @@ class _RiderTransactionState extends State<RiderTransaction> {
       onWillPop: () async => false),
     );
   }
+
+  Widget _viewRider(){
+        return Container(
+          child: FutureBuilder(
+            future: getTransac(),
+            builder: (BuildContext context , AsyncSnapshot snapshot){
+                      if(snapshot.data == null){
+                  return Container(
+                    child: Center(
+                      child: Text("No Transaction Yet...",
+                      style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+              fontSize:  16.0,
+              fontWeight: FontWeight.normal
+            ),),    
+                    ),
+                  );
+                }else{
+
+                        return SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context,index){
+                   return Column(
+                     children: <Widget>[
+                      ViewTransacRider(
+                        image: "asset/img/app.jpg",
+                        transacId: snapshot.data[index].id.toString(),
+                        name: snapshot.data[index].name,
+                        address: snapshot.data[index].address,
+                        deliveryAddress: snapshot.data[index].deliveryAddress,
+                        restaurantName: snapshot.data[index].restaurantName,
+                        onTap: (){
+                          
+                        },
+                      ),
+                     ],
+                   );
+                },
+                ),
+            ),
+          );
+
+
+
+                }
+            },
+          ),
+        );
+
+
+  }
+
 }
