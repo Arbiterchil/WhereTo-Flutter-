@@ -82,6 +82,7 @@ class _Profile extends State<Profile> {
   }
 
   void configSignal() async {
+    var data;
     await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
     await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
@@ -91,9 +92,10 @@ class _Profile extends State<Profile> {
         .setNotificationReceivedHandler((OSNotification notification) {
       setState(() {
         //  constant = notification.payload.additionalData;
+        data =notification.payload.additionalData;
+        
       });
     });
-
     await OneSignal.shared.setSubscription(true);
     var tags = await OneSignal.shared.getTags();
     var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
@@ -102,13 +104,13 @@ class _Profile extends State<Profile> {
     String url = 'https://onesignal.com/api/v1/notifications';
     var playerId = status.subscriptionStatus.userId;
 
-    var numb = "2";
+    var numb = "4";
     var contents = {
       "include_player_ids": [playerId],
-      "include_segments": ["All"],
+      "include_segments": ["Users Notif"],
       "excluded_segments": [],
-      "contents": {"en": "This is a test."},
-      "data": {"foo": "bar"},
+      "contents": {"en": "Fuck you this is a test."},
+      "data": {"userID": numb},
       "headings": {"en": numb},
       "filter": [
         {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
@@ -122,11 +124,14 @@ class _Profile extends State<Profile> {
     var repo =
         await http.post(url, headers: headers, body: json.encode(contents));
 
-    await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
+    // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
+    print(data.toString());
     print(tags);
     print(sendtag);
     print(playerId);
     print(repo.body);
+  
+    
   }
 
   @override

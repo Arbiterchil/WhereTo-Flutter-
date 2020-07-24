@@ -28,7 +28,7 @@ class _TransactionListState extends State<TransactionList> {
   @override
   void setState(fn) {
     super.setState(fn);
-    getUserLocation();
+    // getUserLocation();
   }
 
   getUserLocation() async {
@@ -84,6 +84,7 @@ class _TransactionListState extends State<TransactionList> {
                   padding: EdgeInsets.all(20),
                   itemCount: snapshot.length,
                   itemBuilder: (context, index) {
+
                     return Padding(
                       padding: EdgeInsets.all(10),
                       child: Stack(
@@ -241,43 +242,62 @@ class _TransactionListState extends State<TransactionList> {
                     // final c =<LatLng>[];
                     // final destination = geodesy.pointsInRange(point, c, 100);
                     // print("Points: ${destination} ${destination}");
-                    // var id;
-                    // var quantity;
-                    // Map<String, dynamic> string;
-                    // Map<String, dynamic> post;
-                    // List<dynamic> order =[];
-                    // SharedPreferences localStorage = await SharedPreferences.getInstance();
-                    // var userJson = localStorage.getString('user');
-                    // var user = json.decode(userJson);
+                    var id;
+                    var quantity;
+                    Map<String, dynamic> string;
+                    Map<String, dynamic> post;
+                    Map<String, int> converted ={};
+                    List<dynamic> order =[];
+                    List<dynamic> result =[];
+                    SharedPreferences localStorage = await SharedPreferences.getInstance();
+                    var userJson = localStorage.getString('user');
+                    var user = json.decode(userJson);
 
-                    //   snapshot.forEach((element)async {
-                    //     setState(() {
-                    //       id=element.id;
-                    //       quantity =element.quantity;
-                    //       string ={
-                    //       'menuId': '$id', 'quantity': '$quantity'
-                    //       };
-                    //       order.add(string);
-                    //     });
+                      snapshot.forEach((element)async {
+                        setState(() {
+                          id=element.id;
+                          quantity =element.quantity;
 
-                    //     });
-                    //     // print(order);
-                    //     setState(() {
-                    //       post ={
-                    //         'userId': user['id'],
-                    //         'restaurantId': this.widget.restauID,
-                    //          'order':order,
-                    //          "deliveryAddress": "Davao"
-                    //       };
-                    //       // print(post);
-                    //     });
-                    //     var res =await ApiCall().postData(post, '/putOrder');
-                    //     if(res.statusCode ==200){
-                    //     var data =json.decode(res.body);
-                    //     print(data);
-                    //     print("Success");
+                          string ={
+                          'menuId': '$id', 'quantity': '$quantity'
+                          };
+                         order.add(string);
+              
+                        });
+                        });
+                        for(int z=0;z<order.length;z++){
+                          var item =order[z];
+                          if(converted.containsKey(item['menuId'])){
+                            converted[item['menuId']] +=int.parse(item['quantity']);
+                          }else{
+                            converted[item['menuId']] =int.parse(item['quantity']);
+                          }
+                          
+                        }
+                        converted.forEach((key, value) {
+                          result.add({
+                            "menuId": key,
+                            "quantity": value
+                          });
+                        });
+                        
+                        print(result);
+                        setState(() {
+                          post ={
+                            'userId': user['id'],
+                            'restaurantId': this.widget.restauID,
+                             'order':result,
+                             "deliveryAddress": "Davao"
+                          };
+                          // print(post);
+                        });
+                        var res =await ApiCall().postData(post, '/putOrder');
+                        if(res.statusCode ==200){
+                        var data =json.decode(res.body);
+                        print(data);
+                        print("Success");
 
-                    //     }
+                      }
                     // final street = "Penongs Quirante II";
                     // final query ="Penongs $street, Tagum, Davao del Norte";
                     // final coordinates4 =new Coordinates(7.4281297, 125.8066161);
@@ -290,50 +310,61 @@ class _TransactionListState extends State<TransactionList> {
                     // var queryaddresses =await Geocoder.local.findAddressesFromQuery(query);
                     // var second =queryaddresses.first;
 
-                    await OneSignal.shared.setLocationShared(true);
-                    await OneSignal.shared.promptLocationPermission();
-                    await OneSignal.shared
-                        .init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+                    // await OneSignal.shared.setLocationShared(true);
+                    // await OneSignal.shared.promptLocationPermission();
+                    // await OneSignal.shared
+                    //     .init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+                    // OneSignal.shared.setInFocusDisplayType(
+                    //     OSNotificationDisplayType.notification);
+                    // OneSignal.shared.setNotificationReceivedHandler(
+                    //     (OSNotification notification) {
+                    //   setState(() {
+                    //     //  constant = notification.payload.additionalData;
+                    //   });
+                    // });
 
-                    await OneSignal.shared.setSubscription(true);
-                    var tags = await OneSignal.shared.getTags();
-                    var sendtag =
-                        await OneSignal.shared.sendTags({'UR': 'TRUE'});
-                    var status =
-                        await OneSignal.shared.getPermissionSubscriptionState();
+                    // await OneSignal.shared.setSubscription(true);
+                    // var tags = await OneSignal.shared.getTags();
+                    // var sendtag =
+                    //     await OneSignal.shared.sendTags({'UR': 'TRUE'});
+                    // var status =
+                    //     await OneSignal.shared.getPermissionSubscriptionState();
 
-                    String url = 'https://onesignal.com/api/v1/notifications';
-                    var playerId = status.subscriptionStatus.userId;
+                    // String url = 'https://onesignal.com/api/v1/notifications';
+                    // var playerId = status.subscriptionStatus.userId;
 
-                    var numb = "2";
-                    var contents = {
-                      "include_player_ids": [playerId],
-                      "include_segments": ["All"],
-                      "excluded_segments": [],
-                      "contents": {"en": "This is a test."},
-                      "headings": {"en": numb},
-                      "filter": [
-                        {
-                          "field": "tag",
-                          "key": "UR",
-                          "relation": "=",
-                          "value": "TRUE"
-                        },
-                      ],
-                      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-                    };
-                    Map<String, String> headers = {
-                      'Content-Type': 'application/json',
-                      'authorization':
-                          'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-                    };
-                    var repo = await http.post(url,
-                        headers: headers, body: json.encode(contents));
+                    // var numb = "2";
+                    // var contents = {
+                    //   "include_player_ids": [playerId],
+                    //   "include_segments": ["All"],
+                    //   "excluded_segments": [],
+                    //   "contents": {"en": "This is a test."},
+                    //   "data": {"foo": "bar"},
+                    //   "headings": {"en": numb},
+                    //   "filter": [
+                    //     {
+                    //       "field": "tag",
+                    //       "key": "UR",
+                    //       "relation": "=",
+                    //       "value": "TRUE"
+                    //     },
+                    //   ],
+                    //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+                    // };
+                    // Map<String, String> headers = {
+                    //   'Content-Type': 'application/json',
+                    //   'authorization':
+                    //       'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+                    // };
+                    // var repo = await http.post(url,
+                    //     headers: headers, body: json.encode(contents));
 
-                    // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
-                    print(tags);
-                    print(sendtag);
-                    print(repo.body);
+                    // await OneSignal.shared
+                    //     .deleteTags(["userID", "2", "transactionID", "2"]);
+                    // print(tags);
+                    // print(sendtag);
+                    // print(playerId);
+                    // print(repo.body);
                   },
                 ),
               ),
