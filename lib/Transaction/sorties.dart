@@ -30,7 +30,7 @@ BoxDecoration morph =BoxDecoration(
 
 BoxDecoration morphInvert =BoxDecoration(
   borderRadius: BorderRadius.circular(15),
-  color: blueMCL,
+  color: Colors.grey[300],
   boxShadow: [
     BoxShadow(
       color: blueMCL,
@@ -45,7 +45,7 @@ BoxDecoration morphInvertActive=morphInvert.copyWith(color: mCC);
 
 BoxDecoration btn =BoxDecoration(
   borderRadius: BorderRadius.circular(5),
-  color: mC,
+  color: Colors.grey[300],
   boxShadow: [
     BoxShadow(
       color: mCD,

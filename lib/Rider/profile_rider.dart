@@ -257,7 +257,7 @@ void configSignal() async {
                                   iconSize: 30.0,
                                   onTap: (){
                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                          return RiderTransaction(number: constant['id'].toString(),);
+                                          return RiderTransaction();
                                           }));
                                   },
                                 ),

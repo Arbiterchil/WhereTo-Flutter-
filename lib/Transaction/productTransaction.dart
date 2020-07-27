@@ -1,5 +1,6 @@
 import 'dart:convert';
 // import 'package:geodesy/geodesy.dart';
+import 'package:WhereTo/Transaction/button_deisngtransac.dart';
 import 'package:WhereTo/Transaction/morpling.dart';
 import 'package:WhereTo/Transaction/payload.dart';
 import 'package:WhereTo/Transaction/sorties.dart';
@@ -424,6 +425,7 @@ class _TransactionListState extends State<TransactionList> {
                                 showCupertinoModalBottomSheet(
                                   expand: true,
                                   elevation: 10.5,
+                                  backgroundColor: Colors.grey[300],
                                   context: context, builder: (context, scrollController){
                                       return Container(
                                           child: Column(
@@ -434,41 +436,81 @@ class _TransactionListState extends State<TransactionList> {
                                                 "Checkout",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w700,
-                                                    color: fCL),
+                                                    color: Colors.black12,
+                                                    
+                                                    fontSize: 25.0,
+                                                    fontFamily: 'Opensans'),
                                               ),
                                               Padding(
-                                                padding: EdgeInsets.all(10),
+                                                padding: const EdgeInsets.all(25.0),
                                                 child: Container(
-                                                  height: 150,
-                                                  width: double.infinity,
+                                                  height: 150.0,
+                                                  width: MediaQuery.of(context).size.width,
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                    color: mC,
+                                                  color: Colors.grey[300],
+                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey[500],
+                                                      offset: Offset(4.0, 4.0),
+                                                      blurRadius: 15.0,
+                                                      spreadRadius: 1.0
+
+                                                    ),
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      offset: Offset(-4.0, -4.0),
+                                                      blurRadius: 15.0,
+                                                      spreadRadius: 1.0
+                                                    )
+                                                  ],  
                                                   ),
-                                                  child: Card(
-                                                    color: mC,
-                                                    elevation: 15.0,
-                                                  ),
+
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.all(10),
+                                                ),
+                                              // Padding(
+                                              //   padding: EdgeInsets.all(10),
+                                              //   child: Container(
+                                              //     height: 150,
+                                              //     width: double.infinity,
+                                              //     decoration: BoxDecoration(
+                                              //       borderRadius:
+                                              //           BorderRadius.circular(
+                                              //               30,),
+                                              //       color: mC,
+
+                                              //     ),
+                                              //     child: Card(
+                                              //       color: mC,
+                                              //       elevation: 15.0,
+                                              //     ),
+                                              //   ),
+                                              // ),
+                                               Padding(
+                                                padding: const EdgeInsets.all(25.0),
                                                 child: Container(
-                                                  height: 55,
-                                                  width: double.infinity,
+                                                  height: 55.0,
+                                                  width: MediaQuery.of(context).size.width,
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                    color: mC,
+                                                  color: Colors.grey[300],
+                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey[500],
+                                                      offset: Offset(4.0, 4.0),
+                                                      blurRadius: 15.0,
+                                                      spreadRadius: 1.0
+
+                                                    ),
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      offset: Offset(-4.0, -4.0),
+                                                      blurRadius: 15.0,
+                                                      spreadRadius: 1.0
+                                                    )
+                                                  ],  
                                                   ),
-                                                  child: Card(
-                                                    color: mC,
-                                                    elevation: 15.0,
-                                                    child: Container(
-                                                      child: BlocConsumer<
+                                                  child: BlocConsumer<
                                                           OrderBloc,
                                                           List<
                                                               TransactionOrders>>(
@@ -492,7 +534,7 @@ class _TransactionListState extends State<TransactionList> {
                                                                 color: fCD,
                                                                 letterSpacing:
                                                                     2,
-                                                                fontSize: 25,
+                                                                fontSize: 18,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w700),
@@ -506,31 +548,86 @@ class _TransactionListState extends State<TransactionList> {
                                                           // SnackBar(content: Text("Order Remove")));
                                                         },
                                                       ),
-                                                    ),
-                                                  ),
+
                                                 ),
-                                              ),
+                                                ),
+                                              // Padding(
+                                              //   padding: EdgeInsets.all(10),
+                                              //   child: Container(
+                                              //     height: 55,
+                                              //     width: double.infinity,
+                                              //     decoration: BoxDecoration(
+                                              //       borderRadius:
+                                              //           BorderRadius.circular(
+                                              //               30),
+                                              //       color: mC,
+                                              //     ),
+                                              //     child: Card(
+                                              //       color: mC,
+                                              //       elevation: 15.0,
+                                              //       child: Container(
+                                              //         child: BlocConsumer<
+                                              //             OrderBloc,
+                                              //             List<
+                                              //                 TransactionOrders>>(
+                                              //           builder: (context,
+                                              //               datasnapshot) {
+                                              //             int total = 0;
+                                              //             for (int z = 0;
+                                              //                 z <
+                                              //                     datasnapshot
+                                              //                         .length;
+                                              //                 z++) {
+                                              //               total += snapshot[z]
+                                              //                       .price *
+                                              //                   snapshot[z]
+                                              //                       .quantity;
+                                              //             }
+                                              //             return Center(
+                                              //                 child: Text(
+                                              //               "Sub Total: $total",
+                                              //               style: GoogleFonts.archivo(
+                                              //                   color: fCD,
+                                              //                   letterSpacing:
+                                              //                       2,
+                                              //                   fontSize: 25,
+                                              //                   fontWeight:
+                                              //                       FontWeight
+                                              //                           .w700),
+                                              //             ),
+                                              //             );
+                                              //           },
+                                              //           listener: (BuildContext
+                                              //                   context,
+                                              //               order) {
+                                              //             // Scaffold.of(context).showSnackBar(
+                                              //             // SnackBar(content: Text("Order Remove")));
+                                              //           },
+                                              //         ),
+                                              //       ),
+                                              //     ),
+                                              //   ),
+                                              // ),
                                               Padding(
-                                                padding: EdgeInsets.all(20),
+                                                padding: const EdgeInsets.all(25),
                                                 child: Align(
                                                   alignment: Alignment.bottomCenter,
-                                                  child: DesignButton(
+                                                  child: ButtonPlaceOrder(
                                                     height: 55,
                                                     width: double.infinity,
-                                                    color: Color(0xFF398AE5),
+                                                    color: Colors.grey[500],
                                                     offblackBlue: Offset(-4, -4),
                                                     offsetBlue: Offset(4, 4),
                                                     blurlevel: 4.0,
                                                     icon: Icons.add_shopping_cart,
                                                     iconSize: 30.0,
-                                                    onTap: () async {
-                                                      // Geodesy geodesy = Geodesy();
+                                                    onTap: () async{
+                                                       // Geodesy geodesy = Geodesy();
                                                       // Position _currentPosition;
                                                       // final point =LatLng(7.4281587, 125.8067275);
                                                       // final c =<LatLng>[];
                                                       // final destination = geodesy.pointsInRange(point, c, 100);
                                                       // print("Points: ${destination} ${destination}");
-
                                                       var id;
                                                       var quantity;
                                                       Map<String, dynamic> string;
@@ -592,71 +689,155 @@ class _TransactionListState extends State<TransactionList> {
                                                         };
                                                         print(post);
                                                       });
-                                                      // var res = await ApiCall().postData(post, '/putOrder');
-                                                      // if (res.statusCode == 200) {
-                                                      //   var data = json.decode(res.body);
-                                                      //   print(data);
-                                                      //   print("Success");
-                                                      // }
-                                                      // await OneSignal.shared.setLocationShared(true);
-                                                      // await OneSignal.shared.promptLocationPermission();
-                                                      // await OneSignal.shared
-                                                      //     .init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-                                                      // OneSignal.shared.setInFocusDisplayType(
-                                                      //     OSNotificationDisplayType.notification);
-                                                      // OneSignal.shared.setNotificationReceivedHandler(
-                                                      //     (OSNotification notification) {
-                                                      //   setState(() {
-                                                      //     //  constant = notification.payload.additionalData;
-                                                      //   });
-                                                      // });
-
-                                                      // await OneSignal.shared.setSubscription(true);
-                                                      // var tags = await OneSignal.shared.getTags();
-                                                      // var sendtag =
-                                                      //     await OneSignal.shared.sendTags({'UR': 'TRUE'});
-                                                      // var status =
-                                                      //     await OneSignal.shared.getPermissionSubscriptionState();
-
-                                                      // String url = 'https://onesignal.com/api/v1/notifications';
-                                                      // var playerId = status.subscriptionStatus.userId;
-
-                                                      // var numb = "2";
-                                                      // var contents = {
-                                                      //   "include_player_ids": [playerId],
-                                                      //   "include_segments": ["All"],
-                                                      //   "excluded_segments": [],
-                                                      //   "contents": {"en": "This is a test."},
-                                                      //   "data": {"foo": "bar"},
-                                                      //   "headings": {"en": numb},
-                                                      //   "filter": [
-                                                      //     {
-                                                      //       "field": "tag",
-                                                      //       "key": "UR",
-                                                      //       "relation": "=",
-                                                      //       "value": "TRUE"
-                                                      //     },
-                                                      //   ],
-                                                      //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-                                                      // };
-                                                      // Map<String, String> headers = {
-                                                      //   'Content-Type': 'application/json',
-                                                      //   'authorization':
-                                                      //       'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-                                                      // };
-                                                      // var repo = await http.post(url,
-                                                      //     headers: headers, body: json.encode(contents));
-
-                                                      // await OneSignal.shared
-                                                      //     .deleteTags(["userID", "2", "transactionID", "2"]);
-                                                      // print(tags);
-                                                      // print(sendtag);
-                                                      // print(playerId);
-                                                      // print(repo.body);
                                                     },
                                                   ),
-                                                ),
-                                              ),
+                                                ),),
+                                              // Padding(
+                                              //   padding: EdgeInsets.all(20),
+                                              //   child: Align(
+                                              //     alignment: Alignment.bottomCenter,
+                                              //     child: DesignButton(
+                                              //       height: 55,
+                                              //       width: double.infinity,
+                                              //       color: Color(0xFF398AE5),
+                                              //       offblackBlue: Offset(-4, -4),
+                                              //       offsetBlue: Offset(4, 4),
+                                              //       blurlevel: 4.0,
+                                              //       icon: Icons.add_shopping_cart,
+                                              //       iconSize: 30.0,
+                                              //       onTap: () async {
+                                              //         // Geodesy geodesy = Geodesy();
+                                              //         // Position _currentPosition;
+                                              //         // final point =LatLng(7.4281587, 125.8067275);
+                                              //         // final c =<LatLng>[];
+                                              //         // final destination = geodesy.pointsInRange(point, c, 100);
+                                              //         // print("Points: ${destination} ${destination}");
+                                              //         var id;
+                                              //         var quantity;
+                                              //         Map<String, dynamic> string;
+                                              //         Map<String, dynamic> post;
+                                              //         Map<String, int> converted = {};
+                                              //         List<dynamic> order = [];
+                                              //         List<dynamic> result = [];
+                                              //         SharedPreferences localStorage =
+                                              //             await SharedPreferences
+                                              //                 .getInstance();
+                                              //         var userJson = localStorage
+                                              //             .getString('user');
+                                              //         var user =
+                                              //             json.decode(userJson);
+
+                                              //         snapshot
+                                              //             .forEach((element) async {
+                                              //           setState(() {
+                                              //             id = element.id;
+                                              //             quantity = element.quantity;
+
+                                              //             string = {
+                                              //               'menuId': '$id',
+                                              //               'quantity': '$quantity'
+                                              //             };
+                                              //             order.add(string);
+                                              //           });
+                                              //         });
+                                              //         for (int z = 0;
+                                              //             z < order.length;
+                                              //             z++) {
+                                              //           var item = order[z];
+                                              //           if (converted.containsKey(
+                                              //               item['menuId'])) {
+                                              //             converted[item['menuId']] +=
+                                              //                 int.parse(
+                                              //                     item['quantity']);
+                                              //           } else {
+                                              //             converted[item['menuId']] =
+                                              //                 int.parse(
+                                              //                     item['quantity']);
+                                              //           }
+                                              //         }
+                                              //         converted.forEach((key, value) {
+                                              //           result.add({
+                                              //             "menuId": key,
+                                              //             "quantity": value
+                                              //           });
+                                              //         });
+
+                                              //         print(result);
+                                              //         setState(() {
+                                              //           post = {
+                                              //             'userId': user['id'],
+                                              //             'restaurantId':
+                                              //                 this.widget.restauID,
+                                              //             'order': result,
+                                              //             "deliveryAddress": "Davao"
+                                              //           };
+                                              //           print(post);
+                                              //         });
+                                              //         // var res = await ApiCall().postData(post, '/putOrder');
+                                              //         // if (res.statusCode == 200) {
+                                              //         //   var data = json.decode(res.body);
+                                              //         //   print(data);
+                                              //         //   print("Success");
+                                              //         // }
+                                              //         // await OneSignal.shared.setLocationShared(true);
+                                              //         // await OneSignal.shared.promptLocationPermission();
+                                              //         // await OneSignal.shared
+                                              //         //     .init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+                                              //         // OneSignal.shared.setInFocusDisplayType(
+                                              //         //     OSNotificationDisplayType.notification);
+                                              //         // OneSignal.shared.setNotificationReceivedHandler(
+                                              //         //     (OSNotification notification) {
+                                              //         //   setState(() {
+                                              //         //     //  constant = notification.payload.additionalData;
+                                              //         //   });
+                                              //         // });
+
+                                              //         // await OneSignal.shared.setSubscription(true);
+                                              //         // var tags = await OneSignal.shared.getTags();
+                                              //         // var sendtag =
+                                              //         //     await OneSignal.shared.sendTags({'UR': 'TRUE'});
+                                              //         // var status =
+                                              //         //     await OneSignal.shared.getPermissionSubscriptionState();
+
+                                              //         // String url = 'https://onesignal.com/api/v1/notifications';
+                                              //         // var playerId = status.subscriptionStatus.userId;
+
+                                              //         // var numb = "2";
+                                              //         // var contents = {
+                                              //         //   "include_player_ids": [playerId],
+                                              //         //   "include_segments": ["All"],
+                                              //         //   "excluded_segments": [],
+                                              //         //   "contents": {"en": "This is a test."},
+                                              //         //   "data": {"foo": "bar"},
+                                              //         //   "headings": {"en": numb},
+                                              //         //   "filter": [
+                                              //         //     {
+                                              //         //       "field": "tag",
+                                              //         //       "key": "UR",
+                                              //         //       "relation": "=",
+                                              //         //       "value": "TRUE"
+                                              //         //     },
+                                              //         //   ],
+                                              //         //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+                                              //         // };
+                                              //         // Map<String, String> headers = {
+                                              //         //   'Content-Type': 'application/json',
+                                              //         //   'authorization':
+                                              //         //       'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+                                              //         // };
+                                              //         // var repo = await http.post(url,
+                                              //         //     headers: headers, body: json.encode(contents));
+
+                                              //         // await OneSignal.shared
+                                              //         //     .deleteTags(["userID", "2", "transactionID", "2"]);
+                                              //         // print(tags);
+                                              //         // print(sendtag);
+                                              //         // print(playerId);
+                                              //         // print(repo.body);
+                                              //       },
+                                              //     ),
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                         
