@@ -10,8 +10,7 @@ final double width ;
 final IconData icon;
 final double iconSize;
 final Function onTap;
-
-  const DesignButton({Key key, this.color, this.blurlevel, this.offsetBlue, this.offblackBlue, this.height, this.width, this.icon, this.iconSize, this.onTap}) : super(key: key);
+const DesignButton({Key key, this.color, this.blurlevel, this.offsetBlue, this.offblackBlue, this.height, this.width, this.icon, this.iconSize, this.onTap}) : super(key: key);
 
  
   @override
