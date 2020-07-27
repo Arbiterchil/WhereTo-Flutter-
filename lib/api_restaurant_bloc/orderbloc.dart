@@ -12,12 +12,10 @@ class OrderBloc extends Bloc<Computation, List<TransactionOrders>>{
      
      case EventType.add:
       List<TransactionOrders> order =List.from(state);
-      if(event.transactionOrders !=null){
        order.add(event.transactionOrders);
-       
-       
-       
-      }
+
+      
+      
       yield order;
       break;
       case EventType.deleteAll:
