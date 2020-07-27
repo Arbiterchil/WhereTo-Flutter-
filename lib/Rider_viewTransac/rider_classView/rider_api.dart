@@ -3,23 +3,39 @@ import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_class.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_reponse.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
 
 class RiderApi {
+  
 
+  int index;
   var constant;
-
+  var finalID;
   Future<RiderResponse> getViewTransac() async{
-OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
-      OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
-          
-            constant = notification.payload.title;
-          
-       });
-    try{
+    
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared
+        .setNotificationReceivedHandler((OSNotification notification) {
+     
+        constant =notification.payload.additionalData;
       
+    });
+    if(constant == null){
 
-       print(constant);
-        final response = await ApiCall().viewTransac('/getTransactionDetails/$constant');
+        finalID= "0";
+
+    }else{
+
+        finalID = constant['userID'].toString();
+    }
+
+    try{
+    
+        print(finalID);
+        final response = await ApiCall().viewTransac('/getTransactionDetails/$finalID');
         List<RiderViewClass> riderme = [];
         
         var body = json.decode(response.body);

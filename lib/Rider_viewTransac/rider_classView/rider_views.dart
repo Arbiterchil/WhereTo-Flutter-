@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
+import 'package:WhereTo/Rider_ViewMenuTransac/view_MenuTransac.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_class.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_reponse.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_stream.dart';
 import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
+import 'package:WhereTo/api/api.dart';
 import 'package:flutter/material.dart';
 
 class RiderViewing extends StatefulWidget {
@@ -10,6 +15,10 @@ class RiderViewing extends StatefulWidget {
 }
 
 class _RiderViewingState extends State<RiderViewing> {
+
+  var totalAll;
+  var priceTotal = 0 ;
+  var totals;
 
   @override
   void initState() {
@@ -113,8 +122,41 @@ class _RiderViewingState extends State<RiderViewing> {
                         address: rs[index].address,
                         deliveryAddress: rs[index].deliveryAddress,
                         restaurantName: rs[index].restaurantName,
-                        onTap: (){
-                          
+                        onTap: () async {
+                           final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/${rs[index].id.toString()}');
+                      
+                            var body = json.decode(response.body);
+                            for(var body in body){
+                                RiverMenu riverMenu = RiverMenu(
+                                  menuName: body["menuName"],
+                            description: body["description"],
+                            price: body["price"],
+                            quantity: body["quantity"],
+                                );
+                                List prices =  [riverMenu.price] ;
+                                List quans =  [riverMenu.quantity];
+                                for(var i = 0 ; i < prices.length; i++){
+                                  for(var x = 0 ; x < quans.length ; x++){
+                                      totalAll = prices[i]*quans[x];
+                                    List all =  [totalAll]; 
+                                    for(var z = 0 ; z < all.length; z++){
+                                      
+                                          priceTotal = priceTotal+all[z];
+                                          
+                            
+                                          
+                                    }
+                                }
+                                }           
+                            }
+                            totals = priceTotal;
+                            print(totals);
+                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                                return ViewMenuOnTransac(
+                                                  getID: rs[index].id.toString(),
+                                                  gotTotal: totals.toString(),);
+                                              }));
+
                         },
                       ),
                      ],

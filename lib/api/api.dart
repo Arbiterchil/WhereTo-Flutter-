@@ -66,7 +66,14 @@ class ApiCall{
     );
   }
 
-
+viewMenuTransac(api) async {
+    var fullurl = url+api;
+    return http.get(
+    fullurl,
+    headers: _setHeaders()
+    );
+  }
+  
   _setHeaders() => {
   'Content-type' : 'application/json',
         'Accept' : 'application/json',
