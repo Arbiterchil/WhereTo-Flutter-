@@ -80,6 +80,39 @@ BoxDecoration eCBox = BoxDecoration(
   ],
 );
 
+BoxDecoration menuBox = BoxDecoration(
+  color: b1,
+  boxShadow: [
+    BoxShadow(
+      color: sb3,
+      offset: Offset(10, 10),
+      blurRadius: 10
+    ),
+    BoxShadow(
+      color: white,
+      offset: Offset(-10, -10),
+      blurRadius: 10
+    )
+  ],
+);
+
+BoxDecoration transacBox = BoxDecoration(
+  color: b1,
+  boxShadow: [
+    BoxShadow(
+      color: sb3,
+      offset: Offset(6, 6),
+      blurRadius: 6
+    ),
+    BoxShadow(
+      color: white,
+      offset: Offset(-6, -6),
+      blurRadius: 6
+    )
+  ],
+);
+
+
 
 BoxDecoration eMBox = BoxDecoration(
   borderRadius: BorderRadius.circular(15),

@@ -1,3 +1,4 @@
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 
 class MenuDesign extends StatefulWidget {
@@ -20,32 +21,49 @@ class _MenuDesignState extends State<MenuDesign> {
   Widget build(BuildContext context) {
     return Container(
        height: 180.0,
-       width: 120.0,
-       decoration: BoxDecoration(
-               shape: BoxShape.rectangle,
-               color: Color(0xfff7f7f7),
-               borderRadius: BorderRadius.all(Radius.circular(20)),
-             ),
+       width: 180.0,
+       decoration: menuBox,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            textDirection: TextDirection.ltr,
               children: <Widget>[
                 Container(
                   height: 50.0,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                  color: Colors.amber[300],
+                  color: Color(0xFF398AE5),
                   // Color(0xFF398AE5),
                   // Colors.white,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
+                 
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Icon(Icons.restaurant_menu,color: Colors.white,),),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset("asset/img/logo.png"),
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(
+                  height: 6.0,
+                  thickness: 2,
+                  color: Colors.white,
+                  indent: 10.0,
+                  endIndent: 10.0,
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Container(
+                  padding: const EdgeInsets.all(10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         textDirection: TextDirection.ltr,
@@ -53,7 +71,7 @@ class _MenuDesignState extends State<MenuDesign> {
                           Text(
                             widget.menuname,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: 11.0,
                           fontFamily: 'OpenSans')
@@ -63,7 +81,7 @@ class _MenuDesignState extends State<MenuDesign> {
                             widget.description,
                             maxLines: 2,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: 11.0,
                           fontFamily: 'OpenSans')
@@ -72,7 +90,7 @@ class _MenuDesignState extends State<MenuDesign> {
                           Text("Price : "+
                             widget.price,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: 11.0,
                           fontFamily: 'OpenSans')
@@ -81,7 +99,7 @@ class _MenuDesignState extends State<MenuDesign> {
                           Text("Quantity : "+
                             widget.quantity,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: 11.0,
                           fontFamily: 'OpenSans')
@@ -91,7 +109,7 @@ class _MenuDesignState extends State<MenuDesign> {
                         ],
                       ),
                   ),
-                  )
+                  
               ],
           
           ),     

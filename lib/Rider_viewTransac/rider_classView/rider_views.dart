@@ -154,7 +154,9 @@ class _RiderViewingState extends State<RiderViewing> {
                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                                                 return ViewMenuOnTransac(
                                                   getID: rs[index].id.toString(),
-                                                  gotTotal: totals.toString(),);
+                                                  gotTotal: totals.toString(),
+                                                  deliverTo: rs[index].deliveryAddress.toString(),
+                                                  restaurantName: rs[index].restaurantName.toString(),);
                                               }));
 
                         },

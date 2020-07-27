@@ -412,6 +412,7 @@ class _TransactionListState extends State<TransactionList> {
                         alignment: Alignment.bottomRight,
                         child: Stack(
                           children: <Widget>[
+<<<<<<< HEAD
                             Padding(
                               padding: EdgeInsets.only(bottom: 20),
                                 child: Container(
@@ -448,6 +449,53 @@ class _TransactionListState extends State<TransactionList> {
                                                         offset: Offset(4.0, 4.0),
                                                         blurRadius: 15.0,
                                                         spreadRadius: 1.0
+=======
+                            Container(
+                              height: 55,
+                              width: double.infinity,
+                              child: DesignButton(
+                                color: Color(0xFF398AE5),
+                                offblackBlue: Offset(-4, -4),
+                                offsetBlue: Offset(4, 4),
+                                blurlevel: 4.0,
+                                icon: Icons.add_shopping_cart,
+                                iconSize: 30.0,
+                                onTap: () async {
+                                showCupertinoModalBottomSheet(
+                                  expand: true,
+                                  elevation: 10.5,
+                                  backgroundColor: Colors.grey[300],
+                                  context: context, builder: (context, scrollController){
+                                      return Container(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                
+                                            children: <Widget>[
+                                              Text(
+                                                "Checkout",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.black12,
+                                                    
+                                                    fontSize: 25.0,
+                                                    fontFamily: 'Opensans'),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(25.0),
+                                                child: Container(
+                                                  height: 150.0,
+                                                  width: MediaQuery.of(context).size.width,
+                                                  decoration: BoxDecoration(
+                                                  color: Colors.grey[300],
+                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey[500],
+                                                      offset: Offset(4.0, 4.0),
+                                                      blurRadius: 15.0,
+                                                      spreadRadius: 1.0
+>>>>>>> 61806af... nara tol push nako naa sabttnAssign ang katung naay label
 
                                                       ),
                                                       BoxShadow(
