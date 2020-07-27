@@ -6,10 +6,9 @@ import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_views.dart';
 import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../designbuttons.dart';
-
-
 
 class RiderTransaction extends StatefulWidget {
 
@@ -17,50 +16,36 @@ class RiderTransaction extends StatefulWidget {
 
   const RiderTransaction({Key key, this.number}) : super(key: key);
 
-
-
-
   @override
   _RiderTransactionState createState() => _RiderTransactionState();
 }
-
-  
-
-  
-
-
 class _RiderTransactionState extends State<RiderTransaction> {
 
-  var constants;
+  List<String> constants;
 
   @override
   void initState() {
-    
     super.initState();
+    // shared();
+    // _getUseID();
   }
 
-  Future<List<RiderViewClass>> getTransac() async {
+  // void shared() async{
+    
+  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //   localStorage.setStringList('userID', widget.number ); 
 
-        
+  // }
 
-        final response = await ApiCall().viewTransac('/getTransactionDetails/${widget.number}');
-        List<RiderViewClass> riderme = [];
-        
-        var body = json.decode(response.body);
-        for (var body in body){
-            RiderViewClass riderViewClass = RiderViewClass
-          (
-            id: body["id"],
-            name: body["name"],
-            restaurantName: body["restaurantName"],
-            address: body["address"],
-            deliveryAddress: body["deliveryAddress"],);
+//   void _getUseID() async{
 
-            riderme.add(riderViewClass);
-        }
-        print(riderme.length);
-        return riderme;
-  }
+//   SharedPreferences local = await SharedPreferences.getInstance();
+//   var stringId = local.getStringList('userID');
+//   setState(() {
+//     constants = stringId;
+//   });
+
+// }  
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +99,10 @@ class _RiderTransactionState extends State<RiderTransaction> {
                                           // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                                           //       return SearchDepo();
                                           //     }));
+                                           
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                          return RiderTransaction();
+                                          }));
                                         },
                                       ),
                                     ),
@@ -121,8 +110,9 @@ class _RiderTransactionState extends State<RiderTransaction> {
                                 ),
                               ),
                      SizedBox(height: 40.0,),
-                    //  RiderViewing(),
-                    _viewRider(),
+                     
+                    RiderViewing(),
+                    // _viewRider(),
                   ],
                 ),
               ),
@@ -134,61 +124,61 @@ class _RiderTransactionState extends State<RiderTransaction> {
     );
   }
 
-  Widget _viewRider(){
-        return Container(
-          child: FutureBuilder(
-            future: getTransac(),
-            builder: (BuildContext context , AsyncSnapshot snapshot){
-                      if(snapshot.data == null){
-                  return Container(
-                    child: Center(
-                      child: Text("No Transaction Yet...",
-                      style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'OpenSans',
-              fontSize:  16.0,
-              fontWeight: FontWeight.normal
-            ),),    
-                    ),
-                  );
-                }else{
+  // Widget _viewRider(){
+  //       return Container(
+  //         child: FutureBuilder(
+  //           future: getTransac(),
+  //           builder: (BuildContext context , AsyncSnapshot snapshot){
+  //                     if(snapshot.data == null){
+  //                 return Container(
+  //                   child: Center(
+  //                     child: Text("No Transaction Yet...",
+  //                     style: TextStyle(
+  //             color: Colors.white,
+  //             fontFamily: 'OpenSans',
+  //             fontSize:  16.0,
+  //             fontWeight: FontWeight.normal
+  //           ),),    
+  //                   ),
+  //                 );
+  //               }else{
 
-                        return SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (context,index){
-                   return Column(
-                     children: <Widget>[
-                      ViewTransacRider(
-                        image: "asset/img/app.jpg",
-                        transacId: snapshot.data[index].id.toString(),
-                        name: snapshot.data[index].name,
-                        address: snapshot.data[index].address,
-                        deliveryAddress: snapshot.data[index].deliveryAddress,
-                        restaurantName: snapshot.data[index].restaurantName,
-                        onTap: (){
+  //                       return SingleChildScrollView(
+  //           physics: AlwaysScrollableScrollPhysics(),
+  //           child: Container(
+  //             height: MediaQuery.of(context).size.height,
+  //             width: MediaQuery.of(context).size.width,
+  //             child: ListView.builder(
+  //               itemCount: snapshot.data.length,
+  //               itemBuilder: (context,index){
+  //                  return Column(
+  //                    children: <Widget>[
+  //                     ViewTransacRider(
+  //                       image: "asset/img/app.jpg",
+  //                       transacId: snapshot.data[index].id.toString(),
+  //                       name: snapshot.data[index].name,
+  //                       address: snapshot.data[index].address,
+  //                       deliveryAddress: snapshot.data[index].deliveryAddress,
+  //                       restaurantName: snapshot.data[index].restaurantName,
+  //                       onTap: (){
                           
-                        },
-                      ),
-                     ],
-                   );
-                },
-                ),
-            ),
-          );
+  //                       },
+  //                     ),
+  //                    ],
+  //                  );
+  //               },
+  //               ),
+  //           ),
+  //         );
 
 
 
-                }
-            },
-          ),
-        );
+  //               }
+  //           },
+  //         ),
+  //       );
 
 
-  }
+  // }
 
 }

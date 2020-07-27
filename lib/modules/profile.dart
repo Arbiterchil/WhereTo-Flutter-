@@ -38,6 +38,7 @@ class _Profile extends State<Profile> {
     configSignal();
     super.initState();
     // getUserLocation();
+    
   }
 
   void _getUserInfo() async {
@@ -91,8 +92,8 @@ class _Profile extends State<Profile> {
     OneSignal.shared
         .setNotificationReceivedHandler((OSNotification notification) {
       setState(() {
-        //  constant = notification.payload.additionalData;
-        data =notification.payload.additionalData;
+         constant = notification.payload.additionalData;
+        // data =notification.payload.additionalData;
         
       });
     });
@@ -103,15 +104,15 @@ class _Profile extends State<Profile> {
 
     String url = 'https://onesignal.com/api/v1/notifications';
     var playerId = status.subscriptionStatus.userId;
-
-    var numb = "4";
+    var idChil = "1106b49d-60f0-435a-b44f-5d2f4849cb38";
+    var numb = "2";
     var contents = {
-      "include_player_ids": [playerId],
+      "include_player_ids": [idChil,playerId],
       "include_segments": ["Users Notif"],
       "excluded_segments": [],
       "contents": {"en": "Fuck you this is a test."},
       "data": {"userID": numb},
-      "headings": {"en": numb},
+      "headings": {"en": "Erchil Samsung"},
       "filter": [
         {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
       ],
@@ -125,17 +126,23 @@ class _Profile extends State<Profile> {
         await http.post(url, headers: headers, body: json.encode(contents));
 
     // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
-    print(data.toString());
-    print(tags);
+    
+    print(tags);  
     print(sendtag);
     print(playerId);
     print(repo.body);
+    print(constant['userID'].toString());
+    print(constant);    
+
+      }
+
+ 
+
   
-    
-  }
 
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
       backgroundColor: Color(0xFF398AE5),
       body: WillPopScope(

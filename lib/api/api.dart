@@ -65,6 +65,13 @@ class ApiCall{
     headers: _setHeaders()
     );
   }
+   viewMenuTransac(api) async {
+    var fullurl = url+api;
+    return http.get(
+    fullurl,
+    headers: _setHeaders()
+    );
+  }
 
 
   _setHeaders() => {
