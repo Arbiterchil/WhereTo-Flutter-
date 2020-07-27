@@ -60,13 +60,12 @@ class _ViewTransacRiderState extends State<ViewTransacRider> {
                       ),
                       ),
                       Divider(
-                        height: 5.0,
-                        thickness: 2.0,
-                        color: Colors.white,
-                        endIndent: 20.0,
-                        indent: 20.0,
+                    height: 6.0,
+                    thickness: 3,
+                    color: Colors.white,
+                    indent: 15.0,
+                    endIndent: 15.0,
                       ),
-                     
                       SizedBox(height: 10.0,),
                       Text("Restaurant: "+widget.restaurantName,
                       style: TextStyle(
