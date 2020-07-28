@@ -16,6 +16,14 @@ class ApiCall{
     );
   }
 
+  assignRiders(data,api) async{
+    var fullurl = url+api;
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+
  
 
   getData(api) async{
@@ -73,6 +81,11 @@ viewMenuTransac(api) async {
     headers: _setHeaders()
     );
   }
+
+
+
+
+
 
   _setHeaders() => {
   'Content-type' : 'application/json',

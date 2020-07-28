@@ -35,7 +35,8 @@ class RiderApi {
     try{
     
         print(finalID);
-        final response = await ApiCall().viewTransac('/getTransactionDetails/$finalID');
+        // final response = await ApiCall().viewTransac('/getTransactionDetails/$finalID');
+        final response = await ApiCall().viewTransac('/getTransactionDetails/2');
         List<RiderViewClass> riderme = [];
         
         var body = json.decode(response.body);

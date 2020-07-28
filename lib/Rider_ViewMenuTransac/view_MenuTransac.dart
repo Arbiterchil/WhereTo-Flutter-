@@ -36,6 +36,7 @@ var priceTotal = 0;
 var quantityTotal = 0;
 var totals;
 var userData;
+bool available = true;
 
 @override
   void initState() {
@@ -51,6 +52,7 @@ void _getUserInfo() async {
         userData = user;
       });
   }
+
 
 
 Future<List<RiverMenu>> getMenuTransac() async {
@@ -189,19 +191,22 @@ Future<List<RiverMenu>> getMenuTransac() async {
                                     ),
                                     Align(
                                       alignment: Alignment.topRight,
-                                      child: DesignButton(
-                                        height: 55,
-                                        width: 55,
-                                        color: Color(0xFF398AE5),
-                                        offblackBlue: Offset(-4, -4),
-                                        offsetBlue: Offset(4, 4),
-                                        blurlevel: 4.0,
-                                        icon: Icons.drive_eta,
-                                        iconSize: 30.0,
-                                        onTap: ()  {
-                                       
-                                     
-                                    },
+                                      child: Visibility(
+                                        visible: available,
+                                        child: DesignButton(
+                                          height: 55,
+                                          width: 55,
+                                          color: Color(0xFF398AE5),
+                                          offblackBlue: Offset(-4, -4),
+                                          offsetBlue: Offset(4, 4),
+                                          blurlevel: 4.0,
+                                          icon: Icons.drive_eta,
+                                          iconSize: 30.0,
+                                          onTap: (){
+                                            assign();
+                                            print(userData['id']);
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -248,7 +253,23 @@ Future<List<RiverMenu>> getMenuTransac() async {
 
   }
 
+  void assign() async {
 
+      var data = {
+        "transactionId" : '${widget.getID}',
+        "riderId" :  userData['id'],
+      };
+
+      var response = await ApiCall().assignRiders(data, '/assignRider');
+      var body = json.decode(response.body);
+      if(body == true){
+        print("TRUE");
+      }else{
+        print("FALSE");
+      }
+
+
+  }
 
 }
 
