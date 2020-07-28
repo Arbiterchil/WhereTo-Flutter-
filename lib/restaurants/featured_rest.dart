@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/restaurants/restaurant.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,9 +41,7 @@ class _FearturedRestaurantState extends State<FearturedRestaurant> {
           padding: const EdgeInsets.only(left: 10.0 , right: 10.0),
           child: _buildAxisHorin(),
           ),
-      
       );
-    
   }
  
   
@@ -77,18 +76,22 @@ class _FearturedRestaurantState extends State<FearturedRestaurant> {
                     child: Column(
                       children: <Widget>[
                          Container(
-                          width: 120.0,
-                          height: 140.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            shape: BoxShape.rectangle,
-                            image: DecorationImage(
-                              image: 
-                              AssetImage("asset/img/${snapshot.data[index].restaurantName}.png"),
-                              fit: BoxFit.cover,
+                           height: 145.0,
+                           width: 125.0,
+                           decoration: menuBox,
+                           child: Container(
+                            width: 120.0,
+                            height: 140.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              image: DecorationImage(
+                                image: 
+                                AssetImage("asset/img/${snapshot.data[index].restaurantName}.png"),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
                         ),
+                         ),
                         SizedBox(height: 10.0,),
                         Container(
                           width: 100.0,
@@ -96,9 +99,10 @@ class _FearturedRestaurantState extends State<FearturedRestaurant> {
                           maxLines: 2,
                           style: TextStyle(
                             height: 1.4,
-                            color: Colors.black,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 14.0
+                            fontSize: 14.0,
+                            fontFamily: 'Opensans'
                           ),
                           ),
                         ),
