@@ -445,10 +445,7 @@ void _signingIn() async {
       _showDial();
       throw Exception('Failed to Save');
     } 
-  }else{
-     _showDial();
-    throw Exception('Failed to Save');  
-        }
+  }
 
     
 

@@ -17,7 +17,7 @@ import 'package:location/location.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:snack/snack.dart';
+
 
 class TransactionList extends StatefulWidget {
   final String restauID;
@@ -33,7 +33,7 @@ class _TransactionListState extends State<TransactionList> {
   @override
   void setState(fn) {
     super.setState(fn);
-    // getUserLocation();
+    getUserLocation();
   }
 
   getUserLocation() async {
@@ -311,12 +311,7 @@ class _TransactionListState extends State<TransactionList> {
                                                                   )),
                                                             ),
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 5),
-                                                            child: Container(
-                                                              width: 100,
+                                                              Container(
                                                               child: Row(
                                                                 children: <
                                                                     Widget>[
@@ -395,7 +390,7 @@ class _TransactionListState extends State<TransactionList> {
                                                                 ],
                                                               ),
                                                             ),
-                                                          ),
+                                                        
                                                         ],
                                                       ),
                                                     )),
@@ -463,7 +458,7 @@ class _TransactionListState extends State<TransactionList> {
                                                         Padding(padding: EdgeInsets.all(15),
                                                           child: Builder(
                                                             builder: (context){
-                                                              Map<String, dynamic> string;
+                                                                Map<String, dynamic> string;
                                                                 Map<String, int> converted ={};
                                                                 List<dynamic> order =[];
                                                                 List<dynamic> result= [];
@@ -502,7 +497,7 @@ class _TransactionListState extends State<TransactionList> {
                                                                 return Center(
                                                                 child:Container(
                                                                 child: Text("${result[index]['name']} x${result[index]['quantity']}", style: TextStyle(
-                                                                  fontSize: 23,
+                                                                  fontSize: 15,
                                                                   color: fCD,
                                                                   decoration: TextDecoration.none,
                                                                   fontWeight: FontWeight.w500
