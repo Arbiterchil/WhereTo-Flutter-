@@ -84,7 +84,7 @@ class _CarouselState extends State<CarouselSex> {
                       margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 2.0 ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: cur == index ? Colors.amber : Color(0xFF3936ea),
+                        color: cur == index ? Colors.amber : Colors.white,
                       ),
                     );
                   }
