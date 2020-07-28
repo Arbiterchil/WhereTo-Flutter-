@@ -68,7 +68,11 @@ class _TransactionListState extends State<TransactionList> {
     setState(() {
       lat =currentLocation.latitude.toString();
       long =currentLocation.longitude.toString();
+
+      
+
     });
+    print(long+"-"+lat);
     return first;
   }
 
@@ -128,8 +132,9 @@ class _TransactionListState extends State<TransactionList> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 60),
+              padding: EdgeInsets.only(top: 56),
               child: Container(
+                width: MediaQuery.of(context).size.width,
                 child: BlocConsumer<OrderBloc, List<TransactionOrders>>(
                     buildWhen: (List<TransactionOrders> previous,
                         List<TransactionOrders> current) {
@@ -147,7 +152,6 @@ class _TransactionListState extends State<TransactionList> {
                         padding: EdgeInsets.only(bottom: 50),
                         child: ListView.builder(
                             physics: BouncingScrollPhysics(),
-                            padding: EdgeInsets.all(20),
                             itemCount: snapshot.length,
                             itemBuilder: (context, index) {
                               return Padding(
@@ -158,7 +162,7 @@ class _TransactionListState extends State<TransactionList> {
                                         decoration: eBox,
                                         child: Container(
                                           height: 90,
-                                          width: double.infinity,
+                                          width: MediaQuery.of(context).size.width,
                                           decoration: morph,
                                           child: InkWell(
                                             onLongPress: () {
@@ -426,314 +430,317 @@ class _TransactionListState extends State<TransactionList> {
                                     context: context, builder: (context, scrollController){
                                         return Container(
                                           height: MediaQuery.of(context).size.height /2 -60,
-                                            child: Column(
-                                              textDirection: TextDirection.ltr,
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
-                                                  child: Container(
-                                                    height: 150.0,
-                                                    width: MediaQuery.of(context).size.width,
-                                                    decoration: BoxDecoration(
-                                                    color: Colors.grey[300],
-                                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.grey[500],
-                                                        offset: Offset(4.0, 4.0),
-                                                        blurRadius: 15.0,
-                                                        spreadRadius: 1.0
+                                            child: SingleChildScrollView(
+                                              physics: AlwaysScrollableScrollPhysics(),
+                                              child: Column(
+                                                textDirection: TextDirection.ltr,
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
+                                                    child: Container(
+                                                      height: 150.0,
+                                                      width: MediaQuery.of(context).size.width,
+                                                      decoration: BoxDecoration(
+                                                      color: Colors.grey[300],
+                                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey[500],
+                                                          offset: Offset(4.0, 4.0),
+                                                          blurRadius: 15.0,
+                                                          spreadRadius: 1.0
 
+                                                        ),
+                                                        BoxShadow(
+                                                          color: Colors.white,
+                                                          offset: Offset(-4.0, -4.0),
+                                                          blurRadius: 15.0,
+                                                          spreadRadius: 1.0
+                                                        )
+                                                      ],  
                                                       ),
-                                                      BoxShadow(
-                                                        color: Colors.white,
-                                                        offset: Offset(-4.0, -4.0),
-                                                        blurRadius: 15.0,
-                                                        spreadRadius: 1.0
-                                                      )
-                                                    ],  
-                                                    ),
-                                                    child: Stack(
-                                                      children: <Widget>[
-                                                        Padding(padding: EdgeInsets.all(15),
-                                                          child: Builder(
-                                                            builder: (context){
-                                                                Map<String, dynamic> string;
-                                                                Map<String, int> converted ={};
-                                                                List<dynamic> order =[];
-                                                                List<dynamic> result= [];
-                                                                var name;
-                                                                var quantity;
-                                                                snapshot.forEach((element) {
-                                                                  
-                                                                  name =element.name;
-                                                                  quantity =element.quantity;
+                                                      child: Stack(
+                                                        children: <Widget>[
+                                                          Padding(padding: EdgeInsets.all(15),
+                                                            child: Builder(
+                                                              builder: (context){
+                                                                  Map<String, dynamic> string;
+                                                                  Map<String, int> converted ={};
+                                                                  List<dynamic> order =[];
+                                                                  List<dynamic> result= [];
+                                                                  var name;
+                                                                  var quantity;
+                                                                  snapshot.forEach((element) {
+                                                                    
+                                                                    name =element.name;
+                                                                    quantity =element.quantity;
 
-                                                                  string ={
-                                                                    "name": '$name',
-                                                                    "quantity": '$quantity'
-                                                                  };
+                                                                    string ={
+                                                                      "name": '$name',
+                                                                      "quantity": '$quantity'
+                                                                    };
 
-                                                                  order.add(string);  
-                                                                 
-                                                                });
-                                                                for(int z=0;z<order.length;z++){
-                                                                  var item =order[z];
-                                                                  if(converted.containsKey(item['name'])){
-                                                                    converted[item['name']] +=int.parse(item['quantity']);
-                                                                  }else{
-                                                                    converted[item['name']] =int.parse(item['quantity']);
-                                                                  }
-                                                                }
-                                                                converted.forEach((key, value) {
-                                                                  result.add({
-                                                                    "name": key,
-                                                                    "quantity": value
+                                                                    order.add(string);  
+                                                                   
                                                                   });
-                                                                });
-                                                              return ListView.builder(
-                                                              itemCount:result.length,
-                                                              itemBuilder: (context, index){
-                                                                return Center(
-                                                                child:Container(
-                                                                child: Text("${result[index]['name']} x${result[index]['quantity']}", style: TextStyle(
-                                                                  fontSize: 15,
-                                                                  color: fCD,
+                                                                  for(int z=0;z<order.length;z++){
+                                                                    var item =order[z];
+                                                                    if(converted.containsKey(item['name'])){
+                                                                      converted[item['name']] +=int.parse(item['quantity']);
+                                                                    }else{
+                                                                      converted[item['name']] =int.parse(item['quantity']);
+                                                                    }
+                                                                  }
+                                                                  converted.forEach((key, value) {
+                                                                    result.add({
+                                                                      "name": key,
+                                                                      "quantity": value
+                                                                    });
+                                                                  });
+                                                                return ListView.builder(
+                                                                itemCount:result.length,
+                                                                itemBuilder: (context, index){
+                                                                  return Center(
+                                                                  child:Container(
+                                                                  child: Text("${result[index]['name']} x${result[index]['quantity']}", style: TextStyle(
+                                                                    fontSize: 15,
+                                                                    color: fCD,
+                                                                    decoration: TextDecoration.none,
+                                                                    fontWeight: FontWeight.w500
+                                                                  ),),
+                                                                ),
+                                                                );
+                                                                   
+                                                                }
+                                                                );
+                                                              },
+                                                                
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    ),
+                                                  
+                                                   Padding(
+                                                    padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
+                                                    child: Container(
+                                                      height: 55.0,
+                                                      width: MediaQuery.of(context).size.width,
+                                                      decoration: BoxDecoration(
+                                                      color: Colors.grey[300],
+                                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey[500],
+                                                          offset: Offset(4.0, 4.0),
+                                                          blurRadius: 15.0,
+                                                          spreadRadius: 1.0
+
+                                                        ),
+                                                        BoxShadow(
+                                                          color: Colors.white,
+                                                          offset: Offset(-4.0, -4.0),
+                                                          blurRadius: 15.0,
+                                                          spreadRadius: 1.0
+                                                        )
+                                                      ],  
+                                                      ),
+                                                      child: BlocConsumer<
+                                                              OrderBloc,
+                                                              List<
+                                                                  TransactionOrders>>(
+                                                            builder: (context,
+                                                                datasnapshot) {
+                                                              int total = 0;
+                                                              for (int z = 0;
+                                                                  z <
+                                                                      datasnapshot
+                                                                          .length;
+                                                                  z++) {
+                                                                total += snapshot[z]
+                                                                        .price *
+                                                                    snapshot[z]
+                                                                        .quantity;
+                                                              }
+                                                              return Center(
+                                                                  child: Text(
+                                                                "Sub Total: $total",
+                                                                style: GoogleFonts.archivo(
                                                                   decoration: TextDecoration.none,
-                                                                  fontWeight: FontWeight.w500
-                                                                ),),
+                                                                    color: fCD,
+                                                                    
+                                                                    letterSpacing:
+                                                                        2,
+                                                                    fontSize: 18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
                                                               ),
                                                               );
-                                                                 
-                                                              }
-                                                              );
                                                             },
-                                                              
+                                                            listener: (BuildContext
+                                                                    context,
+                                                                order) {
+                                                              // Scaffold.of(context).showSnackBar(
+                                                              // SnackBar(content: Text("Order Remove")));
+                                                            },
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  ),
-                                                
-                                                 Padding(
-                                                  padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
-                                                  child: Container(
-                                                    height: 55.0,
-                                                    width: MediaQuery.of(context).size.width,
-                                                    decoration: BoxDecoration(
-                                                    color: Colors.grey[300],
-                                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.grey[500],
-                                                        offset: Offset(4.0, 4.0),
-                                                        blurRadius: 15.0,
-                                                        spreadRadius: 1.0
 
-                                                      ),
-                                                      BoxShadow(
-                                                        color: Colors.white,
-                                                        offset: Offset(-4.0, -4.0),
-                                                        blurRadius: 15.0,
-                                                        spreadRadius: 1.0
-                                                      )
-                                                    ],  
                                                     ),
-                                                    child: BlocConsumer<
-                                                            OrderBloc,
-                                                            List<
-                                                                TransactionOrders>>(
-                                                          builder: (context,
-                                                              datasnapshot) {
-                                                            int total = 0;
+                                                    ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(25),
+                                                    child: Align(
+                                                      alignment: Alignment.bottomCenter,
+                                                      child: Container(
+                                                          height: 55,
+                                                          width: double.infinity,
+                                                          child: ButtonPlaceOrder(
+                                                          color: Colors.grey[500],
+                                                          offblackBlue: Offset(-4, -4),
+                                                          offsetBlue: Offset(4, 4),
+                                                          blurlevel: 4.0,
+                                                          icon: Icons.add_shopping_cart,
+                                                          iconSize: 30.0,
+                                                          onTap: () async{
+                                                            if(snapshot.length ==0){
+                                                            print("No Order");
+                                                             
+                                                            }else{
+                                                               // Geodesy geodesy = Geodesy();
+                                                            // Position _currentPosition;
+                                                            // final point =LatLng(7.4281587, 125.8067275);
+                                                            // final c =<LatLng>[];
+                                                            // final destination = geodesy.pointsInRange(point, c, 100);
+                                                            // print("Points: ${destination} ${destination}");
+                                                            var id;
+                                                            var quantity;
+                                                            Map<String, dynamic> string;
+                                                            Map<String, dynamic> post;
+                                                            Map<String, int> converted = {};
+                                                            List<dynamic> order = [];
+                                                            List<dynamic> result = [];
+                                                            SharedPreferences localStorage =
+                                                                await SharedPreferences
+                                                                    .getInstance();
+                                                            var userJson = localStorage
+                                                                .getString('user');
+                                                            var user =
+                                                                json.decode(userJson);
+
+                                                            snapshot
+                                                                .forEach((element) async {
+                                                              setState(() {
+                                                                id = element.id;
+                                                                quantity = element.quantity;
+                                                                
+                                                                string = {
+                                                                  'menuId': '$id',
+                                                                  'quantity': '$quantity',
+                                                                };
+                                                                order.add(string);
+                                                              });
+                                                            });
                                                             for (int z = 0;
-                                                                z <
-                                                                    datasnapshot
-                                                                        .length;
+                                                                z < order.length;
                                                                 z++) {
-                                                              total += snapshot[z]
-                                                                      .price *
-                                                                  snapshot[z]
-                                                                      .quantity;
+                                                              var item = order[z];
+                                                              if (converted.containsKey(item['menuId'])) {
+                                                                converted[item['menuId']] +=int.parse(item['quantity']);
+                                                              } else {
+                                                                converted[item['menuId']] =
+                                                                    int.parse(
+                                                                        item['quantity']);
+                                                              }
                                                             }
-                                                            return Center(
-                                                                child: Text(
-                                                              "Sub Total: $total",
-                                                              style: GoogleFonts.archivo(
-                                                                decoration: TextDecoration.none,
-                                                                  color: fCD,
-                                                                  
-                                                                  letterSpacing:
-                                                                      2,
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            ),
-                                                            );
-                                                          },
-                                                          listener: (BuildContext
-                                                                  context,
-                                                              order) {
-                                                            // Scaffold.of(context).showSnackBar(
-                                                            // SnackBar(content: Text("Order Remove")));
+                                                            converted.forEach((key, value) {
+                                                              result.add({
+                                                                "menuId": key,
+                                                                "quantity": value
+                                                              });
+                                                            });
+
+                                                            print(result);
+                                                            // setState(() {
+                                                            //   post = {
+                                                            //     'userId': user['id'],
+                                                            //     'restaurantId':
+                                                            //         this.widget.restauID,
+                                                            //     'order': result,
+                                                            //     "deliveryAddress": "$lat,$long"
+                                                            //   };
+                                                            //   // print(post);
+                                                            // });
+                                                          var res = await ApiCall().postData(post, '/putOrder');
+                                                          if (res.statusCode == 200) {
+                                                            var data = json.decode(res.body);
+                                                            print(data);
+                                                            print("Success");
+                                                          }
+                                                          // await OneSignal.shared.setLocationShared(true);
+                                                  //         // await OneSignal.shared.promptLocationPermission();
+                                                  //         // await OneSignal.shared
+                                                  //         //     .init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+                                                  //         // OneSignal.shared.setInFocusDisplayType(
+                                                  //         //     OSNotificationDisplayType.notification);
+                                                  //         // OneSignal.shared.setNotificationReceivedHandler(
+                                                  //         //     (OSNotification notification) {
+                                                  //         //   setState(() {
+                                                  //         //     //  constant = notification.payload.additionalData;
+                                                  //         //   });
+                                                  //         // });
+
+                                                  //         // await OneSignal.shared.setSubscription(true);
+                                                  //         // var tags = await OneSignal.shared.getTags();
+                                                  //         // var sendtag =
+                                                  //         //     await OneSignal.shared.sendTags({'UR': 'TRUE'});
+                                                  //         // var status =
+                                                  //         //     await OneSignal.shared.getPermissionSubscriptionState();
+
+                                                  //         // String url = 'https://onesignal.com/api/v1/notifications';
+                                                  //         // var playerId = status.subscriptionStatus.userId;
+
+                                                  //         // var numb = "2";
+                                                  //         // var contents = {
+                                                  //         //   "include_player_ids": [playerId],
+                                                  //         //   "include_segments": ["All"],
+                                                  //         //   "excluded_segments": [],
+                                                  //         //   "contents": {"en": "This is a test."},
+                                                  //         //   "data": {"foo": "bar"},
+                                                  //         //   "headings": {"en": numb},
+                                                  //         //   "filter": [
+                                                  //         //     {
+                                                  //         //       "field": "tag",
+                                                  //         //       "key": "UR",
+                                                  //         //       "relation": "=",
+                                                  //         //       "value": "TRUE"
+                                                  //         //     },
+                                                  //         //   ],
+                                                  //         //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+                                                  //         // };
+                                                  //         // Map<String, String> headers = {
+                                                  //         //   'Content-Type': 'application/json',
+                                                  //         //   'authorization':
+                                                  //         //       'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+                                                  //         // };
+                                                  //         // var repo = await http.post(url,
+                                                  //         //     headers: headers, body: json.encode(contents));
+
+                                                  //         // await OneSignal.shared
+                                                  //         //     .deleteTags(["userID", "2", "transactionID", "2"]);
+                                                  //         // print(tags);
+                                                  //         // print(sendtag);
+                                                  //         // print(playerId);
+                                                  //         // print(repo.body);
+                                                            }
                                                           },
                                                         ),
-
-                                                  ),
-                                                  ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(25),
-                                                  child: Align(
-                                                    alignment: Alignment.bottomCenter,
-                                                    child: Container(
-                                                        height: 55,
-                                                        width: double.infinity,
-                                                        child: ButtonPlaceOrder(
-                                                        color: Colors.grey[500],
-                                                        offblackBlue: Offset(-4, -4),
-                                                        offsetBlue: Offset(4, 4),
-                                                        blurlevel: 4.0,
-                                                        icon: Icons.add_shopping_cart,
-                                                        iconSize: 30.0,
-                                                        onTap: () async{
-                                                          if(snapshot.length ==0){
-                                                          print("No Order");
-                                                           
-                                                          }else{
-                                                             // Geodesy geodesy = Geodesy();
-                                                          // Position _currentPosition;
-                                                          // final point =LatLng(7.4281587, 125.8067275);
-                                                          // final c =<LatLng>[];
-                                                          // final destination = geodesy.pointsInRange(point, c, 100);
-                                                          // print("Points: ${destination} ${destination}");
-                                                          var id;
-                                                          var quantity;
-                                                          Map<String, dynamic> string;
-                                                          Map<String, dynamic> post;
-                                                          Map<String, int> converted = {};
-                                                          List<dynamic> order = [];
-                                                          List<dynamic> result = [];
-                                                          SharedPreferences localStorage =
-                                                              await SharedPreferences
-                                                                  .getInstance();
-                                                          var userJson = localStorage
-                                                              .getString('user');
-                                                          var user =
-                                                              json.decode(userJson);
-
-                                                          snapshot
-                                                              .forEach((element) async {
-                                                            setState(() {
-                                                              id = element.id;
-                                                              quantity = element.quantity;
-                                                              
-                                                              string = {
-                                                                'menuId': '$id',
-                                                                'quantity': '$quantity',
-                                                              };
-                                                              order.add(string);
-                                                            });
-                                                          });
-                                                          for (int z = 0;
-                                                              z < order.length;
-                                                              z++) {
-                                                            var item = order[z];
-                                                            if (converted.containsKey(item['menuId'])) {
-                                                              converted[item['menuId']] +=int.parse(item['quantity']);
-                                                            } else {
-                                                              converted[item['menuId']] =
-                                                                  int.parse(
-                                                                      item['quantity']);
-                                                            }
-                                                          }
-                                                          converted.forEach((key, value) {
-                                                            result.add({
-                                                              "menuId": key,
-                                                              "quantity": value
-                                                            });
-                                                          });
-
-                                                          print(result);
-                                                          setState(() {
-                                                            post = {
-                                                              'userId': user['id'],
-                                                              'restaurantId':
-                                                                  this.widget.restauID,
-                                                              'order': result,
-                                                              "deliveryAddress": "$lat,$long"
-                                                            };
-                                                            // print(post);
-                                                          });
-                                                        var res = await ApiCall().postData(post, '/putOrder');
-                                                        if (res.statusCode == 200) {
-                                                          var data = json.decode(res.body);
-                                                          print(data);
-                                                          print("Success");
-                                                        }
-                                                        // await OneSignal.shared.setLocationShared(true);
-                                                //         // await OneSignal.shared.promptLocationPermission();
-                                                //         // await OneSignal.shared
-                                                //         //     .init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-                                                //         // OneSignal.shared.setInFocusDisplayType(
-                                                //         //     OSNotificationDisplayType.notification);
-                                                //         // OneSignal.shared.setNotificationReceivedHandler(
-                                                //         //     (OSNotification notification) {
-                                                //         //   setState(() {
-                                                //         //     //  constant = notification.payload.additionalData;
-                                                //         //   });
-                                                //         // });
-
-                                                //         // await OneSignal.shared.setSubscription(true);
-                                                //         // var tags = await OneSignal.shared.getTags();
-                                                //         // var sendtag =
-                                                //         //     await OneSignal.shared.sendTags({'UR': 'TRUE'});
-                                                //         // var status =
-                                                //         //     await OneSignal.shared.getPermissionSubscriptionState();
-
-                                                //         // String url = 'https://onesignal.com/api/v1/notifications';
-                                                //         // var playerId = status.subscriptionStatus.userId;
-
-                                                //         // var numb = "2";
-                                                //         // var contents = {
-                                                //         //   "include_player_ids": [playerId],
-                                                //         //   "include_segments": ["All"],
-                                                //         //   "excluded_segments": [],
-                                                //         //   "contents": {"en": "This is a test."},
-                                                //         //   "data": {"foo": "bar"},
-                                                //         //   "headings": {"en": numb},
-                                                //         //   "filter": [
-                                                //         //     {
-                                                //         //       "field": "tag",
-                                                //         //       "key": "UR",
-                                                //         //       "relation": "=",
-                                                //         //       "value": "TRUE"
-                                                //         //     },
-                                                //         //   ],
-                                                //         //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-                                                //         // };
-                                                //         // Map<String, String> headers = {
-                                                //         //   'Content-Type': 'application/json',
-                                                //         //   'authorization':
-                                                //         //       'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-                                                //         // };
-                                                //         // var repo = await http.post(url,
-                                                //         //     headers: headers, body: json.encode(contents));
-
-                                                //         // await OneSignal.shared
-                                                //         //     .deleteTags(["userID", "2", "transactionID", "2"]);
-                                                //         // print(tags);
-                                                //         // print(sendtag);
-                                                //         // print(playerId);
-                                                //         // print(repo.body);
-                                                          }
-                                                        },
                                                       ),
-                                                    ),
-                                                  ),),
-                                               
-                                              ],
+                                                    ),),
+                                                 
+                                                ],
+                                              ),
                                             ),
                                           
                                         );
