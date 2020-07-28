@@ -598,6 +598,7 @@ class _TransactionListState extends State<TransactionList> {
                                                         icon: Icons.add_shopping_cart,
                                                         iconSize: 30.0,
                                                         onTap: () async{
+                                                          var status = await OneSignal.shared.getPermissionSubscriptionState();
                                                           if(snapshot.length ==0){
                                                           print("No Order");
                                                            
@@ -657,12 +658,15 @@ class _TransactionListState extends State<TransactionList> {
 
                                                           print(result);
                                                           setState(() {
+                                                            
+                                                            var playerId = status.subscriptionStatus.userId;
                                                             post = {
                                                               'userId': user['id'],
                                                               'restaurantId':
                                                                   this.widget.restauID,
                                                               'order': result,
-                                                              "deliveryAddress": "$lat,$long"
+                                                              "deliveryAddress": "$lat,$long",
+                                                              "deviceId": "$playerId"
                                                             };
                                                             // print(post);
                                                           });
