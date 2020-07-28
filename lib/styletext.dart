@@ -37,13 +37,13 @@ BoxDecoration eBox = BoxDecoration(
   borderRadius: BorderRadius.circular(15),
   color: b1,
   boxShadow: [
-    BoxShadow(
+   BoxShadow(
       color: sb3,
       offset: Offset(10, 10),
       blurRadius: 10
     ),
     BoxShadow(
-      color: Colors.blue[500],
+      color: white,
       offset: Offset(-10, -10),
       blurRadius: 10
     )

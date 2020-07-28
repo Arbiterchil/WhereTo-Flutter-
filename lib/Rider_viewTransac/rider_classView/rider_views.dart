@@ -156,7 +156,9 @@ class _RiderViewingState extends State<RiderViewing> {
                                                   getID: rs[index].id.toString(),
                                                   gotTotal: totals.toString(),
                                                   deliverTo: rs[index].deliveryAddress.toString(),
-                                                  restaurantName: rs[index].restaurantName.toString(),);
+                                                  restaurantName: rs[index].restaurantName.toString(),
+                                                  deviceID: rs[index].deviceId.toString(),
+                                                  riderID: rs[index].riderId.toString(),);
                                               }));
 
                         },

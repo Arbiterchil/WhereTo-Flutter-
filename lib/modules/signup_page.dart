@@ -420,6 +420,8 @@ void _signingIn() async {
     loading = true;
   });
 
+    bool value = true;
+
   if(formkey.currentState.validate()){
       formkey.currentState.save();
       var data = {
@@ -435,6 +437,7 @@ void _signingIn() async {
      var body = json.decode(res.body);
       if(body['success']){
       SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
        Navigator.pushReplacement(

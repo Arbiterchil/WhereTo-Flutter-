@@ -14,11 +14,12 @@ class ViewMenuOnTransac extends StatefulWidget {
   final String gotTotal;
   final String deliverTo;
   final String restaurantName;
+  final String riderID;
+  final String deviceID;
 
-  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName}) : super(key: key);
+  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID}) : super(key: key);
 
-
-  
+ 
   
   @override
   _ViewMenuOnTransacState createState() => _ViewMenuOnTransacState();
@@ -37,11 +38,14 @@ var quantityTotal = 0;
 var totals;
 var userData;
 bool available = true;
+bool okAvail = true;
 
 @override
   void initState() {
     _getUserInfo();
+    
     super.initState();
+    riderCheck();
   }
 
 void _getUserInfo() async {
@@ -55,7 +59,7 @@ void _getUserInfo() async {
 
 
 
-Future<List<RiverMenu>> getMenuTransac() async {
+  Future<List<RiverMenu>> getMenuTransac() async {
 
 
         final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/${widget.getID}');
@@ -65,9 +69,9 @@ Future<List<RiverMenu>> getMenuTransac() async {
         for(var body in body){
             RiverMenu riverMenu = RiverMenu(
               menuName: body["menuName"],
-        description: body["description"],
-        price: body["price"],
-        quantity: body["quantity"],
+              description: body["description"],
+              price: body["price"],
+              quantity: body["quantity"],
             );
            
             ridermenu.add(riverMenu);          
@@ -79,7 +83,38 @@ Future<List<RiverMenu>> getMenuTransac() async {
         
   }
 
-    
+    void riderCheck() async{
+SharedPreferences localStorage = await SharedPreferences.getInstance();
+var checkVal = localStorage.getBool('check');
+        String riderId = widget.riderID.toString();
+        if(riderId == null){
+              setState(() {
+                okAvail = !okAvail;
+              });
+        }else if(riderId != null){
+          setState(() {
+            available = !available;
+            if(checkVal != null){
+              if(checkVal){
+                print(userData['id'].toString()+"-"+riderId);
+                if(riderId != userData['id'].toString()){
+                    okAvail = !okAvail;
+                }else{
+                  okAvail = okAvail;
+                }
+              }
+               
+            } 
+
+          });
+        }
+        
+
+
+        
+
+    }
+
 
     Widget _viewMenus(){
 
@@ -239,8 +274,16 @@ Future<List<RiverMenu>> getMenuTransac() async {
                     icon: Icons.location_city,
                     label: "Deliver To : ${widget.deliverTo}",
                   ),
-                       SizedBox(height: 10.0,),
+                  SizedBox(height: 30.0,),
 
+                  Visibility(
+                    visible: okAvail,
+                    child: Container(
+                      height: 200.0,
+                      width: 200.0,
+                      decoration: eCBox,
+                    ),
+                  ),
                       ],
                     ),
                     ),

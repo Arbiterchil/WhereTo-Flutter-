@@ -296,7 +296,7 @@ class _LoginPageState extends State<LoginPage>{
 
 void _login() async{
  String hens ;
- 
+ bool value = true;
 
  setState(() {
       isLoading = true;
@@ -317,6 +317,7 @@ void _login() async{
  var body = json.decode(res.body);
     if(body['success']){
       SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
       var userJson = localStorage.getString('user'); 

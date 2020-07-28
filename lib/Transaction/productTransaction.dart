@@ -430,7 +430,9 @@ class _TransactionListState extends State<TransactionList> {
                                     context: context, builder: (context, scrollController){
                                         return Container(
                                           height: MediaQuery.of(context).size.height /2 -60,
+
                                             child: SingleChildScrollView(
+                                              
                                               physics: AlwaysScrollableScrollPhysics(),
                                               child: Column(
                                                 textDirection: TextDirection.ltr,
