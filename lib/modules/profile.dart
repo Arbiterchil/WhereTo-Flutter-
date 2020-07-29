@@ -35,9 +35,10 @@ class _Profile extends State<Profile> {
   void initState() {
     _getUserInfo();
     casting = false;
-    configSignal();
+    // configSignal();
     super.initState();
-    // getUserLocation();
+    getLocation();
+
   }
 
   void _getUserInfo() async {
@@ -48,38 +49,16 @@ class _Profile extends State<Profile> {
       userData = user;
     });
   }
-
-  getUserLocation() async {
-    //call this async method from whereever you need
-    LocationData currentLocation;
-    LocationData myLocation;
-    String error;
-    Location location = new Location();
-    try {
-      myLocation = await location.getLocation();
-    } on PlatformException catch (e) {
-      if (e.code == 'PERMISSION_DENIED') {
-        error = 'please grant permission';
-        print(error);
-      }
-      if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
-        error = 'permission denied- please enable it from app settings';
-        print(error);
-      }
-      myLocation = null;
+ getLocation() async{
+    var location =Location();
+    try{
+      var userLocation =await location.getLocation();
+      print("${userLocation.latitude},${userLocation.longitude}");
+    } on Exception catch (e){
+      print(e.toString());
     }
-    currentLocation = myLocation;
-    final coordinates =
-        new Coordinates(myLocation.latitude, myLocation.longitude);
-    var addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = addresses.first;
-
-    print(
-        ' ${first.locality}, ${first.adminArea},${first.subLocality}, ${first.subAdminArea},${first.addressLine}, ${first.featureName},${first.thoroughfare}, ${first.subThoroughfare}');
-    print("${currentLocation.latitude},${currentLocation.longitude} ");
-    return first;
-  }
+ }
+  
 
   void configSignal() async {
     var data;

@@ -19,7 +19,7 @@ class SearchDepo extends StatefulWidget {
     
 
 
-   Future<List<SearchDeposition>> getRest() async{
+   Future<List<SearchDeposition>> getRest() async {
    final response =await ApiCall().getRestarant('/getFeaturedRestaurant');
    List<SearchDeposition> search =searchDepoFromJson(response.body);
    return search;

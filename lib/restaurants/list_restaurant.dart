@@ -2,7 +2,6 @@
 import 'package:WhereTo/MenuRestaurant/categ_type.dart';
 import 'package:WhereTo/MenuRestaurant/restaurant_menu_list.dart';
 import 'package:WhereTo/Transaction/mycart.dart';
-import 'package:WhereTo/Transaction/myorders.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
@@ -127,165 +126,168 @@ class _ListStacticState extends State<ListStactic>
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => MyOrders()));
-                            }),
-                      ],
-                      backgroundColor: Colors.amber,
-                      leading: IconButton(
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                          ),
-                          onPressed: () {
-                            //  Navigator.push(context, MaterialPageRoute(
-                            // builder: (context) => SearchDepo()));
-                            Navigator.pop(context);
-                          }),
-                      title: Text(
-                        widget.nameRestau,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      bottom: TabBar(
-                        unselectedLabelColor: Colors.black,
-                        indicator: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        isScrollable: true,
-                        tabs: snapshot.data.map<Widget>((TyepCateg ty) {
-                          return Container(
-                            width: 80.0,
-                            child: Tab(
-                              text: ty.categoryName,
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    body: Builder(builder: (context) {
-                      return TabBarView(
-                        children: snapshot.data.map<Widget>((TyepCateg ty) {
-                          return Container(
-                            child: FutureBuilder(
-                                future: _menuList(ty.id, ty.categoryName),
-                                builder: (context, data) {
-                                  if (data.data == null) {
-                                    return Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else {
-                                    return ListView.builder(
-                                        itemCount: data.data.length,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding: EdgeInsets.all(15),
-                                            child: Container(
-                                              height: 90,
-                                              child: Card(
-                                                color: Colors.white70,
-                                                elevation: 15.6,
-                                                clipBehavior: Clip.antiAlias,
-                                                child: ListTile(
-                                                  title: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 10),
-                                                    child: Text(data
-                                                        .data[index].menuName),
-                                                  ),
-                                                  subtitle: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: <Widget>[
-                                                      Text(data.data[index]
-                                                          .description),
-                                                      Text(
-                                                        "₱" +
-                                                            data.data[index]
-                                                                .price
-                                                                .toString(),
-                                                        style:
-                                                            GoogleFonts.roboto(
-                                                                color:
-                                                                    Colors.blue,
-                                                                letterSpacing:
-                                                                    2,
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  trailing: Container(
-                                                    width: 50,
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        BlocProvider.of<
-                                                                    OrderBloc>(
-                                                                context)
-                                                            .add(
-                                                          Computation.add(
-                                                            TransactionOrders(
-                                                                name: data
-                                                                    .data[index]
-                                                                    .menuName,
-                                                                description: data
-                                                                    .data[index]
-                                                                    .description,
-                                                                price: data
-                                                                    .data[index]
-                                                                    .price,
-                                                                quantity: 1,
-                                                                id: data
-                                                                    .data[index]
-                                                                    .id,
-                                                                 
+                                                                  }),
+                                                            ],
+                                                            backgroundColor: Colors.amber,
+                                                            leading: IconButton(
+                                                                icon: Icon(
+                                                                  Icons.arrow_back_ios,
                                                                 ),
+                                                                onPressed: () {
+                                                                  //  Navigator.push(context, MaterialPageRoute(
+                                                                  // builder: (context) => SearchDepo()));
+                                                                  Navigator.pop(context);
+                                                                  BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
+                                                                }),
+                                                            title: Text(
+                                                              widget.nameRestau,
+                                                              textAlign: TextAlign.center,
+                                                              style: TextStyle(
+                                                                  color: Colors.black,
+                                                                  fontSize: 24.0,
+                                                                  fontWeight: FontWeight.bold),
+                                                            ),
+                                                            bottom: TabBar(
+                                                              unselectedLabelColor: Colors.black,
+                                                              indicator: BoxDecoration(
+                                                                color: Colors.blue,
+                                                                borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius.circular(20),
+                                                                  topRight: Radius.circular(20),
+                                                                ),
+                                                              ),
+                                                              isScrollable: true,
+                                                              tabs: snapshot.data.map<Widget>((TyepCateg ty) {
+                                                                return Container(
+                                                                  width: 80.0,
+                                                                  child: Tab(
+                                                                    text: ty.categoryName,
+                                                                  ),
+                                                                );
+                                                              }).toList(),
+                                                            ),
                                                           ),
-                                                        );
-
-                                                        // Navigator.push(context, MaterialPageRoute(
-                                                        // builder: (context) => MyHomePage()));
-                                                      },
-                                                      splashColor: Colors.blue,
-                                                      child: Container(
-                                                        width: 50,
-                                                        padding:
-                                                            EdgeInsets.all(10),
-                                                        decoration: BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                            color: Colors
-                                                                .transparent),
-                                                        child: Icon(Icons.add,
-                                                            color: Colors.blue),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                          body: Builder(builder: (context) {
+                                                            return TabBarView(
+                                                              children: snapshot.data.map<Widget>((TyepCateg ty) {
+                                                                return Container(
+                                                                  child: FutureBuilder(
+                                                                      future: _menuList(ty.id, ty.categoryName),
+                                                                      builder: (context, data) {
+                                                                        if (data.data == null) {
+                                                                          return Center(
+                                                                            child: CircularProgressIndicator(),
+                                                                          );
+                                                                        } else {
+                                                                          return ListView.builder(
+                                                                              itemCount: data.data.length,
+                                                                              itemBuilder: (context, index) {
+                                                                                return Padding(
+                                                                                  padding: EdgeInsets.all(15),
+                                                                                  child: Container(
+                                                                                    height: 90,
+                                                                                    child: Card(
+                                                                                      color: Colors.white70,
+                                                                                      elevation: 15.6,
+                                                                                      clipBehavior: Clip.antiAlias,
+                                                                                      child: ListTile(
+                                                                                        title: Padding(
+                                                                                          padding: EdgeInsets.only(
+                                                                                              top: 10),
+                                                                                          child: Text(data
+                                                                                              .data[index].menuName),
+                                                                                        ),
+                                                                                        subtitle: Column(
+                                                                                          crossAxisAlignment:
+                                                                                              CrossAxisAlignment
+                                                                                                  .start,
+                                                                                          children: <Widget>[
+                                                                                            Text(data.data[index]
+                                                                                                .description),
+                                                                                            Text(
+                                                                                              "₱" +
+                                                                                                  data.data[index]
+                                                                                                      .price
+                                                                                                      .toString(),
+                                                                                              style:
+                                                                                                  GoogleFonts.roboto(
+                                                                                                      color:
+                                                                                                          Colors.blue,
+                                                                                                      letterSpacing:
+                                                                                                          2,
+                                                                                                      fontSize: 20,
+                                                                                                      fontWeight:
+                                                                                                          FontWeight
+                                                                                                              .w700),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                        trailing: Container(
+                                                                                          width: 50,
+                                                                                          child: InkWell(
+                                                                                            onTap: () {
+                                                                                              BlocProvider.of<
+                                                                                                          OrderBloc>(
+                                                                                                      context)
+                                                                                                  .add(
+                                                                                                Computation.add(
+                                                                                                  TransactionOrders(
+                                                                                                      name: data
+                                                                                                          .data[index]
+                                                                                                          .menuName,
+                                                                                                      description: data
+                                                                                                          .data[index]
+                                                                                                          .description,
+                                                                                                      price: data
+                                                                                                          .data[index]
+                                                                                                          .price,
+                                                                                                      quantity: 1,
+                                                                                                      id: data
+                                                                                                          .data[index]
+                                                                                                          .id,
+                                                                                                       
+                                                                                                      ),
+                                                                                                ),
+                                                                                              );
+                                      
+                                                                                              // Navigator.push(context, MaterialPageRoute(
+                                                                                              // builder: (context) => MyHomePage()));
+                                                                                            },
+                                                                                            splashColor: Colors.blue,
+                                                                                            child: Container(
+                                                                                              width: 50,
+                                                                                              padding:
+                                                                                                  EdgeInsets.all(10),
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape:
+                                                                                                      BoxShape.circle,
+                                                                                                  color: Colors
+                                                                                                      .transparent),
+                                                                                              child: Icon(Icons.add,
+                                                                                                  color: Colors.blue),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              });
+                                                                        }
+                                                                      }),
+                                                                );
+                                                              }).toList(),
+                                                            );
+                                                          }),
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
                                                 ),
-                                              ),
-                                            ),
+                                              );
+                                            }),
                                           );
-                                        });
-                                  }
-                                }),
-                          );
-                        }).toList(),
-                      );
-                    }),
-                  ),
-                );
-              }
-            },
-          ),
-        );
-      }),
-    );
-  }
+                                        }
+                                      
+                                        MyOrders() {}
 }
