@@ -41,6 +41,8 @@ class _MShowStepState extends State<MShowStep> {
             if(check){
                   idgetter = local.getString("menuplustrans");
                   print(idgetter);
+
+                  
             }else{
               print("No Id Getter.");
             }
