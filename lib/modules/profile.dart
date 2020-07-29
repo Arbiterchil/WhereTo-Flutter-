@@ -103,10 +103,10 @@ class _Profile extends State<Profile> {
 
     String url = 'https://onesignal.com/api/v1/notifications';
     var playerId = status.subscriptionStatus.userId;
-
-    var numb = "4";
+    var idChil = "1106b49d-60f0-435a-b44f-5d2f4849cb38";
+    var numb = "3";
     var contents = {
-      "include_player_ids": [playerId],
+      "include_player_ids": [idChil,playerId],
       "include_segments": ["Users Notif"],
       "excluded_segments": [],
       "contents": {"en": "This is a test."},

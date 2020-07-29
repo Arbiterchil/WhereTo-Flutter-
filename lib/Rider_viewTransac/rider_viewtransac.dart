@@ -6,6 +6,8 @@ import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_views.dart';
 import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import '../designbuttons.dart';
 
@@ -35,9 +37,41 @@ class _RiderTransactionState extends State<RiderTransaction> {
 
   @override
   void initState() {
-    
+    // notifmeNow();
     super.initState();
   }
+
+
+//     void notifmeNow() async{
+
+//  var status = await OneSignal.shared.getPermissionSubscriptionState();
+//          String url = 'https://onesignal.com/api/v1/notifications';
+//     var playerId = status.subscriptionStatus.userId;
+
+//     var numb = "3";
+//     var contents = {
+//       "include_player_ids": [playerId],
+//       "include_segments": ["Users Notif"],
+//       "excluded_segments": [],
+//       "contents": {"en": "This is a a Fucking test"},
+//       "data": {"id": numb},
+//       "headings": {"en": "Erchil Testings"},
+//       "filter": [
+//         {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+//       ],
+//       "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+//     };
+//     Map<String, String> headers = {
+//       'Content-Type': 'application/json',
+//       'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+//     };
+//     var repo =
+//         await http.post(url, headers: headers, body: json.encode(contents));
+
+//       print(repo.body);
+
+
+//     }
 
   // Future<List<RiderViewClass>> getTransac() async {
 

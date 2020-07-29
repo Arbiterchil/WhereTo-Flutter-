@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:WhereTo/Rider_ViewMenuTransac/riderMenu_reponse.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_class.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_reponse.dart';
 import 'package:WhereTo/api/api.dart';
@@ -13,15 +14,14 @@ class RiderApi {
   int index;
   var constant;
   var finalID;
+  bool checkValue = true;
   Future<RiderResponse> getViewTransac() async{
     
     OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
     OneSignal.shared
         .setNotificationReceivedHandler((OSNotification notification) {
-     
         constant =notification.payload.additionalData;
-      
     });
     if(constant == null){
 
@@ -29,14 +29,17 @@ class RiderApi {
 
     }else{
 
-        finalID = constant['userID'].toString();
+        finalID = constant['id'].toString();
     }
 
     try{
     
         print(finalID);
-        // final response = await ApiCall().viewTransac('/getTransactionDetails/$finalID');
-        final response = await ApiCall().viewTransac('/getTransactionDetails/2');
+        // SharedPreferences localStorage = await SharedPreferences.getInstance();
+        // localStorage.setBool('listCheck', checkValue);
+        // localStorage.setStringList('listId', finalID);
+        final response = await ApiCall().viewTransac('/getTransactionDetails/$finalID');
+        // final response = await ApiCall().viewTransac('/getTransactionDetails/2');
         List<RiderViewClass> riderme = [];
         
         var body = json.decode(response.body);
@@ -69,6 +72,7 @@ class RiderApi {
 
 
   }
+
 
 
 

@@ -13,7 +13,6 @@ class RiderViewing extends StatefulWidget {
   @override
   _RiderViewingState createState() => _RiderViewingState();
 }
-
 class _RiderViewingState extends State<RiderViewing> {
 
   var totalAll;

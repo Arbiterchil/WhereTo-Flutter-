@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:WhereTo/Rider_ViewMenuTransac/button_OkAssign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
+import 'package:WhereTo/Rider_ViewMenuTransac/ridershowStep_Menu.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_viewtransac.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/designbuttons.dart';
@@ -30,6 +32,15 @@ class ViewMenuOnTransac extends StatefulWidget {
 class _ViewMenuOnTransacState extends State<ViewMenuOnTransac> {
 
 
+StepperType stepperType = StepperType.horizontal;
+
+switchThis(){
+
+  setState(() => stepperType == StepperType.horizontal 
+  ? stepperType = StepperType.vertical
+  : stepperType = StepperType.horizontal);
+
+}
 
 var totalAll;
 var deliverFee;
@@ -39,6 +50,10 @@ var totals;
 var userData;
 bool available = true;
 bool okAvail = true;
+int currentStep = 0;
+bool complete = false;
+bool stepTf = true;
+bool menuHide = true;
 
 @override
   void initState() {
@@ -48,6 +63,151 @@ bool okAvail = true;
     riderCheck();
   }
 
+   Widget _viewMenus(){
+
+        return Visibility(
+          visible: menuHide,
+          child: Container(
+            height: 240,
+            width: MediaQuery.of(context).size.width,
+            child: FutureBuilder(
+              future: getMenuTransac(),
+              builder: (BuildContext context, AsyncSnapshot snapshot){
+
+
+                if(snapshot.data == null){
+                  return Container(
+                        child: Center(
+                          child: Text("Loading Menu's Please wait...",
+                          style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'OpenSans',
+                  fontSize:  16.0,
+                  fontWeight: FontWeight.normal
+                ),),    
+                        ),
+                      );
+                }else{
+                  
+                    return Container(
+                      
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context,index){
+
+                              return Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  
+                                    children: <Widget>[
+                                     
+                                       MenuDesign(
+                                         menuname: snapshot.data[index].menuName,
+                                         description: snapshot.data[index].description,
+                                         price: snapshot.data[index].price.toString(),
+                                         quantity: snapshot.data[index].quantity.toString(),
+
+                                       ),
+                                       
+                                    ],
+
+                                ),
+                              );
+
+
+
+                        }),
+                    );
+                }
+
+
+
+              },
+              ),
+          ),
+        );
+
+    }
+
+
+  List<Step> steps = [
+      Step(
+        title: const Text("Buy",
+        style: TextStyle(
+          fontFamily: 'OpenSans',
+          color:  Colors.black,
+        ),
+        ),
+        isActive: true,
+        state: StepState.editing,
+        content: Column(
+         children: <Widget>[
+              MShowStep(),
+              SizedBox(height: 15.0,),
+         ], 
+        )),
+         Step(
+        title: const Text("Deliver",
+        style: TextStyle(
+          fontFamily: 'OpenSans',
+          color:  Colors.black,
+        ),
+        ),
+        isActive: true,
+        state: StepState.complete,
+        
+        content: Column(
+         children: <Widget>[
+           SizedBox(height: 15.0,),
+           Container(
+                      height: 200.0,
+                      width: 200.0,
+                      decoration: eCBox,
+                      child: Text("2"),
+              ),
+              SizedBox(height: 15.0,),
+         ], 
+        )),
+         Step(
+        title: const Text("Done.",
+        style: TextStyle(
+          fontFamily: 'OpenSans',
+          color:  Colors.black,
+        ),
+        ),
+        isActive: true,
+        state: StepState.complete,
+        content: Column(
+         children: <Widget>[
+           SizedBox(height: 15.0,),
+           Container(
+                      height: 200.0,
+                      width: 200.0,
+                      decoration: eCBox,
+                      child: Text("3"),
+              ),
+              SizedBox(height: 15.0,),
+         ], 
+        ))
+
+  ];
+
+
+  nextSteps(){
+    currentStep + 1 != steps.length
+    ? goTo(currentStep + 1)
+    : setState(()=> complete = true);
+  } 
+  cancel(){
+    if(currentStep > 0){
+      goTo(currentStep - 1);
+    }
+  }
+  goTo(int step){
+    setState(() => currentStep = step);
+  }
 void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var userJson = localStorage.getString('user'); 
@@ -56,8 +216,6 @@ void _getUserInfo() async {
         userData = user;
       });
   }
-
-
 
   Future<List<RiverMenu>> getMenuTransac() async {
 
@@ -87,13 +245,16 @@ void _getUserInfo() async {
 SharedPreferences localStorage = await SharedPreferences.getInstance();
 var checkVal = localStorage.getBool('check');
         String riderId = widget.riderID.toString();
-        if(riderId == null){
+        if(riderId == "null"){
+          print(riderId);
               setState(() {
                 okAvail = !okAvail;
+                available = available;
               });
         }else if(riderId != null){
           setState(() {
             available = !available;
+            
             if(checkVal != null){
               if(checkVal){
                 print(userData['id'].toString()+"-"+riderId);
@@ -101,6 +262,7 @@ var checkVal = localStorage.getBool('check');
                     okAvail = !okAvail;
                 }else{
                   okAvail = okAvail;
+                  menuHide = !menuHide;
                 }
               }
                
@@ -116,73 +278,7 @@ var checkVal = localStorage.getBool('check');
     }
 
 
-    Widget _viewMenus(){
-
-        return Container(
-          height: 240,
-          width: MediaQuery.of(context).size.width,
-          child: FutureBuilder(
-            future: getMenuTransac(),
-            builder: (BuildContext context, AsyncSnapshot snapshot){
-
-
-              if(snapshot.data == null){
-                return Container(
-                      child: Center(
-                        child: Text("Loading Menu's Please wait...",
-                        style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'OpenSans',
-                fontSize:  16.0,
-                fontWeight: FontWeight.normal
-              ),),    
-                      ),
-                    );
-              }else{
-                
-                  return Container(
-                    
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context,index){
-
-
-
-
-                            return Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                
-                                  children: <Widget>[
-                                   
-                                     MenuDesign(
-                                       menuname: snapshot.data[index].menuName,
-                                       description: snapshot.data[index].description,
-                                       price: snapshot.data[index].price.toString(),
-                                       quantity: snapshot.data[index].quantity.toString(),
-
-                                     ),
-                                     
-                                  ],
-
-                              ),
-                            );
-
-
-
-                      }),
-                  );
-              }
-
-
-
-            },
-            ),
-        );
-
-    }
+   
 
 
   @override
@@ -238,7 +334,13 @@ var checkVal = localStorage.getBool('check');
                                           icon: Icons.drive_eta,
                                           iconSize: 30.0,
                                           onTap: (){
-                                            assign();
+                                            setState(() {
+                                              available = !available;
+                                              menuHide = !menuHide;
+                                              assign();
+                                              riderCheck();
+                                            });
+                                            
                                             print(userData['id']);
                                           },
                                         ),
@@ -248,7 +350,83 @@ var checkVal = localStorage.getBool('check');
                                 ),
                               ),
                       SizedBox(height: 40.0,),
+                
+                        Visibility(
+                          visible: okAvail,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 450.0,
+                              child: Stepper(
+                                  steps: steps,
+                                  type: stepperType,
+                                  currentStep: currentStep,
+                                  onStepContinue: nextSteps,
+                                  onStepTapped: (step) => goTo(step),
+                                  onStepCancel: cancel,
+                                  controlsBuilder: (
+                                    BuildContext context ,{VoidCallback onStepContinue,VoidCallback onStepCancel}){
+                                       return Row(
+                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                         children: <Widget>[
+                                            NCard1Button(
+                                          width: 100,
+                                          icon: Icons.skip_next,
+                                          label: "OK",
+                                          onTap: onStepContinue,
+                                          active: false,
+                                            ),
+                                            NCard1Button(
+                                          width: 115,
+                                          icon: Icons.cancel,
+                                          label: "CANCEL",
+                                          onTap: onStepCancel,
+                                          active: true,
+                                            ),
+
+                                         ],
+                                       ); 
+                                  },
+                              ),
+                            ),
+                          
+                        ),
+                        // Visibility(
+                        //   // visible: okAvail,
+                        //   child: Stepper(
+                        //             steps: steps,
+                        //             // type: stepperType,
+                        //             currentStep: currentStep,
+                        //             onStepContinue: nextSteps,
+                        //             onStepTapped: (step) => goTo(step),
+                        //             onStepCancel: cancel,
+                        //             controlsBuilder: (
+                        //               BuildContext context ,{VoidCallback onStepContinue,VoidCallback onStepCancel}){
+                        //                  return Row(
+                        //                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //                    children: <Widget>[
+                        //                       NCard1Button(
+                        //                     width: 100,
+                        //                     icon: Icons.skip_next,
+                        //                     label: "OK",
+                        //                     onTap: onStepContinue,
+                        //                     active: false,
+                        //                       ),
+                        //                       NCard1Button(
+                        //                     width: 115,
+                        //                     icon: Icons.cancel,
+                        //                     label: "CANCEL",
+                        //                     onTap: onStepCancel,
+                        //                     active: true,
+                        //                       ),
+
+                        //                    ],
+                        //                  ); 
+                        //             },
+                        //         ),
+                        // ),
+                      SizedBox(height: 20.0,),
                     _viewMenus(),
+
                     SizedBox(height: 40.0,),
                    
                     NCard(
@@ -275,28 +453,28 @@ var checkVal = localStorage.getBool('check');
                     label: "Deliver To : ${widget.deliverTo}",
                   ),
                   SizedBox(height: 30.0,),
-
-                  Visibility(
-                    visible: okAvail,
-                    child: Container(
-                      height: 200.0,
-                      width: 200.0,
-                      decoration: eCBox,
-                    ),
-                  ),
                       ],
+                    
                     ),
+                    
                     ),
+                    
                     ),
               ),
           ),
         ),
+        // floatingActionButton: FloatingActionButton(
+        //   child: Icon(Icons.swap_horizontal_circle),
+        //   onPressed: switchThis,
+        // ),
       );
 
 
   }
 
-  void assign() async {
+  void assign() async { 
+
+      bool checkthis = true;
 
       var data = {
         "transactionId" : '${widget.getID}',
@@ -307,6 +485,12 @@ var checkVal = localStorage.getBool('check');
       var body = json.decode(response.body);
       if(body == true){
         print("TRUE");
+        SharedPreferences localStore = await SharedPreferences.getInstance();
+        localStore.setBool("cuurentIdtrans", checkthis);
+        localStore.setString("menuplustrans", "${widget.getID}");
+        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+        // return RiderTransaction();
+        //   }));
       }else{
         print("FALSE");
       }
@@ -320,7 +504,6 @@ var checkVal = localStorage.getBool('check');
 
 
 class NCard extends StatelessWidget {
-
   final bool active;
   final IconData icon;
   final String label;
@@ -358,3 +541,141 @@ class NCard extends StatelessWidget {
     );
   }
 }
+class NCard1Button extends StatelessWidget {
+
+  final bool active;
+  final IconData icon;
+  final String label;
+  final Function onTap;
+  final double  width;
+
+  const NCard1Button({Key key, this.active, this.icon, this.label, this.onTap, this.width}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+        onTap: onTap,
+      child: Container(
+        height: 60.0,
+        width: width,
+        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 7),
+        decoration: eBox,
+        child: Row(
+          children: <Widget>[
+            Icon(icon,color: Colors.white),
+            SizedBox(width: 3.0,),
+               Text(label,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15.0,
+                  fontFamily: 'OpenSans'
+                ),),
+             
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// class CallerMenu extends StatelessWidget{
+
+  // final String getId;
+
+  // const CallerMenu({Key key, this.getId}) : super(key: key);
+
+
+  //  Future<List<RiverMenu>> getMenuTransaction() async {
+
+
+  //       final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/3');
+  //       List<RiverMenu> ridermenu = [];
+
+  //       var body = json.decode(response.body);
+  //       for(var body in body){
+  //           RiverMenu riverMenu = RiverMenu(
+  //             menuName: body["menuName"],
+  //             description: body["description"],
+  //             price: body["price"],
+  //             quantity: body["quantity"],
+  //           );
+           
+  //           ridermenu.add(riverMenu);          
+  //       }
+
+       
+
+  //       return ridermenu;
+        
+  // }
+
+   
+  
+  
+  // @override
+  // Widget build(BuildContext context) {
+  //    return Container(
+  //         height: 240,
+  //         width: MediaQuery.of(context).size.width,
+  //         child: FutureBuilder(
+  //           future: getMenuTransaction(),
+  //           builder: (BuildContext context, AsyncSnapshot snapshot){
+
+
+  //             if(snapshot.data == null){
+  //               return Container(
+  //                     child: Center(
+  //                       child: Text("Loading Menu's Please wait...",
+  //                       style: TextStyle(
+  //               color: Colors.white,
+  //               fontFamily: 'OpenSans',
+  //               fontSize:  16.0,
+  //               fontWeight: FontWeight.normal
+  //             ),),    
+  //                     ),
+  //                   );
+  //             }else{
+                
+  //                 return Container(
+                    
+  //                   child: ListView.builder(
+  //                     scrollDirection: Axis.horizontal,
+  //                     itemCount: snapshot.data.length,
+  //                     itemBuilder: (context,index){
+
+  //                           return Padding(
+  //                             padding: const EdgeInsets.all(15.0),
+  //                             child: Row(
+  //                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                
+  //                                 children: <Widget>[
+                                   
+  //                                    MenuDesign(
+  //                                      menuname: snapshot.data[index].menuName,
+  //                                      description: snapshot.data[index].description,
+  //                                      price: snapshot.data[index].price.toString(),
+  //                                      quantity: snapshot.data[index].quantity.toString(),
+
+  //                                    ),
+                                     
+  //                                 ],
+
+  //                             ),
+  //                           );
+
+
+
+  //                     }),
+  //                 );
+  //             }
+
+
+
+  //           },
+  //           ),
+  //       );
+  // }
+
+// }
