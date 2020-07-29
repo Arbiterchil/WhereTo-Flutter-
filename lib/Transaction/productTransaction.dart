@@ -1,6 +1,7 @@
 import 'dart:convert';
 // import 'package:geodesy/geodesy.dart';
 import 'package:WhereTo/Transaction/button_deisngtransac.dart';
+import 'package:WhereTo/Transaction/getDeviceID/getDeviceID.class.dart';
 import 'package:WhereTo/Transaction/payload.dart';
 import 'package:WhereTo/Transaction/sorties.dart';
 import 'package:WhereTo/designbuttons.dart';
@@ -17,7 +18,7 @@ import 'package:location/location.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart' as http;
 
 class TransactionList extends StatefulWidget {
   final String restauID;
@@ -33,49 +34,12 @@ class _TransactionListState extends State<TransactionList> {
   @override
   void setState(fn) {
     super.setState(fn);
-    getUserLocation();
+    
   }
 
-  getUserLocation() async {
-    //call this async method from whereever you need
-    LocationData currentLocation;
-    LocationData myLocation;
-    String error;
-    Location location = new Location();
-    try {
-      myLocation = await location.getLocation();
-    } on PlatformException catch (e) {
-      if (e.code == 'PERMISSION_DENIED') {
-        error = 'please grant permission';
-        print(error);
-      }
-      if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
-        error = 'permission denied- please enable it from app settings';
-        print(error);
-      }
-      myLocation = null;
-    }
-    currentLocation = myLocation;
-    final coordinates =
-        new Coordinates(myLocation.latitude, myLocation.longitude);
-    var addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = addresses.first;
-
-    print(
-        ' ${first.locality}, ${first.adminArea},${first.subLocality}, ${first.subAdminArea},${first.addressLine}, ${first.featureName},${first.thoroughfare}, ${first.subThoroughfare}');
-    print("${currentLocation.latitude},${currentLocation.longitude} ");
-    setState(() {
-      lat =currentLocation.latitude.toString();
-      long =currentLocation.longitude.toString();
 
       
-
-    });
-    print(long+"-"+lat);
-    return first;
-  }
-
+    
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -616,6 +580,8 @@ class _TransactionListState extends State<TransactionList> {
                                                             // final c =<LatLng>[];
                                                             // final destination = geodesy.pointsInRange(point, c, 100);
                                                             // print("Points: ${destination} ${destination}");
+                                                            var location =Location();
+                                                            var userLocation =await location.getLocation();
                                                             var id;
                                                             var quantity;
                                                             Map<String, dynamic> string;
@@ -662,79 +628,71 @@ class _TransactionListState extends State<TransactionList> {
                                                                 "quantity": value
                                                               });
                                                             });
-
+                                                            
                                                             print(result);
-                                                            // setState(() {
-                                                            //   post = {
-                                                            //     'userId': user['id'],
-                                                            //     'restaurantId':
-                                                            //         this.widget.restauID,
-                                                            //     'order': result,
-                                                            //     "deliveryAddress": "$lat,$long"
-                                                            //   };
-                                                            //   // print(post);
-                                                            // });
-                                                          var res = await ApiCall().postData(post, '/putOrder');
-                                                          if (res.statusCode == 200) {
-                                                            var data = json.decode(res.body);
-                                                            print(data);
-                                                            print("Success");
-                                                          }
-                                                          // await OneSignal.shared.setLocationShared(true);
-                                                  //         // await OneSignal.shared.promptLocationPermission();
-                                                  //         // await OneSignal.shared
-                                                  //         //     .init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-                                                  //         // OneSignal.shared.setInFocusDisplayType(
-                                                  //         //     OSNotificationDisplayType.notification);
-                                                  //         // OneSignal.shared.setNotificationReceivedHandler(
-                                                  //         //     (OSNotification notification) {
-                                                  //         //   setState(() {
-                                                  //         //     //  constant = notification.payload.additionalData;
-                                                  //         //   });
-                                                  //         // });
+                                                            setState(() {
+                                                              post = {
+                                                                'userId': user['id'],
+                                                                'restaurantId':this.widget.restauID,
+                                                                'order': result,
+                                                                "deliveryAddress": "${userLocation.latitude},${userLocation.longitude}"
+                                                              };
+                                                              // print(post);
+                                                            });
+                                                          // var res = await ApiCall().postData(post, '/putOrder');
+                                                          // if (res.statusCode == 200) {
+                                                          //   var data = json.decode(res.body);
+                                                          //   print(data);
+                                                          //   print("Success");
+                                                          // }
+                                                          final response =await ApiCall().getData('/getAllPlayerId');
+                                                          List<GetPlayerId> search =getPlayerIdFromJson(response.body);
+                                                          List<dynamic> player =[];
+                                                          search.forEach((element) {
+                                                            player.add(element.deviceId);
+                                                          });
+                                                          await OneSignal.shared.setLocationShared(true);
+                                                          await OneSignal.shared.promptLocationPermission();
+                                                          await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+                                                          OneSignal.shared
+                                                              .setInFocusDisplayType(OSNotificationDisplayType.notification);
+                                                          OneSignal.shared
+                                                              .setNotificationReceivedHandler((OSNotification notification) {
+                                                          
+                                                          
+                                                          });
 
-                                                  //         // await OneSignal.shared.setSubscription(true);
-                                                  //         // var tags = await OneSignal.shared.getTags();
-                                                  //         // var sendtag =
-                                                  //         //     await OneSignal.shared.sendTags({'UR': 'TRUE'});
-                                                  //         // var status =
-                                                  //         //     await OneSignal.shared.getPermissionSubscriptionState();
+                                                          await OneSignal.shared.setSubscription(true);
+                                                          var tags = await OneSignal.shared.getTags();
+                                                          var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
+                                                          var status = await OneSignal.shared.getPermissionSubscriptionState();
 
-                                                  //         // String url = 'https://onesignal.com/api/v1/notifications';
-                                                  //         // var playerId = status.subscriptionStatus.userId;
-
-                                                  //         // var numb = "2";
-                                                  //         // var contents = {
-                                                  //         //   "include_player_ids": [playerId],
-                                                  //         //   "include_segments": ["All"],
-                                                  //         //   "excluded_segments": [],
-                                                  //         //   "contents": {"en": "This is a test."},
-                                                  //         //   "data": {"foo": "bar"},
-                                                  //         //   "headings": {"en": numb},
-                                                  //         //   "filter": [
-                                                  //         //     {
-                                                  //         //       "field": "tag",
-                                                  //         //       "key": "UR",
-                                                  //         //       "relation": "=",
-                                                  //         //       "value": "TRUE"
-                                                  //         //     },
-                                                  //         //   ],
-                                                  //         //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-                                                  //         // };
-                                                  //         // Map<String, String> headers = {
-                                                  //         //   'Content-Type': 'application/json',
-                                                  //         //   'authorization':
-                                                  //         //       'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-                                                  //         // };
-                                                  //         // var repo = await http.post(url,
-                                                  //         //     headers: headers, body: json.encode(contents));
-
-                                                  //         // await OneSignal.shared
-                                                  //         //     .deleteTags(["userID", "2", "transactionID", "2"]);
-                                                  //         // print(tags);
-                                                  //         // print(sendtag);
-                                                  //         // print(playerId);
-                                                  //         // print(repo.body);
+                                                          String url = 'https://onesignal.com/api/v1/notifications';
+                                                          var playerId = status.subscriptionStatus.userId;
+                                                          var numb = "2";
+                                                          var contents = {
+                                                            "include_player_ids": player,
+                                                            "include_segments": ["All"],
+                                                            "excluded_segments": [],
+                                                            "contents": {"en": "Try"},
+                                                            "data": {"foo": "bar"},
+                                                            "headings": {"en": numb},
+                                                            "filter": [
+                                                              {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+                                                            ],
+                                                            "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+                                                          };
+                                                          Map<String, String> headers = {
+                                                            'Content-Type': 'application/json',
+                                                            'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+                                                          };
+                                                          var repo =
+                                                              await http.post(url, headers: headers, body: json.encode(contents));
+                                                          print(tags);
+                                                          print(sendtag);
+                                                          print(playerId);
+                                                          print(repo.body);
+                                                          
                                                             }
                                                           },
                                                         ),

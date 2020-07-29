@@ -51,7 +51,7 @@ dependencies:
   workmanager: ^0.2.3
   url_launcher: ^5.5.0
   geocoder: ^0.2.1
-  geolocator: ^5.3.2+2
+  geolocation: ^1.1.2
   location: ^3.0.2
   geodesy: ^0.3.2
   draggable_fab: ^0.1.1
