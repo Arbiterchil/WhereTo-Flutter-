@@ -47,7 +47,10 @@ class RiderApi {
             name: body["name"],
             restaurantName: body["restaurantName"],
             address: body["address"],
-            deliveryAddress: body["deliveryAddress"],);
+            deviceId: body["deviceId"],
+            riderId: body["riderId"],
+            deliveryAddress: body["deliveryAddress"],
+            );
 
             riderme.add(riderViewClass);
         }

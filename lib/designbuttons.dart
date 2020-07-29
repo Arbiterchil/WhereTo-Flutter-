@@ -99,7 +99,8 @@ class _DesignButtonState extends State<DesignButton> {
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
             boxShadow: [
               BoxShadow(
-                color:  Colors.blue[500],
+                color:  Colors.white70.withOpacity(0.050),
+                // Colors.blue[500],
                 blurRadius: widget.blurlevel,
                 offset: Offset(-6, -6),
 
