@@ -7,6 +7,7 @@ import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '../bloc.Navigation_bloc/navigation_bloc.dart';
@@ -53,6 +54,9 @@ class _Profile extends State<Profile> {
     var location =Location();
     try{
       var userLocation =await location.getLocation();
+      List<Placemark> place = await Geolocator().placemarkFromCoordinates(userLocation.latitude, userLocation.longitude);
+      Placemark placemark =place[0];
+      print("${placemark.name}, ${placemark.subLocality}, ${placemark.locality}, ${placemark.administrativeArea}, ${placemark.postalCode}, ${placemark.position}, ${placemark.subAdministrativeArea}");
       print("${userLocation.latitude},${userLocation.longitude}");
     } on Exception catch (e){
       print(e.toString());
