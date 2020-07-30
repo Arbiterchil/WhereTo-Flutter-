@@ -15,31 +15,26 @@ class RiderApi {
   var constant;
   var finalID;
   bool checkValue = true;
+
   Future<RiderResponse> getViewTransac() async{
-    
-    OneSignal.shared
-        .setInFocusDisplayType(OSNotificationDisplayType.notification);
-    OneSignal.shared
-        .setNotificationReceivedHandler((OSNotification notification) {
-        constant =notification.payload.additionalData;
-    });
-    if(constant == null){
-
-        finalID= "0";
-
-    }else{
-
-        finalID = constant['id'].toString();
-    }
 
     try{
-    
+      SharedPreferences local = await SharedPreferences.getInstance();
+        
+          var check = local.getBool("cuurentIdtrans");
+        if(check !=null ){
+
+            if(check){
+                  finalID = local.getString("menuplustrans");
+                  print(finalID);
+
+            }else{
+              print("No Id Getter.");
+            }
+
+        }
         print(finalID);
-        // SharedPreferences localStorage = await SharedPreferences.getInstance();
-        // localStorage.setBool('listCheck', checkValue);
-        // localStorage.setStringList('listId', finalID);
         final response = await ApiCall().viewTransac('/getTransactionDetails/$finalID');
-        // final response = await ApiCall().viewTransac('/getTransactionDetails/2');
         List<RiderViewClass> riderme = [];
         
         var body = json.decode(response.body);

@@ -8,8 +8,12 @@ import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_stream.dart';
 import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class RiderViewing extends StatefulWidget {
+  
+  
+
   @override
   _RiderViewingState createState() => _RiderViewingState();
 }
@@ -19,13 +23,20 @@ class _RiderViewingState extends State<RiderViewing> {
   var priceTotal = 0 ;
   var totals;
 
-  @override
-  void initState() {
+var constant;
+  var finalID;
+ 
 
+  @override
+  void initState() { 
     super.initState();
     streamRider..getView();
   }
-
+  @override
+  void dispose() {
+    super.dispose();
+    streamRider..drainStream();
+  }
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<RiderResponse>(
@@ -44,8 +55,6 @@ class _RiderViewingState extends State<RiderViewing> {
       },
     );
   }
-
-
     Widget _load(){
       return Center(
         child: Column(
@@ -80,7 +89,7 @@ class _RiderViewingState extends State<RiderViewing> {
 
         if(rs.length == 0 ){
           return Container(
-            child: Text('No Transactions This Time.',
+            child: Text('Ok.',
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -150,7 +159,7 @@ class _RiderViewingState extends State<RiderViewing> {
                             }
                             totals = priceTotal;
                             print(totals);
-                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                             Navigator.push(context, MaterialPageRoute(builder: (context){
                                                 return ViewMenuOnTransac(
                                                   getID: rs[index].id.toString(),
                                                   gotTotal: totals.toString(),
