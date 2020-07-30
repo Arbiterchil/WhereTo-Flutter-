@@ -27,7 +27,7 @@ class ApiCall{
  
 
   getData(api) async{
-    var fullurl = url + api + await _getToken();
+    var fullurl = url + api;
     // print(fullurl);
     return await http.get(
       fullurl,

@@ -58,7 +58,7 @@ dependencies:
   slide_popup_dialog: ^0.0.2
   neumorphic: ^0.3.2
   modal_bottom_sheet: ^0.2.0+1
-  snack: ^1.0.4
+  dio: ^3.0.9
   
 dev_dependencies:
   flutter_test:

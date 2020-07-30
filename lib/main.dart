@@ -1,18 +1,15 @@
 
 
 
-import 'package:WhereTo/api_restaurant_bloc/bloc.provider.dart';
-import 'package:WhereTo/api_restaurant_bloc/bloc.transaction.dart';
-import 'package:WhereTo/api_restaurant_bloc/computation.dart';
+import 'package:WhereTo/Transaction/MyOrder/bloc.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 
 import 'package:WhereTo/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neumorphic/neumorphic.dart';
 
-import 'package:provider/provider.dart';
 
+import 'Transaction/MyOrder/bloc.provider.dart';
 import 'api_restaurant_bloc/orderblocdelegate.dart';
 void main() {
   BlocSupervisor.delegate =OrderBlocDelegate();
@@ -58,13 +55,15 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
       
       debugShowCheckedModeBanner: false,
-      home:BlocProviders(
-        bloc: BlocTransaction(),
+      home:Builder(builder: (context){
+        return BlocProviders(
+        bloc: BlocAll(),
         child: Scaffold(
          body: SplashScreen(),
         // body: _isLoggedIn ? Home() :  LoginPage(),
         ),
-        ),
+        );
+      })
       
     ),
     );

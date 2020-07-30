@@ -1,6 +1,7 @@
 
 import 'package:WhereTo/MenuRestaurant/categ_type.dart';
 import 'package:WhereTo/MenuRestaurant/restaurant_menu_list.dart';
+import 'package:WhereTo/Transaction/myOrders.dart';
 import 'package:WhereTo/Transaction/mycart.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
@@ -125,7 +126,7 @@ class _ListStacticState extends State<ListStactic>
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => MyOrders()));
+                                      builder: (context) => MyOrder()));
                                                                   }),
                                                             ],
                                                             backgroundColor: Colors.amber,
@@ -289,5 +290,5 @@ class _ListStacticState extends State<ListStactic>
                                           );
                                         }
                                       
-                                        MyOrders() {}
+                                      
 }

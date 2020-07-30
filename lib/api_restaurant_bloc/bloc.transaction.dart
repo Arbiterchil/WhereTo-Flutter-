@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:WhereTo/MenuRestaurant/categ_type.dart';
 import 'package:WhereTo/MenuRestaurant/restaurant_menu_list.dart';
+import 'package:WhereTo/Transaction/MyOrder/bloc.provider.dart';
+import 'package:WhereTo/Transaction/MyOrder/getMenuPerTransaction.class.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/api_restaurant_bloc/bloc.provider.dart';
+
 
 
 
@@ -32,6 +34,12 @@ class BlocTransaction implements BlocBase{
   Sink<List<TyepCateg>> get sinkType => streamType.sink;
   Stream<List<TyepCateg>> get streamCategory=>streamType.stream;
 
+
+  StreamController<List<MenuOrderTransaction>> menutransactionStream =StreamController.broadcast();
+  Sink<List<MenuOrderTransaction>> get transactionType =>menutransactionStream.sink;
+  Stream<List<MenuOrderTransaction>> get streamMenuTransaction=> menutransactionStream.stream;
+  
+
   Future<void> menuList(String restau, String menuName, int id) async{
     final response = await ApiCall().getCategory('/getMenuCategory/$id');
     final List<RestaurantMenu> restList = restaurantMenuFromJson(response.body);
@@ -49,14 +57,14 @@ class BlocTransaction implements BlocBase{
     sinkType.add(category);
   }
 
-  
-    add(int total){
-    List<int> addItems =[];
-    addItems.add(total);
-    for(var items in addItems){
-    sinkInt.add(items);
-    }
+  Future<void> getMenuTransaction(var id) async{
+    final response = await ApiCall().getData('/getMenuPerTransaction/$id');
+    final List<MenuOrderTransaction> transaction = menuOrderTransactionFromJson(response.body);
+    transactionType.add(transaction);
   }
+  
+    
+  
 
   // increment(){
   //   sinkInc.add(++incrementer);
@@ -73,6 +81,7 @@ class BlocTransaction implements BlocBase{
     // streamInc.close();
     streamAPI.close();
     streamType.close();
+    menutransactionStream.close();
   }
 
 }
