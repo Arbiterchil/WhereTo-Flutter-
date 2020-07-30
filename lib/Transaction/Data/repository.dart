@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_class.dart';
 import 'package:WhereTo/Transaction/Data/response.dart';
 import 'package:WhereTo/Transaction/MyOrder/getMenuPerTransaction.class.dart';
 import 'package:WhereTo/Transaction/MyOrder/getTransactionDetails.class.dart';
@@ -12,11 +13,11 @@ class Repository{
     
      
         final response = await ApiCall().viewTransac('/getTransactionDetails/3');
-        List<MenuOrderTransaction> me = [];
+        List<RiderViewClass> riderme = [];
         
         var body = json.decode(response.body);
         for (var body in body){
-            MenuOrderTransaction userclass = MenuOrderTransaction
+            RiderViewClass riderViewClass = RiderViewClass
           (
             id: body["id"],
             name: body["name"],
@@ -27,11 +28,11 @@ class Repository{
             deliveryAddress: body["deliveryAddress"],
             );
 
-            me.add(userclass);
+            riderme.add(riderViewClass);
         }
-        print(me.length);
+        print(riderme.length);
               
-        return Response.fromJson(me);
+        return Response.fromJson(riderme);
 
     }catch(error,stacktrace){
 

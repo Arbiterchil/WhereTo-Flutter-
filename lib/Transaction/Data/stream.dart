@@ -23,4 +23,4 @@ class Stream{
   }
   BehaviorSubject<Response> get subject => _subject;
 }
-final userStream =Stream();
+final userStream = Stream();
