@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:WhereTo/AnCustom/dialog_showGlobal.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/button_OkAssign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
@@ -48,6 +49,7 @@ var priceTotal = 0;
 var quantityTotal = 0;
 var totals;
 var userData;
+var stepnumber;
 bool available = true;
 bool okAvail = true;
 int currentStep = 0;
@@ -197,9 +199,28 @@ bool menuHide = true;
 
   nextSteps(){
     currentStep + 1 != steps.length
-    ? goTo(currentStep + 1)
+    ? goTo(currentStep + 1) 
     : setState(()=> complete = true);
+   
+    stepnumber = currentStep+ 1;
+    print(stepnumber);
   } 
+
+  // nextSteps(){
+
+  //   setState(() {
+      
+  //     if(currentStep+1 != steps.length){
+       
+  //       goto(currentStep +  1);
+  //     }else{
+  //       complete = true;
+  //     }
+
+  //   });
+
+  // }
+
   cancel(){
     if(currentStep > 0){
       goTo(currentStep - 1);
@@ -217,10 +238,12 @@ void _getUserInfo() async {
       });
   }
 
-  Future<List<RiverMenu>> getMenuTransac() async {
+Future<List<RiverMenu>> getMenuTransac() async {
 
 
         final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/${widget.getID}');
+        // final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/3');
+        
         List<RiverMenu> ridermenu = [];
 
         var body = json.decode(response.body);
@@ -241,7 +264,7 @@ void _getUserInfo() async {
         
   }
 
-    void riderCheck() async{
+void riderCheck() async{
 SharedPreferences localStorage = await SharedPreferences.getInstance();
 var checkVal = localStorage.getBool('check');
         String riderId = widget.riderID.toString();
@@ -334,13 +357,15 @@ var checkVal = localStorage.getBool('check');
                                           icon: Icons.drive_eta,
                                           iconSize: 30.0,
                                           onTap: (){
-                                            setState(() {
-                                              available = !available;
-                                              menuHide = !menuHide;
-                                              assign();
-                                              riderCheck();
-                                            });
-                                            
+                                                xDilogAhow(context);
+                                            //     setState(() {
+                                            //   available = !available;
+                                            //   menuHide = !menuHide;
+                                            //   assign();
+                                            //   riderCheck();
+                                            // });
+                                           
+                                           
                                             print(userData['id']);
                                           },
                                         ),
@@ -350,7 +375,63 @@ var checkVal = localStorage.getBool('check');
                                 ),
                               ),
                       SizedBox(height: 40.0,),
-                
+                      
+                        complete ? Container(
+                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: menuBox,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Done! Orders Successfully Delivered.",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'OpenSans',
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w700,
+                              ),),
+                              SizedBox(height: 30.0,),
+                              Text("Again Job Well Done!.",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'OpenSans',
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w700,
+                              ),),
+                              SizedBox(height: 10.0,),
+                               RaisedButton(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                              onPressed: () {
+                                      setState(() {
+                                      complete = false;                    
+                                                          });
+                              // Navigator.of(context).pop();
+                                  },   
+                              child: Text ( "Yes", style :TextStyle(
+                              color: Color(0xFF398AE5),
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12.0,
+                                          fontFamily: 'OpenSans'
+                            ),),),
+                            ],
+                          ),
+                        ):
+
+
+
+                        //  Center(
+                        //    child: AlertDialog(
+                        //      title: Text("Done! Delivery Orders"),
+                        //      content: Text("Nice Job!"),
+                        //     actions: <Widget>[
+                        //       FlatButton(
+                        //         onPressed: (()=>complete = false),
+                        //         child: Text("OK"))
+                        //     ],
+                        //    ),
+                           
+                        //  ) :
                         Visibility(
                           visible: okAvail,
                             child: Container(
@@ -463,10 +544,6 @@ var checkVal = localStorage.getBool('check');
               ),
           ),
         ),
-        // floatingActionButton: FloatingActionButton(
-        //   child: Icon(Icons.swap_horizontal_circle),
-        //   onPressed: switchThis,
-        // ),
       );
 
 
@@ -497,7 +574,122 @@ var checkVal = localStorage.getBool('check');
 
 
   }
+  void xDilogAhow(context){
+      showDialog(context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context){
 
+          return Dialog(
+             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: mCustom(context),
+    ); 
+
+
+      });
+
+
+  }
+    mCustom(BuildContext context){
+
+       return Container(
+        height: 300.0,
+        width: 200.0,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+        color: Colors.white),
+        child: Column(
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  Container(
+                    height: 150.0,
+                  ),
+                  Container(
+                    height: 100.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
+                      color: Color(0xFF398AE5),),
+
+                  ),
+                  Positioned(
+                    top: 50.0,
+                    left: 94.0,
+                    child: Container(
+                      height: 90,
+                      width: 90,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(45),
+                        border: Border.all(
+                          color: Colors.white,
+                          style: BorderStyle.solid,
+                          width: 2.0,
+                        ),
+                        image: DecorationImage(
+                          image: AssetImage("asset/img/logo.png"),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10.0,),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text("Accept Transcation Orders?",
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.0,
+                  fontFamily: 'OpenSans'
+                ),
+                
+                ),),
+                SizedBox(height: 25.0,),
+                Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  FlatButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                    onPressed: (){
+                      Navigator.of(context).pop();
+                    },
+                    child: Text ( "No", style :TextStyle(
+                color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
+                            fontFamily: 'OpenSans'
+              ),),),
+              SizedBox(width: 20.0,),
+              RaisedButton(
+                color: Color(0xFF398AE5),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                onPressed: () {
+                                              setState(() {
+                                              available = !available;
+                                              menuHide = !menuHide;
+                                              assign();
+                                              riderCheck();
+                                            });
+                 Navigator.of(context).pop();
+                    },   
+                child: Text ( "Yes", style :TextStyle(
+                color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
+                            fontFamily: 'OpenSans'
+              ),),),
+                ],
+              ), 
+            ],
+        ),
+      );
+
+
+    }
 }
 
 
@@ -579,103 +771,3 @@ class NCard1Button extends StatelessWidget {
     );
   }
 }
-
-// class CallerMenu extends StatelessWidget{
-
-  // final String getId;
-
-  // const CallerMenu({Key key, this.getId}) : super(key: key);
-
-
-  //  Future<List<RiverMenu>> getMenuTransaction() async {
-
-
-  //       final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/3');
-  //       List<RiverMenu> ridermenu = [];
-
-  //       var body = json.decode(response.body);
-  //       for(var body in body){
-  //           RiverMenu riverMenu = RiverMenu(
-  //             menuName: body["menuName"],
-  //             description: body["description"],
-  //             price: body["price"],
-  //             quantity: body["quantity"],
-  //           );
-           
-  //           ridermenu.add(riverMenu);          
-  //       }
-
-       
-
-  //       return ridermenu;
-        
-  // }
-
-   
-  
-  
-  // @override
-  // Widget build(BuildContext context) {
-  //    return Container(
-  //         height: 240,
-  //         width: MediaQuery.of(context).size.width,
-  //         child: FutureBuilder(
-  //           future: getMenuTransaction(),
-  //           builder: (BuildContext context, AsyncSnapshot snapshot){
-
-
-  //             if(snapshot.data == null){
-  //               return Container(
-  //                     child: Center(
-  //                       child: Text("Loading Menu's Please wait...",
-  //                       style: TextStyle(
-  //               color: Colors.white,
-  //               fontFamily: 'OpenSans',
-  //               fontSize:  16.0,
-  //               fontWeight: FontWeight.normal
-  //             ),),    
-  //                     ),
-  //                   );
-  //             }else{
-                
-  //                 return Container(
-                    
-  //                   child: ListView.builder(
-  //                     scrollDirection: Axis.horizontal,
-  //                     itemCount: snapshot.data.length,
-  //                     itemBuilder: (context,index){
-
-  //                           return Padding(
-  //                             padding: const EdgeInsets.all(15.0),
-  //                             child: Row(
-  //                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                
-  //                                 children: <Widget>[
-                                   
-  //                                    MenuDesign(
-  //                                      menuname: snapshot.data[index].menuName,
-  //                                      description: snapshot.data[index].description,
-  //                                      price: snapshot.data[index].price.toString(),
-  //                                      quantity: snapshot.data[index].quantity.toString(),
-
-  //                                    ),
-                                     
-  //                                 ],
-
-  //                             ),
-  //                           );
-
-
-
-  //                     }),
-  //                 );
-  //             }
-
-
-
-  //           },
-  //           ),
-  //       );
-  // }
-
-// }
