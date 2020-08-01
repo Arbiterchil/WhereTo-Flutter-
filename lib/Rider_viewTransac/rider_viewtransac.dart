@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:WhereTo/Rider/profile_rider.dart';
+import 'package:WhereTo/Rider_MonkeyBar/rider_bottom.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/view_MenuTransac.dart';
+import 'package:WhereTo/Rider_viewTransac/DummyTesting/dummy_Card.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_class.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_views.dart';
 import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
@@ -19,13 +21,9 @@ import '../designbuttons.dart';
 
 class RiderTransaction extends StatefulWidget {
 
-   final String number;
-
-  const RiderTransaction({Key key, this.number}) : super(key: key);
 
 
-
-
+  const RiderTransaction({Key key}) : super(key: key);
   @override
   _RiderTransactionState createState() => _RiderTransactionState();
 }
@@ -36,34 +34,19 @@ var totalAll;
   var priceTotal = 0 ;
   var totals;
   bool getmessage = false;
-      var constant;
+  bool mine = false;
+  var constant;
   var finalID;
   var idgetter;
   
   @override
   void initState() {
-    notifmeNow();
+    // notifmeNow();
     mybackUp();
     super.initState();
   }
 void notifmeNow() async{
- OneSignal.shared
-        .setInFocusDisplayType(OSNotificationDisplayType.notification);
-    OneSignal.shared
-        .setNotificationReceivedHandler((OSNotification notification) {
-                constant =notification.payload.additionalData; 
-                
-                setState(() {
-                  if(constant != null){
-                    print(constant['id'].toString());
-                    getmessage = true;
-                    finalID = constant['id'];
-
-                  }else{
-                    print("No Data");
-                  }
-                });
-    });
+ 
 
   var status = await OneSignal.shared.getPermissionSubscriptionState();
          String url = 'https://onesignal.com/api/v1/notifications';
@@ -88,16 +71,10 @@ void notifmeNow() async{
     };
     // var repo =
         await http.post(url, headers: headers, body: json.encode(contents));
-
-      // print(repo.body);
-      
-
-        
-    
+      // print(repo.body);    
      }
 
-  Future<List<RiderViewClass>> getTransac() async {
-   
+Future<List<RiderViewClass>> getTransac() async {   
         final response = await ApiCall().viewTransac('/getTransactionDetails/$finalID');
         List<RiderViewClass> riderme = [];
         var body = json.decode(response.body);
@@ -111,6 +88,8 @@ void notifmeNow() async{
             deviceId: body["deviceId"],
             riderId: body["riderId"],
             deliveryAddress: body["deliveryAddress"],
+            status: body["status"],
+            deliveryCharge: body["deliveryCharge"]
             );
 
             riderme.add(riderViewClass);
@@ -118,31 +97,31 @@ void notifmeNow() async{
         print(riderme.length);
         return riderme;
   }
-
  mybackUp() async {
-
-   SharedPreferences local = await SharedPreferences.getInstance();
-        
-          var check = local.getBool("cuurentIdtrans");
-        if(check !=null ){
-
-            if(check){
-                  idgetter = local.getString("menuplustrans");
-                  print(idgetter);
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared
+        .setNotificationReceivedHandler((OSNotification notification) {
+                constant =notification.payload.additionalData; 
+                
+                setState(() {
+                  if(constant != null){
+                    print(constant['id'].toString());
+                    getmessage = true;
                     
-            }else{
-              print("No Id Getter.");
-            }
+                    finalID = constant['id'];
 
-        }
-
+                  }else{
+                    print("No Data");
+                  }
+                });
+    });
  }   
-
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-    backgroundColor: Color(0xFF398AE5),
+    backgroundColor: Color(0xFFF2F2F2),
+    // Color(0xFF398AE5),
     body: WillPopScope(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -151,58 +130,42 @@ void notifmeNow() async{
             child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
               child: Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: <Widget>[
-                     Container(
-                                width: MediaQuery.of(context).size.width,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: DesignButton(
-                                        height: 55,
-                                        width: 55,
-                                        color: Color(0xFF398AE5),
-                                        offblackBlue: Offset(-4, -4),
-                                        offsetBlue: Offset(4, 4),
-                                        blurlevel: 4.0,
-                                        icon: Icons.arrow_back,
-                                        iconSize: 30.0,
-                                        onTap: ()  {
-                                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                                return RiderProfile();
-                                              }));
-                                    },
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: DesignButton(
-                                        height: 55,
-                                        width: 55,
-                                        color: Color(0xFF398AE5),
-                                        offblackBlue: Offset(-4, -4),
-                                        offsetBlue: Offset(4, 4),
-                                        blurlevel: 4.0,
-                                        icon: Icons.refresh,
-                                        iconSize: 30.0,
-                                        onTap: (){
-                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                                return RiderTransaction();
-                                              }));
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                     SizedBox(height: 40.0,),
-                    //  TestCombineRxDart(),
-                    // idgetter==null ?  "": RiderViewing(),
-                  //  getmessage ?  _viewRider() : false
-                  // RiderViewing(),
-                  _viewRider()
+                    //  Container(
+                    //             width: MediaQuery.of(context).size.width,
+                    //             child: Stack(
+                    //               children: <Widget>[
+                                    
+                    //                 // Align(
+                    //                 //   alignment: Alignment.topRight,
+                    //                 //   child: DesignButton(
+                    //                 //     height: 55,
+                    //                 //     width: 55,
+                    //                 //     color: Color(0xFF398AE5),
+                    //                 //     offblackBlue: Offset(-4, -4),
+                    //                 //     offsetBlue: Offset(4, 4),
+                    //                 //     blurlevel: 4.0,
+                    //                 //     icon: Icons.refresh,
+                    //                 //     iconSize: 30.0,
+                    //                 //     onTap: (){
+                    //                 //       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                    //                 //             return RiderTransaction();
+                    //                 //           }));
+                    //                 //     },
+                    //                 //   ),
+                    //                 // ),
+                    //               ],
+                    //             ),
+                    //           ),
+                  SizedBox(height: 40.0,),
+                  
+                   _viewRider(),
+                  
+                  
+
+                  // RiderViewing()
                   
                    
                 
@@ -217,11 +180,8 @@ void notifmeNow() async{
       onWillPop: () async => false),
     );
   }
-
   Widget _viewRider(){
-        return Visibility(
-          visible: getmessage,
-          child: Container(
+        return Container(
             child: FutureBuilder(
               future: getTransac(),
               builder: (BuildContext context , AsyncSnapshot snapshot){
@@ -249,8 +209,10 @@ void notifmeNow() async{
                   itemBuilder: (context,index){
                      return Column(
                        children: <Widget>[
-                         ViewTransacRider(
-                          image: "asset/img/app.jpg",
+                        
+                                
+                        
+                        Customgettransac( image: "asset/img/app.jpg",
                           transacId: snapshot.data[index].id.toString(),
                           name: snapshot.data[index].name,
                           address: snapshot.data[index].address,
@@ -295,8 +257,7 @@ void notifmeNow() async{
                                                     riderID: snapshot.data[index].riderId.toString(),);
                                                 }));
 
-                          },
-                        ),
+                          },),
                        ],
                      );
                   },
@@ -309,7 +270,7 @@ void notifmeNow() async{
                   }
               },
             ),
-          ),
+         
         );
 
 

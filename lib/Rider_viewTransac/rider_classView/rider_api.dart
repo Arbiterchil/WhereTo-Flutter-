@@ -17,22 +17,34 @@ class RiderApi {
   bool checkValue = true;
 
   Future<RiderResponse> getViewTransac() async{
+ OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared
+        .setNotificationReceivedHandler((OSNotification notification) {
+                constant =notification.payload.additionalData; 
+                
+               
+                  if(constant != null){
+                    print(constant['id'].toString());
+                   
+                    
+                    finalID = constant['id'];
 
+                  }else{
+                    print("No Data");
+                  }
+            
+    });
     try{
-      SharedPreferences local = await SharedPreferences.getInstance();
-        
-          var check = local.getBool("cuurentIdtrans");
-        if(check !=null ){
+      if(constant != null){
+                    print(constant['id'].toString());
+                
+                    
+                    finalID = constant['id'];
 
-            if(check){
-                  finalID = local.getString("menuplustrans");
-                  print(finalID);
-
-            }else{
-              print("No Id Getter.");
-            }
-
-        }
+                  }else{
+                    print("No Data");
+                  }
         print(finalID);
         final response = await ApiCall().viewTransac('/getTransactionDetails/$finalID');
         List<RiderViewClass> riderme = [];
