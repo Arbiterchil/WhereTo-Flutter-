@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:WhereTo/MenuRestaurant/categ_type.dart';
 import 'package:WhereTo/MenuRestaurant/restaurant_menu_list.dart';
-import 'package:WhereTo/Transaction/MyOrder/bloc.provider.dart';
 import 'package:WhereTo/Transaction/MyOrder/getMenuPerTransaction.class.dart';
 import 'package:WhereTo/api/api.dart';
 
 
 
 
-class BlocTransaction implements BlocBase{
+class BlocTransaction {
 
   int number =0;
   int val =0;

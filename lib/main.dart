@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-import 'Transaction/MyOrder/bloc.provider.dart';
 import 'api_restaurant_bloc/orderblocdelegate.dart';
 void main() {
   BlocSupervisor.delegate =OrderBlocDelegate();
@@ -55,15 +54,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
       
       debugShowCheckedModeBanner: false,
-      home:Builder(builder: (context){
-        return BlocProviders(
-        bloc: BlocAll(),
-        child: Scaffold(
-         body: SplashScreen(),
-        // body: _isLoggedIn ? Home() :  LoginPage(),
-        ),
-        );
-      })
+      home:SplashScreen(),
       
     ),
     );

@@ -7,7 +7,7 @@ class Stream{
 
   final Repository repository = Repository();
   final BehaviorSubject<Response> _subject =BehaviorSubject<Response>();
-
+   final BehaviorSubject<Response> sub =BehaviorSubject<Response>();
 
 
 

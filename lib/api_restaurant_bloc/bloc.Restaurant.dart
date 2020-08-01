@@ -3,11 +3,10 @@ import 'dart:convert';
 
 
 import 'package:WhereTo/MenuRestaurant/restaurant_menu_list.dart';
-import 'package:WhereTo/Transaction/MyOrder/bloc.provider.dart';
 import 'package:WhereTo/api/api.dart';
 
 
-class Blocrestaurant implements BlocBase{
+class Blocrestaurant{
 
 StreamController<List<RestaurantMenu>> streamApi =StreamController.broadcast();
 Sink<List<RestaurantMenu>> get sinkApi =>streamApi.sink;

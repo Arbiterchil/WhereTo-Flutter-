@@ -26,6 +26,7 @@ class ListStactic extends StatefulWidget {
 class _ListStacticState extends State<ListStactic>
     with SingleTickerProviderStateMixin {
   num _defaultValue = 0;
+
   Future<List<TyepCateg>> _categRest() async {
     final response = await ApiCall().getCategory('/getCategories');
     final List<TyepCateg> category = tyepCategFromJson(response.body);
@@ -50,15 +51,6 @@ class _ListStacticState extends State<ListStactic>
 
   @override
   Widget build(BuildContext context) {
-    // int getmeouts = widget.restaurant.id;
-    int id;
-    String menuName;
-    // final bloc = BlocProviders.of<BlocTransaction>(context);
-    // setState(() {
-    //   bloc.category();
-    //   bloc.menuList(widget.nameRestau, "Chicken", 4);
-    // });
-    int val = 0;
     return Scaffold(
       body: Builder(builder: (context) {
         return Container(
@@ -112,8 +104,7 @@ class _ListStacticState extends State<ListStactic>
                               );
                             },
                             listener: (BuildContext context, order) {
-                                  Scaffold.of(context).showSnackBar(
-                                  SnackBar(content: Text("Order Added")));
+                               
                                 },
                           ),
                         ),
@@ -172,18 +163,17 @@ class _ListStacticState extends State<ListStactic>
                                                             return TabBarView(
                                                               children: snapshot.data.map<Widget>((TyepCateg ty) {
                                                                 return Container(
-                                                                  child: FutureBuilder(
+                                                                  child: FutureBuilder<List<RestaurantMenu>>(
                                                                       future: _menuList(ty.id, ty.categoryName),
                                                                       builder: (context, data) {
-                                                                        if (data.data == null) {
-                                                                          return Center(
-                                                                            child: CircularProgressIndicator(),
-                                                                          );
-                                                                        } else {
-                                                                          return ListView.builder(
+                                                                        print(ty.categoryName);
+                                                                        if(data.hasData){
+                                                                          if(data.data.length >0){
+                                                                            return ListView.builder(
                                                                               itemCount: data.data.length,
                                                                               itemBuilder: (context, index) {
-                                                                                return Padding(
+                                                                                if(data.data.length >0){
+                                                                                  return Padding(
                                                                                   padding: EdgeInsets.all(15),
                                                                                   child: Container(
                                                                                     height: 90,
@@ -273,7 +263,19 @@ class _ListStacticState extends State<ListStactic>
                                                                                     ),
                                                                                   ),
                                                                                 );
+                                                                                }else{
+                                                                                  return Container();
+                                                                                }
                                                                               });
+                                                                          }else{
+                                                                            return Center(
+                                                                            child: Container()
+                                                                          );
+                                                                          }
+                                                                        }else{
+                                                                          return Center(
+                                                                            child: CircularProgressIndicator(),
+                                                                          );
                                                                         }
                                                                       }),
                                                                 );
