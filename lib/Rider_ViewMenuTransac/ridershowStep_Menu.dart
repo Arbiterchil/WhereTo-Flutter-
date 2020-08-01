@@ -24,7 +24,7 @@ class _MShowStepState extends State<MShowStep> {
 
   @override
   void initState() {
-    
+    getMenuTransaction();
     super.initState();
   }
 
@@ -87,7 +87,7 @@ class _MShowStepState extends State<MShowStep> {
                       child: Center(
                         child: Text("Loading Menu's Please wait...",
                         style: TextStyle(
-                color: Colors.white,
+                color:  Color(0xFF0C375B),
                 fontFamily: 'OpenSans',
                 fontSize:  16.0,
                 fontWeight: FontWeight.normal

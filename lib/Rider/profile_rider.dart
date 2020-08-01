@@ -76,12 +76,15 @@ class _RiderProfileState extends State<RiderProfile> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: 
-        Color(0xFF398AE5),
-        // Colors.white,
+        // Color(0xFF398AE5),
+        Colors.white,
         // unselectedItemColor: Colors.grey,
         backgroundColor:
-        Color(0xFFF2F2F2),
+        Color(0xFF0C375B), 
+        // Color(0xFFF2F2F2)
         //  Color(0xFF398AE5),
+        unselectedItemColor: 
+        Color(0xFF176DB5),
         currentIndex: _selectedIndex,
         onTap: (int index) { _selectTab(pageKeys[index], index); },
         items: [

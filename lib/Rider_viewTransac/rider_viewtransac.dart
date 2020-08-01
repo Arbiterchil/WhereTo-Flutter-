@@ -37,6 +37,7 @@ var totalAll;
   bool mine = false;
   var constant;
   var finalID;
+  var userRN;
   var idgetter;
   
   @override
@@ -76,6 +77,7 @@ void notifmeNow() async{
 
 Future<List<RiderViewClass>> getTransac() async {   
         final response = await ApiCall().viewTransac('/getTransactionDetails/$finalID');
+        // final response = await ApiCall().viewTransac('/getTransactionDetails/3');
         List<RiderViewClass> riderme = [];
         var body = json.decode(response.body);
         for (var body in body){
@@ -107,6 +109,7 @@ Future<List<RiderViewClass>> getTransac() async {
                 setState(() {
                   if(constant != null){
                     print(constant['id'].toString());
+                    print(constant['rn'].toString());
                     getmessage = true;
                     
                     finalID = constant['id'];
@@ -133,43 +136,9 @@ Future<List<RiderViewClass>> getTransac() async {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: <Widget>[
-                    //  Container(
-                    //             width: MediaQuery.of(context).size.width,
-                    //             child: Stack(
-                    //               children: <Widget>[
-                                    
-                    //                 // Align(
-                    //                 //   alignment: Alignment.topRight,
-                    //                 //   child: DesignButton(
-                    //                 //     height: 55,
-                    //                 //     width: 55,
-                    //                 //     color: Color(0xFF398AE5),
-                    //                 //     offblackBlue: Offset(-4, -4),
-                    //                 //     offsetBlue: Offset(4, 4),
-                    //                 //     blurlevel: 4.0,
-                    //                 //     icon: Icons.refresh,
-                    //                 //     iconSize: 30.0,
-                    //                 //     onTap: (){
-                    //                 //       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                    //                 //             return RiderTransaction();
-                    //                 //           }));
-                    //                 //     },
-                    //                 //   ),
-                    //                 // ),
-                    //               ],
-                    //             ),
-                    //           ),
                   SizedBox(height: 40.0,),
-                  
                    _viewRider(),
-                  
-                  
-
                   // RiderViewing()
-                  
-                   
-                
-             
                   ],
                 ),
               ),
@@ -247,14 +216,16 @@ Future<List<RiderViewClass>> getTransac() async {
                               }
                               totals = priceTotal;
                               print(totals);
-                               Navigator.push(context, MaterialPageRoute(builder: (context){
+                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                                                   return ViewMenuOnTransac(
                                                     getID: snapshot.data[index].id.toString(),
                                                     gotTotal: totals.toString(),
                                                     deliverTo: snapshot.data[index].deliveryAddress.toString(),
                                                     restaurantName: snapshot.data[index].restaurantName.toString(),
                                                     deviceID: snapshot.data[index].deviceId.toString(),
-                                                    riderID: snapshot.data[index].riderId.toString(),);
+                                                    riderID: snapshot.data[index].riderId.toString(),
+                                                    deliveryCharge: snapshot.data[index].deliveryCharge.toString(),
+                                                    nametran:  snapshot.data[index].name,);
                                                 }));
 
                           },),

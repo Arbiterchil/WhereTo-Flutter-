@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:WhereTo/AnCustom/dialogHelp.dart';
 import 'package:WhereTo/Rider_viewTransac/DummyTesting/dummy_Card.dart';
-import 'package:WhereTo/styletext.dart';
+import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/login_page.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,47 +16,78 @@ class RiderDash extends StatefulWidget {
 
 class _RiderDashState extends State<RiderDash> {
 var userData;
- bool online = false;
+ bool online = true;
   String coma = "'";
+  var checkbool;
   @override
   void initState() {
     _getUserInfo();
     configSignal();
+    // toOnline(online);
     super.initState();
   }
 
-void toOnline(bool e){
-
-setState(() {
-  if(e){
-    online = e;
-  }else{
-    online = e;
-  }
-});
-
-}
 
 void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
-      var userJson = localStorage.getString('user'); 
+      var userJson = localStorage.getString('user');
+      checkbool = localStorage.getBool('check'); 
       var user = json.decode(userJson);
       setState(() {
         userData = user;
       });
   }
+
+// void logOutto() async{
+// SharedPreferences localStorage = await SharedPreferences.getInstance();
+
+//   var offline = await ApiCall().getOffline('goOffline/${userData['id']}');
+
+//   var bod = json.decode(offline.body);
+//   print(bod);
+//   var res = await ApiCall().getData('/logout');
+//                             var body = json.decode(res.body);
+                           
+                               
+//                                localStorage.remove('user');
+//                                localStorage.remove('token');
+//                                print(body);
+//                               //   Navigator.pushReplacement(
+//                               // context,
+//                               // new MaterialPageRoute(
+//                               //     builder: (context) => LoginPage()));
+//                               exit(0);
+//                               print(body);
+// }
+
+void toOnline(bool e) async{
+
+
+    setState(() {
+
+      if(checkbool!=null){
+        if(checkbool){
+      if(e){
+        online = e;                      
+        }else{
+        online = e;
+        // logOutto(); 
+      }
+        }
+      }
+
+      
+
+      
+    });
+
+}
+
 void configSignal() async {
      await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
     await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-    // OneSignal.shared
-    //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
-    // OneSignal.shared
-    //     .setNotificationReceivedHandler((OSNotification notification) {
-    //   setState(() {
-    //     constant =notification.payload.additionalData as List;
-    //   });
-    // });
+
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();
    await OneSignal.shared.sendTags({'UR': 'TRUE'});
@@ -145,7 +179,15 @@ void configSignal() async {
                                       child: Switch(
                                         value: online,
                                         activeColor: Colors.lightGreen,
-                                       onChanged: (bool e) => toOnline(e)),
+                                        // onChanged: ((bool e)=>toOnline(e)),
+                                        onChanged: (bool value) async {
+                                         
+                                              online = !value;
+                                                 
+                                                Dialog_Helper.exit(context); 
+                                           
+                                         },
+                                      ),
                                        
                                     )
                                   ),

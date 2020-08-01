@@ -95,22 +95,21 @@ class _DesignButtonState extends State<DesignButton> {
           height: widget.height,
           width: widget.width,
           decoration: BoxDecoration(
-            color: Color(0xFF398AE5),
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            boxShadow: [
-              BoxShadow(
-                color:  Colors.white70.withOpacity(0.050),
-                // Colors.blue[500],
-                blurRadius: widget.blurlevel,
-                offset: Offset(-6, -6),
+           color: Color(0xFF176DB5),
+                                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:Color(0xFF0C375B),
+                                            blurRadius: 6,
+                                            offset: Offset(-6, -6),
 
-              ),
-              BoxShadow(
-                color:Colors.blue.shade700,
-                blurRadius: widget.blurlevel,
-                offset: Offset(6, 6),
-              ),
-            ],
+                                          ),
+                                          BoxShadow(
+                                            color:Color(0xFF0C375B),
+                                            blurRadius: 6,
+                                            offset: Offset(6, 6),
+                                          ),
+                                        ],
           ),
           child: Icon(
             widget.icon,

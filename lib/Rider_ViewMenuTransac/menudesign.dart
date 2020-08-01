@@ -22,7 +22,21 @@ class _MenuDesignState extends State<MenuDesign> {
     return Container(
        height: 180.0,
        width: 180.0,
-       decoration: menuBox,
+       decoration: BoxDecoration(
+
+        borderRadius: BorderRadius.circular(15.0),
+        gradient: LinearGradient(
+          
+          stops: [0.2,4],
+           colors: 
+           [
+           Color(0xFF0C375B),
+           Color(0xFF176DB5)
+           ],
+           begin: Alignment.bottomRight,
+           end: Alignment.topLeft),
+
+       ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -32,10 +46,10 @@ class _MenuDesignState extends State<MenuDesign> {
                   height: 50.0,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                  color: Color(0xFF398AE5),
-                  // Color(0xFF398AE5),
-                  // Colors.white,
-                  shape: BoxShape.rectangle,
+                  // color: Color(0xFF398AE5),
+                  // // Color(0xFF398AE5),
+                  // // Colors.white,
+                  // shape: BoxShape.rectangle,
                  
                 ),
                   child: Padding(

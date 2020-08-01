@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/modules/login_page.dart';
+import 'package:WhereTo/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +14,26 @@ class DialogCustomMade extends StatefulWidget {
 }
 
 class _DialogCustomMadeState extends State<DialogCustomMade> {
+ 
+var userData;
+
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getUserInfo();
+  }
+ 
+ void _getUserInfo() async {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var userJson = localStorage.getString('user');
+      // checkbool = localStorage.getBool('check'); 
+      var user = json.decode(userJson);
+      setState(() {
+        userData = user;
+      });
+  }
+ 
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -30,7 +49,15 @@ class _DialogCustomMadeState extends State<DialogCustomMade> {
 
     height: 297,
     decoration: BoxDecoration(
-      color: Color(0xFF398AE5),
+      gradient: LinearGradient(
+                              stops: [0.2,4],
+                              colors: 
+                              [
+                                Color(0xFF0C375B),
+                                Color(0xFF176DB5)
+                              ],
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft),
       shape: BoxShape.rectangle,
       borderRadius: BorderRadius.all(Radius.circular(20))
       ),
@@ -86,6 +113,10 @@ class _DialogCustomMadeState extends State<DialogCustomMade> {
                 color: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 onPressed: () async{
+                   var offline = await ApiCall().getOffline('/goOffline/${userData['id']}');
+
+                                              var bod = json.decode(offline.body);
+                                              print(bod); 
                   var res = await ApiCall().getData('/logout');
                             var body = json.decode(res.body);
                            
@@ -93,10 +124,10 @@ class _DialogCustomMadeState extends State<DialogCustomMade> {
                                localStorage.remove('user');
                                localStorage.remove('token');
                                print(body);
-                              //   Navigator.pushReplacement(
-                              // context,
-                              // new MaterialPageRoute(
-                              //     builder: (context) => LoginPage()));
+                                Navigator.pushReplacement(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => SplashScreen()));
                               exit(0);
                               print(body);
                             

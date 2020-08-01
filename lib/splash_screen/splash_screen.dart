@@ -47,8 +47,15 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color:  
-          Color(0xFF398AE5)
+           gradient: LinearGradient(
+                              stops: [0.2,4],
+                              colors: 
+                              [
+                                Color(0xFF0C375B),
+                                Color(0xFF176DB5)
+                              ],
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter),
         ),
         child:  Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +67,12 @@ class _SplashScreenState extends State<SplashScreen> {
                     width: 200.0,
                     height: 200.0,
                     padding: EdgeInsets.all(20.0),
-                    decoration: eCBox,
+                    // decoration: eCBoxDark,
+                    decoration: BoxDecoration(
+                      // shape: BoxShape.circle,
+                       borderRadius: BorderRadius.circular(110),
+                      color: Colors.white
+                    ),
                     child: Container(
                     child: Image.asset("asset/img/logo.png"),
             ),

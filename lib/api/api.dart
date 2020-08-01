@@ -34,6 +34,14 @@ class ApiCall{
       headers: _setHeaders()
       );
   }
+  getOffline(api) async{
+    var fullurl = url + api;
+    // print(fullurl);
+    return await http.post(
+      fullurl,
+      headers: _setHeaders()
+      );
+  }
 
   getRestarant(api) async{
     

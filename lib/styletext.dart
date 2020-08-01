@@ -96,6 +96,22 @@ BoxDecoration eCBox = BoxDecoration(
     )
   ],
 );
+BoxDecoration eCBoxDark = BoxDecoration(
+  borderRadius: BorderRadius.circular(110),
+  color: wheretoLight,
+  boxShadow: [
+    BoxShadow(
+      color: wheretoDark,
+      offset: Offset(10, 10),
+      blurRadius: 10
+    ),
+    BoxShadow(
+      color: wheretoLight.withOpacity(0.65),
+      offset: Offset(-10, -10),
+      blurRadius: 10
+    )
+  ],
+);
 
 BoxDecoration menuBox = BoxDecoration(
   color: b1,
