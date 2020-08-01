@@ -18,6 +18,8 @@ class RiderViewClass {
         this.createdAt,
         this.deviceId,
         this.riderId,
+        this.status,
+        this.deliveryCharge,
     });
 
     int id;
@@ -28,6 +30,8 @@ class RiderViewClass {
     DateTime createdAt;
     String deviceId;
     dynamic riderId;
+    int status;
+    int deliveryCharge;
 
     factory RiderViewClass.fromJson(Map<String, dynamic> json) => RiderViewClass(
         id: json["id"],
@@ -38,6 +42,8 @@ class RiderViewClass {
         createdAt: DateTime.parse(json["created_at"]),
         deviceId: json["deviceId"],
         riderId: json["riderId"],
+        status: json["status"],
+        deliveryCharge: json["deliveryCharge"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -49,5 +55,7 @@ class RiderViewClass {
         "created_at": createdAt.toIso8601String(),
         "deviceId": deviceId,
         "riderId": riderId,
+        "status": status,
+        "deliveryCharge": deliveryCharge,
     };
 }

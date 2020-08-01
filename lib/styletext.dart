@@ -9,6 +9,8 @@ Color b2s = Color(0xFF478DE0).withOpacity(0.65);
 Color b2s1 = Color(0xFF478DE0).withOpacity(.45);
 Color sb3 = Colors.blue.shade700;
 Color sb4 = Colors.blueAccent;
+Color wheretoDark = Color(0xFF0C375B);
+Color wheretoLight =   Color(0xFF176DB5);                          
 Color white = Colors.white70.withOpacity(0.050);
 
 
@@ -32,7 +34,22 @@ BoxDecoration eBox1 = BoxDecoration(
     ),
   ],
 );
-
+BoxDecoration exBox = BoxDecoration(
+  borderRadius: BorderRadius.circular(15),
+  color: b1,
+  boxShadow: [
+   BoxShadow(
+      color: Colors.grey[700],
+      offset: Offset(10, 10),
+      blurRadius: 10
+    ),
+    BoxShadow(
+      color: white,
+      offset: Offset(-10, -10),
+      blurRadius: 10
+    )
+  ],
+);
 BoxDecoration eBox = BoxDecoration(
   borderRadius: BorderRadius.circular(15),
   color: b1,

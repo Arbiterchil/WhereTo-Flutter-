@@ -206,20 +206,6 @@ bool menuHide = true;
     print(stepnumber);
   } 
 
-  // nextSteps(){
-
-  //   setState(() {
-      
-  //     if(currentStep+1 != steps.length){
-       
-  //       goto(currentStep +  1);
-  //     }else{
-  //       complete = true;
-  //     }
-
-  //   });
-
-  // }
 
   cancel(){
     if(currentStep > 0){
@@ -565,9 +551,6 @@ var checkVal = localStorage.getBool('check');
         SharedPreferences localStore = await SharedPreferences.getInstance();
         localStore.setBool("cuurentIdtrans", checkthis);
         localStore.setString("menuplustrans", "${widget.getID}");
-        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-        // return RiderTransaction();
-        //   }));
       }else{
         print("FALSE");
       }
@@ -596,95 +579,98 @@ var checkVal = localStorage.getBool('check');
 
        return Container(
         height: 300.0,
-        width: 200.0,
+        width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
         color: Colors.white),
-        child: Column(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                    height: 150.0,
-                  ),
-                  Container(
-                    height: 100.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
-                      color: Color(0xFF398AE5),),
-
-                  ),
-                  Positioned(
-                    top: 50.0,
-                    left: 94.0,
-                    child: Container(
-                      height: 90,
-                      width: 90,
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 150.0,
+                    ),
+                    Container(
+                      height: 100.0,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(45),
-                        border: Border.all(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
+                        color: Color(0xFF398AE5),),
+
+                    ),
+                    Positioned(
+                      top: 50.0,
+                      left: 94.0,
+                      child: Container(
+                        height: 90,
+                        width: 90,
+                        decoration: BoxDecoration(
                           color: Colors.white,
-                          style: BorderStyle.solid,
-                          width: 2.0,
-                        ),
-                        image: DecorationImage(
-                          image: AssetImage("asset/img/logo.png"),
-                          fit: BoxFit.cover,
+                          borderRadius: BorderRadius.circular(45),
+                          border: Border.all(
+                            color: Colors.white,
+                            style: BorderStyle.solid,
+                            width: 2.0,
+                          ),
+                          image: DecorationImage(
+                            image: AssetImage("asset/img/logo.png"),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.0,),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Text("Accept Transcation Orders?",
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.0,
-                  fontFamily: 'OpenSans'
+                  ],
                 ),
-                
-                ),),
-                SizedBox(height: 25.0,),
-                Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  FlatButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    onPressed: (){
-                      Navigator.of(context).pop();
-                    },
-                    child: Text ( "No", style :TextStyle(
-                color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12.0,
-                            fontFamily: 'OpenSans'
-              ),),),
-              SizedBox(width: 20.0,),
-              RaisedButton(
-                color: Color(0xFF398AE5),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                onPressed: () {
-                                              setState(() {
-                                              available = !available;
-                                              menuHide = !menuHide;
-                                              assign();
-                                              riderCheck();
-                                            });
-                 Navigator.of(context).pop();
-                    },   
-                child: Text ( "Yes", style :TextStyle(
-                color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12.0,
-                            fontFamily: 'OpenSans'
-              ),),),
-                ],
-              ), 
-            ],
+                SizedBox(height: 10.0,),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text("Accept Transcation Orders?",
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18.0,
+                    fontFamily: 'OpenSans'
+                  ),
+                  
+                  ),),
+                  SizedBox(height: 25.0,),
+                  Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    FlatButton(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                      onPressed: (){
+                        Navigator.of(context).pop();
+                      },
+                      child: Text ( "No", style :TextStyle(
+                  color: Colors.black,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+                SizedBox(width: 20.0,),
+                RaisedButton(
+                  color: Color(0xFF398AE5),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () {
+                                                setState(() {
+                                                available = !available;
+                                                menuHide = !menuHide;
+                                                assign();
+                                                riderCheck();
+                                              });
+                   Navigator.of(context).pop();
+                      },   
+                  child: Text ( "Yes", style :TextStyle(
+                  color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+                  ],
+                ), 
+              ],
+          ),
         ),
       );
 
