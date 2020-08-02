@@ -22,6 +22,9 @@ class RiderProfile extends StatefulWidget {
 class _RiderProfileState extends State<RiderProfile> {
  
 
+  
+
+
     String _currentPage = "Profile";
   
    List<String> pageKeys = ["Profile","Transaction"];
@@ -41,6 +44,22 @@ class _RiderProfileState extends State<RiderProfile> {
       });
     }
   }
+
+  @override
+  void initState() {
+    configSignal();
+    super.initState();
+  }
+
+void configSignal() async {
+     await OneSignal.shared.setLocationShared(true);
+    await OneSignal.shared.promptLocationPermission();
+    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+
+    await OneSignal.shared.setSubscription(true);
+    await OneSignal.shared.getTags();
+   await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
+}
 
   @override
   Widget build(BuildContext context) {

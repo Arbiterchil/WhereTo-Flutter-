@@ -98,6 +98,7 @@ class _SignupPageState extends State<SignupPage>{
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
+                cursorColor: Colors.white,
                 controller: fulname,
                 validator: (val) => val.isEmpty ? ' Please Put Your Full Name' : null,
                 style: TextStyle(
@@ -127,6 +128,7 @@ class _SignupPageState extends State<SignupPage>{
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
+                cursorColor: Colors.white,
                 controller: email,
                 validator: (val)=> emailValidate(email.text = val),
                     onSaved: (val) => email.text = val,
@@ -157,6 +159,7 @@ class _SignupPageState extends State<SignupPage>{
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
+                cursorColor: Colors.white,
                 controller: ownAddress,
                 validator: (val) => val.isEmpty ? ' Please Put Your Address' : null,
                 style: TextStyle(
@@ -186,6 +189,7 @@ class _SignupPageState extends State<SignupPage>{
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
+                cursorColor: Colors.white,
                 controller: ownpass,
                 validator: (input) => ownpass.text.length < 8 ?  'Password to Short' : null,
                 obscureText: true,
@@ -216,6 +220,7 @@ class _SignupPageState extends State<SignupPage>{
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
+                cursorColor: Colors.white,
                 controller: ownconpass,
                 validator:(val){
                       if(val.isEmpty){
@@ -253,6 +258,7 @@ class _SignupPageState extends State<SignupPage>{
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
+                cursorColor: Colors.white,
               keyboardType: TextInputType.number,
                 controller: ownNumber,
                 validator: (val)=> phoneValidate(ownNumber.text = val),
@@ -379,7 +385,16 @@ class _SignupPageState extends State<SignupPage>{
           height: MediaQuery.of(context).size.height,
            width: MediaQuery.of(context).size.width,
            decoration: BoxDecoration(
-                      color: Color(0xFF398AE5),
+                      // color: Color(0xFF398AE5),
+                      gradient: LinearGradient(
+                              stops: [0.1,4],
+                              colors: 
+                              [
+                                Color(0xFF0C375B),
+                                Color(0xFF176DB5)
+                              ],
+                              begin: Alignment.bottomRight,
+                              end: Alignment.topLeft),
                     ),
                     child: SafeArea(
                       child: SingleChildScrollView(
@@ -465,19 +480,111 @@ void _signingIn() async {
 void _showDial(){
   showDialog(
     context: context,
+    barrierDismissible: true,
     builder: (BuildContext context){
-      return AlertDialog(
-          title: Text("Contant Number Already Exist."),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          actions: <Widget>[
-                FlatButton(onPressed: () => Navigator.of(context).pop(),
-                child: const Text("OK",textAlign: TextAlign.center,),),
-              ],
-           
-        );
+      return Dialog(
+             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: mCustom(context),
+    ); 
     },);
 }
+ mCustom(BuildContext context){
+
+       return Container(
+        height: 300.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+        color: Colors.white),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 150.0,
+                    ),
+                    Container(
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
+                         gradient: LinearGradient(
+                              stops: [0.2,4],
+                              colors: 
+                              [
+                                Color(0xFF0C375B),
+                                Color(0xFF176DB5)
+                              ],
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft),),
+
+                    ),
+                    Positioned(
+                      top: 50.0,
+                      left: 94.0,
+                      child: Container(
+                        height: 90,
+                        width: 90,
+                        padding: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(45),
+                          
+                          // border: Border.all(
+                          //   color: Colors.white,
+                          //   style: BorderStyle.solid,
+                          //   width: 2.0,
+                          // ),
+                          image: DecorationImage(
+                            image: AssetImage("asset/img/logo.png"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text("Please check the fields Or Phone Number already Exists.",
+                  style: TextStyle(
+                    color: Color(0xFF0C375B),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 11.0,
+                    fontFamily: 'OpenSans'
+                  ),
+                  
+                  ),),
+                  SizedBox(height: 25.0,),
+                  Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[         
+                RaisedButton(
+                  color:Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () {
+                      Navigator.of(context).pop();
+                      },   
+                      
+                  child: Text ( "Yes", style :TextStyle(
+                  color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+                  ],
+                ), 
+              ],
+          ),
+        ),
+      );
+
+
+    }
 
 }

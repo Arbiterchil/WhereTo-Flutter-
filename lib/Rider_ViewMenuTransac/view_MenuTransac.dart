@@ -60,6 +60,7 @@ bool complete = false;
 bool stepTf = true;
 bool menuHide = true;
 bool backTF =true;
+var idgetter;
 
 @override
   void initState() {
@@ -165,7 +166,9 @@ bool backTF =true;
            Container(
                       height: 200.0,
                       width: 200.0,
-                      decoration: eCBox,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF0C375B),
+                      ),
                       child: Text("2"),
               ),
               SizedBox(height: 15.0,),
@@ -195,14 +198,32 @@ bool backTF =true;
 
   ];
 
+  buy() async {
+
+
+                  await ApiCall().transactionBuying('/transactionBuying/${widget.getID}');
+  }
+  deliver() async {
+
+
+                  await ApiCall().transactionDelivery('/transactionDelivery/${widget.getID}');
+  }
+  done() async{
+
+                  await ApiCall().transactionComplete('/transactionComplete/${widget.getID}');
+  }
 
   nextSteps(){
     currentStep + 1 != steps.length
     ? goTo(currentStep + 1) 
     : setState(()=> complete = true);
    
-    stepnumber = currentStep+ 1;
-    print(stepnumber);
+    stepnumber = currentStep+ 1;  
+    if(stepnumber == 2){
+      deliver();
+    }else if(stepnumber == 3){
+      done();
+    }
   } 
 
 
@@ -449,6 +470,7 @@ var checkVal = localStorage.getBool('check');
                                           onTap: (){
                                                 xDilogAhow(context);
                                             print(userData['id']);
+
                                           },
                                         ),
                                       ),
@@ -618,10 +640,10 @@ var checkVal = localStorage.getBool('check');
   void assign() async { 
 
       bool checkthis = true;
-
+      var idyours = userData['id'].toString();
       var data = {
         "transactionId" : '${widget.getID}',
-        "riderId" :  userData['id'],
+        "riderId" :  idyours,
       };
 
       var response = await ApiCall().assignRiders(data, '/assignRider');
@@ -742,13 +764,34 @@ var checkVal = localStorage.getBool('check');
                 RaisedButton(
                   color:Color(0xFF0C375B),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: () {
+                  onPressed: () async{
+                     bool checkthis = true;
+      var idyours = userData['id'].toString();
+      var data = {
+        "transactionId" : '${widget.getID}',
+        "riderId" :  idyours,
+      };
+
+      var response = await ApiCall().assignRiders(data, '/assignRider');
+      var body = json.decode(response.body);
+      if(body == true){
+        print("TRUE");
+        SharedPreferences localStore = await SharedPreferences.getInstance();
+        localStore.setBool("cuurentIdtrans", checkthis);
+        localStore.setString("menuplustrans", "${widget.getID}");
+      }else{
+        print("FALSE");
+      }
+
+
                                                 setState(() {
                                                 available = !available;
                                                 menuHide = !menuHide;
                                                 backTF = !backTF;
-                                                assign();
+                                                
                                                 riderCheck();
+                                               
+
                                               });
                    Navigator.of(context).pop();
                       },   

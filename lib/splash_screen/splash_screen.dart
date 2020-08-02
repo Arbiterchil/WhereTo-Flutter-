@@ -70,8 +70,21 @@ class _SplashScreenState extends State<SplashScreen> {
                     // decoration: eCBoxDark,
                     decoration: BoxDecoration(
                       // shape: BoxShape.circle,
+                      color: Color(0xFF0C375B),
                        borderRadius: BorderRadius.circular(110),
-                      color: Colors.white
+                        boxShadow: [
+                        BoxShadow(
+                          color: Color(0xFF176DB5),
+                          offset: Offset(10, 10),
+                          blurRadius: 10
+                        ),
+                        BoxShadow(
+                          color:  Color(0xFF176DB5),
+                          offset: Offset(-10, -10),
+                          blurRadius: 10
+                        )
+                      ],
+
                     ),
                     child: Container(
                     child: Image.asset("asset/img/logo.png"),

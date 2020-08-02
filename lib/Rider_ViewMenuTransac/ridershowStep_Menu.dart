@@ -35,21 +35,23 @@ class _MShowStepState extends State<MShowStep> {
 
         SharedPreferences local = await SharedPreferences.getInstance();
         
-          var check = local.getBool("cuurentIdtrans");
-        if(check !=null ){
+          // var check = local.getBool("cuurentIdtrans");
+        // if(check !=null ){
 
-            if(check){
+            // if(check){
                   idgetter = local.getString("menuplustrans");
                   print(idgetter);
 
-            }else{
-              print("No Id Getter.");
-            }
+            // }else{
+            //   print("No Id Getter.");
+            // }
 
-        }
+        // }
        
 
         final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/$idgetter');
+        // await ApiCall().transactionBuying('/transactionBuying/${widget.getID}');
+        await ApiCall().transactionBuying('/transactionBuying/$idgetter');
         // final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/2');
         List<RiverMenu> ridermenu = [];
 

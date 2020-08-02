@@ -21,10 +21,10 @@ var userData;
   var checkbool;
   @override
   void initState() {
-    _getUserInfo();
     configSignal();
-    // toOnline(online);
+    _getUserInfo();
     super.initState();
+    
   }
 
 
@@ -38,44 +38,35 @@ void _getUserInfo() async {
       });
   }
 
-// void logOutto() async{
-// SharedPreferences localStorage = await SharedPreferences.getInstance();
+void goOffline() async{
+   await ApiCall().getOffline('/goOffline/${userData['id']}');
+}
+void goOnline() async{
+ var data = {
+        'contactNumber' : userData['contactNumber'].toString(), 
+        'password' : userData['password'].toString()
+        ,};
+    
 
-//   var offline = await ApiCall().getOffline('goOffline/${userData['id']}');
 
-//   var bod = json.decode(offline.body);
-//   print(bod);
-//   var res = await ApiCall().getData('/logout');
-//                             var body = json.decode(res.body);
-                           
-                               
-//                                localStorage.remove('user');
-//                                localStorage.remove('token');
-//                                print(body);
-//                               //   Navigator.pushReplacement(
-//                               // context,
-//                               // new MaterialPageRoute(
-//                               //     builder: (context) => LoginPage()));
-//                               exit(0);
-//                               print(body);
-// }
+  await ApiCall().postData(data,'/login');
+
+
+}
 
 void toOnline(bool e) async{
 
 
     setState(() {
 
-      if(checkbool!=null){
-        if(checkbool){
       if(e){
-        online = e;                      
+        online = e;     
+        // goOnline();
+        
         }else{
         online = e;
-        // logOutto(); 
+        goOffline();
       }
-        }
-      }
-
       
 
       
@@ -84,34 +75,14 @@ void toOnline(bool e) async{
 }
 
 void configSignal() async {
+  await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
      await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
-    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+    
 
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();
-   await OneSignal.shared.sendTags({'UR': 'TRUE'});
-
-
-    // if(constant == null){
-    //     print('No Received.');
-    // } else{
-    // print(constant);
-
-    // for(var  i = 0; i<constant.length ; i++){
-    //   print(constant[i]);
-    // } 
-    
-    // SharedPreferences localStorage = await SharedPreferences.getInstance();
-    // var object = localStorage.setStringList('userid', constant ?? []);
-    // print(object);
-    
-    
-    // makeit.add(constant['userID'].toString());
-    //                                 print(makeit);
-
-    //                                 SharedPreferences localStorage = await SharedPreferences.getInstance();
-    //                                 localStorage.setStringList('userID', makeit);  
+   await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
 }
 
   // Color(0xFFF2F2F2)
@@ -227,7 +198,7 @@ void configSignal() async {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                           
                                           children: <Widget>[
-                                                  Text(userData!= null ? '${userData['name']}' :  'Fail get data.',
+                                                  Text(userData!= null ? '${userData['name']}':  'Fail get data.',
                                                   style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,

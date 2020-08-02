@@ -6,7 +6,7 @@ Color b2 = Color(0xFF478DE0);
 Color b3 = Color(0xFF61A4F1);
 Color b1s = Color(0xFF398AE5).withOpacity(0.075);
 Color b2s = Color(0xFF478DE0).withOpacity(0.65);
-Color b2s1 = Color(0xFF478DE0).withOpacity(.45);
+Color b2s1 = Color(0xFF478DE0).withOpacity(0.45);
 Color sb3 = Colors.blue.shade700;
 Color sb4 = Colors.blueAccent;
 Color wheretoDark = Color(0xFF0C375B);
@@ -174,21 +174,22 @@ final eLabelStyle = TextStyle(
 );
 
 final eBoxDecorationStyle = BoxDecoration(
-  color:  Color(0xFF398AE5),
+  // color:  Color(0xFF398AE5),
+  color: wheretoDark,
   borderRadius: BorderRadius.circular(10.0),
-  boxShadow: [
-    BoxShadow(
-      color: sb3,
-     offset: Offset(4.0, 4.0),
-      blurRadius: 15.0,
-      spreadRadius: 1.0,
-    ),
-    BoxShadow(
-      color: white,
-     offset: Offset(-4.0, -4.0),
-      blurRadius: 15.0,
-      spreadRadius: 1.0,
-    )
-  ],
+  // boxShadow: [
+  //   BoxShadow(
+  //     color: sb3,
+  //    offset: Offset(4.0, 4.0),
+  //     blurRadius: 15.0,
+  //     spreadRadius: 1.0,
+  //   ),
+  //   BoxShadow(
+  //     color: white,
+  //    offset: Offset(-4.0, -4.0),
+  //     blurRadius: 15.0,
+  //     spreadRadius: 1.0,
+  //   )
+  // ],
 );
 

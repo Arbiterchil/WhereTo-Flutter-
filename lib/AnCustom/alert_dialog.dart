@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -123,13 +124,14 @@ var userData;
                                SharedPreferences localStorage = await SharedPreferences.getInstance();
                                localStorage.remove('user');
                                localStorage.remove('token');
+                               localStorage.remove('menuplustrans');
                                print(body);
-                                Navigator.pushReplacement(
+                                Navigator.pushAndRemoveUntil(
                               context,
                               new MaterialPageRoute(
-                                  builder: (context) => SplashScreen()));
-                              exit(0);
-                              print(body);
+                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
+                              // exit(0);
+                              // print(body);
                             
                 },
                 
