@@ -36,7 +36,7 @@ class _Profile extends State<Profile> {
   void initState() {
     _getUserInfo();
     casting = false;
-    configSignal();
+    // configSignal();
     super.initState();
     getLocation();
 
@@ -54,9 +54,6 @@ class _Profile extends State<Profile> {
     var location =Location();
     try{
       var userLocation =await location.getLocation();
-      List<Placemark> place = await Geolocator().placemarkFromCoordinates(userLocation.latitude, userLocation.longitude);
-      Placemark placemark =place[0];
-      print("${placemark.name}, ${placemark.subLocality}, ${placemark.locality}, ${placemark.administrativeArea}, ${placemark.postalCode}, ${placemark.position}, ${placemark.subAdministrativeArea}");
       print("${userLocation.latitude},${userLocation.longitude}");
     } on Exception catch (e){
       print(e.toString());

@@ -1,20 +1,23 @@
-import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
-import 'package:WhereTo/Transaction/Data/response.dart';
+
+import 'dart:async';
+
+import 'package:WhereTo/Transaction/MyOrder/StatusStepper.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
+import 'package:WhereTo/Transaction/MyOrder/userOrder.dart';
 import 'package:WhereTo/designbuttons.dart';
 import 'package:flutter/material.dart';
 
 import 'MyOrder/bloc.dart';
 
 class MyOrder extends StatefulWidget {
+  final String id;
+  MyOrder({@required this.id});
   @override
   _MyOrderState createState() => _MyOrderState();
 }
 
 class _MyOrderState extends State<MyOrder> {
-  BlocAll bloc = BlocAll();
-  var id ="1";
-
+  BlocAll bloc;
   Future<void> getBloc(var id) async {
     await bloc.getMenuTransaction(id);
   }
@@ -25,16 +28,24 @@ class _MyOrderState extends State<MyOrder> {
 
   @override
   void initState() {
+   
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    getBloc(id);
+    setState(() {
+      bloc = BlocAll();
+      getBloc(widget.id.toString());  
+     
+      
+    });
+  
 
     return Scaffold(
       backgroundColor: Color(0xFF398AE5),
       body: Stack(
+        
         fit: StackFit.expand,
         children: <Widget>[
           Padding(
@@ -96,15 +107,18 @@ class _MyOrderState extends State<MyOrder> {
                     if (snapshot.data.length > 0) {
                       return Column(
                         children: [
-                          ViewTransacRider(
-                          image: "asset/img/app.jpg",
-                          address: snapshot.data[index].address,
-                          deliveryAddress: snapshot.data[index].deliveryAddress,
-                          restaurantName: snapshot.data[index].restaurantName,
-                          onTap: () async {
-
-                          },
-                      ),
+                          OrderCard(
+                            image:"asset/img/app.jpg",
+                            deliveryAddress: snapshot.data[index].deliveryAddress,
+                            address: snapshot.data[index].address,
+                            restaurantName: snapshot.data[index].restaurantName,
+                            status: snapshot.data[index].status.toString(),
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return StepperStatus();
+                              }));
+                            },
+                          ),
                         ],
                       );
                     } else {

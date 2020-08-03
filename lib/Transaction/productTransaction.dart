@@ -394,9 +394,7 @@ class _TransactionListState extends State<TransactionList> {
                                     context: context, builder: (context, scrollController){
                                         return Container(
                                           height: MediaQuery.of(context).size.height /2 -60,
-
                                             child: SingleChildScrollView(
-                                              
                                               physics: AlwaysScrollableScrollPhysics(),
                                               child: Column(
                                                 textDirection: TextDirection.ltr,
@@ -584,6 +582,7 @@ class _TransactionListState extends State<TransactionList> {
                                                             var userLocation =await location.getLocation();
                                                             var id;
                                                             var quantity;
+                                                            var transactID;
                                                             Map<String, dynamic> string;
                                                             Map<String, dynamic> post;
                                                             Map<String, int> converted = {};
@@ -635,21 +634,27 @@ class _TransactionListState extends State<TransactionList> {
                                                                 'userId': user['id'],
                                                                 'restaurantId':this.widget.restauID,
                                                                 'order': result,
-                                                                "deliveryAddress": "${userLocation.latitude},${userLocation.longitude}"
+                                                                "deliveryAddress": "${userLocation.latitude},${userLocation.longitude}",
+                                                                "deliveryCharge":"100"
                                                               };
-                                                              // print(post);
+                                                              print(post);
                                                             });
-                                                          // var res = await ApiCall().postData(post, '/putOrder');
-                                                          // if (res.statusCode == 200) {
-                                                          //   var data = json.decode(res.body);
-                                                          //   print(data);
-                                                          //   print("Success");
-                                                          // }
+                                                          var res = await ApiCall().postData(post, '/putOrder');
+                                                          if (res.statusCode == 200) {
+                                                            var data = json.decode(res.body);
+                                                            setState(() {
+                                                               transactID =data; 
+                                                            });
+                                                            print(data);
+                                                            print("Success");
+                                                          
+                                                          }
                                                           final response =await ApiCall().getData('/getAllPlayerId');
                                                           List<GetPlayerId> search =getPlayerIdFromJson(response.body);
                                                           List<dynamic> player =[];
                                                           search.forEach((element) {
                                                             player.add(element.deviceId);
+                                                            print(element.deviceId);
                                                           });
                                                           await OneSignal.shared.setLocationShared(true);
                                                           await OneSignal.shared.promptLocationPermission();
@@ -663,20 +668,22 @@ class _TransactionListState extends State<TransactionList> {
                                                           });
 
                                                           await OneSignal.shared.setSubscription(true);
-                                                          var tags = await OneSignal.shared.getTags();
-                                                          var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
+                                                          await OneSignal.shared.getTags();
                                                           var status = await OneSignal.shared.getPermissionSubscriptionState();
 
                                                           String url = 'https://onesignal.com/api/v1/notifications';
                                                           var playerId = status.subscriptionStatus.userId;
-                                                          var numb = "2";
                                                           var contents = {
                                                             "include_player_ids": player,
                                                             "include_segments": ["All"],
                                                             "excluded_segments": [],
-                                                            "contents": {"en": "Try"},
-                                                            "data": {"foo": "bar"},
-                                                            "headings": {"en": numb},
+                                                            "contents": {"en": "FuCK you driver!"},
+                                                            "data": {
+                                                              "id": user['id'],
+                                                              "player_id": playerId,
+                                                              "transact_id": transactID,
+                                                            },
+                                                            "headings": {"en": "New Order"},
                                                             "filter": [
                                                               {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
                                                             ],
@@ -686,12 +693,12 @@ class _TransactionListState extends State<TransactionList> {
                                                             'Content-Type': 'application/json',
                                                             'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
                                                           };
-                                                          var repo =
-                                                              await http.post(url, headers: headers, body: json.encode(contents));
-                                                          print(tags);
-                                                          print(sendtag);
+                                                          
+                                                          await http.post(url, headers: headers, body: json.encode(contents));
                                                           print(playerId);
-                                                          print(repo.body);
+                                                          // print(tags);
+                                                          // print(repo);
+                                                          
                                                           
                                                             }
                                                           },

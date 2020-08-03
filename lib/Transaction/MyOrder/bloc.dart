@@ -11,13 +11,23 @@ StreamController<List<GetViewOrders>> streamApi =StreamController.broadcast();
 Sink<List<GetViewOrders>> get sinkApi =>streamApi.sink;
 Stream<List<GetViewOrders>> get stream =>streamApi.stream;
 
-  Future<void> getMenuTransaction(var id) async{
+var id;
+StreamSubscription periodicSub;
+ 
+
+    Future<void>getMenuTransaction(var id) async{
     final response = await ApiCall().getData('/viewCurrentOrders/$id');
     final List<GetViewOrders> transaction = getViewOrdersFromJson(response.body);
+    periodicSub = new Stream.periodic(Duration(seconds: 1), (v) =>v).listen((event) {
     sinkApi.add(transaction);
+    });
+
   }
   
  
-  void dispose() =>streamApi.close();
+  void dispose(){
+    streamApi.close();
+    periodicSub.cancel();
+  }
 
 }
