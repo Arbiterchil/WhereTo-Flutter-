@@ -114,6 +114,34 @@ flutter:
     - family: OpenSans
       fonts:
         - asset: asset/font/OpenSans-Regular.ttf
+
+    - family: Brandon_Grotesque
+      fonts: 
+      - asset: asset/font/brandon-grotesque-black-58a8a3e824392.otf
+         
+    - family: Brandon_italic
+      fonts: 
+      - asset: asset/font/brandon-grotesque-bold-italic-58a8a48221563.otf
+      
+    - family: Brandon_Grotesque_regular_italic
+      fonts: 
+      - asset: asset/font/brandon-grotesque-regular-italic-58a8a456c4724.otf 
+    
+    - family: Brandon_Grotesque_medium
+      fonts: 
+      - asset: asset/font/brandon-grotesque-medium-italic-58a8a3c40866a.otf
+
+    - family: Brandon_Grotesque_light
+      fonts:  
+      - asset: asset/font/brandon-grotesque-light-58a8a4b38001d.otf
+      
+    - family: Gilroy-ExtraBold
+      fonts:
+      - asset: asset/font/Radomir Tinkov - Gilroy-ExtraBold.otf
+      
+    - family: Gilroy-light
+      fonts:
+      - asset: asset/font/Radomir Tinkov - Gilroy-Light.otf      
   # fonts:
   #   - family: Schyler
   #     fonts:

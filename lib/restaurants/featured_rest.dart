@@ -16,7 +16,6 @@ Future<List<Restaurant>> _getRest() async{
       List<Restaurant> rests = [];
       var bods = json.decode(response.body);
       for(var bods in bods){
-        
         Restaurant rest = Restaurant
         (bods["id"],
         bods["restaurantName"],
@@ -43,8 +42,6 @@ class _FearturedRestaurantState extends State<FearturedRestaurant> {
           ),
       );
   }
- 
-  
 
   Widget _buildAxisHorin(){
       return  Container(  
