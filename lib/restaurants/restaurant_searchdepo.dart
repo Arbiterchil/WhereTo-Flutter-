@@ -16,16 +16,12 @@ class SearchDepo extends StatefulWidget {
   _SearchDepoState createState() => _SearchDepoState();
 }
 
-    
-
 
    Future<List<SearchDeposition>> getRest() async {
    final response =await ApiCall().getRestarant('/getFeaturedRestaurant');
    List<SearchDeposition> search =searchDepoFromJson(response.body);
    return search;
  }
-
- 
 
 
 class _SearchDepoState extends State<SearchDepo> {
@@ -46,116 +42,91 @@ TextEditingController search = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
-
-      backgroundColor:Color(0xFF398AE5),
       body: WillPopScope(
         onWillPop: () async => false,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: SafeArea(
-            child: Stack(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            child: Column(
               children: <Widget>[
-                newListUp(),
-                listData(),
-              ],
-            ),
-              ),),
-      ),
-      
-
-    );
-
-  }
-
-    Widget newListUp(){
-        return Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 140,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Stack(
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: DesignButton(
-                                  height: 55,
-                                  width: 55,
-                                  color: Color(0xFF398AE5),
-                                  offblackBlue: Offset(-4, -4),
-                                  offsetBlue: Offset(4, 4),
-                                  blurlevel: 4.0,
-                                  icon: Icons.arrow_back,
-                                  iconSize: 30.0,
-                                  onTap: ()  {
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                          return Profile();
-                                        }));
-                                     
-                              },
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: DesignButton(
-                                  height: 55,
-                                  width: 55,
-                                  color: Color(0xFF398AE5),
-                                  offblackBlue: Offset(-4, -4),
-                                  offsetBlue: Offset(4, 4),
-                                  blurlevel: 4.0,
-                                  icon: Icons.view_list,
-                                  iconSize: 30.0,
-                                  onTap: (){
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                          return RestDel();
-                                        }));
-                                  },
-                                ),
-                              ),
-                            ],
+                Stack(
+                  children: <Widget>[
+                    Container(
+                          height: 190.0,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              stops: [0.2,4],
+                              colors: 
+                              [
+                                Color(0xFF0C375B),
+                                Color(0xFF176DB5)
+                              ],
+                              begin: Alignment.bottomRight,
+                              end: Alignment.topLeft),
+                               borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(40),
+                              bottomRight: Radius.circular(40),
+                            ),
                           ),
+                          
                         ),
-                        SizedBox(height: 25.0,),
-                      Container(
-                        height: 50.0,
+                       Align(
+                         alignment: Alignment.topRight,
+                         child: Padding(
+                            padding: const EdgeInsets.only(right: 20,top: 20),
+                           child: Column(
+                             crossAxisAlignment: CrossAxisAlignment.end,
+                             children: <Widget>[
+                               Text("Satify Your Own",
+                                 style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight: FontWeight.normal,
+                                                        fontSize: 18.0,
+                                                        fontFamily: 'Gilroy-light'
+                                                      ),
+                                 ),
+                              SizedBox(height: 5,),
+                                  Text("CRAVES",
+                                 style: TextStyle(
+                                 color: Colors.blueAccent,
+                                  fontWeight: FontWeight.bold,
+                                 fontSize: 23.0,
+                                  fontFamily: 'Gilroy-ExtraBold'
+                                                      ),
+                                 ),
+                             
+                             ],
+                           ),
+                         ),
+                       ), 
+                    Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                         padding: const EdgeInsets.only(right: 20,top: 110, left: 20),
+                         child: Container(
+                        height: 40.0,
                         decoration: BoxDecoration(
                           color: Colors.blueGrey[50],
                           borderRadius: BorderRadius.circular(30.0),
-                          boxShadow: [
-                             BoxShadow(
-                            color:  Colors.blue[500],
-                            blurRadius: 6,
-                            offset: Offset(-6, -6),
-                            ),
-                            BoxShadow(
-                              color:Colors.blue.shade700,
-                              blurRadius: 6,
-                              offset: Offset(6, 6),
-                            ),
-                            ],
                             ),
                             alignment: Alignment.centerLeft,
                             child: TextField(
+                              cursorColor: Color(0xFF0C375B),
                               controller: search,
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Color(0xFF0C375B),
+                                fontWeight: FontWeight.bold,
+                                  
+                                                        fontFamily: 'Gilroy-light'
                               ),
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                contentPadding: const EdgeInsets.only(top:14.0,),
+                                contentPadding: const EdgeInsets.only(top:7.0,),
                                 prefixIcon: Icon(
                                   Icons.search,
-                                  color: Color(0xFF398AE5),
+                                  color: Color(0xFF0C375B),
                                 ),
                                 hintText: "Search",
                               ),
@@ -166,19 +137,33 @@ TextEditingController search = new TextEditingController();
                               },
                             )
                       ),
-
-                ],
-              ),
+                         ),
+                       
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5,),
+                Container(
+                  height: 520.0,
+                  width: MediaQuery.of(context).size.width,
+                  child: listData(),
+                )
+              ],
             ),
           ),
-        );
+          ),
+      ),
+      
+
+    );
+
+  }
 
 
-    }  
     
     Widget listData(){
         return Padding(
-          padding: const EdgeInsets.only(top: 180.0),
+          padding: const EdgeInsets.only(top: 5.0),
           child: new Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
@@ -206,29 +191,26 @@ TextEditingController search = new TextEditingController();
                           |snapshot.data[index].address.contains(searchit) ? GestureDetector(
                             onTap: (){
 
-                              // Navigator.push(context,
-                              //   new MaterialPageRoute(builder: (context) 
-                              //   => ListStactic(
-                              //      nameRestau: snapshot.data[index].restaurantName.toString(),
-                              //     )
-                              //   )
-                              //   );    
+                                
                             },
-                            child: RestaurantFront(
-                              image: "asset/img/${snapshot.data[index].restaurantName}.png",
-                              restaurantName:snapshot.data[index].restaurantName ,
-                              restaurantAddress: snapshot.data[index].address,
-                              openAndclose: snapshot.data[index].openTime+"-"+snapshot.data[index].closingTime,
-                              onTap: (){
-                                Navigator.push(context,
-                                new MaterialPageRoute(builder: (context) 
-                                => ListStactic(
-                                    restauID: snapshot.data[index].id.toString(),
-                                   nameRestau: snapshot.data[index].restaurantName.toString(),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
+                              child: RestaurantFront(
+                                image: "asset/img/${snapshot.data[index].restaurantName}.png",
+                                restaurantName:snapshot.data[index].restaurantName ,
+                                restaurantAddress: snapshot.data[index].address,
+                                openAndclose: snapshot.data[index].openTime+"-"+snapshot.data[index].closingTime,
+                                onTap: (){
+                                  Navigator.push(context,
+                                  new MaterialPageRoute(builder: (context) 
+                                  => ListStactic(
+                                      restauID: snapshot.data[index].id.toString(),
+                                     nameRestau: snapshot.data[index].restaurantName.toString(),
+                                    )
                                   )
-                                )
-                                ); 
-                              },
+                                  ); 
+                                },
+                              ),
                             ),
                           ): Container();
                         },

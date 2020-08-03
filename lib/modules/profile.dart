@@ -1,10 +1,17 @@
 import 'dart:convert';
 import 'package:WhereTo/AnCustom/alert_dialog.dart';
 import 'package:WhereTo/AnCustom/dialogHelp.dart';
+import 'package:WhereTo/AnCustom/restaurant_front.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/designbuttons.dart';
 import 'package:WhereTo/modules/login_page.dart';
+import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
+import 'package:WhereTo/restaurants/New_ViewRestaurant/static_viewRest.dart';
+import 'package:WhereTo/restaurants/carousel_rest.dart';
+import 'package:WhereTo/restaurants/featured_rest.dart';
+import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
+import 'package:WhereTo/restaurants/searchRestaurant.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
@@ -32,15 +39,100 @@ class _Profile extends State<Profile> {
   var userData;
   var constant;
   bool casting;
+  String getRestaurant;
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  String searchit = "";
   @override
   void initState() {
     _getUserInfo();
     casting = false;
-    configSignal();
+    // configSignal();
     super.initState();
     getLocation();
 
   }
+
+
+  void _showodalShit(){
+
+    showModalBottomSheet(
+      context : context,
+      backgroundColor: Colors.transparent,
+      builder:(builder){
+
+      return new Padding(
+          padding: EdgeInsets.only(left: 20.0,right: 20.0 ,top: 20.0),
+          child: Container(
+            height: 700.0,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Color(0xFFF2F2F2F2),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30)
+              ),
+            ),
+            child: FutureBuilder(
+              future: getRest(),
+              builder: (BuildContext context, AsyncSnapshot snapshot){
+                if(snapshot.data == null){
+                  return Container(
+                    child: Center(
+                      child: Text("Restaurants Searching..",
+                      style: TextStyle(
+                        color: Colors.black,
+                                  fontFamily: 'Gilroy-light',
+                                  fontStyle: FontStyle.normal
+                      ),
+                      ),
+                    ),
+                  );
+                }else{
+
+                    return new ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context , int index){
+                          return snapshot.data[index].restaurantName.contains(searchit)
+                          |snapshot.data[index].address.contains(searchit) ? GestureDetector(
+                            onTap: (){
+   
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: RestaurantFront(
+                                image: "asset/img/${snapshot.data[index].restaurantName}.png",
+                                restaurantName:snapshot.data[index].restaurantName ,
+                                restaurantAddress: snapshot.data[index].address,
+                                openAndclose: snapshot.data[index].openTime+"-"+snapshot.data[index].closingTime,
+                                onTap: (){
+                                  Navigator.push(context,
+                                  new MaterialPageRoute(builder: (context) 
+                                  => ListStactic(
+                                      restauID: snapshot.data[index].id.toString(),
+                                     nameRestau: snapshot.data[index].restaurantName.toString(),
+                                    )
+                                  )
+                                  ); 
+                                },
+                              ),
+                            ),
+                          ): Container();
+                        },
+                      );
+
+                }
+
+
+
+              },
+            ),
+          ),
+      );
+
+    });
+
+  } 
 
   void _getUserInfo() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -62,7 +154,6 @@ class _Profile extends State<Profile> {
       print(e.toString());
     }
  }
-  
 
   void configSignal() async {
     var data;
@@ -93,7 +184,9 @@ class _Profile extends State<Profile> {
       "include_segments": ["Users Notif"],
       "excluded_segments": [],
       "contents": {"en": "This is a test."},
+
       "data": {"id": numb},
+
       "headings": {"en": "Erchil Testings"},
       "filter": [
         {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
@@ -117,234 +210,427 @@ class _Profile extends State<Profile> {
     
   }
 
+  
+   Future<List<SearchDeposition>> getRest() async {
+   final response =await ApiCall().getRestarant('/getFeaturedRestaurant');
+   List<SearchDeposition> search =searchDepoFromJson(response.body);
+   return search;
+ }
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF398AE5),
-      body: WillPopScope(
-        onWillPop: () async {
-          return await Dialog_Helper.exit(context);
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: SafeArea(
-            child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Stack(
-                        children: <Widget>[
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.exit_to_app,
-                              iconSize: 30.0,
-                              onTap: () {
-                                Dialog_Helper.exit(context);
-                              },
+  return Scaffold(
+      key: scaffoldKey,
+      backgroundColor:Color(0xFFF2F2F2) ,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          scrollDirection: Axis.vertical,
+              child: Column(
+                textDirection: TextDirection.ltr,
+                children: <Widget>[
+                    Stack(
+                      alignment: AlignmentDirectional.topCenter,
+                      overflow: Overflow.visible,
+                      children: <Widget>[                      
+                        Container(
+                          height: 330.0,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              stops: [0.2,4],
+                              colors: 
+                              [
+                                Color(0xFF0C375B),
+                                Color(0xFF176DB5)
+                              ],
+                              begin: Alignment.bottomRight,
+                              end: Alignment.topLeft),
+                            
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(40),
+                              bottomRight: Radius.circular(40),
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.search,
-                              iconSize: 30.0,
-                              onTap: () {
-                                Navigator.pushReplacement(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return SearchDepo();
-                                }));
+
+                        ),
+                       Padding(
+                         padding: const EdgeInsets.only(top: 5,left: 30,right: 30),
+                         child: Container(
+                               height: 220.0,
+                               child: Column(
+                                 children: <Widget>[
+                                   Padding(
+                                     padding: const EdgeInsets.only(top: 35.0),
+                                     child: Row(
+                                       children: <Widget>[
+                                      Container(
+                                      height: 90,
+                                      width: 90,
+                                      decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: Colors.white,
+                                          //  Color(0xFF398AE5),
+                                          width: 2.0,
+                                        ),
+                                        
+                                        ),
+                                        padding: EdgeInsets.all(8.0),
+                                        child: CircleAvatar(
+                                          backgroundImage: AssetImage("asset/img/app.jpg"),
+                                        ),
+                                          ),
+                                      SizedBox(width: 20.0,),
+                                      Flexible(
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                          
+                                          children: <Widget>[
+                                                  Text(userData!= null ? '${userData['name']}':  'Fail get data.',
+                                                  style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16.0,
+                                                  fontFamily: 'Gilroy-ExtraBold'
+                                                ),
+                                                  ),
+                                                  SizedBox(height: 2,),
+                                                  Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
+                                                  style: TextStyle(
+                                                  color: Colors.grey[300],
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 10.0,
+                                                  fontFamily: 'Gilroy-light'
+                                                ),
+                                                  ),
+                                                 NCard(
+                                                      active: false,
+                                 icon: Icons.phone_android,
+                                 label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
+                                                    ),
+                                                    NCard(
+                                                      active: false,
+                                 icon: Icons.my_location,
+                                 label: userData!= null ? '${userData['address']}' :  'Fail get data.',
+                                                    ),
+                                                
+                                                ],
+                                              ),
+                                        ),
+                                      ),
+                                    
+                                        
+
+
+                                       ],
+                                     ),
+                                   ),
+                                   
+                                   Padding(
+                                      padding: const EdgeInsets.only(top: 15,left: 50,right: 50),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          
+                                          RaisedButton(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                    onPressed: (){},                
+                    child: Text ( "EDIT PROFILE", style :TextStyle(
+                    color: Color(0xFF0C375B),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12.0,
+                                fontFamily: 'Gilroy-ExtraBold'
+                  ),),),
+                                        ],
+                                      ),
+                                     ), 
+                                 ],
+                               ),
+                             ),
+                       ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:210),
+                          child: Divider(
+                  height: 1.0,
+                  thickness: 1,
+                  
+                  color: Colors.white,
+                  indent: 90.0,
+                  endIndent: 90.0,
+                ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 220,left: 25.0,right: 25.0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              textDirection: TextDirection.ltr,
+                              children: <Widget>[
+                               Row(
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: <Widget>[
+                                    Text("What Do You",
+                                style :TextStyle(
+                                color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 22.0,
+                                  fontFamily: 'Gilroy-light'
+                        ),),
+                        SizedBox(width: 5.0,),
+                         Text("Crave?",
+                                style :TextStyle(
+                                color: Colors.blue,
+                                // Color(0xFF176DB5),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22.0,
+                                  fontFamily: 'Gilroy-ExtraBold'
+                        ),),
+                                 ],
+                               ),
+                        SizedBox(height: 20.0,),
+                               Container(
+                                 width: MediaQuery.of(context).size.width,
+                                 height: 40.0,
+                                 decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(50),
+                                   color: Colors.white
+                                 ),
+                                 child: TextField(
+                                   cursorColor: Color(0xFF0C375B),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Gilroy-light',
+                                  fontStyle: FontStyle.normal
+                              ),
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: const EdgeInsets.only(top:7.0,),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color:  Color(0xFF0C375B),
+                                  ),
+                                  hintText: "Search",
+                              ),
+                              textInputAction: TextInputAction.go,
+                              onSubmitted: (input){
+                                  setState(() {
+                                    searchit = input;
+                                    print(searchit);
+                                    _showodalShit();
+                                  });
                               },
+                              // onTap: _showodalShit,
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Container(
-                      width: 250,
-                      height: 250,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF398AE5),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(-6, -6),
-                              blurRadius: 6.0,
-                              color: Colors.blue[500]),
-                          BoxShadow(
-                              offset: Offset(6, 6),
-                              blurRadius: 6.0,
-                              color: Colors.blue.shade700),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
-                          decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage("asset/img/app.jpg"),
+                               )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 25.0,
-                    ),
-                    Text(
-                      userData != null ? '${userData['name']}' : '',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 28.0,
-                          fontFamily: 'OpenSans'),
-                    ),
-                    SizedBox(
-                      height: 25.0,
-                    ),
-                    NCard(
-                      active: false,
-                      icon: Icons.my_location,
-                      label: userData != null
-                          ? '${userData['address']}'
-                          : 'Fail get data.',
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    NCard(
-                      active: false,
-                      icon: Icons.phone_android,
-                      label: userData != null
-                          ? '${userData['contactNumber']}'
-                          : 'Fail get data.',
-                    ),
-                    SizedBox(
-                      height: 45.0,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
+                    SizedBox(height: 10.0,),
+                   Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Text("Popular Fast Food",
+                        style: TextStyle(
+                              color:Color(0xFF0C375B),
+                              fontWeight: FontWeight.bold,
+                                  fontSize: 12.0,
+                                  fontFamily: 'Gilroy-light' 
+                        ),),
+                      ),
+                    ),
+                    SizedBox(height: 5.0,),
+                    Divider(
+                  height: 1.0,
+                  thickness: 1,
+                  color: Color(0xFF0C375B),
+                  indent: 20.0,
+                  endIndent: 60.0,
+                ),
+                   SizedBox(height: 8.0,),
+                   Padding(
+                     padding: const EdgeInsets.only(left: 10,right: 10),
+                     child: NewRestaurantViewFeatured(),
+                   ),
+                   Padding(
+                     padding: const EdgeInsets.only(left: 10,right: 10),
+                     child: Container(
+                       width: MediaQuery.of(context).size.width,
+                       child: Stack(
+                         children: <Widget>[
+                           Align(
+                             alignment: Alignment.centerRight,
+                             child:  RaisedButton(
+                    color: Color(0xFF0C375B),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                    onPressed: (){},                
+                    child: Text ( "Show More...", style :TextStyle(
+                    color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12.0,
+                                fontFamily: 'OpenSans'
+                  ),),),
+                           ),
+                         ],
+                       ),
+                     ),
+                   ),
+                   SizedBox(height: 10.0,),
+                    Divider(
+                  height: 1.0,
+                  thickness: 1,
+                  color: Color(0xFF0C375B),
+                  indent: 90.0,
+                  endIndent: 90.0,
+                ), 
+                SizedBox(height: 5.0,),
+                   CarouselSex(),
+                  SizedBox(height: 10.0,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text("Most Popular Restaurants",
+                        style: TextStyle(
+                              color:Color(0xFF0C375B),
+                              fontWeight: FontWeight.w800,
+                                  fontSize: 12.0,
+                                  fontFamily: 'Gilroy-light' 
+                        ),),
+                      ),
+                    ),
+                    SizedBox(height: 5.0,),
+                    Divider(
+                  height: 3.0,
+                  thickness: 2,
+                  color: Color(0xFF0C375B),
+                  indent: 20.0,
+                  endIndent: 60.0,
+                ),
+                   SizedBox(height: 8.0,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20),
+                      child: Container(
+                        height: 250,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView(
                           children: <Widget>[
-                            DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.home,
-                              iconSize: 30.0,
-                              onTap: () {
-                                Navigator.pushReplacement(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return Profile();
-                                }));
-                              },
+                            StaticviewsRestaurant(
+                              image: "asset/img/app.jpg",
+                              restauratname: "Chowking",
+                              address: "National Highway",
+                              openOn: "Weekly",
                             ),
-                            DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.track_changes,
-                              iconSize: 30.0,
+                             StaticviewsRestaurant(
+                              image: "asset/img/fbmYkDz.jpg",
+                              restauratname: "Jollibee",
+                              address: "National Highway",
+                              openOn: "Weekly",
                             ),
-                            DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.inbox,
-                              iconSize: 30.0,
+                             StaticviewsRestaurant(
+                              image: "asset/img/mWWsAhL.jpg",
+                              restauratname: "Mc Donald's",
+                              address: "Rizal Street",
+                              openOn: "Weekly",
                             ),
-                            DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.account_box,
-                              iconSize: 30.0,
-                              onTap: () {},
+                             StaticviewsRestaurant(
+                              image: "asset/img/76134055_p0.png",
+                              restauratname: "Penongs",
+                              address: "Rizal Street",
+                              openOn: "Weekly",
                             ),
                           ],
                         ),
                       ),
                     ),
-                  ],
-                ),
+                    SizedBox(height: 15.0,),
+                      Padding(
+                     padding: const EdgeInsets.only(left: 10,right: 10),
+                     child: Container(
+                       width: MediaQuery.of(context).size.width,
+                       child: Stack(
+                         children: <Widget>[
+                           Align(
+                             alignment: Alignment.centerRight,
+                             child:  RaisedButton(
+                    color: Color(0xFF0C375B),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                    onPressed: (){},                
+                    child: Text ( "Show More...", style :TextStyle(
+                    color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12.0,
+                                fontFamily: 'OpenSans'
+                  ),),),
+                           ),
+                         ],
+                       ),
+                     ),
+                   ),
+                   SizedBox(height: 15.0,),
+                ],
               ),
             ),
-          ),
-        ),
+        
       ),
-    );
+  );
   }
 }
 
 class NCard extends StatelessWidget {
+
   final bool active;
   final IconData icon;
   final String label;
   final Function onTap;
-  const NCard({this.active, this.icon, this.onTap, this.label});
+  const NCard({this.active,this.icon,this.onTap,this.label});
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
-      onTap: onTap,
+        onTap: onTap,
       child: Container(
-        height: 60.0,
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-        decoration: eBox,
+        height: 30.0,
+        width: MediaQuery.of(context).size.width,
+        // padding: EdgeInsets.symmetric(horizontal: 15,vertical: 7),
+        // decoration: eBox,
         child: Row(
           children: <Widget>[
-            Icon(icon, color: Colors.white),
-            SizedBox(
-              width: 20.0,
-            ),
-            Expanded(
-              flex: 1,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Text(
-                  label,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16.0,
-                      fontFamily: 'OpenSans'),
-                ),
-              ),
-            )
+            Icon(icon,color: Colors.white,size: 15.0,),
+            SizedBox(width: 7.0,),
+        
+             Flexible(
+               flex: 1,
+               child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    child: Container(
+                      child: Text(label,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.0,
+                        fontFamily: 'Gilroy-light'
+                      ),),
+                    ),
+                  ),
+             ),
+           
+            
           ],
         ),
       ),

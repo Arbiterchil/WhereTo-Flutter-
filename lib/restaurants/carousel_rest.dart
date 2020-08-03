@@ -31,12 +31,14 @@ class _CarouselState extends State<CarouselSex> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
+      
       child: Stack(
         children: <Widget>[
               Column(
                 children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width,
+                
                 child: CarouselSlider(
                 height: 200.0,
                 autoPlayCurve: Curves.fastOutSlowIn,
@@ -63,6 +65,7 @@ class _CarouselState extends State<CarouselSex> {
                         ),
                         child: Container(
                           width: MediaQuery.of(context).size.width,
+                          
                           margin: EdgeInsets.symmetric(horizontal: 0.0),
                           child: Image.asset(
                             index,
@@ -74,7 +77,7 @@ class _CarouselState extends State<CarouselSex> {
                 }).toList(),   
             ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: map<Widget>(img ,(index , asset){
@@ -84,7 +87,7 @@ class _CarouselState extends State<CarouselSex> {
                       margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 2.0 ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: cur == index ? Colors.amber : Colors.white,
+                        color: cur == index ? Color(0xFF0C375B) : Colors.amber,
                       ),
                     );
                   }
