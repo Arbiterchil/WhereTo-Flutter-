@@ -193,14 +193,8 @@ class _ListStacticState extends State<ListStactic>
                                                                                       menuName:data.data[index].menuName ,
                                                                                       menuDescription: data.data[index].description,
                                                                                       fixprice:  "₱" +data.data[index].price.toString(),
-                                                                                      hugs: Row(
-                                                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                                                        children: <Widget>[
-                                                                                          Icon(Icons.star,size: 10,color: Colors.amber,),
-                                                                                          Icon(Icons.star,size: 10,color: Colors.amber,),
-                                                                                            Icon(Icons.star,size: 10,color: Colors.amber,),
-                                                                                        ],
-                                                                                      ) ,       
+                                                                                      hugs:"Best Seller" , 
+                                                                                           
                                                                                       onTap: (){
                                                                                          BlocProvider.of<
                                                                                                           OrderBloc>(

@@ -7,7 +7,7 @@ class MenuBoxRestaurant extends StatefulWidget {
   final String menuDescription;
   final String fixprice;
   // final String image;
-  final Widget hugs;
+  final String hugs;
 
   const MenuBoxRestaurant({Key key, this.onTap, this.menuName, this.menuDescription, this.fixprice, this.hugs}) : super(key: key);
 
@@ -44,7 +44,7 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
             Align(
               alignment: Alignment.topLeft,
               child: Container(
-                height: 100,
+                height: 80,
                 width: 170,
                 decoration: BoxDecoration(
                   color: Color(0xFF0C375B),
@@ -58,17 +58,6 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Container(
-                        height: 20,
-                        decoration: BoxDecoration(  
-                         borderRadius: BorderRadius.only(
-                           topRight: Radius.circular(20),
-                           bottomLeft: Radius.circular(10)
-                         ),
-                         color: Color(0xFF0C375B)),
-                        child: widget.hugs
-                        
-                        ),
                         Text(widget.menuName,
                     style: TextStyle(
                       color: Colors.white,
@@ -151,7 +140,32 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
                      ),    
             ),
 
-          
+            Align(
+              alignment: Alignment.topRight,
+
+                       child: Container(
+                       width: 120,
+                        height: 20,
+                        decoration: BoxDecoration(  
+                         borderRadius: BorderRadius.only(
+                           topRight: Radius.circular(20),
+                           bottomLeft: Radius.circular(10)
+                         ),
+                         color: Color(0xFF0C375B)),
+                        child: Center(
+                          child: Text(widget.hugs,
+                          style: TextStyle(
+                                color: Colors.white,
+                        fontSize: 15.0,
+                        fontFamily: 'Gilroy-light'
+                      ),
+                          
+                          ),
+                        )
+                        
+                        ),
+                       
+            ),
 
           ],
         ),
