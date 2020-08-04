@@ -111,7 +111,7 @@ class _MyOrderState extends State<MyOrder> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 90),
+            padding: EdgeInsets.only(top: 70),
             child: xStreamAsshole(),
           ),
         ],
@@ -126,7 +126,7 @@ class _MyOrderState extends State<MyOrder> {
         if (snapshot.hasData) {
           if (snapshot.data.length > 0) {
             return SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -160,7 +160,8 @@ class _MyOrderState extends State<MyOrder> {
                     }
                   },
                 ),
-              ),
+              
+            ),
             );
           } else {
             return Container();
