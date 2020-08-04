@@ -6,6 +6,7 @@ import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/Transaction/MyOrder/userOrder.dart';
 import 'package:WhereTo/designbuttons.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'MyOrder/bloc.dart';
 
@@ -17,6 +18,13 @@ class MyOrder extends StatefulWidget {
 }
 
 class _MyOrderState extends State<MyOrder> {
+  var data;
+  String transactID;
+  String riderID;
+  String status;
+  String statusExist;
+  String sunkist;
+  bool isExist =false;
   BlocAll bloc;
   Future<void> getBloc(var id) async {
     await bloc.getMenuTransaction(id);
@@ -26,10 +34,31 @@ class _MyOrderState extends State<MyOrder> {
     bloc.dispose();
   }
 
+ 
+
   @override
   void initState() {
-   
+    getData();
     super.initState();
+  }
+   getData() async{
+     OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+     OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
+        data =notification.payload.additionalData;
+        setState(() {
+          if(data!=null){
+            print(data['transact_id'].toString());
+            print(data['id'].toString());
+            print(data['status'].toString());
+            isExist =true;
+            transactID =data['transact_id'].toString();
+            riderID =data['id'].toString();
+            status =data['status'].toString();
+          }else{
+            print("Error");
+          }
+        });
+      });
   }
 
   @override
@@ -37,7 +66,7 @@ class _MyOrderState extends State<MyOrder> {
     setState(() {
       bloc = BlocAll();
       getBloc(widget.id.toString());  
-     
+
       
     });
   
@@ -105,14 +134,19 @@ class _MyOrderState extends State<MyOrder> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     if (snapshot.data.length > 0) {
+                      if(transactID.toString().contains(snapshot.data[index].id.toString())){
+                        sunkist =status;
+                      }else{
+                        sunkist =snapshot.data[index].status.toString();
+                      }
                       return Column(
                         children: [
-                          OrderCard(
+                           OrderCard(
                             image:"asset/img/app.jpg",
                             deliveryAddress: snapshot.data[index].deliveryAddress,
                             address: snapshot.data[index].address,
                             restaurantName: snapshot.data[index].restaurantName,
-                            status: snapshot.data[index].status.toString(),
+                            status: sunkist =="0" ?snapshot.data[index].status.toString() :sunkist,
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context){
                                 return StepperStatus();

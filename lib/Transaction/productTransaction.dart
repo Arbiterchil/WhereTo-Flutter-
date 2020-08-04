@@ -679,9 +679,9 @@ class _TransactionListState extends State<TransactionList> {
                                                             "excluded_segments": [],
                                                             "contents": {"en": "FuCK you driver!"},
                                                             "data": {
-                                                              "id": user['id'],
-                                                              "player_id": playerId,
-                                                              "transact_id": transactID,
+                                                              "id": user['id'].toString(),
+                                                              "player_id": playerId.toString(),
+                                                              "transact_id": transactID.toString(),
                                                             },
                                                             "headings": {"en": "New Order"},
                                                             "filter": [

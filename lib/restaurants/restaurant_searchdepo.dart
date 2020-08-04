@@ -201,6 +201,7 @@ TextEditingController search = new TextEditingController();
                                 restaurantAddress: snapshot.data[index].address,
                                 openAndclose: snapshot.data[index].openTime+"-"+snapshot.data[index].closingTime,
                                 onTap: (){
+                                  
                                   Navigator.push(context,
                                   new MaterialPageRoute(builder: (context) 
                                   => ListStactic(
