@@ -185,7 +185,7 @@ class _ListStacticState extends State<ListStactic>
                                                                   child: FutureBuilder<List<RestaurantMenu>>(
                                                                       future: _menuList(ty.id, ty.categoryName),
                                                                       builder: (context, data) {
-                                                                        print(ty.categoryName);
+                                                                       
                                                                         if(data.hasData){
                                                                           if(data.data.length >0){
                                                                             return ListView.builder(
