@@ -4,6 +4,7 @@ import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MShowStep extends StatefulWidget {
@@ -21,13 +22,51 @@ class MShowStep extends StatefulWidget {
 class _MShowStepState extends State<MShowStep> {
 
   var idgetter;
-
+  var playerID;
+  var riderID;
   @override
   void initState() {
     getMenuTransaction();
     super.initState();
+    sendNotif();
   }
+  sendNotif() async {
+    SharedPreferences local = await SharedPreferences.getInstance();
+    idgetter = local.getString("menuplustrans");
+    playerID = local.getString("playerIDS");
+    var userJson = local.getString('user'); 
+      var user = json.decode(userJson);
+      setState(() {
+        riderID = user;
+      });
+                  print(idgetter+"-"+playerID);
+     String url = 'https://onesignal.com/api/v1/notifications';
+        var contents = {
+          "include_player_ids": ['$playerID'],
+          "include_segments": ["Users Notif"],
+          "excluded_segments": [],
+          "contents": {"en": "Your Order is Accepted and Ongoing to Buy The Menu."},
 
+          "data": {
+            "id": "${riderID['id']}",
+            "transact_id":"$idgetter",
+            "status":"2"
+          },
+          "headings": {"en": "WhereTo Rider"},
+          "filter": [
+            {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+          ],
+          "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+        };
+        Map<String, String> headers = {
+          'Content-Type': 'application/json',
+          'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+        };
+        var repo =
+            await http.post(url, headers: headers, body: json.encode(contents));
+            print(repo.body);
+
+  }
 
 
 
@@ -40,7 +79,8 @@ class _MShowStepState extends State<MShowStep> {
 
             // if(check){
                   idgetter = local.getString("menuplustrans");
-                  print(idgetter);
+                  // playerID = local.getString("playerIDS");
+                  // print(idgetter+"-"+playerID);
 
             // }else{
             //   print("No Id Getter.");
@@ -52,6 +92,7 @@ class _MShowStepState extends State<MShowStep> {
         final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/$idgetter');
         // await ApiCall().transactionBuying('/transactionBuying/${widget.getID}');
         await ApiCall().transactionBuying('/transactionBuying/$idgetter');
+       
         // final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/2');
         List<RiverMenu> ridermenu = [];
 

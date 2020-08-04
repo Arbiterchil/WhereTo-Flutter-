@@ -3,6 +3,7 @@ import 'package:WhereTo/AnCustom/dialog_showGlobal.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_headerpage.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/button_OkAssign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
+import 'package:http/http.dart' as http;
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/ridershowStep_Menu.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_viewtransac.dart';
@@ -22,10 +23,10 @@ class ViewMenuOnTransac extends StatefulWidget {
   final String deviceID;
   final String deliveryCharge;
   final String nametran;
+  final String playerId;
+  final String transacIDs;
 
-  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran}) : super(key: key);
- 
- 
+  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs}) : super(key: key);
   
   @override
   _ViewMenuOnTransacState createState() => _ViewMenuOnTransacState();
@@ -68,6 +69,67 @@ var idgetter;
     
     super.initState();
     riderCheck();
+  }
+
+  notif2() async {
+       String url = 'https://onesignal.com/api/v1/notifications';
+    // var playerId = status.subscriptionStatus.userId;
+    // var idChil = "1106b49d-60f0-435a-b44f-5d2f4849cb38";
+    // var numb = "3";
+    var contents = {
+      "include_player_ids": ['${widget.playerId}'],
+      "include_segments": ["Users Notif"],
+      "excluded_segments": [],
+      "contents": {"en": "Your Order is Being Delivered."},
+
+      "data": {
+        "id": "${userData['id']}",
+        "transact_id":"${widget.getID}",
+        "status":"3"
+      },
+      "headings": {"en": "WhereTo Rider"},
+      "filter": [
+        {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+      ],
+      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+    };
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+    };
+    var repo =
+        await http.post(url, headers: headers, body: json.encode(contents));
+        print(repo.body);
+  }
+  notif3() async {
+ String url = 'https://onesignal.com/api/v1/notifications';
+    // var playerId = status.subscriptionStatus.userId;
+    // var idChil = "1106b49d-60f0-435a-b44f-5d2f4849cb38";
+    // var numb = "3";
+    var contents = {
+      "include_player_ids": ['${widget.playerId}'],
+      "include_segments": ["Users Notif"],
+      "excluded_segments": [],
+      "contents": {"en": "Your Order Successfully Delivered."},
+
+      "data": {
+        "id": "${userData['id']}",
+        "transact_id":"${widget.getID}",
+        "status":"4"
+      },
+      "headings": {"en": "WhereTo Rider"},
+      "filter": [
+        {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+      ],
+      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+    };
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+    };
+    var repo =
+        await http.post(url, headers: headers, body: json.encode(contents));
+        print(repo.body);
   }
 
    Widget _viewMenus(){
@@ -198,19 +260,17 @@ var idgetter;
 
   ];
 
-  buy() async {
-
-
-                  await ApiCall().transactionBuying('/transactionBuying/${widget.getID}');
-  }
+  // by() async {
+  // await ApiCall().transactionBuying('/transactionBuying/${widget.getID}');
+  // notif1();
+  // }
   deliver() async {
-
-
-                  await ApiCall().transactionDelivery('/transactionDelivery/${widget.getID}');
+  await ApiCall().transactionDelivery('/transactionDelivery/${widget.getID}');
+  notif2();
   }
   done() async{
-
-                  await ApiCall().transactionComplete('/transactionComplete/${widget.getID}');
+  await ApiCall().transactionComplete('/transactionComplete/${widget.getID}');
+  notif3();
   }
 
   nextSteps(){
@@ -219,12 +279,7 @@ var idgetter;
     : setState(()=> complete = true);
    
     stepnumber = currentStep+ 1;  
-    if(stepnumber == 2){
-      deliver();
-    }else if(stepnumber == 3){
-      done();
-    }
-  } 
+  }
 
 
   cancel(){
@@ -234,6 +289,13 @@ var idgetter;
   }
   goTo(int step){
     setState(() => currentStep = step);
+
+    print(step);
+      if(step == 1){
+      deliver();
+    }else if(step == 2){
+      done();
+    }
   }
 void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -560,10 +622,18 @@ var checkVal = localStorage.getBool('check');
                                    RaisedButton(
                                   color: Colors.white,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                                  onPressed: () {
-                                          setState(() {
-                                          complete = false;                    
-                                                              });
+                                  onPressed: () async {
+                                    SharedPreferences localStorage = await SharedPreferences.getInstance();
+                                    localStorage.remove('menuplustrans');
+                                    localStorage.remove('playerIDS');
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                                  return RiderTransaction();
+                                                }));
+
+                                        //   setState(() {
+                                        //   complete = false;                    
+
+                                        // });
                                   // Navigator.of(context).pop();
                                       },   
                                   child: Text ( "Yes", style :TextStyle(
@@ -677,7 +747,7 @@ var checkVal = localStorage.getBool('check');
 
 
   }
-    mCustom(BuildContext context){
+  mCustom(BuildContext context){
 
        return Container(
         height: 300.0,
@@ -779,6 +849,7 @@ var checkVal = localStorage.getBool('check');
         SharedPreferences localStore = await SharedPreferences.getInstance();
         localStore.setBool("cuurentIdtrans", checkthis);
         localStore.setString("menuplustrans", "${widget.getID}");
+        localStore.setString("playerIDS", "${widget.playerId}");
       }else{
         print("FALSE");
       }

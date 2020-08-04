@@ -37,12 +37,13 @@ var totalAll;
   bool mine = false;
   var constant;
   var finalID;
+  var playerId;
   var userRN;
   var idgetter;
   
   @override
   void initState() {
-    // notifmeNow();
+    
     mybackUp();
     super.initState();
   }
@@ -109,11 +110,12 @@ Future<List<RiderViewClass>> getTransac() async {
                 setState(() {
                   if(constant != null){
                     print(constant['id'].toString());
-                    print(constant['rn'].toString());
+                    print(constant['transact_id'].toString());
+                    print(constant['player_id'].toString());
+                    // print(constant['transac_id'].toString());
                     getmessage = true;
-                    
-                    finalID = constant['id'];
-
+                    finalID = constant['transact_id'];
+                    playerId = constant['player_id'].toString();
                   }else{
                     print("No Data");
                   }
@@ -225,7 +227,8 @@ Future<List<RiderViewClass>> getTransac() async {
                                                     deviceID: snapshot.data[index].deviceId.toString(),
                                                     riderID: snapshot.data[index].riderId.toString(),
                                                     deliveryCharge: snapshot.data[index].deliveryCharge.toString(),
-                                                    nametran:  snapshot.data[index].name,);
+                                                    nametran:  snapshot.data[index].name,
+                                                    playerId: playerId.toString(),);
                                                 }));
 
                           },),
