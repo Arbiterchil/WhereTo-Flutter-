@@ -43,27 +43,31 @@ class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF398AE5),
       body: Padding(
         padding: EdgeInsets.only(top: 40, left: 10, right: 10),
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
             Align(
+              // Navigator.pop(context);
               alignment: Alignment.topLeft,
-              child: DesignButton(
-                height: 55,
-                width: 55,
-                color: Color(0xFF398AE5),
-                offblackBlue: Offset(-4, -4),
-                offsetBlue: Offset(4, 4),
-                blurlevel: 4.0,
-                icon: Icons.arrow_back,
-                iconSize: 30.0,
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF0C375B),
+                    shape: BoxShape.circle
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
             ),
             Padding(
               padding: EdgeInsets.only(top: 10),
@@ -73,28 +77,50 @@ class _TransactionListState extends State<TransactionList> {
                   "My Cart",
                   style: TextStyle(
                       fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500),
+                      color: Color(0xFF0C375B),
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Gilroy-light'),
                 ),
               ),
             ),
             Align(
+              // Navigator.pop(context);
               alignment: Alignment.topRight,
-              child: DesignButton(
-                height: 55,
-                width: 55,
-                color: Color(0xFF398AE5),
-                offblackBlue: Offset(-4, -4),
-                offsetBlue: Offset(4, 4),
-                blurlevel: 4.0,
-                icon: Icons.clear,
-                iconSize: 30.0,
-                onTap: () {
-                  BlocProvider.of<OrderBloc>(context)
-                      .add(Computation.deleteAll());
-                },
-              ),
+              child: GestureDetector(
+                onTap: () => BlocProvider.of<OrderBloc>(context)
+                      .add(Computation.deleteAll()),
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF0C375B),
+                    shape: BoxShape.circle
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.clear,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
             ),
+            // Align(
+            //   alignment: Alignment.topRight,
+            //   child: DesignButton(
+            //     height: 55,
+            //     width: 55,
+            //     color: Color(0xFF398AE5),
+            //     offblackBlue: Offset(-4, -4),
+            //     offsetBlue: Offset(4, 4),
+            //     blurlevel: 4.0,
+            //     icon: Icons.clear,
+            //     iconSize: 30.0,
+            //     onTap: () {
+                  
+            //     },
+            //   ),
+            // ),
             Padding(
               padding: EdgeInsets.only(top: 56),
               child: Container(
@@ -123,11 +149,13 @@ class _TransactionListState extends State<TransactionList> {
                                 child: Stack(
                                   children: <Widget>[
                                     Container(
-                                        decoration: eBox,
                                         child: Container(
-                                          height: 90,
+                                          height: 120,
                                           width: MediaQuery.of(context).size.width,
-                                          decoration: morph,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF0C375B),
+                                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                                          ),
                                           child: InkWell(
                                             onLongPress: () {
                                               BlocProvider.of<OrderBloc>(
@@ -137,133 +165,64 @@ class _TransactionListState extends State<TransactionList> {
                                             },
                                             child: Stack(
                                               children: <Widget>[
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 10, left: 7),
-                                                      child: Text(
-                                                        snapshot[index].name,
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 15,
-                                                          letterSpacing: 1,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 5, left: 7),
-                                                      child: Text(
-                                                        snapshot[index]
-                                                            .description,
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 15,
-                                                          letterSpacing: 1,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 5),
-                                                      child: Container(
-                                                        width: 100,
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                          vertical: 20 / 4,
-                                                        ),
-                                                        decoration: BoxDecoration(
-                                                            color: Colors.white,
-                                                            borderRadius: BorderRadius.only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        10),
-                                                                bottomRight:
-                                                                    Radius
-                                                                        .circular(
-                                                                            10),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        20))),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 15),
-                                                          child: Text(
-                                                            "₱" +
-                                                                snapshot[index]
-                                                                    .price
-                                                                    .toString(),
-                                                            style: GoogleFonts.roboto(
-                                                                color:
-                                                                    Colors.blue,
-                                                                letterSpacing:
-                                                                    3,
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                   Align(
+                                                      alignment: Alignment.bottomLeft,
+                                                      child: Padding(
+                                                        padding: EdgeInsets.only(
+                                                            top: 5),
+                                                        child: Container(
+                                                          width: 100,
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                            vertical: 20 / 4,
+                                                          ),
+                                                          decoration: BoxDecoration(
+                                                              color: Colors.grey,
+                                                              borderRadius: BorderRadius.only(
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          10),
+            
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          20))),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 15),
+                                                            child: Text(
+                                                              "₱" +
+                                                                  snapshot[index]
+                                                                      .price
+                                                                      .toString(),
+                                                              style: GoogleFonts.roboto(
+                                                                  color:Color(0xFF0C375B),
+                                                                  letterSpacing:
+                                                                      1,
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                          ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ],
-                                                ),
-                                                Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 150),
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerRight,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: <Widget>[
-                                                          Container(
-                                                            width: 60,
-                                                            height: 60,
+                                                  Align(
+                                                    alignment: Alignment.topRight,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(top:10,right: 20),
+                                                      child:Container(
+                                                            width: 70,
+                                                            height: 70,
                                                             decoration:
                                                                 BoxDecoration(
-                                                              color: blueMCL,
                                                               shape: BoxShape
                                                                   .circle,
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  offset:
-                                                                      Offset(-3,
-                                                                          -3),
-                                                                  blurRadius:
-                                                                      1.0,
-                                                                  color: Colors
-                                                                      .white
-                                                                      .withOpacity(
-                                                                          0.2),
-                                                                ),
-                                                                BoxShadow(
-                                                                  offset:
-                                                                      Offset(
-                                                                          3, 3),
-                                                                  blurRadius:
-                                                                      1.0,
-                                                                  color: Colors
-                                                                      .white
-                                                                      .withOpacity(
-                                                                          0.2),
-                                                                ),
-                                                              ],
+                                                            
                                                             ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(10),
+                                                            
                                                               child: Container(
                                                                   decoration: BoxDecoration(
                                                                       shape: BoxShape
@@ -277,8 +236,57 @@ class _TransactionListState extends State<TransactionList> {
                                                                               "asset/img/app.jpg"),
                                                                     ),
                                                                   )),
-                                                            ),
-                                                          ),
+                                                          
+                                                          ) 
+                                                      ,),
+                                                  ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 10, left: 7),
+                                                      child: Text(snapshot[index].name,
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 15,
+                                                          letterSpacing: 1,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(top: 5, left: 7),
+                                                      child: Text(
+                                                        snapshot[index]
+                                                            .description,
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 15,
+                                                          letterSpacing: 1,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                   
+                                                  ],
+                                                ),
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                      top: 90,
+                                                        left: 170),
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.bottomRight,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: <Widget>[
+                                                          
                                                               Container(
                                                               child: Row(
                                                                 children: <
@@ -380,14 +388,8 @@ class _TransactionListState extends State<TransactionList> {
                                 child: Container(
                                 height: 55,
                                 width: double.infinity,
-                                child: DesignButton(
-                                  color: Color(0xFF398AE5),
-                                  offblackBlue: Offset(-4, -4),
-                                  offsetBlue: Offset(4, 4),
-                                  blurlevel: 4.0,
-                                  icon: Icons.add_shopping_cart,
-                                  iconSize: 30.0,
-                                  onTap: () async {
+                                child: GestureDetector(
+                                  onTap: (){
                                   showCupertinoModalBottomSheet(
                                     elevation: 10.5,
                                     backgroundColor: Colors.grey[300],
@@ -559,15 +561,13 @@ class _TransactionListState extends State<TransactionList> {
                                                       alignment: Alignment.bottomCenter,
                                                       child: Container(
                                                           height: 55,
-                                                          width: double.infinity,
-                                                          child: ButtonPlaceOrder(
-                                                          color: Colors.grey[500],
-                                                          offblackBlue: Offset(-4, -4),
-                                                          offsetBlue: Offset(4, 4),
-                                                          blurlevel: 4.0,
-                                                          icon: Icons.add_shopping_cart,
-                                                          iconSize: 30.0,
-                                                          onTap: () async{
+                                                          width: 190,
+                                                          decoration: BoxDecoration(
+                                                            color: Color(0xFF0C375B),
+                                                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                          ),
+                                                          child: GestureDetector(
+                                                            onTap: ()async{
                                                             if(snapshot.length ==0){
                                                             print("No Order");
                                                              
@@ -702,7 +702,19 @@ class _TransactionListState extends State<TransactionList> {
                                                           
                                                             }
                                                           },
-                                                        ),
+                                                            child: Center(
+                                                              child: Text("Place Order",
+                                                               style: TextStyle(
+                                                                  color: Colors.white,
+                                                          fontSize: 15.0,
+                                                          fontFamily: 'Gilroy-light'
+                                                               ),
+                                                              ),
+                                                            ),
+                                                          )
+
+
+
                                                       ),
                                                     ),),
                                                  
@@ -713,21 +725,43 @@ class _TransactionListState extends State<TransactionList> {
                                         );
                                     });
                                   },
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 13, left: 30),
-                              child: Container(
-                                child: Text(
-                                  "Place Order",
+                                  child: Container(
+                                    height: 60,
+                                    width: 190,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFF0C375B),
+                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                  "View Place Orders ",
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.w400,
-                                      color: mC),
+                                      color: Colors.white,
+                                      fontFamily: 'Gilroy-light'
+                                      ),
                                 ),
+                                    ),
+                                  ),
+                                ),
+                                
                               ),
                             ),
+                            // Padding(
+                            //   padding: EdgeInsets.only(top: 13, left: 30),
+                            //   child: Container(
+                            //     child: Text(
+                            //       "View Place Orders ",
+                            //       style: TextStyle(
+                            //           fontSize: 25,
+                            //           fontWeight: FontWeight.w400,
+                            //           color: Colors.white,
+                            //           fontFamily: 'Gilroy-light'
+                            //           ),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -790,3 +824,9 @@ class _TransactionListState extends State<TransactionList> {
   //   print(repo.body);
   // }
 }
+
+
+
+
+
+

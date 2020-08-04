@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:WhereTo/Transaction/MyOrder/StatusStepper.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/Transaction/MyOrder/userOrder.dart';
+import 'package:WhereTo/Transaction/x_view.dart';
 import 'package:WhereTo/designbuttons.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -69,32 +70,34 @@ class _MyOrderState extends State<MyOrder> {
 
       
     });
-  
-
     return Scaffold(
-      backgroundColor: Color(0xFF398AE5),
       body: Stack(
-        
         fit: StackFit.expand,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(top: 40, left: 10, right: 10),
             child: Align(
               alignment: Alignment.topLeft,
-              child: DesignButton(
-                height: 55,
-                width: 55,
-                color: Color(0xFF398AE5),
-                offblackBlue: Offset(-4, -4),
-                offsetBlue: Offset(4, 4),
-                blurlevel: 4.0,
-                icon: Icons.arrow_back,
-                iconSize: 30.0,
-                onTap: () {
+              child: GestureDetector(
+                onTap: (){
                   Navigator.pop(context);
                   disposeBloc();
                 },
-              ),
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF0C375B),
+                    shape: BoxShape.circle
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
             ),
           ),
           Padding(
@@ -105,8 +108,10 @@ class _MyOrderState extends State<MyOrder> {
                 "My Orders",
                 style: TextStyle(
                     fontSize: 30,
-                    color: Colors.white,
+                    color: Color(0xFF0C375B),
+                    fontFamily: 'Gilroy-light',
                     fontWeight: FontWeight.w500),
+
               ),
             ),
           ),
@@ -125,9 +130,7 @@ class _MyOrderState extends State<MyOrder> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.length > 0) {
-            return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Container(
+            return Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
@@ -139,21 +142,25 @@ class _MyOrderState extends State<MyOrder> {
                       }else{
                         sunkist =snapshot.data[index].status.toString();
                       }
-                      return Column(
-                        children: [
-                           OrderCard(
-                            image:"asset/img/app.jpg",
-                            deliveryAddress: snapshot.data[index].deliveryAddress,
-                            address: snapshot.data[index].address,
-                            restaurantName: snapshot.data[index].restaurantName,
-                            status: sunkist =="0" ?snapshot.data[index].status.toString() :sunkist,
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return StepperStatus();
-                              }));
-                            },
+                      return  Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            children: [
+                               XviewTransac(
+                                image:"asset/img/app.jpg",
+                                deliveryAddress: snapshot.data[index].deliveryAddress,
+                                address: snapshot.data[index].address,
+                                restaurantName: snapshot.data[index].restaurantName,
+                                status: sunkist =="0" ?snapshot.data[index].status.toString() :sunkist,
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    return StepperStatus();
+                                  }));
+                                },
+                              ),
+                            ],
                           ),
-                        ],
+                        
                       );
                     } else {
                       return Container();
@@ -161,7 +168,7 @@ class _MyOrderState extends State<MyOrder> {
                   },
                 ),
               
-            ),
+            
             );
           } else {
             return Container();
