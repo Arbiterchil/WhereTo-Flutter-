@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:WhereTo/MenuRestaurant/categ_type.dart';
 import 'package:WhereTo/MenuRestaurant/restaurant_menu_list.dart';
 import 'package:WhereTo/Transaction/myOrders.dart';
@@ -13,8 +15,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:google_fonts/google_fonts.dart';
 
 
 class ListStactic extends StatefulWidget {
@@ -27,14 +29,13 @@ class ListStactic extends StatefulWidget {
 
 class _ListStacticState extends State<ListStactic>
     with SingleTickerProviderStateMixin {
-  num _defaultValue = 0;
+
 
   Future<List<TyepCateg>> _categRest() async {
     final response = await ApiCall().getCategory('/getCategories');
     final List<TyepCateg> category = tyepCategFromJson(response.body);
     return category;
   }
-  var user;
   Future<List<RestaurantMenu>> _menuList(int id, String menuName) async {
     final response = await ApiCall().getCategory('/getMenuCategory/$id');
     final List<RestaurantMenu> restList = restaurantMenuFromJson(response.body);
@@ -98,6 +99,7 @@ class _ListStacticState extends State<ListStactic>
                                           color: Colors.white,
                                         ),
                                         onPressed: () {
+                                          
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -119,13 +121,16 @@ class _ListStacticState extends State<ListStactic>
                                 Icons.shopping_cart,
                                 color: Colors.white,
                               ),
-                              onPressed: () {
+                              onPressed: () async{
+                                SharedPreferences local =await SharedPreferences.getInstance();
+                                var userjson =local.getString('user');
+                                var user =json.decode(userjson);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => MyOrder(id: user['id'].toString())));
-                                                                    }),
-                                                              ],
+                                                }),
+                                              ],
                       // backgroundColor: Colors.amber,
                       backgroundColor: Color(0xFF0C375B),
                       leading: IconButton(
