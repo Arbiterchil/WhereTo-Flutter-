@@ -44,6 +44,7 @@ class _PathWayState extends State<PathWay> {
        if(customer.contains(value)){
         return  _isLoggedIn  ? HomePage() :  LoginPage();
       }else{
+        
         return _isLoggedIn  ? RiderProfile() :  LoginPage();
       }
 

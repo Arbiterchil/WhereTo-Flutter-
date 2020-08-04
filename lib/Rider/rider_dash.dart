@@ -23,10 +23,22 @@ var userData;
   void initState() {
     configSignal();
     _getUserInfo();
+    postRiderId();
     super.initState();
     
   }
 
+  void postRiderId() async{
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    var playerId = status.subscriptionStatus.userId;
+    var data =
+    {
+      "userId" : userData['id'].toString(),
+      "playerId" : playerId
+    };
+    var responses = await ApiCall().playerIdSave(data,'/assignPlayerId');
+    print(responses);
+  }
 
 void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();

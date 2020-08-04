@@ -16,6 +16,14 @@ class ApiCall{
     );
   }
 
+  playerIdSave(data ,api) async {
+    var fullurl = url+api+ await _getToken();
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+
 
   transactionBuying(api) async{
     var fullurl = url+api;
@@ -107,6 +115,14 @@ class ApiCall{
   }
 
 viewMenuTransac(api) async {
+    var fullurl = url+api;
+    return http.get(
+    fullurl,
+    headers: _setHeaders()
+    );
+  }
+
+  getBararang(api) async {
     var fullurl = url+api;
     return http.get(
     fullurl,

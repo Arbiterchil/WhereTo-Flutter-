@@ -164,13 +164,13 @@ BoxDecoration eMBoxActive = eMBox.copyWith(color: b2s);
 
 final eHintStyle = TextStyle(
   color: Colors.white54,
-  fontFamily: 'OpenSans',
+  fontFamily: 'Gilroy-light',
 );
 
 final eLabelStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
-  fontFamily: 'OpenSans',
+  fontFamily: 'Gilroy-light',
 );
 
 final eBoxDecorationStyle = BoxDecoration(

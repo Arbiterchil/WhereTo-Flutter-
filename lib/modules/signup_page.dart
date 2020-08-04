@@ -28,10 +28,14 @@ class SignupPage extends StatefulWidget{
 
 class _SignupPageState extends State<SignupPage>{
   
+
+
+
+  
     
     String default_pick = "Customer";
     int default_number = 1;
-
+     String selectPerson;
     List<MyChoice> picks = [
       MyChoice(numberpick: 1,pickchoice: "Customer"),
       MyChoice(numberpick: 2,pickchoice: "Rider")
@@ -68,6 +72,9 @@ class _SignupPageState extends State<SignupPage>{
 
     }   
 
+  
+
+
     emailValidate(String value){
       Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -103,7 +110,7 @@ class _SignupPageState extends State<SignupPage>{
                 validator: (val) => val.isEmpty ? ' Please Put Your Full Name' : null,
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'OpenSans',
+                  fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -134,7 +141,7 @@ class _SignupPageState extends State<SignupPage>{
                     onSaved: (val) => email.text = val,
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'OpenSans',
+                  fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -148,6 +155,73 @@ class _SignupPageState extends State<SignupPage>{
                 ),
               ),
             ),
+              SizedBox(height: 15.0,),
+
+            Text("District",
+                    style: eLabelStyle,
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: DropdownButtonHideUnderline(
+                      child: Stack(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Icon(Icons.place,color: Colors.white,)),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: DropdownButton(
+                                  isExpanded: true ,
+                                  hint: Text( "Select District",
+                                  style: TextStyle(
+                                      
+                                      color: Colors.white,
+                                      fontFamily: 'Gilroy-light'
+                                    ),),
+                                  dropdownColor:  Color(0xFF0C375B),
+                                  icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
+                                  
+                                  value: selectPerson,
+                                  items: dataBarangay.map((item) {
+                                  return DropdownMenuItem(
+                                    child: Text(item.toString(),
+                                    style: TextStyle(
+                                      
+                                      color: Colors.white,
+                                      fontFamily: 'Gilroy-light'
+                                    ),
+                                    ),
+                                    value: item,
+                                  );
+                                }).toList(),
+                                  onChanged: (item){
+                                    setState(() {
+                                      selectPerson = item;
+                                      print(item);
+                                    });
+                                  }
+                                  ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  
+              )
+            ),
+
+
+
+
+
+
+
+
                 SizedBox(height: 15.0,),
                  Text('Address',
                     style: eLabelStyle,
@@ -164,7 +238,7 @@ class _SignupPageState extends State<SignupPage>{
                 validator: (val) => val.isEmpty ? ' Please Put Your Address' : null,
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'OpenSans',
+                  fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -195,7 +269,7 @@ class _SignupPageState extends State<SignupPage>{
                 obscureText: true,
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'OpenSans',
+                  fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -224,7 +298,7 @@ class _SignupPageState extends State<SignupPage>{
                 controller: ownconpass,
                 validator:(val){
                       if(val.isEmpty){
-                        return "Empty";
+                        return "Gilroy-light";
                       }if(val != ownpass.text){
                         return "Password not Match";
                       }
@@ -233,7 +307,7 @@ class _SignupPageState extends State<SignupPage>{
                 obscureText: true,
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'OpenSans',
+                  fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -267,7 +341,7 @@ class _SignupPageState extends State<SignupPage>{
                 
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'OpenSans',
+                  fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -331,7 +405,7 @@ class _SignupPageState extends State<SignupPage>{
                     letterSpacing: 1.5,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
+                    fontFamily: 'Gilroy-light',
                   ),),
                   ),
               ),
@@ -377,6 +451,34 @@ class _SignupPageState extends State<SignupPage>{
   }
 
   @override
+  void initState() {
+    
+    super.initState();
+    callBarangay();
+  }
+
+  
+    List<dynamic> dataBarangay = List();
+
+    callBarangay() async{
+
+    var respon = await ApiCall().getBararang('/getBarangayList');
+    var bararang = json.decode(respon.body);
+    
+    // List<String> bararangsaika = [];
+    // bararangsaika.add(bararang);
+    // print(bararangsaika);
+    // print(bararang);
+    // return bararang;
+
+    setState(() {
+      dataBarangay = bararang;
+    });
+    print(bararang);
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
      body: WillPopScope(
@@ -410,8 +512,9 @@ class _SignupPageState extends State<SignupPage>{
                               'Sign Up',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'OpenSans',
-                                fontSize: 30.0,
+                                fontFamily: 'Gilroy-light',
+                                letterSpacing: 1,
+                                fontSize: 32.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -437,7 +540,11 @@ void _signingIn() async {
 
     bool value = true;
 
-  if(formkey.currentState.validate()){
+  if(selectPerson == null){
+    print("Select District");
+    _showDistictWarning();
+  }else{
+     if(formkey.currentState.validate()){
       formkey.currentState.save();
       var data = {
         'name' : fulname.text,
@@ -464,6 +571,10 @@ void _signingIn() async {
       throw Exception('Failed to Save');
     } 
   }
+
+  }
+
+ 
 
     
 
@@ -555,7 +666,7 @@ void _showDial(){
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,
                     fontSize: 11.0,
-                    fontFamily: 'OpenSans'
+                    fontFamily: 'Gilroy-light'
                   ),
                   
                   ),),
@@ -586,5 +697,126 @@ void _showDial(){
 
 
     }
+
+
+
+
+
+
+void _showDistictWarning(){
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context){
+      return Dialog(
+             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: mCustomDistictWarning(context),
+    ); 
+    },);
+}
+ mCustomDistictWarning(BuildContext context){
+
+       return Container(
+        height: 300.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+        color: Colors.white),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 150.0,
+                    ),
+                    Container(
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
+                         gradient: LinearGradient(
+                              stops: [0.2,4],
+                              colors: 
+                              [
+                                Color(0xFF0C375B),
+                                Color(0xFF176DB5)
+                              ],
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft),),
+
+                    ),
+                    Positioned(
+                      top: 50.0,
+                      left: 94.0,
+                      child: Container(
+                        height: 90,
+                        width: 90,
+                        padding: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(45),
+                          
+                          // border: Border.all(
+                          //   color: Colors.white,
+                          //   style: BorderStyle.solid,
+                          //   width: 2.0,
+                          // ),
+                          image: DecorationImage(
+                            image: AssetImage("asset/img/logo.png"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text("Please Select a District.",
+                  style: TextStyle(
+                    color: Color(0xFF0C375B),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20.0,
+                    fontFamily: 'Gilroy-light'
+                  ),
+                  
+                  ),),
+                  SizedBox(height: 25.0,),
+                  Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[         
+                RaisedButton(
+                  color:Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () {
+                      Navigator.of(context).pop();
+                      },   
+                      
+                  child: Text ( "Yes", style :TextStyle(
+                  color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+                  ],
+                ), 
+              ],
+          ),
+        ),
+      );
+
+
+    }
+
+
+
+
+
+
 
 }
