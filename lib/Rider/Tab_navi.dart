@@ -1,4 +1,5 @@
 import 'package:WhereTo/Rider/rider_dash.dart';
+import 'package:WhereTo/Rider/rider_inbox.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_viewtransac.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,8 @@ class TabNavigator extends StatelessWidget {
       child = RiderDash();
     else if(tabItem == "Transaction")
       child = RiderTransaction();
+    else if(tabItem == "Inbox")
+      child = InboxRider();  
     
     return Navigator(
       key: navigatorKey,

@@ -4,6 +4,7 @@ import 'package:WhereTo/AnCustom/dialogHelp.dart';
 import 'package:WhereTo/AnCustom/restaurant_front.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/designbuttons.dart';
+import 'package:WhereTo/modules/OtherFeatures/trans_port.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/static_viewRest.dart';
@@ -117,7 +118,21 @@ class _Profile extends State<Profile> {
                                 },
                               ),
                             ),
-                          ): Container();
+                          ): Container(
+                            // child: Center(
+                            //   child: Padding(
+                            //     padding: const EdgeInsets.all(20.0),
+                            //     child: Container(
+                            //         height: 300,
+                            //         width: MediaQuery.of(context).size.width,
+                            //         decoration: BoxDecoration(
+                            //           image: DecorationImage(
+                            //             image: AssetImage("asset/img/nosearch.png"))
+                            //         ),
+                            //     ),
+                            //   ),
+                            // ),
+                          );
                         },
                       );
 
@@ -329,12 +344,61 @@ class _Profile extends State<Profile> {
                                    ),
                                    
                                    Padding(
-                                      padding: const EdgeInsets.only(top: 15,left: 50,right: 50),
+                                      padding: const EdgeInsets.only(top: 15,
+                                      left: 70,
+                                      // right: 50
+                                      ),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          
+                                          GestureDetector(
+                                            onTap: (){
+                                               Navigator.pushReplacement(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => UserSoloTransport()));
+                                            },
+                                            child: Container(
+                                              height: 40,
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.white
+                                              ),
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.list,
+                                                  color: Color(0xFF0C375B),
+
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: (){
+                                              Navigator.pushReplacement(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => UserSoloTransport()));
+                                            },
+                                            child: Container(
+                                              height: 40,
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.white
+                                              ),
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.directions_transit,
+                                                  color: Color(0xFF0C375B),
+
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+
                                           RaisedButton(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -577,6 +641,22 @@ class _Profile extends State<Profile> {
                      ),
                    ),
                    SizedBox(height: 15.0,),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 20,right: 20),
+                    //   child: Container(
+                    //     width: MediaQuery.of(context).size.width,
+                    //     child: Text("Other",
+                    //     style: TextStyle(
+                    //           color:Color(0xFF0C375B),
+                    //           fontWeight: FontWeight.w800,
+                    //               fontSize: 12.0,
+                    //               fontFamily: 'Gilroy-light' 
+                    //     ),),
+                    //   ),
+                    // ),
+                    // SizedBox(height: 5.0,),
+
+
                 ],
               ),
             ),

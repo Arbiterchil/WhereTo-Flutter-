@@ -212,6 +212,8 @@ var idgetter;
         isActive: true,
         state: StepState.editing,
         content: MShowStep(),),
+
+
          Step(
         title: const Text("Deliver",
         style: TextStyle(
@@ -222,18 +224,21 @@ var idgetter;
         isActive: true,
         state: StepState.complete,
         
-        content: Column(
+        content: Stack(
          children: <Widget>[
-           SizedBox(height: 15.0,),
-           Container(
-                      height: 200.0,
-                      width: 200.0,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF0C375B),
-                      ),
-                      child: Text("2"),
-              ),
-              SizedBox(height: 15.0,),
+           Align(
+             alignment: Alignment.topCenter,
+             child: Container(
+                        height: 300.0,
+                        width: 300.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("asset/img/deliveryProcess.png"))
+                          // color: Color(0xFF0C375B),
+                        ),
+                        // child: Text("2"),
+                ),
+           ),
          ], 
         )),
          Step(
@@ -245,16 +250,19 @@ var idgetter;
         ),
         isActive: true,
         state: StepState.complete,
-        content: Column(
+        content: Stack(
+          alignment: Alignment.topCenter,
          children: <Widget>[
-           SizedBox(height: 15.0,),
            Container(
-                      height: 200.0,
-                      width: 200.0,
-                      decoration: eCBox,
-                      child: Text("3"),
+                      height: 300.0,
+                      width: 300.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("asset/img/doneprocess.png"))
+                        // color: Color(0xFF0C375B),
+                      ),
+                      // child: Text("2"),
               ),
-              SizedBox(height: 15.0,),
          ], 
         ))
 
@@ -655,7 +663,7 @@ var checkVal = localStorage.getBool('check');
                               height: 450.0,
                               child: Stepper(
                                   steps: steps,
-                                  type: stepperType,
+                                  // type: stepperType,
                                   currentStep: currentStep,
                                   onStepContinue: nextSteps,
                                   onStepTapped: (step) => goTo(step),
@@ -690,7 +698,7 @@ var checkVal = localStorage.getBool('check');
                           
                         ),
                         
-                      SizedBox(height: 20.0,),
+                      SizedBox(height: 80.0,),
                     _viewMenus(),
                       ],
                     
