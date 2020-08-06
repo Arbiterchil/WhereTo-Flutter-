@@ -16,11 +16,10 @@ StreamSubscription periodicSub;
  
 
     Future<void>getMenuTransaction(var id) async{
-    final response = await ApiCall().getData('/viewCurrentOrders/$id');
+    final response = await ApiCall().getData('/viewUserOrders/$id');
     final List<GetViewOrders> transaction = getViewOrdersFromJson(response.body);
-    periodicSub = new Stream.periodic(Duration(seconds: 1), (v) =>v).listen((event) {
     sinkApi.add(transaction);
-    });
+  
 
   }
   

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-void showDial(BuildContext context){
+void showDial(BuildContext context, String text){
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -11,11 +11,11 @@ void showDial(BuildContext context){
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: mCustom(context),
+      child: mCustom(context, text),
     ); 
     },);
 }
- mCustom(BuildContext context){
+ mCustom(BuildContext context, String text){
 
        return Container(
         height: 300.0,
@@ -74,7 +74,7 @@ void showDial(BuildContext context){
                 
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: Text("Sorry you have a pending Transaction order on this Restaurant.",
+                  child: Text(text,
                   style: TextStyle(
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,

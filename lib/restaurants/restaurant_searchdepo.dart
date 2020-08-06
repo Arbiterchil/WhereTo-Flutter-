@@ -1,20 +1,14 @@
 import 'dart:convert';
-
-import 'package:WhereTo/AnCustom/dialog_showGlobal.dart';
 import 'package:WhereTo/AnCustom/restaurant_front.dart';
-import 'package:WhereTo/Transaction/MyOrder/bloc.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
-import 'package:WhereTo/restaurants/restaurant.dart';
-import 'package:WhereTo/restaurants/restaurant_del.dart';
 import 'package:WhereTo/restaurants/searchRestaurant.dart';
 import 'package:flutter/material.dart';
+import 'package:ntp/ntp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../designbuttons.dart';
+import 'package:intl/intl.dart';
 
 class SearchDepo extends StatefulWidget {
   @override
@@ -204,12 +198,15 @@ class _SearchDepoState extends State<SearchDepo> {
                                 var user = json.decode(userjson);
                                 var restaurant;
                                 var status;
-                                var insideResto =snapshot.data[index].restaurantName;
-                                var isTrue =false;
+                                var insideResto =
+                                    snapshot.data[index].restaurantName;
+                                var isTrue = false;
                                 Map<String, dynamic> temp;
-                                List<dynamic> converted =[];
-                                final response = await ApiCall().getData('/viewCurrentOrders/${user['id']}');
-                                final List<GetViewOrders> transaction =getViewOrdersFromJson(response.body);
+                                List<dynamic> converted = [];
+                                final response = await ApiCall().getData(
+                                    '/viewCurrentOrders/${user['id']}');
+                                final List<GetViewOrders> transaction =
+                                    getViewOrdersFromJson(response.body);
                                 transaction.forEach((element) {
                                   restaurant = element.restaurantName;
                                   status = element.status;
@@ -219,32 +216,31 @@ class _SearchDepoState extends State<SearchDepo> {
                                   };
                                   converted.add(temp);
                                 });
-                                
-                                for(var i =0; i < converted.length; i ++){
-                                  if(insideResto == converted[i]['restaurant'] && converted[i]['status'] <4){
-                                    isTrue =true;
+
+                                for (var i = 0; i < converted.length; i++) {
+                                  if (insideResto ==
+                                          converted[i]['restaurant'] &&
+                                      converted[i]['status'] < 4) {
+                                    isTrue = true;
                                     break;
                                   }
                                 }
-                                if(isTrue){
+                                if (isTrue) {
                                   print("Exists");
-                                  showDial(context);
-                                }else{
-                                  print("Not Exists");
-                                  Navigator.pushReplacement(context,new MaterialPageRoute(
-                                  builder: (context) => ListStactic(
-                                              restauID: snapshot.data[index].id
-                                                  .toString(),
-                                           nameRestau: snapshot
-                                          .data[index].restaurantName
-                                          .toString(),
-                                  )));
+                                  showDial(context,"Sorry you have a pending Transaction order on this Restaurant.");
+                                } else {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) => ListStactic(
+                                                restauID: snapshot
+                                                    .data[index].id
+                                                    .toString(),
+                                                nameRestau: snapshot
+                                                    .data[index].restaurantName
+                                                    .toString(),
+                                              )));
                                 }
-                                
-                                  
-                                  
-                                
-                                
                               },
                             ),
                           ),

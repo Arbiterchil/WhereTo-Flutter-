@@ -189,7 +189,7 @@ class _MyOrderState extends State<MyOrder> {
             height: 25.0,
             width: 25.0,
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
               strokeWidth: 4.0,
             ),
           ),
