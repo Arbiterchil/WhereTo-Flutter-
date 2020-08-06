@@ -125,7 +125,7 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   Widget xStreamAsshole() {
-    return StreamBuilder<List<GetViewOrders>>(
+    return StreamBuilder<List<ViewUserOrder>>(
       stream: bloc.stream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {

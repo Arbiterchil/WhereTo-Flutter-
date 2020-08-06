@@ -4,7 +4,7 @@ import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 
 class Response{
 
-  final List<GetViewOrders> getview;
+  final List<ViewUserOrder> getview;
   final String error;
 
   Response(this.getview, this.error);

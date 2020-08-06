@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final getViewOrders = getViewOrdersFromJson(jsonString);
+//     final viewUserOrder = viewUserOrderFromJson(jsonString);
 
 import 'dart:convert';
 
-List<GetViewOrders> getViewOrdersFromJson(String str) => List<GetViewOrders>.from(json.decode(str).map((x) => GetViewOrders.fromJson(x)));
+List<ViewUserOrder> viewUserOrderFromJson(String str) => List<ViewUserOrder>.from(json.decode(str).map((x) => ViewUserOrder.fromJson(x)));
 
-String getViewOrdersToJson(List<GetViewOrders> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String viewUserOrderToJson(List<ViewUserOrder> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class GetViewOrders {
-    GetViewOrders({
+class ViewUserOrder {
+    ViewUserOrder({
         this.id,
         this.restaurantName,
         this.address,
@@ -19,19 +19,20 @@ class GetViewOrders {
         this.status,
     });
 
-    int id;
-    String restaurantName;
-    String address;
-    String deliveryAddress;
-    DateTime createdAt;
-    dynamic riderId;
-    int status;
+    final int id;
+    final String restaurantName;
+    final String address;
+    final String deliveryAddress;
+    final DateTime createdAt;
+    final dynamic riderId;
+    final int status;
 
-    factory GetViewOrders.fromJson(Map<String, dynamic> json) => GetViewOrders(
+    factory ViewUserOrder.fromJson(Map<String, dynamic> json) => ViewUserOrder(
         id: json["id"],
         restaurantName: json["restaurantName"],
         address: json["address"],
         deliveryAddress: json["deliveryAddress"],
+        createdAt: DateTime.parse(json["created_at"]),
         riderId: json["riderId"],
         status: json["status"],
     );

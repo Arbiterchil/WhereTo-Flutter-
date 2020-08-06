@@ -192,6 +192,19 @@ class _SearchDepoState extends State<SearchDepo> {
                                   "-" +
                                   snapshot.data[index].closingTime,
                               onTap: () async {
+                                final now = await NTP.now();
+                                  String formatNow =
+                                      DateFormat.jm().format(now);
+                                  DateFormat inputFormat = DateFormat("H:mm");
+                                  DateTime dateTime = inputFormat
+                                      .parse(snapshot.data[index].closingTime);
+                                  String formatClosing =
+                                      DateFormat.jm().format(dateTime);
+                                  int cpTime =
+                                      int.parse(formatNow.substring(0, 1));
+                                  int restoTime =
+                                      int.parse(formatClosing.substring(0, 1));
+                                      print(restoTime);
                                 SharedPreferences local =
                                     await SharedPreferences.getInstance();
                                 var userjson = local.getString('user');
@@ -203,10 +216,10 @@ class _SearchDepoState extends State<SearchDepo> {
                                 var isTrue = false;
                                 Map<String, dynamic> temp;
                                 List<dynamic> converted = [];
-                                final response = await ApiCall().getData(
-                                    '/viewCurrentOrders/${user['id']}');
-                                final List<GetViewOrders> transaction =
-                                    getViewOrdersFromJson(response.body);
+                                final response = await ApiCall()
+                                    .getData('/viewUserOrders/${user['id']}');
+                                final List<ViewUserOrder> transaction =
+                                    viewUserOrderFromJson(response.body);
                                 transaction.forEach((element) {
                                   restaurant = element.restaurantName;
                                   status = element.status;
@@ -226,10 +239,18 @@ class _SearchDepoState extends State<SearchDepo> {
                                   }
                                 }
                                 if (isTrue) {
-                                  print("Exists");
-                                  showDial(context,"Sorry you have a pending Transaction order on this Restaurant.");
+                                  showDial(context,
+                                      "You have a pending Transaction order on this Restaurant.");
                                 } else {
-                                  Navigator.pushReplacement(
+                                  if (formatClosing.contains("PM") &&
+                                      formatNow.contains("PM")) {
+                                    if (cpTime > restoTime) {
+                                      showDial(context,
+                                          "Sorry The Restaurant Close as this moment of Time");
+                                      print("CLOSE");
+                                    } else {
+                                       print("OPEN");
+                                       Navigator.pushReplacement(
                                       context,
                                       new MaterialPageRoute(
                                           builder: (context) => ListStactic(
@@ -240,6 +261,22 @@ class _SearchDepoState extends State<SearchDepo> {
                                                     .data[index].restaurantName
                                                     .toString(),
                                               )));
+                                    }
+                                  }else{
+                                    
+                                     Navigator.pushReplacement(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) => ListStactic(
+                                                restauID: snapshot
+                                                    .data[index].id
+                                                    .toString(),
+                                                nameRestau: snapshot
+                                                    .data[index].restaurantName
+                                                    .toString(),
+                                              )));
+                                  }
+                                 
                                 }
                               },
                             ),

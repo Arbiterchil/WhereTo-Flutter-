@@ -14,11 +14,11 @@ class Repository{
     
      
         final response = await ApiCall().viewTransac('/viewCurrentOrders/3');
-        List<GetViewOrders> riderme = [];
+        List<ViewUserOrder> riderme = [];
         
         final body = json.decode(response.body);
         for (var body in body){
-            GetViewOrders riderViewClass = GetViewOrders
+            ViewUserOrder riderViewClass = ViewUserOrder
           (
             id: body["id"],
             restaurantName: body["restaurantName"],
