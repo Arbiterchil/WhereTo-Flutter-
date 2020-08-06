@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/bara_rang.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,6 +37,7 @@ class _SignupPageState extends State<SignupPage>{
     String default_pick = "Customer";
     int default_number = 1;
      String selectPerson;
+     var idbararangSaika;
     List<MyChoice> picks = [
       MyChoice(numberpick: 1,pickchoice: "Customer"),
       MyChoice(numberpick: 2,pickchoice: "Rider")
@@ -157,7 +159,7 @@ class _SignupPageState extends State<SignupPage>{
             ),
               SizedBox(height: 15.0,),
 
-            Text("District",
+            Text("Barangay",
                     style: eLabelStyle,
                     ),
                     SizedBox(height: 10.0,),
@@ -176,21 +178,48 @@ class _SignupPageState extends State<SignupPage>{
                             child: Icon(Icons.place,color: Colors.white,)),
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
-                            child: DropdownButton(
+                            
+                              child: FutureBuilder<List<Barangays>>(
+                                future: callBarangay(),
+                                builder: (context , snapshot){
+                                   if(snapshot.data == null){
+                    return Container(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    strokeWidth: 3,
+                    
+                  ),
+                ),
+              //             child: Text("Getting All Barangays",
+
+              //             style: TextStyle(
+              //   color: Colors.white,
+              //   fontFamily: 'Gilroy-light',
+              //   fontSize:  16.0,
+              //   fontWeight: FontWeight.normal
+              // ),
+              //         ),
+                        ),
+                    );
+                  }else{
+                    return DropdownButton(
                                   isExpanded: true ,
-                                  hint: Text( "Select District",
+                                  hint: Text(selectPerson != null ? selectPerson : "Select Barangay",
                                   style: TextStyle(
-                                      
-                                      color: Colors.white,
+                                      color: Colors.white,    
                                       fontFamily: 'Gilroy-light'
                                     ),),
                                   dropdownColor:  Color(0xFF0C375B),
                                   icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
                                   
-                                  value: selectPerson,
-                                  items: dataBarangay.map((item) {
-                                  return DropdownMenuItem(
-                                    child: Text(item.toString(),
+                                  value: barangays,
+                                  items: snapshot.data.map(( item)
+                                  
+                                  => DropdownMenuItem<Barangays>(
+                                    child: Text(item.barangayName,
                                     style: TextStyle(
                                       
                                       color: Colors.white,
@@ -198,15 +227,57 @@ class _SignupPageState extends State<SignupPage>{
                                     ),
                                     ),
                                     value: item,
-                                  );
-                                }).toList(),
-                                  onChanged: (item){
+                                
+                                    ),
+                                   ).toList(),
+                                  onChanged: (Barangays item){
                                     setState(() {
-                                      selectPerson = item;
-                                      print(item);
+                                    
+                                     selectPerson = item.barangayName;
+                                     idbararangSaika = item.id;
+
+                                      print(item.id.toString()+"="+item.barangayName);
                                     });
                                   }
-                                  ),
+                                  );
+                  }
+
+
+                                },
+                              ),
+
+
+                            // child: DropdownButton(
+                            //       isExpanded: true ,
+                            //       hint: Text( "Select District",
+                            //       style: TextStyle(
+                                      
+                            //           color: Colors.white,
+                            //           fontFamily: 'Gilroy-light'
+                            //         ),),
+                            //       dropdownColor:  Color(0xFF0C375B),
+                            //       icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
+                                  
+                            //       value: selectPerson,
+                            //       items: dataBarangay.map((Barangays item) {
+                            //       return DropdownMenuItem(
+                            //         child: Text(item.barangayName,
+                            //         style: TextStyle(
+                                      
+                            //           color: Colors.white,
+                            //           fontFamily: 'Gilroy-light'
+                            //         ),
+                            //         ),
+                            //         value: item.barangayName,
+                            //       );
+                            //     }).toList(),
+                            //       onChanged: ( item){
+                            //         setState(() {
+                            //           selectPerson = item;
+                            //           print(item);
+                            //         });
+                            //       }
+                            //       ),
                           ),
                         ],
                       ),
@@ -458,25 +529,44 @@ class _SignupPageState extends State<SignupPage>{
   }
 
   
-    List<dynamic> dataBarangay = List();
+  //   List<Barangays> dataBarangay = List();
 
-    callBarangay() async{
+  //   callBarangay() async{
 
+  //   var respon = await ApiCall().getBararang('/getBarangayList');
+  //   var bararang = json.decode(respon.body);
+    
+  //   // List<String> bararangsaika = [];
+  //   // bararangsaika.add(bararang);
+  //   // print(bararangsaika);
+  //   // print(bararang);
+  //   // return bararang;
+
+  //   setState(() {
+  //     dataBarangay = bararang;
+  //   });
+  //   print(bararang);
+
+  // }
+
+    Barangays barangays;
+
+    Future<List<Barangays>> callBarangay() async{
     var respon = await ApiCall().getBararang('/getBarangayList');
     var bararang = json.decode(respon.body);
-    
-    // List<String> bararangsaika = [];
-    // bararangsaika.add(bararang);
-    // print(bararangsaika);
-    // print(bararang);
-    // return bararang;
+    List<Barangays> bararangsaika = [];
+    for(var body in bararang){
+      Barangays barangays = Barangays(
+        id: body['id'],
+        barangayName: body['barangayName']
+      );
+      bararangsaika.add(barangays);
+    }
+    print(bararangsaika);
+    return bararangsaika;
+    }
 
-    setState(() {
-      dataBarangay = bararang;
-    });
-    print(bararang);
-
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -552,6 +642,7 @@ void _signingIn() async {
         'contactNumber' : ownNumber.text,
         'address' : ownAddress.text,
         'password' : ownpass.text, 
+        'barangayId': idbararangSaika
             };
       var res = await ApiCall().postData(data,'/register');
 

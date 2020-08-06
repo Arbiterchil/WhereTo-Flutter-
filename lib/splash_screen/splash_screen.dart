@@ -47,15 +47,15 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-           gradient: LinearGradient(
-                              stops: [0.2,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter),
+          //  gradient: LinearGradient(
+          //                     stops: [0.2,4],
+          //                     colors: 
+          //                     [
+          //                       Color(0xFF0C375B),
+          //                       Color(0xFF176DB5)
+          //                     ],
+          //                     begin: Alignment.bottomCenter,
+          //                     end: Alignment.topCenter),
         ),
         child:  Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -70,20 +70,20 @@ class _SplashScreenState extends State<SplashScreen> {
                     // decoration: eCBoxDark,
                     decoration: BoxDecoration(
                       // shape: BoxShape.circle,
-                      color: Color(0xFF0C375B),
-                       borderRadius: BorderRadius.circular(110),
-                        boxShadow: [
-                        BoxShadow(
-                          color: Color(0xFF176DB5),
-                          offset: Offset(10, 10),
-                          blurRadius: 10
-                        ),
-                        BoxShadow(
-                          color:  Color(0xFF176DB5),
-                          offset: Offset(-10, -10),
-                          blurRadius: 10
-                        )
-                      ],
+                      // color: Color(0xFF0C375B),
+                      //  borderRadius: BorderRadius.circular(110),
+                      //   boxShadow: [
+                      //   BoxShadow(
+                      //     color: Color(0xFF176DB5),
+                      //     offset: Offset(10, 10),
+                      //     blurRadius: 10
+                      //   ),
+                      //   BoxShadow(
+                      //     color:  Color(0xFF176DB5),
+                      //     offset: Offset(-10, -10),
+                      //     blurRadius: 10
+                      //   )
+                      // ],
 
                     ),
                     child: Container(
