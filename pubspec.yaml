@@ -98,6 +98,14 @@ flutter:
   - asset/img/logo.png
   - asset/img/fb.png
   - asset/img/gmail.png
+  - asset/img/deliveryProcess.png
+  - asset/img/doneprocess.png
+  - asset/img/emptycart.png
+  - asset/img/nosearch.png
+  - asset/img/notifempty.png
+  - asset/img/ongoing.png
+  - asset/img/penalty.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

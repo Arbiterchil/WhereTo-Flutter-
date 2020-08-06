@@ -27,11 +27,12 @@ class _RiderProfileState extends State<RiderProfile> {
 
     String _currentPage = "Profile";
   
-   List<String> pageKeys = ["Profile","Transaction"];
+   List<String> pageKeys = ["Profile","Transaction","Inbox"];
    Map<String,GlobalKey<NavigatorState>> _navigatorKeys =
     {
      "Profile":GlobalKey<NavigatorState>(),
-     "Transaction":GlobalKey<NavigatorState>()
+     "Transaction":GlobalKey<NavigatorState>(),
+     "Inbox":GlobalKey<NavigatorState>()
    };
  int _selectedIndex = 0;
   void _selectTab(String tabItem, int index) {
@@ -89,6 +90,7 @@ void configSignal() async {
           children: <Widget>[
             _buildOffstageNavigator("Profile"),
             _buildOffstageNavigator("Transaction"),
+            _buildOffstageNavigator("Inbox"),
           ],
         ),
         
@@ -124,6 +126,15 @@ void configSignal() async {
               icon: new Icon(Icons.person),
               title: new Text('Edit'),
             ),
+            //  BottomNavigationBarItem(
+            //   icon: new Icon(Icons.directions_railway),
+            //   title: new Text('Trasport'),
+            // ),
+            //  BottomNavigationBarItem(
+            //   icon: new Icon(Icons.swap_horizontal_circle),
+            //   title: new Text('Orders'),
+            // ),
+
         ],
         type: BottomNavigationBarType.fixed,
         ),   
