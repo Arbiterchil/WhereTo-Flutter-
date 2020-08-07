@@ -12,11 +12,11 @@ class _CarouselState extends State<CarouselSex> {
   int cur = 0;
   List img = [
 
-      "asset/img/61338547_p0.png",
-      "asset/img/62512004_p0.png",
-      "asset/img/76134055_p0.png",
-      "asset/img/fbmYkDz.jpg",
-      "asset/img/mWWsAhL.jpg",
+      "asset/img/carousel1.jpg",
+      "asset/img/carousel2.jpg",
+      "asset/img/carousel3.jpg",
+      "asset/img/carousel4.jpg",
+      "asset/img/carousel5.jpg"
   ];
 
    List<T> map<T>(List list, Function handler){
@@ -58,19 +58,26 @@ class _CarouselState extends State<CarouselSex> {
                 items: img.map((index){
                   return Builder(
                     builder:(BuildContext context){
-                      return Container(
-                        
-                        decoration: BoxDecoration(
-                          // border: Border.all(color: Colors.black, width: 5.0),
-                        ),
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 8,right: 8),
                         child: Container(
-                          width: MediaQuery.of(context).size.width,
                           
-                          margin: EdgeInsets.symmetric(horizontal: 0.0),
-                          child: Image.asset(
-                            index,
-                            fit: BoxFit.cover,
-                            ),
+                          decoration: BoxDecoration(
+                            // border: Border.all(color: Colors.black, width: 5.0),
+                          image: DecorationImage(
+                            image: AssetImage(index),
+                            fit: BoxFit.cover) ,
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          ),
+                          // child: Container(
+                          //   width: MediaQuery.of(context).size.width,
+                            
+                          //   margin: EdgeInsets.symmetric(horizontal: 0.0),
+                          //   child: Image.asset(
+                          //     index,
+                          //     fit: BoxFit.cover,
+                          //     ),
+                          // ),
                         ),
                       );
                     });  

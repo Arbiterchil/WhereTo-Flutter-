@@ -17,11 +17,12 @@ class TabUserNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      Widget child ;
-    if(tabItem == "UserProfile")
-      child = Profile();
-    else if(tabItem == "SearchRestaurant")
-      child = SearchDepo();
     
+   if(tabItem == "SearchRestaurant")
+      child = SearchDepo();
+   else if(tabItem == "UserProfile")
+      child = Profile();
+      
     return Navigator(
       key: navigatorKey,
       onGenerateRoute: (routeSettings) {

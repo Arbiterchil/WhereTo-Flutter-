@@ -20,17 +20,26 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:140,
+      height:120,
       decoration: BoxDecoration(
-          gradient:  LinearGradient(
-                              stops: [0.2,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topLeft),
+        color: Color(0xFFF2F2F2),
+          // gradient:  LinearGradient(
+          //                     stops: [0.2,2],
+          //                     colors: 
+          //                     [
+          //                       Color(0xFF176DB5),
+          //                       Color(0xFF0C375B),
+                                
+          //                     ],
+          //                     begin: Alignment.bottomRight,
+          //                     end: Alignment.topLeft),
+                              boxShadow: [
+                             BoxShadow(
+                               color: Colors.black12,
+                               spreadRadius: 4.4,
+                               blurRadius: 4.4
+                             ),
+                           ],
         // image: DecorationImage(
         //   image: AssetImage("asset/img/bgback.png",
         //   ),
@@ -44,15 +53,17 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
             Align(
               alignment: Alignment.topLeft,
               child: Container(
-                height: 80,
+                // height: MediaQuery.of(context).size.height,
+                height: 110,
                 width: 170,
-                decoration: BoxDecoration(
-                  color: Color(0xFF0C375B),
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(50),
-                    topLeft: Radius.circular(20)
-                  ),
-                ),
+                // decoration: BoxDecoration(
+                //   color: Color(0xFF0C375B),
+                //   borderRadius: BorderRadius.only(
+                //     bottomRight: Radius.circular(50),
+                //     topLeft: Radius.circular(20),
+                //     bottomLeft: Radius.circular(10)
+                //   ),
+                // ),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
@@ -60,7 +71,7 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
                       children: <Widget>[
                         Text(widget.menuName,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Color(0xFF0C375B),
                       fontSize: 14.0,
                       letterSpacing: 1,
                       fontFamily: 'Gilroy-ExtraBold'
@@ -69,10 +80,28 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
                     SizedBox(height: 5,),
                     Text(widget.menuDescription,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Color(0xFF0C375B),
                       fontSize: 12.0,
                       fontFamily: 'Gilroy-light'
                     ),
+                    ),
+                    SizedBox(height: 20,),
+                    Container(
+                      height: 30,
+                      width: 90,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF0C375B),
+                        borderRadius: BorderRadius.all(Radius.circular(30))
+                      ),
+                      child: Center(
+                        child: Text(widget.fixprice,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.0,
+                          fontFamily: 'Gilroy-light'
+                        ),
+                        ),
+                      ),
                     ),
                       ],
                     ),
@@ -82,43 +111,40 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
             ),
             Align(
               alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5,right: 20),
+              // child: Padding(
+              //   padding: const EdgeInsets.only(top: 5,right: 20),
                 child: Container(
-                  height: 115,
-                  width: 115,
+                  // height: 90,
+                  height: MediaQuery.of(context).size.height,
+                  width: 120,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20)
+                      ,
+                      topRight: Radius.circular(20)
+                    ),
                     image: DecorationImage(
-                      image: AssetImage("asset/img/image.jpg"),
+                      image: AssetImage("asset/img/noodles.jpg"),
                       fit: BoxFit.cover)
                   ),
                 ),
-                ),
+                // ),
             ),
             Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                height: 30,
-                width: 90,
-                decoration: BoxDecoration(
-                  color:  Color(0xFF0C375B),
-                  borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(50),
-                  bottomLeft: Radius.circular(20)
-                  ),
-                ),
-                  child: Center(
-                    child: Text(widget.fixprice,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15.0,
-                      fontFamily: 'Gilroy-light'
-                    ),
+              alignment: Alignment.topRight,
+              child: Padding(
+                  padding: const EdgeInsets.only(right: 10 ,top: 5),
+                  child: Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage("asset/img/heartIcon.jpg")
+                      ),
                     ),
                   ),
-            
-              ),
+                  ),
             ),
             Align(
               alignment: Alignment.bottomRight,
@@ -127,8 +153,8 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
                   onTap: widget.onTap,
                    splashColor: Colors.blue,
                        child: Container(
-                       width: 70,
-                        height: 40,
+                       width: 60,
+                        height: 30,
                         decoration: BoxDecoration(  
                          borderRadius: BorderRadius.only(
                            topLeft: Radius.circular(40),
@@ -140,32 +166,32 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
                      ),    
             ),
 
-            Align(
-              alignment: Alignment.topRight,
+            // Align(
+            //   alignment: Alignment.topRight,
 
-                       child: Container(
-                       width: 120,
-                        height: 20,
-                        decoration: BoxDecoration(  
-                         borderRadius: BorderRadius.only(
-                           topRight: Radius.circular(20),
-                           bottomLeft: Radius.circular(10)
-                         ),
-                         color: Color(0xFF0C375B)),
-                        child: Center(
-                          child: Text(widget.hugs,
-                          style: TextStyle(
-                                color: Colors.white,
-                        fontSize: 15.0,
-                        fontFamily: 'Gilroy-light'
-                      ),
+            //            child: Container(
+            //            width: 120,
+            //             height: 20,
+            //             decoration: BoxDecoration(  
+            //              borderRadius: BorderRadius.only(
+            //                topRight: Radius.circular(20),
+            //                bottomLeft: Radius.circular(10)
+            //              ),
+            //              color: Color(0xFF0C375B)),
+            //             child: Center(
+            //               child: Text(widget.hugs,
+            //               style: TextStyle(
+            //                     color: Colors.white,
+            //             fontSize: 15.0,
+            //             fontFamily: 'Gilroy-light'
+            //           ),
                           
-                          ),
-                        )
+            //               ),
+            //             )
                         
-                        ),
+            //             ),
                        
-            ),
+            // ),
 
           ],
         ),

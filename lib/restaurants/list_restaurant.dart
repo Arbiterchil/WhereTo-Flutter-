@@ -197,8 +197,8 @@ class _ListStacticState extends State<ListStactic>
                                                                                     child: MenuBoxRestaurant(
                                                                                       menuName:data.data[index].menuName ,
                                                                                       menuDescription: data.data[index].description,
-                                                                                      fixprice:  "₱" +data.data[index].price.toString(),
-                                                                                      hugs:"Best Seller" , 
+                                                                                      fixprice:  "₱ " +data.data[index].price.toString()+".00",
+                                                                                      
                                                                                            
                                                                                       onTap: (){
                                                                                          BlocProvider.of<

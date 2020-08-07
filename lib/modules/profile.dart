@@ -1,30 +1,16 @@
 import 'dart:convert';
-import 'package:WhereTo/AnCustom/alert_dialog.dart';
-import 'package:WhereTo/AnCustom/dialogHelp.dart';
-import 'package:WhereTo/AnCustom/restaurant_front.dart';
+import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/designbuttons.dart';
+
 import 'package:WhereTo/modules/OtherFeatures/trans_port.dart';
-import 'package:WhereTo/modules/login_page.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/static_viewRest.dart';
-import 'package:WhereTo/restaurants/carousel_rest.dart';
-import 'package:WhereTo/restaurants/featured_rest.dart';
-import 'package:WhereTo/restaurants/list_restaurant.dart';
-import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:WhereTo/restaurants/searchRestaurant.dart';
-import 'package:flutter/services.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import '../bloc.Navigation_bloc/navigation_bloc.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../styletext.dart';
 
 // class Profile extends StatefulWidget with NavigationStates{
 //   @override
@@ -47,110 +33,19 @@ class _Profile extends State<Profile> {
   void initState() {
     _getUserInfo();
     casting = false;
+<<<<<<< HEAD
 
     // configSignal();
     getService();
     getPermission();
+=======
+    super.initState();
+>>>>>>> 8acd245b5b77d47dbb58bd38071d1a95b38d2d30
     getLocation();
     super.initState();
     
     
   }
-
-  void _showodalShit(){
-
-    showModalBottomSheet(
-      context : context,
-      backgroundColor: Colors.transparent,
-      builder:(builder){
-
-      return new Padding(
-          padding: EdgeInsets.only(left: 20.0,right: 20.0 ,top: 20.0),
-          child: Container(
-            height: 700.0,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: Color(0xFFF2F2F2F2),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30)
-              ),
-            ),
-            child: FutureBuilder(
-              future: getRest(),
-              builder: (BuildContext context, AsyncSnapshot snapshot){
-                if(snapshot.data == null){
-                  return Container(
-                    child: Center(
-                      child: Text("Restaurants Searching..",
-                      style: TextStyle(
-                        color: Colors.black,
-                                  fontFamily: 'Gilroy-light',
-                                  fontStyle: FontStyle.normal
-                      ),
-                      ),
-                    ),
-                  );
-                }else{
-
-                    return new ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context , int index){
-                          return snapshot.data[index].restaurantName.contains(searchit)
-                          |snapshot.data[index].address.contains(searchit) ? GestureDetector(
-                            onTap: (){
-   
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: RestaurantFront(
-                                image: "asset/img/${snapshot.data[index].restaurantName}.png",
-                                restaurantName:snapshot.data[index].restaurantName ,
-                                restaurantAddress: snapshot.data[index].address,
-                                openAndclose: snapshot.data[index].openTime+"-"+snapshot.data[index].closingTime,
-                                onTap: (){
-                                  Navigator.push(context,
-                                  new MaterialPageRoute(builder: (context) 
-                                  => ListStactic(
-                                      restauID: snapshot.data[index].id.toString(),
-                                     nameRestau: snapshot.data[index].restaurantName.toString(),
-                                    )
-                                  )
-                                  ); 
-                                },
-                              ),
-                            ),
-                          ): Container(
-                            // child: Center(
-                            //   child: Padding(
-                            //     padding: const EdgeInsets.all(20.0),
-                            //     child: Container(
-                            //         height: 300,
-                            //         width: MediaQuery.of(context).size.width,
-                            //         decoration: BoxDecoration(
-                            //           image: DecorationImage(
-                            //             image: AssetImage("asset/img/nosearch.png"))
-                            //         ),
-                            //     ),
-                            //   ),
-                            // ),
-                          );
-                        },
-                      );
-
-                }
-
-
-
-              },
-            ),
-          ),
-      );
-
-    });
-
-  } 
 
   void _getUserInfo() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -371,68 +266,69 @@ class _Profile extends State<Profile> {
                                        ],
                                      ),
                                    ),
-                                   
                                    Padding(
                                       padding: const EdgeInsets.only(top: 35,
-                                      left: 70,
+                                      left: 40,
                                       // right: 50
                                       ),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          GestureDetector(
-                                            onTap: (){
-                                               Navigator.pushReplacement(
-        context,
-        new MaterialPageRoute(
-            builder: (context) => UserSoloTransport()));
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.white
-                                              ),
-                                              child: Center(
-                                                child: Icon(
-                                                  Icons.list,
-                                                  color: Color(0xFF0C375B),
+        //                                   GestureDetector(
+        //                                     onTap: (){
+        //                                        Navigator.pushReplacement(
+        // context,
+        // new MaterialPageRoute(
+        //     builder: (context) => UserSoloTransport()));
+        //                                     },
+        //                                     child: Container(
+        //                                       height: 40,
+        //                                       width: 40,
+        //                                       decoration: BoxDecoration(
+        //                                         shape: BoxShape.circle,
+        //                                         color: Colors.white
+        //                                       ),
+        //                                       child: Center(
+        //                                         child: Icon(
+        //                                           Icons.list,
+        //                                           color: Color(0xFF0C375B),
 
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: (){
-                                              Navigator.pushReplacement(
-        context,
-        new MaterialPageRoute(
-            builder: (context) => UserSoloTransport()));
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.white
-                                              ),
-                                              child: Center(
-                                                child: Icon(
-                                                  Icons.directions_transit,
-                                                  color: Color(0xFF0C375B),
+        //                                         ),
+        //                                       ),
+        //                                     ),
+        //                                   ),
+        //                                   GestureDetector(
+        //                                     onTap: (){
+        //                                       Navigator.pushReplacement(
+        // context,
+        // new MaterialPageRoute(
+        //     builder: (context) => UserSoloTransport()));
+        //                                     },
+        //                                     child: Container(
+        //                                       height: 40,
+        //                                       width: 40,
+        //                                       decoration: BoxDecoration(
+        //                                         shape: BoxShape.circle,
+        //                                         color: Colors.white
+        //                                       ),
+        //                                       child: Center(
+        //                                         child: Icon(
+        //                                           Icons.directions_transit,
+        //                                           color: Color(0xFF0C375B),
 
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+        //                                         ),
+        //                                       ),
+        //                                     ),
+        //                                   ),
 
                                           RaisedButton(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    onPressed: (){},                
-                    child: Text ( "EDIT PROFILE", style :TextStyle(
+                    onPressed: (){
+                      UserDialog_Help.exit(context);
+                    },                
+                    child: Text ( "LOG OUT", style :TextStyle(
                     color: Color(0xFF0C375B),
                                 fontWeight: FontWeight.w700,
                                 fontSize: 12.0,
@@ -445,281 +341,17 @@ class _Profile extends State<Profile> {
                                ),
                              ),
                        ),
-                //         Padding(
-                //           padding: const EdgeInsets.only(top:210),
-                //           child: Divider(
-                //   height: 1.0,
-                //   thickness: 1,
-                  
-                //   color: Colors.white,
-                //   indent: 90.0,
-                //   endIndent: 90.0,
-                // ),
-                //         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 220,left: 25.0,right: 25.0),
-                        //   child: Container(
-                        //     width: MediaQuery.of(context).size.width,
-                        //     child: Column(
-                        //       crossAxisAlignment: CrossAxisAlignment.start,
-                        //       mainAxisAlignment: MainAxisAlignment.start,
-                        //       textDirection: TextDirection.ltr,
-                        //       children: <Widget>[
-                        //        Row(
-                        //          crossAxisAlignment: CrossAxisAlignment.start,
-                        //          children: <Widget>[
-                        //             Text("What Do You",
-                        //         style :TextStyle(
-                        //         color: Colors.white,
-                        //           fontWeight: FontWeight.w700,
-                        //           fontSize: 22.0,
-                        //           fontFamily: 'Gilroy-light'
-                        // ),),
-                        // SizedBox(width: 5.0,),
-                        //  Text("Crave?",
-                        //         style :TextStyle(
-                        //         color: Colors.blue,
-                        //         // Color(0xFF176DB5),
-                        //           fontWeight: FontWeight.bold,
-                        //           fontSize: 22.0,
-                        //           fontFamily: 'Gilroy-ExtraBold'
-                        // ),),
-                        //          ],
-                        //        ),
-                        // SizedBox(height: 20.0,),
-                        //        Container(
-                        //          width: MediaQuery.of(context).size.width,
-                        //          height: 40.0,
-                        //          decoration: BoxDecoration(
-                        //            borderRadius: BorderRadius.circular(50),
-                        //            color: Colors.white
-                        //          ),
-                        //          child: TextField(
-                        //            cursorColor: Color(0xFF0C375B),
-                        //       style: TextStyle(
-                        //           color: Colors.black,
-                        //           fontFamily: 'Gilroy-light',
-                        //           fontStyle: FontStyle.normal
-                        //       ),
-                        //       decoration: InputDecoration(
-                        //           border: InputBorder.none,
-                        //           contentPadding: const EdgeInsets.only(top:7.0,),
-                        //           prefixIcon: Icon(
-                        //             Icons.search,
-                        //             color:  Color(0xFF0C375B),
-                        //           ),
-                        //           hintText: "Search",
-                        //       ),
-                        //       textInputAction: TextInputAction.go,
-                        //       onSubmitted: (input){
-                        //           setState(() {
-                        //             searchit = input;
-                        //             print(searchit);
-                        //             _showodalShit();
-                        //           });
-                        //       },
-                        //       // onTap: _showodalShit,
-                        //     ),
-                        //        )
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
-                    SizedBox(height: 30.0,),
-                   Padding(
-                      padding: const EdgeInsets.only(left: 20,right: 20),
-                      child: Container(
-                        width: 120,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF0C375B),
-                          borderRadius: BorderRadius.all(Radius.circular(40))
-                        ),
-                        child: Center(
-                          child: Text("Popular Fast Food",
-                          style: TextStyle(
-                                color:Colors.white,
-                                fontWeight: FontWeight.bold,
-                                    fontSize: 12.0,
-                                    fontFamily: 'Gilroy-light' 
-                          ),),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5.0,),
-                    Divider(
-                  height: 1.0,
-                  thickness: 1,
-                  color: Color(0xFF0C375B),
-                  indent: 20.0,
-                  endIndent: 60.0,
-                ),
-                   SizedBox(height: 8.0,),
-
-                   Padding(
-                     padding: const EdgeInsets.only(left: 10,right: 10),
-                     child: NewRestaurantViewFeatured(),
-                   ),
-                  //  Padding(
-                  //    padding: const EdgeInsets.only(left: 10,right: 10),
-                  //    child: Container(
-                  //      width: MediaQuery.of(context).size.width,
-                  //      child: Stack(
-                  //        children: <Widget>[
-                  //          Align(
-                  //            alignment: Alignment.centerRight,
-                  //            child:  RaisedButton(
-                  //   color: Color(0xFF0C375B),
-                  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  //   onPressed: (){},                
-                  //   child: Text ( "Show More...", style :TextStyle(
-                  //   color: Colors.white,
-                  //               fontWeight: FontWeight.w700,
-                  //               fontSize: 12.0,
-                  //               fontFamily: 'OpenSans'
-                  // ),),),
-                  //          ),
-                  //        ],
-                  //      ),
+                   SizedBox(height: 40,),
+                  //  GridView(
+                  //    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                  //    crossAxisCount: Orientation.portrait == Orientation.portrait ? 2 : 3),
+                  //    children: <Widget>[
+                      
+                  //    ],
+                     
                   //    ),
-                  //  ),
-                   SizedBox(height: 10.0,),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20,right: 20),
-                      child: Container(
-                       width: 180,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF0C375B),
-                          borderRadius: BorderRadius.all(Radius.circular(40))
-                        ),
-                        child: Center(
-                          child: Text("Popular Featured Restaurants",
-                          style: TextStyle(
-                                color:Colors.white,
-                                fontWeight: FontWeight.w800,
-                                    fontSize: 12.0,
-                                    fontFamily: 'Gilroy-light' 
-                          ),),
-                        ),
-                      ),
-                    ),
-                //     Divider(
-                //   height: 1.0,
-                //   thickness: 1,
-                //   color: Color(0xFF0C375B),
-                //   indent: 90.0,
-                //   endIndent: 90.0,
-                // ), 
-                SizedBox(height: 5.0,),
-                   CarouselSex(),
-                  SizedBox(height: 10.0,),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20,right: 20),
-                      child: Container(
-                       width: 150,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF0C375B),
-                          borderRadius: BorderRadius.all(Radius.circular(40))
-                        ),
-                        child: Center(
-                          child: Text("Most Popular Restaurants",
-                          style: TextStyle(
-                                color:Colors.white,
-                                fontWeight: FontWeight.w800,
-                                    fontSize: 12.0,
-                                    fontFamily: 'Gilroy-light' 
-                          ),),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5.0,),
-                    Divider(
-                  height: 3.0,
-                  thickness: 2,
-                  color: Color(0xFF0C375B),
-                  indent: 20.0,
-                  endIndent: 60.0,
-                ),
-                   SizedBox(height: 8.0,),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20,right: 20),
-                      child: Container(
-                        height: 250,
-                        width: MediaQuery.of(context).size.width,
-                        child: ListView(
-                          children: <Widget>[
-                            StaticviewsRestaurant(
-                              image: "asset/img/app.jpg",
-                              restauratname: "Chowking",
-                              address: "National Highway",
-                              openOn: "Weekly",
-                            ),
-                             StaticviewsRestaurant(
-                              image: "asset/img/fbmYkDz.jpg",
-                              restauratname: "Jollibee",
-                              address: "National Highway",
-                              openOn: "Weekly",
-                            ),
-                             StaticviewsRestaurant(
-                              image: "asset/img/mWWsAhL.jpg",
-                              restauratname: "Mc Donald's",
-                              address: "Rizal Street",
-                              openOn: "Weekly",
-                            ),
-                             StaticviewsRestaurant(
-                              image: "asset/img/76134055_p0.png",
-                              restauratname: "Penongs",
-                              address: "Rizal Street",
-                              openOn: "Weekly",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 15.0,),
-                  //     Padding(
-                  //    padding: const EdgeInsets.only(left: 10,right: 10),
-                  //    child: Container(
-                  //      width: MediaQuery.of(context).size.width,
-                  //      child: Stack(
-                  //        children: <Widget>[
-                  //          Align(
-                  //            alignment: Alignment.centerRight,
-                  //            child:  RaisedButton(
-                  //   color: Color(0xFF0C375B),
-                  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  //   onPressed: (){},                
-                  //   child: Text ( "Show More...", style :TextStyle(
-                  //   color: Colors.white,
-                  //               fontWeight: FontWeight.w700,
-                  //               fontSize: 12.0,
-                  //               fontFamily: 'OpenSans'
-                  // ),),),
-                  //          ),
-                  //        ],
-                  //      ),
-                  //    ),
-                  //  ),
-                   SizedBox(height: 15.0,),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 20,right: 20),
-                    //   child: Container(
-                    //     width: MediaQuery.of(context).size.width,
-                    //     child: Text("Other",
-                    //     style: TextStyle(
-                    //           color:Color(0xFF0C375B),
-                    //           fontWeight: FontWeight.w800,
-                    //               fontSize: 12.0,
-                    //               fontFamily: 'Gilroy-light' 
-                    //     ),),
-                    //   ),
-                    // ),
-                    // SizedBox(height: 5.0,),
-
 
                 ],
               ),

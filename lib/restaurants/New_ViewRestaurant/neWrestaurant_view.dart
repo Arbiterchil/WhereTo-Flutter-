@@ -97,7 +97,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                    return Column(
                      children: <Widget>[
                        NewRestaurantBox(
-                         image: "asset/img/${nf[index].restaurantName}.png",
+                         image: "asset/img/${nf[index].restaurantName}.jpg",
                          restaurantName:nf[index].restaurantName ,
                          address: nf[index].address,
                          onTap: (){},
