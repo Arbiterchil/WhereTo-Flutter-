@@ -153,8 +153,15 @@ class _TransactionListState extends State<TransactionList> {
                                           height: 120,
                                           width: MediaQuery.of(context).size.width,
                                           decoration: BoxDecoration(
-                                            color: Color(0xFF0C375B),
-                                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                                            color: Color(0xFFF2F2F2),
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            boxShadow: [
+                             BoxShadow(
+                               color: Colors.black12,
+                               spreadRadius: 4.4,
+                               blurRadius: 4.4
+                             ),
+                           ],
                                           ),
                                           child: InkWell(
                                             onLongPress: () {
@@ -169,76 +176,62 @@ class _TransactionListState extends State<TransactionList> {
                                                       alignment: Alignment.bottomLeft,
                                                       child: Padding(
                                                         padding: EdgeInsets.only(
-                                                            top: 5),
+                                                            top: 5,bottom: 20,left: 5),
                                                         child: Container(
+                                                          height: 40,
                                                           width: 100,
                                                           padding: EdgeInsets
                                                               .symmetric(
                                                             vertical: 20 / 4,
                                                           ),
                                                           decoration: BoxDecoration(
-                                                              color: Colors.grey,
-                                                              borderRadius: BorderRadius.only(
-                                                                  bottomLeft: Radius
-                                                                      .circular(
-                                                                          10),
-            
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          20))),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 15),
-                                                            child: Text(
-                                                              "₱" +
-                                                                  snapshot[index]
-                                                                      .price
-                                                                      .toString(),
-                                                              style: GoogleFonts.roboto(
-                                                                  color:Color(0xFF0C375B),
-                                                                  letterSpacing:
-                                                                      1,
-                                                                  fontSize: 20,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                          ),
+                                                              color: Color(0xFF0C375B),
+                                                              borderRadius: BorderRadius.all(Radius.circular(30)
+                                                                  )),
+                                                          
+                                                            child: Center(
+                                                              child: Text(
+                                                                "₱ " +
+                                                                    snapshot[index]
+                                                                        .price
+                                                                        .toString()+".00",
+                                                                style: GoogleFonts.roboto(
+                                                                    color:Colors.white,
+                                                                    letterSpacing:
+                                                                        1,
+                                                                    fontSize: 16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                            ),
+                                                              ),
                                                             ),
-                                                          ),
+                                                          
                                                         ),
                                                       ),
                                                     ),
                                                   Align(
                                                     alignment: Alignment.topRight,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(top:10,right: 20),
+                                                    
                                                       child:Container(
-                                                            width: 70,
-                                                            height: 70,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              shape: BoxShape
-                                                                  .circle,
-                                                            
-                                                            ),
-                                                            
+                                                            width: 120,
+                                                            height: MediaQuery.of(context).size.width,
+ 
                                                               child: Container(
                                                                   decoration: BoxDecoration(
-                                                                      shape: BoxShape
-                                                                          .circle),
-                                                                  child:
-                                                                      Container(
-                                                                    child:
-                                                                        CircleAvatar(
-                                                                      backgroundImage:
-                                                                          AssetImage(
-                                                                              "asset/img/app.jpg"),
-                                                                    ),
+                                                            borderRadius: BorderRadius.only(
+                                                              bottomRight: Radius.circular(20)
+                                                              ,
+                                                              topRight: Radius.circular(20)
+                                                            ),
+                                                            image: DecorationImage(
+                                                              image: AssetImage("asset/img/noodles.jpg"),
+                                                              fit: BoxFit.cover)
+                  
                                                                   )),
                                                           
-                                                          ) 
-                                                      ,),
+                                                          
+                                                      ),
                                                   ),
                                                 Column(
                                                   crossAxisAlignment:
@@ -249,7 +242,7 @@ class _TransactionListState extends State<TransactionList> {
                                                           top: 10, left: 7),
                                                       child: Text(snapshot[index].name,
                                                         style: TextStyle(
-                                                          color: Colors.white,
+                                                          color: Color(0xFF0C375B),
                                                           fontSize: 15,
                                                           letterSpacing: 1,
                                                           fontWeight:
@@ -258,13 +251,13 @@ class _TransactionListState extends State<TransactionList> {
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding: EdgeInsets.only(top: 5, left: 7),
+                                                      padding: EdgeInsets.only(top: 8, left: 7),
                                                       child: Text(
                                                         snapshot[index]
                                                             .description,
                                                         style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 15,
+                                                          color: Color(0xFF0C375B),
+                                                          fontSize: 12,
                                                           letterSpacing: 1,
                                                           fontWeight:
                                                               FontWeight.w400,

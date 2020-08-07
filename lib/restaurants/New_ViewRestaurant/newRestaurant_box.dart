@@ -29,7 +29,14 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
             image: DecorationImage(
               image: AssetImage(widget.image),
               fit: BoxFit.cover
-              )
+              ),
+               boxShadow: [
+                             BoxShadow(
+                               color: Colors.black12,
+                               spreadRadius: 3.3,
+                               blurRadius: 3.3
+                             ),
+                           ],
           ),
           child: Stack(
             children: <Widget>[

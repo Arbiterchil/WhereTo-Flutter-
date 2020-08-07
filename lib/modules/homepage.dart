@@ -10,13 +10,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
  
-    String _currentPage = "UserProfile";
+    String _currentPage = "SearchRestaurant";
   
-   List<String> pageKeys = ["UserProfile","SearchRestaurant"];
+   List<String> pageKeys = ["SearchRestaurant","UserProfile"];
    Map<String,GlobalKey<NavigatorState>> _navigatorKeys =
     {
-     "UserProfile":GlobalKey<NavigatorState>(),
-     "SearchRestaurant":GlobalKey<NavigatorState>()
+     "SearchRestaurant":GlobalKey<NavigatorState>(),
+     "UserProfile":GlobalKey<NavigatorState>()
    };
  int _selectedIndex = 0;
   void _selectTab(String tabItem, int index) {
@@ -56,8 +56,8 @@ void configSignal() async {
             !await _navigatorKeys[_currentPage].currentState.maybePop();
             
         if (isFirstRouteInCurrentTab) {
-          if (_currentPage != "UserProfile") {
-            _selectTab("UserProfile", 1);
+          if (_currentPage != "SearchRestaurant") {
+            _selectTab("SearchRestaurant", 1);
             
             return false;
             
@@ -70,8 +70,8 @@ void configSignal() async {
       },
           child: Stack(
           children: <Widget>[
-            _buildOffstageNavigator("UserProfile"),
             _buildOffstageNavigator("SearchRestaurant"),
+            _buildOffstageNavigator("UserProfile"),
           ],
         ),
         
@@ -90,14 +90,13 @@ void configSignal() async {
         currentIndex: _selectedIndex,
         onTap: (int index) { _selectTab(pageKeys[index], index); },
         items: [
-       
+              BottomNavigationBarItem(
+              icon: new Icon(Icons.view_list),
+              title: new Text('Search'),
+            ),
            BottomNavigationBarItem(
               icon: new Icon(Icons.home),
               title: new Text('Home'),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.view_list),
-              title: new Text('Search'),
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.inbox),

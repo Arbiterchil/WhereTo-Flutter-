@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:WhereTo/AnCustom/restaurant_front.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
+import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
+import 'package:WhereTo/restaurants/carousel_rest.dart';
 import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/searchRestaurant.dart';
@@ -21,6 +24,8 @@ Future<List<SearchDeposition>> getRest() async {
   return search;
 }
 
+
+
 class _SearchDepoState extends State<SearchDepo> {
   TextEditingController search = new TextEditingController();
   String searchit = "";
@@ -30,161 +35,61 @@ class _SearchDepoState extends State<SearchDepo> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async => false,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Container(
-                      height: 190.0,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            stops: [0.2, 4],
-                            colors: [Color(0xFF0C375B), Color(0xFF176DB5)],
-                            begin: Alignment.bottomRight,
-                            end: Alignment.topLeft),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 20, top: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              "Satify Your Own",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 18.0,
-                                  fontFamily: 'Gilroy-light'),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "CRAVES",
-                              style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 23.0,
-                                  fontFamily: 'Gilroy-ExtraBold'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            right: 20, top: 110, left: 20),
-                        child: Container(
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              color: Colors.blueGrey[50],
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            alignment: Alignment.centerLeft,
-                            child: TextField(
-                              cursorColor: Color(0xFF0C375B),
-                              controller: search,
-                              style: TextStyle(
-                                  color: Color(0xFF0C375B),
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Gilroy-light'),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding: const EdgeInsets.only(
-                                  top: 7.0,
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: Color(0xFF0C375B),
-                                ),
-                                hintText: "Search",
-                              ),
-                              onChanged: (input) {
-                                setState(() {
-                                  searchit = input;
-                                });
-                              },
-                            )),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  height: 520.0,
-                  width: MediaQuery.of(context).size.width,
-                  child: listData(),
-                )
-              ],
+  void _showodalShit(){
+
+    showModalBottomSheet(
+      context : context,
+      backgroundColor: Colors.transparent,
+      builder:(builder){
+
+      return new Padding(
+          padding: EdgeInsets.only(left: 20.0,right: 20.0 ,top: 20.0),
+          child: Container(
+            height: 700.0,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Color(0xFFF2F2F2F2),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30)
+              ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
+            child: FutureBuilder(
+              future: getRest(),
+              builder: (BuildContext context, AsyncSnapshot snapshot){
+                if(snapshot.data == null){
+                  return Container(
+                    child: Center(
+                      child: Text("Restaurants Searching..",
+                      style: TextStyle(
+                        color: Colors.black,
+                                  fontFamily: 'Gilroy-light',
+                                  fontStyle: FontStyle.normal
+                      ),
+                      ),
+                    ),
+                  );
+                }else{
 
-  Widget listData() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 5.0),
-      child: new Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(50.0),
-          ),
-        ),
-        child: FutureBuilder(
-          future: getRest(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Container(
-                child: Center(
-                  child: Text("Restaurants Loading"),
-                ),
-              );
-            } else {
-              return ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return snapshot.data[index].restaurantName
-                              .contains(searchit) |
-                          snapshot.data[index].address.contains(searchit)
-                      ? GestureDetector(
-                          onTap: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10, bottom: 10, left: 20, right: 20),
-                            child: RestaurantFront(
-                              image:
-                                  "asset/img/${snapshot.data[index].restaurantName}.png",
+                    return new ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context , int index){
+                          return snapshot.data[index].restaurantName.contains(searchit)
+                          |snapshot.data[index].address.contains(searchit) ? GestureDetector(
+                            onTap: (){
+   
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: RestaurantFront(
+                               image:
+                                  "asset/img/${snapshot.data[index].restaurantName}.jpg",
                               restaurantName:
                                   snapshot.data[index].restaurantName,
                               restaurantAddress: snapshot.data[index].address,
@@ -303,16 +208,417 @@ class _SearchDepoState extends State<SearchDepo> {
                                  
                                 }
                               },
+                              ),
                             ),
+                          ): Container(
+                          );
+                        },
+                      );
+
+                }
+
+
+
+              },
+            ),
+          ),
+      );
+
+    });
+
+  } 
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: WillPopScope(
+        onWillPop: () async => false,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 200.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("asset/img/topsearchbg.jpg"),
+                          fit: BoxFit.cover
+                          
                           ),
-                        )
-                      : Container();
-                },
-              );
-            }
-          },
+                        // gradient: LinearGradient(
+                        //     stops: [0.2, 1],
+                        //     colors: [
+                        //       Color(0xFF0C375B),
+                        //      Color(0xFF176DB5)],
+                        //     begin: Alignment.bottomRight,
+                        //     end: Alignment.topLeft),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 200.0,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            stops: [0.2,2],
+                            colors: [
+                              Color(0xFF0C375B).withOpacity(.80),
+                            //  Color(0xFF176DB5).withOpacity(.90)
+                            Colors.white.withOpacity(.30) 
+                             ],
+                            begin: Alignment.bottomRight,
+                            end: Alignment.topLeft),
+                     
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 20, top: 90),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "Satify Your Own",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 25.0,
+                                  fontFamily: 'Gilroy-ExtraBold'),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "CRAVES",
+                              style: TextStyle(
+                                  color: Color(0xFF176DB5),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 29.0,
+                                  fontFamily: 'Gilroy-ExtraBold'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 20, top: 30, left: 20),
+                        child: Container(
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.80),
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            alignment: Alignment.centerLeft,
+                            child: TextField(
+                              cursorColor: Color(0xFF0C375B),
+                              controller: search,
+                              style: TextStyle(
+                                  color: Color(0xFF0C375B),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Gilroy-light'),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding: const EdgeInsets.only(
+                                  top: 7.0,
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Color(0xFF0C375B),
+                                ),
+                                hintText: "Search",
+                              ),
+                              // onChanged: (input) {
+                              //   setState(() {
+                              //     searchit = input;
+                              //   });
+                              // },
+                               onSubmitted: (input){
+                                  setState(() {
+                                    searchit = input;
+                                    print(searchit);
+                                    _showodalShit();
+                                  });
+                              },
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                 SizedBox(height: 10,),
+                //  CarouselSex(),
+                  SizedBox(height: 20,),
+                 Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20),
+                      child: Container(
+                        width: 170,
+                        height: 40,
+                        // decoration: BoxDecoration(
+                        //   color: Color(0xFF0C375B),
+                        //   borderRadius: BorderRadius.all(Radius.circular(40))
+                        // ),
+                          child: Text("Popular Food in Restaurant's",
+                          style: TextStyle(
+                                color:Color(0xFF0C375B),
+                                fontWeight: FontWeight.bold,
+                                    fontSize: 18.0,
+                                    fontFamily: 'Gilroy-light' 
+                          ),),
+                  
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10,right: 10),
+                      child: Container(
+                        height: 200,
+                        width: MediaQuery.of(context).size.width,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              StaticFoodDisplay(
+                                restaurantname: "KFC",
+                                foodname: "Potato Frys",
+                                description: "Fries and Potato with Dip Ketchup",
+                                image: "asset/img/fryandpota.jpg",
+                                onTap: (){},
+                              ),
+                              StaticFoodDisplay(
+                                restaurantname: "KFC",
+                                foodname: "Vegetarian Food",
+                                description: "Vegetarian food in Russia Cussine",
+                                image: "asset/img/gulays.jpg",
+                                onTap: (){},
+                              ),
+                              StaticFoodDisplay(
+                                restaurantname: "Chowking",
+                                foodname: "Noodles Chinese Food",
+                                description: "Covid 19 Installed",
+                                image: "asset/img/noodles.jpg",
+                                onTap: (){},
+                              ),
+                              StaticFoodDisplay(
+                                restaurantname: "Jollibee",
+                                foodname: "Burger Extra Chili Hot",
+                                description: "Burgers Burgers!",
+                                image: "asset/img/burgers.jpg",
+                                onTap: (){},
+                              ),
+                              StaticFoodDisplay(
+                                restaurantname: "McDonalds",
+                                foodname: "Burger Standard Falbor",
+                                description: "Burgers Burgers!",
+                                image: "asset/img/fryandpota.jpg",
+                                onTap: (){},
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ),
+                      ),
+                   SizedBox(height: 10,),               
+                  Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20),
+                      child: Container(
+                       width: 170,
+                        height: 40,
+                        // decoration: BoxDecoration(
+                        //   color: Color(0xFF0C375B),
+                        //   borderRadius: BorderRadius.all(Radius.circular(40))
+                        // ),
+                          child: Text("Popular Fast Food",
+                          style: TextStyle(
+                                color:Color(0xFF0C375B),
+                                fontWeight: FontWeight.bold,
+                                    fontSize: 18.0,
+                                    fontFamily: 'Gilroy-light' 
+                          ),),
+                     
+                      ),
+                    ),
+                    SizedBox(height: 5.0,),
+                   Padding(
+                     padding: const EdgeInsets.only(left: 10,right: 10),
+                     child: NewRestaurantViewFeatured(),
+                   ),
+                // Container(
+                //   height: 520.0,
+                //   width: MediaQuery.of(context).size.width,
+                //   child: listData(),
+                // )
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
+
+  // Widget listData() {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(top: 5.0),
+  //     child: new Container(
+  //       width: MediaQuery.of(context).size.width,
+  //       height: MediaQuery.of(context).size.height,
+  //       decoration: BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.only(
+  //           topLeft: Radius.circular(50.0),
+  //         ),
+  //       ),
+  //       child: FutureBuilder(
+  //         future: getRest(),
+  //         builder: (BuildContext context, AsyncSnapshot snapshot) {
+  //           if (snapshot.data == null) {
+  //             return Container(
+  //               child: Center(
+  //                 child: Text("Restaurants Loading"),
+  //               ),
+  //             );
+  //           } else {
+  //             return ListView.builder(
+  //               // gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+  //               //   crossAxisCount: Orientation.portrait == Orientation.portrait ? 2 : 3),
+  //               scrollDirection: Axis.vertical,
+  //               itemCount: snapshot.data.length,
+  //               itemBuilder: (BuildContext context, int index) {
+  //                 return snapshot.data[index].restaurantName
+  //                             .contains(searchit) |
+  //                         snapshot.data[index].address.contains(searchit)
+  //                     ? GestureDetector(
+  //                         onTap: () {},
+  //                         child: Padding(
+  //                           padding: const EdgeInsets.only(
+  //                               top: 10, bottom: 10, left: 20, right: 20),
+  //                           child: RestaurantFront(
+  //                             image:
+  //                                 "asset/img/${snapshot.data[index].restaurantName}.png",
+  //                             restaurantName:
+  //                                 snapshot.data[index].restaurantName,
+  //                             restaurantAddress: snapshot.data[index].address,
+  //                             openAndclose: snapshot.data[index].openTime +
+  //                                 "-" +
+  //                                 snapshot.data[index].closingTime,
+  //                             onTap: () async {
+  //                               final now = await NTP.now();
+  //                                 String formatNow =
+  //                                     DateFormat.jm().format(now);
+  //                                 DateFormat inputFormat = DateFormat("H:mm");
+  //                                 DateTime dateTime = inputFormat
+  //                                     .parse(snapshot.data[index].closingTime);
+  //                                 String formatClosing =
+  //                                     DateFormat.jm().format(dateTime);
+  //                                 int cpTime =
+  //                                     int.parse(formatNow.substring(0, 1));
+  //                                 int restoTime =
+  //                                     int.parse(formatClosing.substring(0, 1));
+  //                                     print(restoTime);
+  //                               SharedPreferences local =
+  //                                   await SharedPreferences.getInstance();
+  //                               var userjson = local.getString('user');
+  //                               var user = json.decode(userjson);
+  //                               var restaurant;
+  //                               var status;
+  //                               var insideResto =
+  //                                   snapshot.data[index].restaurantName;
+  //                               var isTrue = false;
+  //                               Map<String, dynamic> temp;
+  //                               List<dynamic> converted = [];
+  //                               final response = await ApiCall()
+  //                                   .getData('/viewUserOrders/${user['id']}');
+  //                               final List<ViewUserOrder> transaction =
+  //                                   viewUserOrderFromJson(response.body);
+  //                               transaction.forEach((element) {
+  //                                 restaurant = element.restaurantName;
+  //                                 status = element.status;
+  //                                 temp = {
+  //                                   "restaurant": restaurant,
+  //                                   "status": status
+  //                                 };
+  //                                 converted.add(temp);
+  //                               });
+
+  //                               for (var i = 0; i < converted.length; i++) {
+  //                                 if (insideResto ==
+  //                                         converted[i]['restaurant'] &&
+  //                                     converted[i]['status'] < 4) {
+  //                                   isTrue = true;
+  //                                   break;
+  //                                 }
+  //                               }
+  //                               if (isTrue) {
+  //                                 showDial(context,
+  //                                     "You have a pending Transaction order on this Restaurant.");
+  //                               } else {
+  //                                 if (formatClosing.contains("PM") &&
+  //                                     formatNow.contains("PM")) {
+  //                                   if (cpTime > restoTime) {
+  //                                     showDial(context,
+  //                                         "Sorry The Restaurant Close as this moment of Time");
+  //                                     print("CLOSE");
+  //                                   } else {
+  //                                      print("OPEN");
+  //                                      Navigator.pushReplacement(
+  //                                     context,
+  //                                     new MaterialPageRoute(
+  //                                         builder: (context) => ListStactic(
+  //                                               restauID: snapshot
+  //                                                   .data[index].id
+  //                                                   .toString(),
+  //                                               nameRestau: snapshot
+  //                                                   .data[index].restaurantName
+  //                                                   .toString(),
+  //                                             )));
+  //                                   }
+  //                                 }else{
+                                    
+  //                                    Navigator.pushReplacement(
+  //                                     context,
+  //                                     new MaterialPageRoute(
+  //                                         builder: (context) => ListStactic(
+  //                                               restauID: snapshot
+  //                                                   .data[index].id
+  //                                                   .toString(),
+  //                                               nameRestau: snapshot
+  //                                                   .data[index].restaurantName
+  //                                                   .toString(),
+  //                                             )));
+  //                                 }
+                                 
+  //                               }
+  //                             },
+  //                           ),
+  //                         ),
+  //                       )
+  //                     : Container();
+  //               },
+  //             );
+  //           }
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
+
+
 }
