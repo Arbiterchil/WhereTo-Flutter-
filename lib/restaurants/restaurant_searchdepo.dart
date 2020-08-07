@@ -74,7 +74,6 @@ class _SearchDepoState extends State<SearchDepo> {
                     ),
                   );
                 }else{
-
                     return new ListView.builder(
                       scrollDirection: Axis.vertical,
                       itemCount: snapshot.data.length,
