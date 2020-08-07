@@ -33,14 +33,7 @@ class _Profile extends State<Profile> {
   void initState() {
     _getUserInfo();
     casting = false;
-<<<<<<< HEAD
-
-    // configSignal();
-    getService();
-    getPermission();
-=======
     super.initState();
->>>>>>> 8acd245b5b77d47dbb58bd38071d1a95b38d2d30
     getLocation();
     super.initState();
     
