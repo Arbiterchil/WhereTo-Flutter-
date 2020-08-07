@@ -7,6 +7,7 @@ import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
 import 'package:WhereTo/restaurants/carousel_rest.dart';
 import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
+import 'package:WhereTo/restaurants/new_Carousel.dart';
 import 'package:WhereTo/restaurants/searchRestaurant.dart';
 import 'package:flutter/material.dart';
 import 'package:ntp/ntp.dart';
@@ -239,52 +240,54 @@ class _SearchDepoState extends State<SearchDepo> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                
                 Stack(
                   children: <Widget>[
-                    Container(
-                      height: 200.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("asset/img/topsearchbg.jpg"),
-                          fit: BoxFit.cover
+                    NewCarousel(),
+                    // Container(
+                    //   height: 200.0,
+                    //   decoration: BoxDecoration(
+                    //     image: DecorationImage(
+                    //       image: AssetImage("asset/img/topsearchbg.jpg"),
+                    //       fit: BoxFit.cover
                           
-                          ),
-                        // gradient: LinearGradient(
-                        //     stops: [0.2, 1],
-                        //     colors: [
-                        //       Color(0xFF0C375B),
-                        //      Color(0xFF176DB5)],
-                        //     begin: Alignment.bottomRight,
-                        //     end: Alignment.topLeft),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 200.0,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            stops: [0.2,2],
-                            colors: [
-                              Color(0xFF0C375B).withOpacity(.80),
-                            //  Color(0xFF176DB5).withOpacity(.90)
-                            Colors.white.withOpacity(.30) 
-                             ],
-                            begin: Alignment.bottomRight,
-                            end: Alignment.topLeft),
+                    //       ),
+                    //     // gradient: LinearGradient(
+                    //     //     stops: [0.2, 1],
+                    //     //     colors: [
+                    //     //       Color(0xFF0C375B),
+                    //     //      Color(0xFF176DB5)],
+                    //     //     begin: Alignment.bottomRight,
+                    //     //     end: Alignment.topLeft),
+                    //     borderRadius: BorderRadius.only(
+                    //       bottomLeft: Radius.circular(40),
+                    //       bottomRight: Radius.circular(40),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   height: 200.0,
+                    //   decoration: BoxDecoration(
+                    //     gradient: LinearGradient(
+                    //         stops: [0.2,2],
+                    //         colors: [
+                    //           Color(0xFF0C375B).withOpacity(.80),
+                    //         //  Color(0xFF176DB5).withOpacity(.90)
+                    //         Colors.white.withOpacity(.30) 
+                    //          ],
+                    //         begin: Alignment.bottomRight,
+                    //         end: Alignment.topLeft),
                      
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
-                        ),
-                      ),
-                    ),
+                    //     borderRadius: BorderRadius.only(
+                    //       bottomLeft: Radius.circular(40),
+                    //       bottomRight: Radius.circular(40),
+                    //     ),
+                    //   ),
+                    // ),
                     Align(
                       alignment: Alignment.topRight,
                       child: Padding(
-                        padding: const EdgeInsets.only(right: 20, top: 90),
+                        padding: const EdgeInsets.only(right: 20, top: 190),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
@@ -293,7 +296,7 @@ class _SearchDepoState extends State<SearchDepo> {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
-                                  fontSize: 25.0,
+                                  fontSize: 35.0,
                                   fontFamily: 'Gilroy-ExtraBold'),
                             ),
                             SizedBox(
@@ -302,9 +305,9 @@ class _SearchDepoState extends State<SearchDepo> {
                             Text(
                               "CRAVES",
                               style: TextStyle(
-                                  color: Color(0xFF176DB5),
+                                  color: Colors.amber,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 29.0,
+                                  fontSize: 30.0,
                                   fontFamily: 'Gilroy-ExtraBold'),
                             ),
                           ],
@@ -359,10 +362,12 @@ class _SearchDepoState extends State<SearchDepo> {
                   ],
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
-                 SizedBox(height: 10,),
                 //  CarouselSex(),
+
+                
+
                   SizedBox(height: 20,),
                  Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20),

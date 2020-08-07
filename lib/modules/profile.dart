@@ -343,7 +343,7 @@ class _Profile extends State<Profile> {
                        ),
                       ],
                     ),
-                   SizedBox(height: 40,),
+                   SizedBox(height: 10,),
                   //  GridView(
                   //    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                   //    crossAxisCount: Orientation.portrait == Orientation.portrait ? 2 : 3),
