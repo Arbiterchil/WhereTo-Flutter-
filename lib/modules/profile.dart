@@ -48,9 +48,12 @@ class _Profile extends State<Profile> {
     _getUserInfo();
     casting = false;
     // configSignal();
-    super.initState();
+    getService();
+    getPermission();
     getLocation();
-
+    super.initState();
+    
+    
   }
 
 
@@ -166,6 +169,30 @@ class _Profile extends State<Profile> {
       print(e.toString());
     }
  }
+
+ Future<void>getService() async{
+   var location =Location();
+   bool _serviceEnabled;
+   _serviceEnabled = await location.serviceEnabled();
+  if (!_serviceEnabled) {
+  _serviceEnabled = await location.requestService();
+  if (!_serviceEnabled) {
+    return;
+  }
+}
+ }
+ Future<void>getPermission() async{
+   var location =Location();
+   PermissionStatus permissionStatus =await location.hasPermission();
+   if(permissionStatus ==PermissionStatus.denied){
+     permissionStatus =await location.requestPermission();
+     if(permissionStatus !=PermissionStatus.granted){
+       return;
+     }
+   }
+ }
+
+
 
   void configSignal() async {
     var data;

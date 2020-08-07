@@ -192,19 +192,17 @@ class _SearchDepoState extends State<SearchDepo> {
                                   "-" +
                                   snapshot.data[index].closingTime,
                               onTap: () async {
-                                final now = await NTP.now();
-                                  String formatNow =
-                                      DateFormat.jm().format(now);
+                                  final now = await NTP.now();
+                                  final formatNow =DateFormat.Hm().format(now);
+                                 
                                   DateFormat inputFormat = DateFormat("H:mm");
-                                  DateTime dateTime = inputFormat
-                                      .parse(snapshot.data[index].closingTime);
-                                  String formatClosing =
-                                      DateFormat.jm().format(dateTime);
-                                  int cpTime =
-                                      int.parse(formatNow.substring(0, 1));
-                                  int restoTime =
-                                      int.parse(formatClosing.substring(0, 1));
-                                      print(restoTime);
+                                  DateTime dateCloseTime = inputFormat.parse(snapshot.data[index].closingTime);
+                                  DateTime dateOpen = inputFormat.parse(snapshot.data[index].openTime);
+                                  String formatClosing =DateFormat.Hm().format(dateCloseTime);
+                                  String formatOpen =DateFormat.Hm().format(dateOpen);
+                                  // int cpTime =int.parse(formatNow.substring(0, 2));
+                                  // int restoTime =int.parse(formatClosing.substring(0, 1));
+                                  // int restoOpen =int.parse(formatOpen.substring(0,1));
                                 SharedPreferences local =
                                     await SharedPreferences.getInstance();
                                 var userjson = local.getString('user');
@@ -242,32 +240,13 @@ class _SearchDepoState extends State<SearchDepo> {
                                   showDial(context,
                                       "You have a pending Transaction order on this Restaurant.");
                                 } else {
-                                  if (formatClosing.contains("PM") &&
-                                      formatNow.contains("PM")) {
-                                    if (cpTime > restoTime) {
-                                      showDial(context,
-                                          "Sorry The Restaurant Close as this moment of Time");
-                                      print("CLOSE");
-                                    } else {
-                                       print("OPEN");
-                                       Navigator.pushReplacement(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (context) => ListStactic(
-                                                restauID: snapshot
-                                                    .data[index].id
-                                                    .toString(),
-                                                nameRestau: snapshot
-                                                    .data[index].restaurantName
-                                                    .toString(),
-                                              )));
-                                    }
+                                  if(int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) || int.parse(formatNow.split(":")[0]) >=0 && int.parse(formatNow.split(":")[0]) <08){
+                                    print("CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
+                                    showDial(context,"Sorry The Restaurant is close at the Moment Please Come Back");
                                   }else{
-                                    
-                                     Navigator.pushReplacement(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (context) => ListStactic(
+                                      if(int.parse(formatNow.split(":")[0])  >= int.parse(formatOpen.split(":")[0])){
+                                         Navigator.pushReplacement(
+                                        context,new MaterialPageRoute(builder: (context) => ListStactic(
                                                 restauID: snapshot
                                                     .data[index].id
                                                     .toString(),
@@ -275,7 +254,52 @@ class _SearchDepoState extends State<SearchDepo> {
                                                     .data[index].restaurantName
                                                     .toString(),
                                               )));
+                                      }else{
+                                        showDial(context,"Sorry The Restaurant is Not yet open at the Moment Please Wait!");
+                                
+                                      }
+                                      
                                   }
+                                  // if (formatClosing.contains("PM") &&formatNow.contains("PM")) {
+
+                                  //   if (cpTime > restoTime) {
+                                  //     showDial(context,
+                                  //         "Sorry The Restaurant Close as this moment of Time");
+                                  //     print("CLOSE");
+                                  //   } else {
+                                  //      print("OPEN");
+                                  //      Navigator.pushReplacement(
+                                  //     context,
+                                  //     new MaterialPageRoute(
+                                  //         builder: (context) => ListStactic(
+                                  //               restauID: snapshot
+                                  //                   .data[index].id
+                                  //                   .toString(),
+                                  //               nameRestau: snapshot
+                                  //                   .data[index].restaurantName
+                                  //                   .toString(),
+                                  //             )));
+                                  //   }
+                                  // }else{
+                                    
+                                  //    if(formatNow.contains("AM")){
+                                  //      if(cpTime > 11 || cpTime >=1 || restoOpen < cpTime){
+                                         
+                                  //      }else{
+                                  //        Navigator.pushReplacement(
+                                  //     context,
+                                  //     new MaterialPageRoute(
+                                  //         builder: (context) => ListStactic(
+                                  //               restauID: snapshot
+                                  //                   .data[index].id
+                                  //                   .toString(),
+                                  //               nameRestau: snapshot
+                                  //                   .data[index].restaurantName
+                                  //                   .toString(),
+                                  //             )));
+                                  //      }
+                                  //    }
+                                  // }
                                  
                                 }
                               },
