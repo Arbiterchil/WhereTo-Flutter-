@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/designbuttons.dart';
 
 import 'package:WhereTo/modules/OtherFeatures/trans_port.dart';
 import 'package:WhereTo/restaurants/searchRestaurant.dart';
@@ -36,8 +37,6 @@ class _Profile extends State<Profile> {
     super.initState();
     getLocation();
     super.initState();
-    
-    
   }
 
   void _getUserInfo() async {
@@ -330,22 +329,45 @@ class _Profile extends State<Profile> {
                                         ],
                                       ),
                                      ), 
+
                                  ],
                                ),
                              ),
                        ),
                       ],
                     ),
-                   SizedBox(height: 10,),
-                  //  GridView(
-                  //    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                  //    crossAxisCount: Orientation.portrait == Orientation.portrait ? 2 : 3),
-                  //    children: <Widget>[
-                      
-                  //    ],
-                     
-                  //    ),
+                   SizedBox(height: 50,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Text("Services (Ongoing)",
+                    style: TextStyle(
+                     color: Color(0xFF0C375B),
+                     fontSize: 25.0,
+                     fontFamily: 'Gilroy-light',
+                     fontWeight: FontWeight.normal
+                    ),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: Row(
+                      children: <Widget>[
+                       GestureDetector(
+                         onTap: (){},
+                         child: Container(
+                           height: 120,
+                           width: 120,
+                           decoration: BoxDecoration(
+                             color: Color(0xFF0C375B),
+                             borderRadius: BorderRadius.all(Radius.circular(20))
+                           ),
+                         ),
+                       ),
 
+                      ],
+                    ),
+                    ),
                 ],
               ),
             ),

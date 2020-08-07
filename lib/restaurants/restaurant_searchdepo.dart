@@ -42,12 +42,10 @@ class _SearchDepoState extends State<SearchDepo> {
   // }
 
   void _showodalShit(){
-
     showModalBottomSheet(
       context : context,
       backgroundColor: Colors.transparent,
       builder:(builder){
-
       return new Padding(
           padding: EdgeInsets.only(left: 20.0,right: 20.0 ,top: 20.0),
           child: Container(
@@ -228,7 +226,6 @@ class _SearchDepoState extends State<SearchDepo> {
     });
 
   } 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -264,7 +261,7 @@ class _SearchDepoState extends State<SearchDepo> {
                               height: 5,
                             ),
                             Text(
-                              "CRAVES",
+                              "CRAVINGS",
                               style: TextStyle(
                                   color: Colors.amber,
                                   fontWeight: FontWeight.bold,
@@ -322,14 +319,7 @@ class _SearchDepoState extends State<SearchDepo> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 5,
-                ),
                 //  CarouselSex(),
-
-                
-
-                  SizedBox(height: 20,),
                  Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20),
                       child: Container(
@@ -357,7 +347,6 @@ class _SearchDepoState extends State<SearchDepo> {
                         width: MediaQuery.of(context).size.width,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          physics: AlwaysScrollableScrollPhysics(),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
