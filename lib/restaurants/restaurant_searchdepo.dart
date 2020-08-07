@@ -244,46 +244,7 @@ class _SearchDepoState extends State<SearchDepo> {
                 Stack(
                   children: <Widget>[
                     NewCarousel(),
-                    // Container(
-                    //   height: 200.0,
-                    //   decoration: BoxDecoration(
-                    //     image: DecorationImage(
-                    //       image: AssetImage("asset/img/topsearchbg.jpg"),
-                    //       fit: BoxFit.cover
-                          
-                    //       ),
-                    //     // gradient: LinearGradient(
-                    //     //     stops: [0.2, 1],
-                    //     //     colors: [
-                    //     //       Color(0xFF0C375B),
-                    //     //      Color(0xFF176DB5)],
-                    //     //     begin: Alignment.bottomRight,
-                    //     //     end: Alignment.topLeft),
-                    //     borderRadius: BorderRadius.only(
-                    //       bottomLeft: Radius.circular(40),
-                    //       bottomRight: Radius.circular(40),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Container(
-                    //   height: 200.0,
-                    //   decoration: BoxDecoration(
-                    //     gradient: LinearGradient(
-                    //         stops: [0.2,2],
-                    //         colors: [
-                    //           Color(0xFF0C375B).withOpacity(.80),
-                    //         //  Color(0xFF176DB5).withOpacity(.90)
-                    //         Colors.white.withOpacity(.30) 
-                    //          ],
-                    //         begin: Alignment.bottomRight,
-                    //         end: Alignment.topLeft),
-                     
-                    //     borderRadius: BorderRadius.only(
-                    //       bottomLeft: Radius.circular(40),
-                    //       bottomRight: Radius.circular(40),
-                    //     ),
-                    //   ),
-                    // ),
+                    
                     Align(
                       alignment: Alignment.topRight,
                       child: Padding(
@@ -624,6 +585,49 @@ class _SearchDepoState extends State<SearchDepo> {
   //     ),
   //   );
   // }
+
+
+
+    // Container(
+                    //   height: 200.0,
+                    //   decoration: BoxDecoration(
+                    //     image: DecorationImage(
+                    //       image: AssetImage("asset/img/topsearchbg.jpg"),
+                    //       fit: BoxFit.cover
+                          
+                    //       ),
+                    //     // gradient: LinearGradient(
+                    //     //     stops: [0.2, 1],
+                    //     //     colors: [
+                    //     //       Color(0xFF0C375B),
+                    //     //      Color(0xFF176DB5)],
+                    //     //     begin: Alignment.bottomRight,
+                    //     //     end: Alignment.topLeft),
+                    //     borderRadius: BorderRadius.only(
+                    //       bottomLeft: Radius.circular(40),
+                    //       bottomRight: Radius.circular(40),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   height: 200.0,
+                    //   decoration: BoxDecoration(
+                    //     gradient: LinearGradient(
+                    //         stops: [0.2,2],
+                    //         colors: [
+                    //           Color(0xFF0C375B).withOpacity(.80),
+                    //         //  Color(0xFF176DB5).withOpacity(.90)
+                    //         Colors.white.withOpacity(.30) 
+                    //          ],
+                    //         begin: Alignment.bottomRight,
+                    //         end: Alignment.topLeft),
+                     
+                    //     borderRadius: BorderRadius.only(
+                    //       bottomLeft: Radius.circular(40),
+                    //       bottomRight: Radius.circular(40),
+                    //     ),
+                    //   ),
+                    // ),
 
 
 }
