@@ -47,15 +47,18 @@ class _Profile extends State<Profile> {
   void initState() {
     _getUserInfo();
     casting = false;
+<<<<<<< HEAD
     // configSignal();
     getService();
     getPermission();
+=======
+    super.initState();
+>>>>>>> 60519b81d8badd60ae9542d4d4848b570e12aeb5
     getLocation();
     super.initState();
     
     
   }
-
 
   void _showodalShit(){
 
@@ -270,13 +273,15 @@ class _Profile extends State<Profile> {
           scrollDirection: Axis.vertical,
               child: Column(
                 textDirection: TextDirection.ltr,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                     Stack(
                       alignment: AlignmentDirectional.topCenter,
                       overflow: Overflow.visible,
                       children: <Widget>[                      
                         Container(
-                          height: 330.0,
+                          height: 230.0,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               stops: [0.2,4],
@@ -371,7 +376,7 @@ class _Profile extends State<Profile> {
                                    ),
                                    
                                    Padding(
-                                      padding: const EdgeInsets.only(top: 15,
+                                      padding: const EdgeInsets.only(top: 35,
                                       left: 70,
                                       // right: 50
                                       ),
@@ -443,100 +448,107 @@ class _Profile extends State<Profile> {
                                ),
                              ),
                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top:210),
-                          child: Divider(
-                  height: 1.0,
-                  thickness: 1,
+                //         Padding(
+                //           padding: const EdgeInsets.only(top:210),
+                //           child: Divider(
+                //   height: 1.0,
+                //   thickness: 1,
                   
-                  color: Colors.white,
-                  indent: 90.0,
-                  endIndent: 90.0,
-                ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 220,left: 25.0,right: 25.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              textDirection: TextDirection.ltr,
-                              children: <Widget>[
-                               Row(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                 children: <Widget>[
-                                    Text("What Do You",
-                                style :TextStyle(
-                                color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 22.0,
-                                  fontFamily: 'Gilroy-light'
-                        ),),
-                        SizedBox(width: 5.0,),
-                         Text("Crave?",
-                                style :TextStyle(
-                                color: Colors.blue,
-                                // Color(0xFF176DB5),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.0,
-                                  fontFamily: 'Gilroy-ExtraBold'
-                        ),),
-                                 ],
-                               ),
-                        SizedBox(height: 20.0,),
-                               Container(
-                                 width: MediaQuery.of(context).size.width,
-                                 height: 40.0,
-                                 decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(50),
-                                   color: Colors.white
-                                 ),
-                                 child: TextField(
-                                   cursorColor: Color(0xFF0C375B),
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'Gilroy-light',
-                                  fontStyle: FontStyle.normal
-                              ),
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: const EdgeInsets.only(top:7.0,),
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    color:  Color(0xFF0C375B),
-                                  ),
-                                  hintText: "Search",
-                              ),
-                              textInputAction: TextInputAction.go,
-                              onSubmitted: (input){
-                                  setState(() {
-                                    searchit = input;
-                                    print(searchit);
-                                    _showodalShit();
-                                  });
-                              },
-                              // onTap: _showodalShit,
-                            ),
-                               )
-                              ],
-                            ),
-                          ),
-                        ),
+                //   color: Colors.white,
+                //   indent: 90.0,
+                //   endIndent: 90.0,
+                // ),
+                //         ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 220,left: 25.0,right: 25.0),
+                        //   child: Container(
+                        //     width: MediaQuery.of(context).size.width,
+                        //     child: Column(
+                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                        //       mainAxisAlignment: MainAxisAlignment.start,
+                        //       textDirection: TextDirection.ltr,
+                        //       children: <Widget>[
+                        //        Row(
+                        //          crossAxisAlignment: CrossAxisAlignment.start,
+                        //          children: <Widget>[
+                        //             Text("What Do You",
+                        //         style :TextStyle(
+                        //         color: Colors.white,
+                        //           fontWeight: FontWeight.w700,
+                        //           fontSize: 22.0,
+                        //           fontFamily: 'Gilroy-light'
+                        // ),),
+                        // SizedBox(width: 5.0,),
+                        //  Text("Crave?",
+                        //         style :TextStyle(
+                        //         color: Colors.blue,
+                        //         // Color(0xFF176DB5),
+                        //           fontWeight: FontWeight.bold,
+                        //           fontSize: 22.0,
+                        //           fontFamily: 'Gilroy-ExtraBold'
+                        // ),),
+                        //          ],
+                        //        ),
+                        // SizedBox(height: 20.0,),
+                        //        Container(
+                        //          width: MediaQuery.of(context).size.width,
+                        //          height: 40.0,
+                        //          decoration: BoxDecoration(
+                        //            borderRadius: BorderRadius.circular(50),
+                        //            color: Colors.white
+                        //          ),
+                        //          child: TextField(
+                        //            cursorColor: Color(0xFF0C375B),
+                        //       style: TextStyle(
+                        //           color: Colors.black,
+                        //           fontFamily: 'Gilroy-light',
+                        //           fontStyle: FontStyle.normal
+                        //       ),
+                        //       decoration: InputDecoration(
+                        //           border: InputBorder.none,
+                        //           contentPadding: const EdgeInsets.only(top:7.0,),
+                        //           prefixIcon: Icon(
+                        //             Icons.search,
+                        //             color:  Color(0xFF0C375B),
+                        //           ),
+                        //           hintText: "Search",
+                        //       ),
+                        //       textInputAction: TextInputAction.go,
+                        //       onSubmitted: (input){
+                        //           setState(() {
+                        //             searchit = input;
+                        //             print(searchit);
+                        //             _showodalShit();
+                        //           });
+                        //       },
+                        //       // onTap: _showodalShit,
+                        //     ),
+                        //        )
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
-                    SizedBox(height: 10.0,),
+                    SizedBox(height: 30.0,),
                    Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20),
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Text("Popular Fast Food",
-                        style: TextStyle(
-                              color:Color(0xFF0C375B),
-                              fontWeight: FontWeight.bold,
-                                  fontSize: 12.0,
-                                  fontFamily: 'Gilroy-light' 
-                        ),),
+                        width: 120,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF0C375B),
+                          borderRadius: BorderRadius.all(Radius.circular(40))
+                        ),
+                        child: Center(
+                          child: Text("Popular Fast Food",
+                          style: TextStyle(
+                                color:Colors.white,
+                                fontWeight: FontWeight.bold,
+                                    fontSize: 12.0,
+                                    fontFamily: 'Gilroy-light' 
+                          ),),
+                        ),
                       ),
                     ),
                     SizedBox(height: 5.0,),
@@ -548,55 +560,83 @@ class _Profile extends State<Profile> {
                   endIndent: 60.0,
                 ),
                    SizedBox(height: 8.0,),
+
                    Padding(
                      padding: const EdgeInsets.only(left: 10,right: 10),
                      child: NewRestaurantViewFeatured(),
                    ),
-                   Padding(
-                     padding: const EdgeInsets.only(left: 10,right: 10),
-                     child: Container(
-                       width: MediaQuery.of(context).size.width,
-                       child: Stack(
-                         children: <Widget>[
-                           Align(
-                             alignment: Alignment.centerRight,
-                             child:  RaisedButton(
-                    color: Color(0xFF0C375B),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    onPressed: (){},                
-                    child: Text ( "Show More...", style :TextStyle(
-                    color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12.0,
-                                fontFamily: 'OpenSans'
-                  ),),),
-                           ),
-                         ],
-                       ),
-                     ),
-                   ),
+                  //  Padding(
+                  //    padding: const EdgeInsets.only(left: 10,right: 10),
+                  //    child: Container(
+                  //      width: MediaQuery.of(context).size.width,
+                  //      child: Stack(
+                  //        children: <Widget>[
+                  //          Align(
+                  //            alignment: Alignment.centerRight,
+                  //            child:  RaisedButton(
+                  //   color: Color(0xFF0C375B),
+                  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  //   onPressed: (){},                
+                  //   child: Text ( "Show More...", style :TextStyle(
+                  //   color: Colors.white,
+                  //               fontWeight: FontWeight.w700,
+                  //               fontSize: 12.0,
+                  //               fontFamily: 'OpenSans'
+                  // ),),),
+                  //          ),
+                  //        ],
+                  //      ),
+                  //    ),
+                  //  ),
                    SizedBox(height: 10.0,),
-                    Divider(
-                  height: 1.0,
-                  thickness: 1,
-                  color: Color(0xFF0C375B),
-                  indent: 90.0,
-                  endIndent: 90.0,
-                ), 
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20),
+                      child: Container(
+                       width: 180,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF0C375B),
+                          borderRadius: BorderRadius.all(Radius.circular(40))
+                        ),
+                        child: Center(
+                          child: Text("Popular Featured Restaurants",
+                          style: TextStyle(
+                                color:Colors.white,
+                                fontWeight: FontWeight.w800,
+                                    fontSize: 12.0,
+                                    fontFamily: 'Gilroy-light' 
+                          ),),
+                        ),
+                      ),
+                    ),
+                //     Divider(
+                //   height: 1.0,
+                //   thickness: 1,
+                //   color: Color(0xFF0C375B),
+                //   indent: 90.0,
+                //   endIndent: 90.0,
+                // ), 
                 SizedBox(height: 5.0,),
                    CarouselSex(),
                   SizedBox(height: 10.0,),
                     Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20),
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Text("Most Popular Restaurants",
-                        style: TextStyle(
-                              color:Color(0xFF0C375B),
-                              fontWeight: FontWeight.w800,
-                                  fontSize: 12.0,
-                                  fontFamily: 'Gilroy-light' 
-                        ),),
+                       width: 150,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF0C375B),
+                          borderRadius: BorderRadius.all(Radius.circular(40))
+                        ),
+                        child: Center(
+                          child: Text("Most Popular Restaurants",
+                          style: TextStyle(
+                                color:Colors.white,
+                                fontWeight: FontWeight.w800,
+                                    fontSize: 12.0,
+                                    fontFamily: 'Gilroy-light' 
+                          ),),
+                        ),
                       ),
                     ),
                     SizedBox(height: 5.0,),
@@ -644,29 +684,29 @@ class _Profile extends State<Profile> {
                       ),
                     ),
                     SizedBox(height: 15.0,),
-                      Padding(
-                     padding: const EdgeInsets.only(left: 10,right: 10),
-                     child: Container(
-                       width: MediaQuery.of(context).size.width,
-                       child: Stack(
-                         children: <Widget>[
-                           Align(
-                             alignment: Alignment.centerRight,
-                             child:  RaisedButton(
-                    color: Color(0xFF0C375B),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    onPressed: (){},                
-                    child: Text ( "Show More...", style :TextStyle(
-                    color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12.0,
-                                fontFamily: 'OpenSans'
-                  ),),),
-                           ),
-                         ],
-                       ),
-                     ),
-                   ),
+                  //     Padding(
+                  //    padding: const EdgeInsets.only(left: 10,right: 10),
+                  //    child: Container(
+                  //      width: MediaQuery.of(context).size.width,
+                  //      child: Stack(
+                  //        children: <Widget>[
+                  //          Align(
+                  //            alignment: Alignment.centerRight,
+                  //            child:  RaisedButton(
+                  //   color: Color(0xFF0C375B),
+                  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  //   onPressed: (){},                
+                  //   child: Text ( "Show More...", style :TextStyle(
+                  //   color: Colors.white,
+                  //               fontWeight: FontWeight.w700,
+                  //               fontSize: 12.0,
+                  //               fontFamily: 'OpenSans'
+                  // ),),),
+                  //          ),
+                  //        ],
+                  //      ),
+                  //    ),
+                  //  ),
                    SizedBox(height: 15.0,),
                     // Padding(
                     //   padding: const EdgeInsets.only(left: 20,right: 20),
