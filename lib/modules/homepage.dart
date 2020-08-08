@@ -70,8 +70,9 @@ void configSignal() async {
       },
           child: Stack(
           children: <Widget>[
-            _buildOffstageNavigator("SearchRestaurant"),
+            
             _buildOffstageNavigator("UserProfile"),
+            _buildOffstageNavigator("SearchRestaurant"),
           ],
         ),
         

@@ -1,189 +1,447 @@
-  return Scaffold(
-      backgroundColor: Color(0xFF398AE5),
-      body: WillPopScope(
-        onWillPop: () async {
-          return await Dialog_Helper.exit(context);
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: SafeArea(
-            child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Stack(
-                        children: <Widget>[
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.exit_to_app,
-                              iconSize: 30.0,
-                              onTap: () {
-                                Dialog_Helper.exit(context);
-                              },
+ Stack(
+                      alignment: AlignmentDirectional.topCenter,
+                      overflow: Overflow.visible,
+                      children: <Widget>[                      
+                        Container(
+                          height: 230.0,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              stops: [0.2,4],
+                              colors: 
+                              [
+                                Color(0xFF0C375B),
+                                Color(0xFF176DB5)
+                              ],
+                              begin: Alignment.bottomRight,
+                              end: Alignment.topLeft),
+                            
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(40),
+                              bottomRight: Radius.circular(40),
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.search,
-                              iconSize: 30.0,
-                              onTap: () {
-                                Navigator.pushReplacement(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return SearchDepo();
-                                }));
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Container(
-                      width: 250,
-                      height: 250,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF398AE5),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(-6, -6),
-                              blurRadius: 6.0,
-                              color: Colors.blue[500]),
-                          BoxShadow(
-                              offset: Offset(6, 6),
-                              blurRadius: 6.0,
-                              color: Colors.blue.shade700),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
-                          decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage("asset/img/app.jpg"),
-                          ),
+
                         ),
-                      ),
+                       Padding(
+                         padding: const EdgeInsets.only(top: 5,left: 30,right: 30),
+                         child: Container(
+                               height: 220.0,
+                               child: Column(
+                                 children: <Widget>[
+                                   Padding(
+                                     padding: const EdgeInsets.only(top: 35.0),
+                                     child: Row(
+                                       children: <Widget>[
+                                      Container(
+                                      height: 90,
+                                      width: 90,
+                                      decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: Colors.white,
+                                          //  Color(0xFF398AE5),
+                                          width: 2.0,
+                                        ),
+                                        
+                                        ),
+                                        padding: EdgeInsets.all(8.0),
+                                        child: CircleAvatar(
+                                          backgroundImage: AssetImage("asset/img/app.jpg"),
+                                        ),
+                                          ),
+                                      SizedBox(width: 20.0,),
+                                      Flexible(
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                          
+                                          children: <Widget>[
+                                                  Text(userData!= null ? '${userData['name']}':  'Fail get data.',
+                                                  style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16.0,
+                                                  fontFamily: 'Gilroy-ExtraBold'
+                                                ),
+                                                  ),
+                                                  SizedBox(height: 2,),
+                                                  Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
+                                                  style: TextStyle(
+                                                  color: Colors.grey[300],
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 10.0,
+                                                  fontFamily: 'Gilroy-light'
+                                                ),
+                                                  ),
+                                                 NCard(
+                                                      active: false,
+                                 icon: Icons.phone_android,
+                                 label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
+                                                    ),
+                                                    NCard(
+                                                      active: false,
+                                 icon: Icons.my_location,
+                                 label: userData!= null ? '${userData['address']}' :  'Fail get data.',
+                                                    ),
+                                                
+                                                ],
+                                              ),
+                                        ),
+                                      ),
+                                    
+                                        
+
+
+                                       ],
+                                     ),
+                                   ),
+                                   Padding(
+                                      padding: const EdgeInsets.only(top: 35,
+                                      left: 40,
+                                      // right: 50
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+        //                                   GestureDetector(
+        //                                     onTap: (){
+        //                                        Navigator.pushReplacement(
+        // context,
+        // new MaterialPageRoute(
+        //     builder: (context) => UserSoloTransport()));
+        //                                     },
+        //                                     child: Container(
+        //                                       height: 40,
+        //                                       width: 40,
+        //                                       decoration: BoxDecoration(
+        //                                         shape: BoxShape.circle,
+        //                                         color: Colors.white
+        //                                       ),
+        //                                       child: Center(
+        //                                         child: Icon(
+        //                                           Icons.list,
+        //                                           color: Color(0xFF0C375B),
+
+        //                                         ),
+        //                                       ),
+        //                                     ),
+        //                                   ),
+        //                                   GestureDetector(
+        //                                     onTap: (){
+        //                                       Navigator.pushReplacement(
+        // context,
+        // new MaterialPageRoute(
+        //     builder: (context) => UserSoloTransport()));
+        //                                     },
+        //                                     child: Container(
+        //                                       height: 40,
+        //                                       width: 40,
+        //                                       decoration: BoxDecoration(
+        //                                         shape: BoxShape.circle,
+        //                                         color: Colors.white
+        //                                       ),
+        //                                       child: Center(
+        //                                         child: Icon(
+        //                                           Icons.directions_transit,
+        //                                           color: Color(0xFF0C375B),
+
+        //                                         ),
+        //                                       ),
+        //                                     ),
+        //                                   ),
+
+                                          RaisedButton(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                    onPressed: (){
+                      UserDialog_Help.exit(context);
+                    },                
+                    child: Text ( "LOG OUT", style :TextStyle(
+                    color: Color(0xFF0C375B),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12.0,
+                                fontFamily: 'Gilroy-ExtraBold'
+                  ),),),
+                                        ],
+                                      ),
+                                     ), 
+
+                                 ],
+                               ),
+                             ),
+                       ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 25.0,
+                   SizedBox(height: 50,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Text("Services (Ongoing)",
+                    style: TextStyle(
+                     color: Color(0xFF0C375B),
+                     fontSize: 25.0,
+                     fontFamily: 'Gilroy-light',
+                     fontWeight: FontWeight.normal
                     ),
-                    Text(
-                      userData != null ? '${userData['name']}' : '',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 28.0,
-                          fontFamily: 'OpenSans'),
                     ),
-                    SizedBox(
-                      height: 25.0,
+                  ),
+                  SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: Row(
+                      children: <Widget>[
+                       GestureDetector(
+                         onTap: (){},
+                         child: Container(
+                           height: 120,
+                           width: 120,
+                           decoration: BoxDecoration(
+                             color: Color(0xFF0C375B),
+                             borderRadius: BorderRadius.all(Radius.circular(20))
+                           ),
+                         ),
+                       ),
+
+                      ],
                     ),
-                    NCard(
-                      active: false,
-                      icon: Icons.my_location,
-                      label: userData != null
-                          ? '${userData['address']}'
-                          : 'Fail get data.',
                     ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    NCard(
-                      active: false,
-                      icon: Icons.phone_android,
-                      label: userData != null
-                          ? '${userData['contactNumber']}'
-                          : 'Fail get data.',
-                    ),
-                    SizedBox(
-                      height: 45.0,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.home,
-                              iconSize: 30.0,
-                              onTap: () {
-                                Navigator.pushReplacement(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return Profile();
-                                }));
-                              },
-                            ),
-                            DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.track_changes,
-                              iconSize: 30.0,
-                            ),
-                            DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.inbox,
-                              iconSize: 30.0,
-                            ),
-                            DesignButton(
-                              height: 55,
-                              width: 55,
-                              color: Color(0xFF398AE5),
-                              offblackBlue: Offset(-4, -4),
-                              offsetBlue: Offset(4, 4),
-                              blurlevel: 4.0,
-                              icon: Icons.account_box,
-                              iconSize: 30.0,
-                              onTap: () {},
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+
+
+
+
+
+
+                    // Align(
+                    //   alignment: Alignment.topCenter,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(
+                    //         right: 20, top: 30, left: 20),
+                    //     child: Container(
+                    //         height: 40.0,
+                    //         decoration: BoxDecoration(
+                    //           color: Colors.white.withOpacity(0.80),
+                    //           borderRadius: BorderRadius.circular(30.0),
+                    //         ),
+                    //         alignment: Alignment.centerLeft,
+                    //         child: TextField(
+                    //           cursorColor: Color(0xFF0C375B),
+                    //           controller: search,
+                    //           style: TextStyle(
+                    //               color: Color(0xFF0C375B),
+                    //               fontWeight: FontWeight.bold,
+                    //               fontFamily: 'Gilroy-light'),
+                    //           decoration: InputDecoration(
+                    //             border: InputBorder.none,
+                    //             contentPadding: const EdgeInsets.only(
+                    //               top: 7.0,
+                    //             ),
+                    //             prefixIcon: Icon(
+                    //               Icons.search,
+                    //               color: Color(0xFF0C375B),
+                    //             ),
+                    //             hintText: "Search",
+                    //           ),
+                    //           // onChanged: (input) {
+                    //           //   setState(() {
+                    //           //     searchit = input;
+                    //           //   });
+                    //           // },
+                    //            onSubmitted: (input){
+                    //               setState(() {
+                    //                 searchit = input;
+                    //                 print(searchit);
+                    //                 _showodalShit();
+                    //               });
+                    //           },
+                    //         )),
+                    //   ),
+                    // ),
+                    // Widget listData() {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(top: 5.0),
+  //     child: new Container(
+  //       width: MediaQuery.of(context).size.width,
+  //       height: MediaQuery.of(context).size.height,
+  //       decoration: BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.only(
+  //           topLeft: Radius.circular(50.0),
+  //         ),
+  //       ),
+  //       child: FutureBuilder(
+  //         future: getRest(),
+  //         builder: (BuildContext context, AsyncSnapshot snapshot) {
+  //           if (snapshot.data == null) {
+  //             return Container(
+  //               child: Center(
+  //                 child: Text("Restaurants Loading"),
+  //               ),
+  //             );
+  //           } else {
+  //             return ListView.builder(
+  //               // gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+  //               //   crossAxisCount: Orientation.portrait == Orientation.portrait ? 2 : 3),
+  //               scrollDirection: Axis.vertical,
+  //               itemCount: snapshot.data.length,
+  //               itemBuilder: (BuildContext context, int index) {
+  //                 return snapshot.data[index].restaurantName
+  //                             .contains(searchit) |
+  //                         snapshot.data[index].address.contains(searchit)
+  //                     ? GestureDetector(
+  //                         onTap: () {},
+  //                         child: Padding(
+  //                           padding: const EdgeInsets.only(
+  //                               top: 10, bottom: 10, left: 20, right: 20),
+  //                           child: RestaurantFront(
+  //                             image:
+  //                                 "asset/img/${snapshot.data[index].restaurantName}.png",
+  //                             restaurantName:
+  //                                 snapshot.data[index].restaurantName,
+  //                             restaurantAddress: snapshot.data[index].address,
+  //                             openAndclose: snapshot.data[index].openTime +
+  //                                 "-" +
+  //                                 snapshot.data[index].closingTime,
+  //                             onTap: () async {
+  //                               final now = await NTP.now();
+  //                                 String formatNow =
+  //                                     DateFormat.jm().format(now);
+  //                                 DateFormat inputFormat = DateFormat("H:mm");
+  //                                 DateTime dateTime = inputFormat
+  //                                     .parse(snapshot.data[index].closingTime);
+  //                                 String formatClosing =
+  //                                     DateFormat.jm().format(dateTime);
+  //                                 int cpTime =
+  //                                     int.parse(formatNow.substring(0, 1));
+  //                                 int restoTime =
+  //                                     int.parse(formatClosing.substring(0, 1));
+  //                                     print(restoTime);
+  //                               SharedPreferences local =
+  //                                   await SharedPreferences.getInstance();
+  //                               var userjson = local.getString('user');
+  //                               var user = json.decode(userjson);
+  //                               var restaurant;
+  //                               var status;
+  //                               var insideResto =
+  //                                   snapshot.data[index].restaurantName;
+  //                               var isTrue = false;
+  //                               Map<String, dynamic> temp;
+  //                               List<dynamic> converted = [];
+  //                               final response = await ApiCall()
+  //                                   .getData('/viewUserOrders/${user['id']}');
+  //                               final List<ViewUserOrder> transaction =
+  //                                   viewUserOrderFromJson(response.body);
+  //                               transaction.forEach((element) {
+  //                                 restaurant = element.restaurantName;
+  //                                 status = element.status;
+  //                                 temp = {
+  //                                   "restaurant": restaurant,
+  //                                   "status": status
+  //                                 };
+  //                                 converted.add(temp);
+  //                               });
+
+  //                               for (var i = 0; i < converted.length; i++) {
+  //                                 if (insideResto ==
+  //                                         converted[i]['restaurant'] &&
+  //                                     converted[i]['status'] < 4) {
+  //                                   isTrue = true;
+  //                                   break;
+  //                                 }
+  //                               }
+  //                               if (isTrue) {
+  //                                 showDial(context,
+  //                                     "You have a pending Transaction order on this Restaurant.");
+  //                               } else {
+  //                                 if (formatClosing.contains("PM") &&
+  //                                     formatNow.contains("PM")) {
+  //                                   if (cpTime > restoTime) {
+  //                                     showDial(context,
+  //                                         "Sorry The Restaurant Close as this moment of Time");
+  //                                     print("CLOSE");
+  //                                   } else {
+  //                                      print("OPEN");
+  //                                      Navigator.pushReplacement(
+  //                                     context,
+  //                                     new MaterialPageRoute(
+  //                                         builder: (context) => ListStactic(
+  //                                               restauID: snapshot
+  //                                                   .data[index].id
+  //                                                   .toString(),
+  //                                               nameRestau: snapshot
+  //                                                   .data[index].restaurantName
+  //                                                   .toString(),
+  //                                             )));
+  //                                   }
+  //                                 }else{
+                                    
+  //                                    Navigator.pushReplacement(
+  //                                     context,
+  //                                     new MaterialPageRoute(
+  //                                         builder: (context) => ListStactic(
+  //                                               restauID: snapshot
+  //                                                   .data[index].id
+  //                                                   .toString(),
+  //                                               nameRestau: snapshot
+  //                                                   .data[index].restaurantName
+  //                                                   .toString(),
+  //                                             )));
+  //                                 }
+                                 
+  //                               }
+  //                             },
+  //                           ),
+  //                         ),
+  //                       )
+  //                     : Container();
+  //               },
+  //             );
+  //           }
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
+
+
+
+    // Container(
+                    //   height: 200.0,
+                    //   decoration: BoxDecoration(
+                    //     image: DecorationImage(
+                    //       image: AssetImage("asset/img/topsearchbg.jpg"),
+                    //       fit: BoxFit.cover
+                          
+                    //       ),
+                    //     // gradient: LinearGradient(
+                    //     //     stops: [0.2, 1],
+                    //     //     colors: [
+                    //     //       Color(0xFF0C375B),
+                    //     //      Color(0xFF176DB5)],
+                    //     //     begin: Alignment.bottomRight,
+                    //     //     end: Alignment.topLeft),
+                    //     borderRadius: BorderRadius.only(
+                    //       bottomLeft: Radius.circular(40),
+                    //       bottomRight: Radius.circular(40),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   height: 200.0,
+                    //   decoration: BoxDecoration(
+                    //     gradient: LinearGradient(
+                    //         stops: [0.2,2],
+                    //         colors: [
+                    //           Color(0xFF0C375B).withOpacity(.80),
+                    //         //  Color(0xFF176DB5).withOpacity(.90)
+                    //         Colors.white.withOpacity(.30) 
+                    //          ],
+                    //         begin: Alignment.bottomRight,
+                    //         end: Alignment.topLeft),
+                     
+                    //     borderRadius: BorderRadius.only(
+                    //       bottomLeft: Radius.circular(40),
+                    //       bottomRight: Radius.circular(40),
+                    //     ),
+                    //   ),
+                    // ),
