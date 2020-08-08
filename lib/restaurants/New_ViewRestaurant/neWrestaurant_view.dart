@@ -19,11 +19,11 @@ class _NewRestaurantViewFeaturedState extends State<NewRestaurantViewFeatured> {
     super.initState();
     streamRestaurantsFeatured..getFeaturedViewRestaurant();
   }
-  @override
-  void dispose() {
-    super.dispose();
-    streamRestaurantsFeatured..drainStream();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   streamRestaurantsFeatured..drainStream();
+  // }
   
   @override
   Widget build(BuildContext context) {
