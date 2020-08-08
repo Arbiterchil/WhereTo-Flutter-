@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
+import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/restaurants/FoodDisplay.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
@@ -28,21 +29,13 @@ class _SearchDepoState extends State<SearchDepo> {
   TextEditingController search = new TextEditingController();
   @override
   void initState() {
-     _getUserInfo();
     casting = false;
     super.initState();
     getLocation();
     super.initState();
   }
 
-  void _getUserInfo() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var userJson = localStorage.getString('user');
-    var user = json.decode(userJson);
-    setState(() {
-      userData = user;
-    });
-  }
+  
  getLocation() async{
     var location =Location();
     try{
@@ -253,65 +246,7 @@ class _SearchDepoState extends State<SearchDepo> {
                     
                   ],
                 ),
-                Padding(padding: const EdgeInsets.only(left: 20,right: 20),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      
-                      children: <Widget>[
-                         Container(
-                           height: 110,
-                           width: 110,
-                           decoration: BoxDecoration(
-                             shape: BoxShape.circle,
-                             image: DecorationImage(
-                               image: AssetImage("asset/img/62512004_p0.png"),
-                               fit: BoxFit.cover),
-                           ),
-                         ),
-                         SizedBox(width: 10,),
-                        Flexible(
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                
-                           Text(userData!= null ? '${userData['name']}':  'Fail get data.',
-                                                    style: TextStyle(
-                                                    color: Color(0xFF0C375B),
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 16.0,
-                                                    fontFamily: 'Gilroy-ExtraBold'
-                                                  ),
-                                                    ),
-                                                    SizedBox(height: 2,),
-                                                    Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
-                                                    style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.normal,
-                                                    fontSize: 10.0,
-                                                    fontFamily: 'Gilroy-light'
-                                                  ),
-                                                    ),
-                                                     NCard(
-                                                        active: false,
-                                   icon: Icons.phone_android,
-                                   label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
-                                                      ),
-                                                      NCard(
-                                                        active: false,
-                                   icon: Icons.my_location,
-                                   label: userData!= null ? '${userData['address']}' :  'Fail get data.',
-                                                      ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                  ),
-                ),
-                ),
+               SharedPrefCallnameData(),
                 SizedBox(height: 40,),
                  Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20),
@@ -361,52 +296,4 @@ class _SearchDepoState extends State<SearchDepo> {
 
   
 
-}
-class NCard extends StatelessWidget {
-
-  final bool active;
-  final IconData icon;
-  final String label;
-  final Function onTap;
-  const NCard({this.active,this.icon,this.onTap,this.label});
-  @override
-  Widget build(BuildContext context) {
-
-    return GestureDetector(
-        onTap: onTap,
-      child: Container(
-        height: 30.0,
-        width: MediaQuery.of(context).size.width,
-        // padding: EdgeInsets.symmetric(horizontal: 15,vertical: 7),
-        // decoration: eBox,
-        child: Row(
-          children: <Widget>[
-            Icon(icon,color: Color(0xFF0C375B),size: 15.0,),
-            SizedBox(width: 7.0,),
-        
-             Flexible(
-               flex: 1,
-               child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    child: Container(
-                      child: Text(label,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(
-                        color: Color(0xFF0C375B),
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12.0,
-                        fontFamily: 'Gilroy-light'
-                      ),),
-                    ),
-                  ),
-             ),
-           
-            
-          ],
-        ),
-      ),
-    );
-  }
 }
