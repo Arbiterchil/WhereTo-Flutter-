@@ -29,13 +29,13 @@ class _Profile extends State<Profile> {
   bool casting;
   String getRestaurant;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
-  String searchit = "";
+   TextEditingController search = new TextEditingController();
   @override
   void initState() {
     _getUserInfo();
     casting = false;
     super.initState();
-    getLocation();
+    // getLocation();
     super.initState();
   }
 
@@ -136,14 +136,6 @@ class _Profile extends State<Profile> {
     
   }
 
-  
-   Future<List<SearchDeposition>> getRest() async {
-   final response =await ApiCall().getRestarant('/getFeaturedRestaurant');
-   List<SearchDeposition> search =searchDepoFromJson(response.body);
-   return search;
- }
-
-
 
 
   @override
@@ -155,16 +147,15 @@ class _Profile extends State<Profile> {
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
-              child: Column(
-                textDirection: TextDirection.ltr,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                    Stack(
-                      alignment: AlignmentDirectional.topCenter,
-                      overflow: Overflow.visible,
-                      children: <Widget>[                      
-                        Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Stack(
+                          overflow: Overflow.visible,
+                          alignment: Alignment.topCenter,
+                          children: <Widget>[
+                            Container(
                           height: 230.0,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
@@ -178,201 +169,73 @@ class _Profile extends State<Profile> {
                               end: Alignment.topLeft),
                             
                             borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(40),
-                              bottomRight: Radius.circular(40),
+                              bottomLeft: Radius.circular(140),
+                              bottomRight: Radius.circular(140),
                             ),
                           ),
 
                         ),
-                       Padding(
-                         padding: const EdgeInsets.only(top: 5,left: 30,right: 30),
-                         child: Container(
-                               height: 220.0,
-                               child: Column(
-                                 children: <Widget>[
-                                   Padding(
-                                     padding: const EdgeInsets.only(top: 35.0),
-                                     child: Row(
-                                       children: <Widget>[
-                                      Container(
-                                      height: 90,
-                                      width: 90,
-                                      decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                          color: Colors.white,
-                                          //  Color(0xFF398AE5),
-                                          width: 2.0,
-                                        ),
-                                        
-                                        ),
-                                        padding: EdgeInsets.all(8.0),
-                                        child: CircleAvatar(
-                                          backgroundImage: AssetImage("asset/img/app.jpg"),
-                                        ),
-                                          ),
-                                      SizedBox(width: 20.0,),
-                                      Flexible(
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                          
-                                          children: <Widget>[
-                                                  Text(userData!= null ? '${userData['name']}':  'Fail get data.',
+                          ],
+                        ),
+                           Transform.translate(
+                           offset: Offset(0, -60),
+                           child: Container(
+                             height: 120,
+                             width: 120,
+                             decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               image: DecorationImage(
+                                 image: AssetImage("asset/img/62512004_p0.png"),
+                                 fit: BoxFit.cover),
+                             ),
+                           ),
+                         ),
+                         Text(userData!= null ? '${userData['name']}':  'Fail get data.',
                                                   style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: Color(0xFF0C375B),
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 16.0,
+                                                  fontSize: 40.0,
                                                   fontFamily: 'Gilroy-ExtraBold'
                                                 ),
                                                   ),
-                                                  SizedBox(height: 2,),
+                                                  SizedBox(height: 10,),
                                                   Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
                                                   style: TextStyle(
-                                                  color: Colors.grey[300],
+                                                  color: Colors.black,
                                                   fontWeight: FontWeight.normal,
-                                                  fontSize: 10.0,
+                                                  fontSize: 20.0,
                                                   fontFamily: 'Gilroy-light'
                                                 ),
                                                   ),
-                                                 NCard(
-                                                      active: false,
+                                                  SizedBox(height: 40,),
+                                                 Padding(
+                                                   padding: const EdgeInsets.only(left: 20,right: 20),
+                                                   child: NCard(
+                                                        active: false,
                                  icon: Icons.phone_android,
                                  label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
-                                                    ),
-                                                    NCard(
-                                                      active: false,
+                                                      ),
+                                                 ), 
+                                                    SizedBox(height: 40,),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left: 20,right: 20),
+                                                      child: NCard(
+                                                        active: false,
                                  icon: Icons.my_location,
                                  label: userData!= null ? '${userData['address']}' :  'Fail get data.',
+                                                      ),
                                                     ),
                                                 
-                                                ],
-                                              ),
-                                        ),
-                                      ),
-                                    
-                                        
-
-
-                                       ],
-                                     ),
-                                   ),
-                                   Padding(
-                                      padding: const EdgeInsets.only(top: 35,
-                                      left: 40,
-                                      // right: 50
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-        //                                   GestureDetector(
-        //                                     onTap: (){
-        //                                        Navigator.pushReplacement(
-        // context,
-        // new MaterialPageRoute(
-        //     builder: (context) => UserSoloTransport()));
-        //                                     },
-        //                                     child: Container(
-        //                                       height: 40,
-        //                                       width: 40,
-        //                                       decoration: BoxDecoration(
-        //                                         shape: BoxShape.circle,
-        //                                         color: Colors.white
-        //                                       ),
-        //                                       child: Center(
-        //                                         child: Icon(
-        //                                           Icons.list,
-        //                                           color: Color(0xFF0C375B),
-
-        //                                         ),
-        //                                       ),
-        //                                     ),
-        //                                   ),
-        //                                   GestureDetector(
-        //                                     onTap: (){
-        //                                       Navigator.pushReplacement(
-        // context,
-        // new MaterialPageRoute(
-        //     builder: (context) => UserSoloTransport()));
-        //                                     },
-        //                                     child: Container(
-        //                                       height: 40,
-        //                                       width: 40,
-        //                                       decoration: BoxDecoration(
-        //                                         shape: BoxShape.circle,
-        //                                         color: Colors.white
-        //                                       ),
-        //                                       child: Center(
-        //                                         child: Icon(
-        //                                           Icons.directions_transit,
-        //                                           color: Color(0xFF0C375B),
-
-        //                                         ),
-        //                                       ),
-        //                                     ),
-        //                                   ),
-
-                                          RaisedButton(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    onPressed: (){
-                      UserDialog_Help.exit(context);
-                    },                
-                    child: Text ( "LOG OUT", style :TextStyle(
-                    color: Color(0xFF0C375B),
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12.0,
-                                fontFamily: 'Gilroy-ExtraBold'
-                  ),),),
-                                        ],
-                                      ),
-                                     ), 
-
-                                 ],
-                               ),
-                             ),
-                       ),
-                      ],
-                    ),
-                   SizedBox(height: 50,),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Text("Services (Ongoing)",
-                    style: TextStyle(
-                     color: Color(0xFF0C375B),
-                     fontSize: 25.0,
-                     fontFamily: 'Gilroy-light',
-                     fontWeight: FontWeight.normal
-                    ),
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: Row(
-                      children: <Widget>[
-                       GestureDetector(
-                         onTap: (){},
-                         child: Container(
-                           height: 120,
-                           width: 120,
-                           decoration: BoxDecoration(
-                             color: Color(0xFF0C375B),
-                             borderRadius: BorderRadius.all(Radius.circular(20))
-                           ),
-                         ),
-                       ),
+                                             
+                                      
 
                       ],
-                    ),
-                    ),
-                ],
+              
+                ),
               ),
             ),
         
-      ),
+    
   );
   }
 }
@@ -390,36 +253,44 @@ class NCard extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
       child: Container(
-        height: 30.0,
+        height: 50.0,
         width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Color(0xFF0C375B),
+          borderRadius: BorderRadius.all(Radius.circular(40))
+        ),
         // padding: EdgeInsets.symmetric(horizontal: 15,vertical: 7),
         // decoration: eBox,
-        child: Row(
-          children: <Widget>[
-            Icon(icon,color: Colors.white,size: 15.0,),
-            SizedBox(width: 7.0,),
-        
-             Flexible(
-               flex: 1,
-               child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    child: Container(
-                      child: Text(label,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12.0,
-                        fontFamily: 'Gilroy-light'
-                      ),),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            children: <Widget>[
+              Icon(icon,color: Colors.white,size: 15.0,),
+              SizedBox(width: 7.0,),
+
+               Flexible(
+                 flex: 1,
+                 child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      child: Container(
+                        child: Text(label,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: Colors.white,
+                          // Color(0xFF0C375B),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16.0,
+                          fontFamily: 'Gilroy-light'
+                        ),),
+                      ),
                     ),
-                  ),
-             ),
-           
-            
-          ],
+               ),
+             
+              
+            ],
+          ),
         ),
       ),
     );

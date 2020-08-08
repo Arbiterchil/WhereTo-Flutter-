@@ -1,233 +1,141 @@
 import 'dart:convert';
-import 'package:WhereTo/AnCustom/restaurant_front.dart';
-import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
-import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
-import 'package:WhereTo/restaurants/carousel_rest.dart';
-import 'package:WhereTo/restaurants/dialog.dart';
-import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/new_Carousel.dart';
-import 'package:WhereTo/restaurants/searchRestaurant.dart';
 import 'package:flutter/material.dart';
-import 'package:ntp/ntp.dart';
+import 'package:http/http.dart' as http;
+import 'package:location/location.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart';
+
 
 class SearchDepo extends StatefulWidget {
   @override
   _SearchDepoState createState() => _SearchDepoState();
 }
 
-Future<List<SearchDeposition>> getRest() async {
-  final response = await ApiCall().getRestarant('/getFeaturedRestaurant');
-  List<SearchDeposition> search = searchDepoFromJson(response.body);
-  return search;
-}
-
-
-
 class _SearchDepoState extends State<SearchDepo> {
-  TextEditingController search = new TextEditingController();
-  String searchit = "";
 
+
+     final scaffoldKey = new GlobalKey<ScaffoldState>(); 
+      var userData;
+  var constant;
+  bool casting;
+  String getRestaurant;
+  String searchit;
+  TextEditingController search = new TextEditingController();
   @override
   void initState() {
+     _getUserInfo();
+    casting = false;
+    super.initState();
+    getLocation();
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // }
-
-  void _showodalShit(){
-    showModalBottomSheet(
-      context : context,
-      backgroundColor: Colors.transparent,
-      builder:(builder){
-      return new Padding(
-          padding: EdgeInsets.only(left: 20.0,right: 20.0 ,top: 20.0),
-          child: Container(
-            height: 700.0,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: Color(0xFFF2F2F2F2),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30)
-              ),
-            ),
-            child: FutureBuilder(
-              future: getRest(),
-              builder: (BuildContext context, AsyncSnapshot snapshot){
-                if(snapshot.data == null){
-                  return Container(
-                    child: Center(
-                      child: Text("Restaurants Searching..",
-                      style: TextStyle(
-                        color: Colors.black,
-                                  fontFamily: 'Gilroy-light',
-                                  fontStyle: FontStyle.normal
-                      ),
-                      ),
-                    ),
-                  );
-                }else{
-                    return new ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context , int index){
-                          return snapshot.data[index].restaurantName.contains(searchit)
-                          |snapshot.data[index].address.contains(searchit) ? GestureDetector(
-                            onTap: (){
-   
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: RestaurantFront(
-                               image:
-                                  "asset/img/${snapshot.data[index].restaurantName}.jpg",
-                              restaurantName:
-                                  snapshot.data[index].restaurantName,
-                              restaurantAddress: snapshot.data[index].address,
-                              openAndclose: snapshot.data[index].openTime +
-                                  "-" +
-                                  snapshot.data[index].closingTime,
-                              onTap: () async {
-                                  final now = await NTP.now();
-                                  final formatNow =DateFormat.Hm().format(now);
-                                 
-                                  DateFormat inputFormat = DateFormat("H:mm");
-                                  DateTime dateCloseTime = inputFormat.parse(snapshot.data[index].closingTime);
-                                  DateTime dateOpen = inputFormat.parse(snapshot.data[index].openTime);
-                                  String formatClosing =DateFormat.Hm().format(dateCloseTime);
-                                  String formatOpen =DateFormat.Hm().format(dateOpen);
-                                  // int cpTime =int.parse(formatNow.substring(0, 2));
-                                  // int restoTime =int.parse(formatClosing.substring(0, 1));
-                                  // int restoOpen =int.parse(formatOpen.substring(0,1));
-                                SharedPreferences local =
-                                    await SharedPreferences.getInstance();
-                                var userjson = local.getString('user');
-                                var user = json.decode(userjson);
-                                var restaurant;
-                                var status;
-                                var insideResto =
-                                    snapshot.data[index].restaurantName;
-                                var isTrue = false;
-                                Map<String, dynamic> temp;
-                                List<dynamic> converted = [];
-                                final response = await ApiCall()
-                                    .getData('/viewUserOrders/${user['id']}');
-                                final List<ViewUserOrder> transaction =
-                                    viewUserOrderFromJson(response.body);
-                                transaction.forEach((element) {
-                                  restaurant = element.restaurantName;
-                                  status = element.status;
-                                  temp = {
-                                    "restaurant": restaurant,
-                                    "status": status
-                                  };
-                                  converted.add(temp);
-                                });
-
-                                for (var i = 0; i < converted.length; i++) {
-                                  if (insideResto ==
-                                          converted[i]['restaurant'] &&
-                                      converted[i]['status'] < 4) {
-                                    isTrue = true;
-                                    break;
-                                  }
-                                }
-                                if (isTrue) {
-                                  showDial(context,
-                                      "You have a pending Transaction order on this Restaurant.");
-                                } else {
-                                  if(int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) || int.parse(formatNow.split(":")[0]) >=0 && int.parse(formatNow.split(":")[0]) <08){
-                                    print("CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
-                                    showDial(context,"Sorry The Restaurant is close at the Moment Please Come Back");
-                                  }else{
-                                      if(int.parse(formatNow.split(":")[0])  >= int.parse(formatOpen.split(":")[0])){
-                                         Navigator.pushReplacement(
-                                        context,new MaterialPageRoute(builder: (context) => ListStactic(
-                                                restauID: snapshot
-                                                    .data[index].id
-                                                    .toString(),
-                                                nameRestau: snapshot
-                                                    .data[index].restaurantName
-                                                    .toString(),
-                                              )));
-                                      }else{
-                                        showDial(context,"Sorry The Restaurant is Not yet open at the Moment Please Wait!");
-                                
-                                      }
-                                      
-                                  }
-                                  // if (formatClosing.contains("PM") &&formatNow.contains("PM")) {
-
-                                  //   if (cpTime > restoTime) {
-                                  //     showDial(context,
-                                  //         "Sorry The Restaurant Close as this moment of Time");
-                                  //     print("CLOSE");
-                                  //   } else {
-                                  //      print("OPEN");
-                                  //      Navigator.pushReplacement(
-                                  //     context,
-                                  //     new MaterialPageRoute(
-                                  //         builder: (context) => ListStactic(
-                                  //               restauID: snapshot
-                                  //                   .data[index].id
-                                  //                   .toString(),
-                                  //               nameRestau: snapshot
-                                  //                   .data[index].restaurantName
-                                  //                   .toString(),
-                                  //             )));
-                                  //   }
-                                  // }else{
-                                    
-                                  //    if(formatNow.contains("AM")){
-                                  //      if(cpTime > 11 || cpTime >=1 || restoOpen < cpTime){
-                                         
-                                  //      }else{
-                                  //        Navigator.pushReplacement(
-                                  //     context,
-                                  //     new MaterialPageRoute(
-                                  //         builder: (context) => ListStactic(
-                                  //               restauID: snapshot
-                                  //                   .data[index].id
-                                  //                   .toString(),
-                                  //               nameRestau: snapshot
-                                  //                   .data[index].restaurantName
-                                  //                   .toString(),
-                                  //             )));
-                                  //      }
-                                  //    }
-                                  // }
-                                 
-                                }
-                              },
-                              ),
-                            ),
-                          ): Container(
-                          );
-                        },
-                      );
-
-                }
-
-
-
-              },
-            ),
-          ),
-      );
-
+  void _getUserInfo() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var userJson = localStorage.getString('user');
+    var user = json.decode(userJson);
+    setState(() {
+      userData = user;
     });
+  }
+ getLocation() async{
+    var location =Location();
+    try{
+      var userLocation =await location.getLocation();
+      print("${userLocation.latitude},${userLocation.longitude}");
+    } on Exception catch (e){
+      print(e.toString());
+    }
+ }
 
-  } 
+ Future<void>getService() async{
+   var location =Location();
+   bool _serviceEnabled;
+   _serviceEnabled = await location.serviceEnabled();
+  if (!_serviceEnabled) {
+  _serviceEnabled = await location.requestService();
+  if (!_serviceEnabled) {
+    return;
+  }
+}
+ }
+ Future<void>getPermission() async{
+   var location =Location();
+   PermissionStatus permissionStatus =await location.hasPermission();
+   if(permissionStatus ==PermissionStatus.denied){
+     permissionStatus =await location.requestPermission();
+     if(permissionStatus !=PermissionStatus.granted){
+       return;
+     }
+   }
+ }
+
+
+
+  void configSignal() async {
+    var data;
+    await OneSignal.shared.setLocationShared(true);
+    await OneSignal.shared.promptLocationPermission();
+    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared
+        .setNotificationReceivedHandler((OSNotification notification) {
+      setState(() {
+        //  constant = notification.payload.additionalData;
+        data =notification.payload.additionalData;
+        
+      });
+    });
+    await OneSignal.shared.setSubscription(true);
+    var tags = await OneSignal.shared.getTags();
+    var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+
+    String url = 'https://onesignal.com/api/v1/notifications';
+    var playerId = status.subscriptionStatus.userId;
+    var idChil = "1106b49d-60f0-435a-b44f-5d2f4849cb38";
+    var numb = "3";
+    var contents = {
+      "include_player_ids": [idChil,playerId],
+      "include_segments": ["Users Notif"],
+      "excluded_segments": [],
+      "contents": {"en": "This is a test."},
+
+      "data": {"id": numb},
+
+      "headings": {"en": "Erchil Testings"},
+      "filter": [
+        {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+      ],
+      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+    };
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+    };
+    var repo =
+        await http.post(url, headers: headers, body: json.encode(contents));
+
+    // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
+    print(data.toString());
+    print(tags);
+    print(sendtag);
+    print(playerId);
+    print(repo.body);
+  
+    
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       body: WillPopScope(
         onWillPop: () async => false,
         child: SafeArea(
@@ -240,42 +148,11 @@ class _SearchDepoState extends State<SearchDepo> {
                 Stack(
                   children: <Widget>[
                     NewCarousel(),
-                    
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 20, top: 190),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              "Satify Your Own",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 35.0,
-                                  fontFamily: 'Gilroy-ExtraBold'),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "CRAVINGS",
-                              style: TextStyle(
-                                  color: Colors.amber,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30.0,
-                                  fontFamily: 'Gilroy-ExtraBold'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            right: 20, top: 30, left: 20),
+                            right: 20, top: 100, left: 20),
                         child: Container(
                             height: 40.0,
                             decoration: BoxDecoration(
@@ -310,24 +187,136 @@ class _SearchDepoState extends State<SearchDepo> {
                                   setState(() {
                                     searchit = input;
                                     print(searchit);
-                                    _showodalShit();
+                                    
                                   });
                               },
                             )),
                       ),
                     ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20,top: 10),
+                        child: GestureDetector(
+                          onTap: () => UserDialog_Help.exit(context),
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.exit_to_app,
+                                color:Color(0xFF0C375B),
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                        
+                        ),
+                    ),
+
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 20, top: 180),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "Satisfy Your Own",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 35.0,
+                                  fontFamily: 'Gilroy-ExtraBold'),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "CRAVINGS",
+                              style: TextStyle(
+                                  color: Colors.amber,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30.0,
+                                  fontFamily: 'Gilroy-ExtraBold'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    
                   ],
                 ),
-                //  CarouselSex(),
+                Padding(padding: const EdgeInsets.only(left: 20,right: 20),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      
+                      children: <Widget>[
+                         Container(
+                           height: 110,
+                           width: 110,
+                           decoration: BoxDecoration(
+                             shape: BoxShape.circle,
+                             image: DecorationImage(
+                               image: AssetImage("asset/img/62512004_p0.png"),
+                               fit: BoxFit.cover),
+                           ),
+                         ),
+                         SizedBox(width: 10,),
+                        Flexible(
+                          child: Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                
+                           Text(userData!= null ? '${userData['name']}':  'Fail get data.',
+                                                    style: TextStyle(
+                                                    color: Color(0xFF0C375B),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16.0,
+                                                    fontFamily: 'Gilroy-ExtraBold'
+                                                  ),
+                                                    ),
+                                                    SizedBox(height: 2,),
+                                                    Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
+                                                    style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 10.0,
+                                                    fontFamily: 'Gilroy-light'
+                                                  ),
+                                                    ),
+                                                     NCard(
+                                                        active: false,
+                                   icon: Icons.phone_android,
+                                   label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
+                                                      ),
+                                                      NCard(
+                                                        active: false,
+                                   icon: Icons.my_location,
+                                   label: userData!= null ? '${userData['address']}' :  'Fail get data.',
+                                                      ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                  ),
+                ),
+                ),
+                SizedBox(height: 40,),
                  Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20),
                       child: Container(
                         width: 170,
                         height: 40,
-                        // decoration: BoxDecoration(
-                        //   color: Color(0xFF0C375B),
-                        //   borderRadius: BorderRadius.all(Radius.circular(40))
-                        // ),
                           child: Text("Popular Food in Restaurant's",
                           style: TextStyle(
                                 color:Color(0xFF0C375B),
@@ -396,10 +385,6 @@ class _SearchDepoState extends State<SearchDepo> {
                       child: Container(
                        width: 170,
                         height: 40,
-                        // decoration: BoxDecoration(
-                        //   color: Color(0xFF0C375B),
-                        //   borderRadius: BorderRadius.all(Radius.circular(40))
-                        // ),
                           child: Text("Popular Fast Food",
                           style: TextStyle(
                                 color:Color(0xFF0C375B),
@@ -415,11 +400,6 @@ class _SearchDepoState extends State<SearchDepo> {
                      padding: const EdgeInsets.only(left: 10,right: 10),
                      child: NewRestaurantViewFeatured(),
                    ),
-                // Container(
-                //   height: 520.0,
-                //   width: MediaQuery.of(context).size.width,
-                //   child: listData(),
-                // )
               ],
             ),
           ),
@@ -428,194 +408,54 @@ class _SearchDepoState extends State<SearchDepo> {
     );
   }
 
-  // Widget listData() {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(top: 5.0),
-  //     child: new Container(
-  //       width: MediaQuery.of(context).size.width,
-  //       height: MediaQuery.of(context).size.height,
-  //       decoration: BoxDecoration(
-  //         color: Colors.white,
-  //         borderRadius: BorderRadius.only(
-  //           topLeft: Radius.circular(50.0),
-  //         ),
-  //       ),
-  //       child: FutureBuilder(
-  //         future: getRest(),
-  //         builder: (BuildContext context, AsyncSnapshot snapshot) {
-  //           if (snapshot.data == null) {
-  //             return Container(
-  //               child: Center(
-  //                 child: Text("Restaurants Loading"),
-  //               ),
-  //             );
-  //           } else {
-  //             return ListView.builder(
-  //               // gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-  //               //   crossAxisCount: Orientation.portrait == Orientation.portrait ? 2 : 3),
-  //               scrollDirection: Axis.vertical,
-  //               itemCount: snapshot.data.length,
-  //               itemBuilder: (BuildContext context, int index) {
-  //                 return snapshot.data[index].restaurantName
-  //                             .contains(searchit) |
-  //                         snapshot.data[index].address.contains(searchit)
-  //                     ? GestureDetector(
-  //                         onTap: () {},
-  //                         child: Padding(
-  //                           padding: const EdgeInsets.only(
-  //                               top: 10, bottom: 10, left: 20, right: 20),
-  //                           child: RestaurantFront(
-  //                             image:
-  //                                 "asset/img/${snapshot.data[index].restaurantName}.png",
-  //                             restaurantName:
-  //                                 snapshot.data[index].restaurantName,
-  //                             restaurantAddress: snapshot.data[index].address,
-  //                             openAndclose: snapshot.data[index].openTime +
-  //                                 "-" +
-  //                                 snapshot.data[index].closingTime,
-  //                             onTap: () async {
-  //                               final now = await NTP.now();
-  //                                 String formatNow =
-  //                                     DateFormat.jm().format(now);
-  //                                 DateFormat inputFormat = DateFormat("H:mm");
-  //                                 DateTime dateTime = inputFormat
-  //                                     .parse(snapshot.data[index].closingTime);
-  //                                 String formatClosing =
-  //                                     DateFormat.jm().format(dateTime);
-  //                                 int cpTime =
-  //                                     int.parse(formatNow.substring(0, 1));
-  //                                 int restoTime =
-  //                                     int.parse(formatClosing.substring(0, 1));
-  //                                     print(restoTime);
-  //                               SharedPreferences local =
-  //                                   await SharedPreferences.getInstance();
-  //                               var userjson = local.getString('user');
-  //                               var user = json.decode(userjson);
-  //                               var restaurant;
-  //                               var status;
-  //                               var insideResto =
-  //                                   snapshot.data[index].restaurantName;
-  //                               var isTrue = false;
-  //                               Map<String, dynamic> temp;
-  //                               List<dynamic> converted = [];
-  //                               final response = await ApiCall()
-  //                                   .getData('/viewUserOrders/${user['id']}');
-  //                               final List<ViewUserOrder> transaction =
-  //                                   viewUserOrderFromJson(response.body);
-  //                               transaction.forEach((element) {
-  //                                 restaurant = element.restaurantName;
-  //                                 status = element.status;
-  //                                 temp = {
-  //                                   "restaurant": restaurant,
-  //                                   "status": status
-  //                                 };
-  //                                 converted.add(temp);
-  //                               });
+  
 
-  //                               for (var i = 0; i < converted.length; i++) {
-  //                                 if (insideResto ==
-  //                                         converted[i]['restaurant'] &&
-  //                                     converted[i]['status'] < 4) {
-  //                                   isTrue = true;
-  //                                   break;
-  //                                 }
-  //                               }
-  //                               if (isTrue) {
-  //                                 showDial(context,
-  //                                     "You have a pending Transaction order on this Restaurant.");
-  //                               } else {
-  //                                 if (formatClosing.contains("PM") &&
-  //                                     formatNow.contains("PM")) {
-  //                                   if (cpTime > restoTime) {
-  //                                     showDial(context,
-  //                                         "Sorry The Restaurant Close as this moment of Time");
-  //                                     print("CLOSE");
-  //                                   } else {
-  //                                      print("OPEN");
-  //                                      Navigator.pushReplacement(
-  //                                     context,
-  //                                     new MaterialPageRoute(
-  //                                         builder: (context) => ListStactic(
-  //                                               restauID: snapshot
-  //                                                   .data[index].id
-  //                                                   .toString(),
-  //                                               nameRestau: snapshot
-  //                                                   .data[index].restaurantName
-  //                                                   .toString(),
-  //                                             )));
-  //                                   }
-  //                                 }else{
-                                    
-  //                                    Navigator.pushReplacement(
-  //                                     context,
-  //                                     new MaterialPageRoute(
-  //                                         builder: (context) => ListStactic(
-  //                                               restauID: snapshot
-  //                                                   .data[index].id
-  //                                                   .toString(),
-  //                                               nameRestau: snapshot
-  //                                                   .data[index].restaurantName
-  //                                                   .toString(),
-  //                                             )));
-  //                                 }
-                                 
-  //                               }
-  //                             },
-  //                           ),
-  //                         ),
-  //                       )
-  //                     : Container();
-  //               },
-  //             );
-  //           }
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
+}
+class NCard extends StatelessWidget {
 
+  final bool active;
+  final IconData icon;
+  final String label;
+  final Function onTap;
+  const NCard({this.active,this.icon,this.onTap,this.label});
+  @override
+  Widget build(BuildContext context) {
 
-
-    // Container(
-                    //   height: 200.0,
-                    //   decoration: BoxDecoration(
-                    //     image: DecorationImage(
-                    //       image: AssetImage("asset/img/topsearchbg.jpg"),
-                    //       fit: BoxFit.cover
-                          
-                    //       ),
-                    //     // gradient: LinearGradient(
-                    //     //     stops: [0.2, 1],
-                    //     //     colors: [
-                    //     //       Color(0xFF0C375B),
-                    //     //      Color(0xFF176DB5)],
-                    //     //     begin: Alignment.bottomRight,
-                    //     //     end: Alignment.topLeft),
-                    //     borderRadius: BorderRadius.only(
-                    //       bottomLeft: Radius.circular(40),
-                    //       bottomRight: Radius.circular(40),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Container(
-                    //   height: 200.0,
-                    //   decoration: BoxDecoration(
-                    //     gradient: LinearGradient(
-                    //         stops: [0.2,2],
-                    //         colors: [
-                    //           Color(0xFF0C375B).withOpacity(.80),
-                    //         //  Color(0xFF176DB5).withOpacity(.90)
-                    //         Colors.white.withOpacity(.30) 
-                    //          ],
-                    //         begin: Alignment.bottomRight,
-                    //         end: Alignment.topLeft),
-                     
-                    //     borderRadius: BorderRadius.only(
-                    //       bottomLeft: Radius.circular(40),
-                    //       bottomRight: Radius.circular(40),
-                    //     ),
-                    //   ),
-                    // ),
-
-
+    return GestureDetector(
+        onTap: onTap,
+      child: Container(
+        height: 30.0,
+        width: MediaQuery.of(context).size.width,
+        // padding: EdgeInsets.symmetric(horizontal: 15,vertical: 7),
+        // decoration: eBox,
+        child: Row(
+          children: <Widget>[
+            Icon(icon,color: Color(0xFF0C375B),size: 15.0,),
+            SizedBox(width: 7.0,),
+        
+             Flexible(
+               flex: 1,
+               child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    child: Container(
+                      child: Text(label,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        color: Color(0xFF0C375B),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.0,
+                        fontFamily: 'Gilroy-light'
+                      ),),
+                    ),
+                  ),
+             ),
+           
+            
+          ],
+        ),
+      ),
+    );
+  }
 }
