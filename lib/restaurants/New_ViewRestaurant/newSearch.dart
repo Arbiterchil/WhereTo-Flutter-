@@ -1,28 +1,190 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class CustomSearch extends SearchDelegate{
-  @override
-  List<Widget> buildActions(BuildContext context) {
-     
-      throw UnimplementedError();
-    }
-  
-    @override
-    Widget buildLeading(BuildContext context) {
-     
-      throw UnimplementedError();
-    }
-  
-    @override
-    Widget buildResults(BuildContext context) {
-    
-      throw UnimplementedError();
-    }
-  
-    @override
-    Widget buildSuggestions(BuildContext context) {
-   
-    throw UnimplementedError();
+import 'package:WhereTo/AnCustom/restaurant_front.dart';
+import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
+import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/restaurants/New_ViewRestaurant/bloc.search.dart';
+import 'package:WhereTo/restaurants/dialog.dart';
+import 'package:WhereTo/restaurants/list_restaurant.dart';
+import 'package:WhereTo/restaurants/searchRestaurant.dart';
+import 'package:flutter/material.dart';
+import 'package:ntp/ntp.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
+class CustomSearch extends SearchDelegate {
+BlocSearch bloc;
+  Future<void> getBloc(var id) async {
+    await bloc.getRest(query);
   }
 
+  Future<void> disposeBloc() async {
+    bloc.dispose();
+  }
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            query = "";
+          }),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+      bloc = BlocSearch();
+      getBloc(query);  
+
+    
+    return new Padding(
+      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+      child: Container(
+        height: 700.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Color(0xFFF2F2F2F2),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+        ),
+        child: StreamBuilder<List<SearchDeposition>>(
+          stream: bloc.stream,
+          builder: (context, snapshot){
+            if (snapshot.data == null) {
+              return Container(
+                child: Center(
+                  child: Text(
+                    "Restaurants Searching..",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Gilroy-light',
+                        fontStyle: FontStyle.normal),
+                  ),
+                ),
+              );
+            } else {
+              return new ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: RestaurantFront(
+                              image:
+                                  "asset/img/${snapshot.data[index].restaurantName}.jpg",
+                              restaurantName:
+                                  snapshot.data[index].restaurantName,
+                              restaurantAddress: snapshot.data[index].address,
+                              openAndclose: snapshot.data[index].openTime +
+                                  "-" +
+                                  snapshot.data[index].closingTime,
+                              onTap: () async {
+                                final now = await NTP.now();
+                                final formatNow = DateFormat.Hm().format(now);
+                                DateFormat inputFormat = DateFormat("H:mm");
+                                DateTime dateCloseTime = inputFormat
+                                    .parse(snapshot.data[index].closingTime);
+                                DateTime dateOpen = inputFormat
+                                    .parse(snapshot.data[index].openTime);
+                                String formatClosing =
+                                    DateFormat.Hm().format(dateCloseTime);
+                                String formatOpen =
+                                    DateFormat.Hm().format(dateOpen);
+                                // int cpTime =int.parse(formatNow.substring(0, 2));
+                                // int restoTime =int.parse(formatClosing.substring(0, 1));
+                                // int restoOpen =int.parse(formatOpen.substring(0,1));
+                                SharedPreferences local =
+                                    await SharedPreferences.getInstance();
+                                var userjson = local.getString('user');
+                                var user = json.decode(userjson);
+                                var restaurant;
+                                var status;
+                                var insideResto =
+                                    snapshot.data[index].restaurantName;
+                                var isTrue = false;
+                                Map<String, dynamic> temp;
+                                List<dynamic> converted = [];
+                                final response = await ApiCall()
+                                    .getData('/viewUserOrders/${user['id']}');
+                                final List<ViewUserOrder> transaction =
+                                    viewUserOrderFromJson(response.body);
+                                transaction.forEach((element) {
+                                  restaurant = element.restaurantName;
+                                  status = element.status;
+                                  temp = {
+                                    "restaurant": restaurant,
+                                    "status": status
+                                  };
+                                  converted.add(temp);
+                                });
+
+                                for (var i = 0; i < converted.length; i++) {
+                                  if (insideResto ==
+                                          converted[i]['restaurant'] &&
+                                      converted[i]['status'] < 4) {
+                                    isTrue = true;
+                                    break;
+                                  }
+                                }
+                                if (isTrue) {
+                                  showDial(context,
+                                      "You have a pending Transaction order on this Restaurant.");
+                                } else {
+                                  if (int.parse(formatNow.split(":")[0]) >=
+                                          int.parse(
+                                              formatClosing.split(":")[0]) ||
+                                      int.parse(formatNow.split(":")[0]) >= 0 &&
+                                          int.parse(formatNow.split(":")[0]) <
+                                              08) {
+                                    print(
+                                        "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
+                                    showDial(context,
+                                        "Sorry The Restaurant is close at the Moment Please Come Back");
+                                  } else {
+                                    if (int.parse(formatNow.split(":")[0]) >=
+                                        int.parse(formatOpen.split(":")[0])) {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          new MaterialPageRoute(
+                                              builder: (context) => ListStactic(
+                                                    restauID: snapshot
+                                                        .data[index].id
+                                                        .toString(),
+                                                    nameRestau: snapshot
+                                                        .data[index]
+                                                        .restaurantName
+                                                        .toString(),
+                                                  )));
+                                    } else {
+                                      showDial(context,
+                                          "Sorry The Restaurant is Not yet open at the Moment Please Wait!");
+                                    }
+                                  }
+                                }
+                              },
+                            ),
+                          );   
+                },
+              );
+            }
+          }),
+      ),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Container();
+  }
 }

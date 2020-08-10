@@ -18,6 +18,7 @@ StreamSubscription periodicSub;
     Future<void>getMenuTransaction(var id) async{
     final response = await ApiCall().getData('/viewUserOrders/$id');
     final List<ViewUserOrder> transaction = viewUserOrderFromJson(response.body);
+    
     sinkApi.add(transaction);
   }
   

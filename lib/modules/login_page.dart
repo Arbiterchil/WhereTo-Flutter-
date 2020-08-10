@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/modules/signup_page.dart';
 import 'package:WhereTo/path.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../styletext.dart';
-import 'homepage.dart';
+
 
 
   class LoginPage extends StatefulWidget{
@@ -326,7 +325,7 @@ void _login() async{
     var res = await ApiCall().postData(data,'/login');
     
     if(res.statusCode == 200){
- var body = json.decode(res.body);
+    var body = json.decode(res.body);
     if(body['success']){
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setBool('check', value);
