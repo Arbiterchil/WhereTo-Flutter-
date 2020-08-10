@@ -64,7 +64,12 @@ class _NewCarouselState extends State<NewCarousel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-     
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50)
+                )
+      ),
       child: Column(
         children: <Widget>[
           GestureDetector(
@@ -76,10 +81,9 @@ class _NewCarouselState extends State<NewCarousel> {
               }
             } ,
             child: Container(
-            height: 350,
+            height: 400,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              
               image: DecorationImage(
                 image: AssetImage(restau[currentIndex][0]),
                 fit:  BoxFit.cover),
@@ -124,7 +128,7 @@ class _NewCarouselState extends State<NewCarousel> {
              child: Transform.translate(
                 offset: Offset(0, -40),
                   child: Container(
-                    height: 130,
+                    height: 150,
                     decoration: BoxDecoration(
                       // color: Color(0xFFF2F2F2),
                       color: Color(0xFF0C375B),
@@ -136,7 +140,7 @@ class _NewCarouselState extends State<NewCarousel> {
                       )
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 30 ,right: 20,top: 15),
+                      padding: const EdgeInsets.only(left: 10 ,right: 10,top: 15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                          mainAxisAlignment: MainAxisAlignment.start,

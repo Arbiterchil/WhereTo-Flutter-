@@ -130,6 +130,14 @@ viewMenuTransac(api) async {
     );
   }
 
+  getComment(api) async {
+    var fullurl = url+api;
+    return http.get(
+    fullurl,
+    headers: _setHeaders()
+    );
+  }
+
 
 
 

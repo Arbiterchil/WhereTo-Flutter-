@@ -5,6 +5,7 @@ import 'package:WhereTo/restaurants/FoodDisplay.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
 import 'package:WhereTo/restaurants/new_Carousel.dart';
+import 'package:WhereTo/restaurants/static_data.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
@@ -27,103 +28,6 @@ class _SearchDepoState extends State<SearchDepo> {
   String getRestaurant;
   String searchit;
   TextEditingController search = new TextEditingController();
-  @override
-  void initState() {
-    casting = false;
-    super.initState();
-    getLocation();
-    super.initState();
-  }
-
-  
- getLocation() async{
-    var location =Location();
-    try{
-      var userLocation =await location.getLocation();
-      print("${userLocation.latitude},${userLocation.longitude}");
-    } on Exception catch (e){
-      print(e.toString());
-    }
- }
-
- Future<void>getService() async{
-   var location =Location();
-   bool _serviceEnabled;
-   _serviceEnabled = await location.serviceEnabled();
-  if (!_serviceEnabled) {
-  _serviceEnabled = await location.requestService();
-  if (!_serviceEnabled) {
-    return;
-  }
-}
- }
- Future<void>getPermission() async{
-   var location =Location();
-   PermissionStatus permissionStatus =await location.hasPermission();
-   if(permissionStatus ==PermissionStatus.denied){
-     permissionStatus =await location.requestPermission();
-     if(permissionStatus !=PermissionStatus.granted){
-       return;
-     }
-   }
- }
-
-
-
-  void configSignal() async {
-    var data;
-    await OneSignal.shared.setLocationShared(true);
-    await OneSignal.shared.promptLocationPermission();
-    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-    OneSignal.shared
-        .setInFocusDisplayType(OSNotificationDisplayType.notification);
-    OneSignal.shared
-        .setNotificationReceivedHandler((OSNotification notification) {
-      setState(() {
-        //  constant = notification.payload.additionalData;
-        data =notification.payload.additionalData;
-        
-      });
-    });
-    await OneSignal.shared.setSubscription(true);
-    var tags = await OneSignal.shared.getTags();
-    var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
-    var status = await OneSignal.shared.getPermissionSubscriptionState();
-
-    String url = 'https://onesignal.com/api/v1/notifications';
-    var playerId = status.subscriptionStatus.userId;
-    var idChil = "1106b49d-60f0-435a-b44f-5d2f4849cb38";
-    var numb = "3";
-    var contents = {
-      "include_player_ids": [idChil,playerId],
-      "include_segments": ["Users Notif"],
-      "excluded_segments": [],
-      "contents": {"en": "This is a test."},
-
-      "data": {"id": numb},
-
-      "headings": {"en": "Erchil Testings"},
-      "filter": [
-        {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
-      ],
-      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-    };
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-    };
-    var repo =
-        await http.post(url, headers: headers, body: json.encode(contents));
-
-    // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
-    print(data.toString());
-    print(tags);
-    print(sendtag);
-    print(playerId);
-    print(repo.body);
-  
-    
-  }
 
 
   @override
@@ -137,11 +41,10 @@ class _SearchDepoState extends State<SearchDepo> {
             physics: AlwaysScrollableScrollPhysics(),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                
+              children: <Widget>[   
                 Stack(
                   children: <Widget>[
-                    NewCarousel(),
+                     NewCarousel(),
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
