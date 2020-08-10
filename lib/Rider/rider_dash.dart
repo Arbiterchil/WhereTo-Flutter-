@@ -28,7 +28,7 @@ var userData;
     
   }
 
-  void postRiderId() async{
+void postRiderId() async{
     var status = await OneSignal.shared.getPermissionSubscriptionState();
     var playerId = status.subscriptionStatus.userId;
     var data =
@@ -39,7 +39,6 @@ var userData;
     var responses = await ApiCall().playerIdSave(data,'/assignPlayerId');
     print(responses);
   }
-
 void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var userJson = localStorage.getString('user');
@@ -49,7 +48,6 @@ void _getUserInfo() async {
         userData = user;
       });
   }
-
 void goOffline() async{
    await ApiCall().getOffline('/goOffline/${userData['id']}');
 }
@@ -133,7 +131,6 @@ void configSignal() async {
                               bottomRight: Radius.circular(40),
                             ),
                           ),
-
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 10,right: 15.0),
@@ -345,17 +342,21 @@ void configSignal() async {
                       ],
                     ),
 
-                    
-                      SizedBox(height: 15.0,),
+                    Container(
+                      height: 380,
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView(
+                        children: <Widget>[
+                           SizedBox(height: 15.0,),
                      Padding(
                        padding: const EdgeInsets.only(left: 40,right: 40,top: 10,bottom: 10),
                        child: Container(
                             height: 200.0,
                             width: MediaQuery.of(context).size.width,
                             child: DontenNoMichi(
-                              boldName: "Erchil Amad",
-                              subtitle: "Nice Job Sir.",
-                              description: "$coma Maayu na Driver kay polite nya with time jud cya ning abut og ganahan ko sa design kay nindut.$coma",
+                              boldName: "Admin: Erchil Amad",
+                              subtitle: "Hi. Rider .",
+                              description: "$coma A Reminder and Also a Heed that please be true on your work of Delivery And Good Speed. $coma",
                             ),
                           ),
                      ),
@@ -365,12 +366,16 @@ void configSignal() async {
                             height: 200.0,
                             width: MediaQuery.of(context).size.width,
                             child: DontenNoMichi(
-                              boldName: "Jayce Mico Dignadice",
-                              subtitle: "Good Job Sir.",
-                              description: "$coma On Time very good.$coma",
+                              boldName: "Admin : Jayce Mico",
+                              subtitle: "For more Info",
+                              description: "$coma Hi. if you're a new Rider feel Free to ask on our marketing staff to answer your Questions and God bless.$coma",
                             ),
                           ),
                      ),
+                        ],
+                      ),
+                    ),
+                     
                              
                 ],
               ),

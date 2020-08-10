@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/homepage.dart';
 import 'package:WhereTo/modules/signup_page.dart';
 import 'package:WhereTo/path.dart';
 import 'package:flutter/cupertino.dart';
@@ -327,25 +329,40 @@ void _login() async{
     if(res.statusCode == 200){
     var body = json.decode(res.body);
     if(body['success']){
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
+       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
-      var userJson = localStorage.getString('user'); 
-      var user = json.decode(userJson);
-      setState(() {
-        userData = user;
-      });
-
-      hens = userData['userType'].toString();
-      
-      Navigator.pushReplacement(
+      if(body['userType'] == 0){
+        print('Customer');
+        Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
-            builder: (context) => 
-            PathWay(
-              getStringthis: hens,
-            )));
+            builder: (context) => HomePage()));
+      }else{
+        print('Rider');
+        Navigator.pushReplacement(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => RiderProfile()));
+      }
+
+     
+      // var userJson = localStorage.getString('user'); 
+      // var user = json.decode(userJson);
+      // setState(() {
+      //   userData = user;
+      // });
+
+      // hens = userData['userType'].toString();
+      
+      // Navigator.pushReplacement(
+      //   context,
+      //   new MaterialPageRoute(
+      //       builder: (context) => 
+      //       PathWay(
+      //         getStringthis: hens,
+      //       )));
       print('success Login');
     }else{
       _showDial();

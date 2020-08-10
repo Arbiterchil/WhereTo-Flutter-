@@ -196,8 +196,7 @@ class _SearchDepoState extends State<SearchDepo> {
             physics: AlwaysScrollableScrollPhysics(),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                
+              children: <Widget>[   
                 Stack(
                   children: <Widget>[
                     NewCarousel(),

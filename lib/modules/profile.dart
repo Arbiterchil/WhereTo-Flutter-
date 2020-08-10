@@ -34,7 +34,6 @@ class _Profile extends State<Profile> {
   void initState() {
     _getUserInfo();
     casting = false;
-    super.initState();
     // getLocation();
     super.initState();
   }
