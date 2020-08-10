@@ -80,48 +80,39 @@ class _NewCarouselState extends State<NewCarousel> {
                 back();
               }
             } ,
-            child: Container(
-            height: 400,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(restau[currentIndex][0]),
-                fit:  BoxFit.cover),
-                
-            ),
-            child: Container(
+              child: Container(
+              height: 400,
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                // gradient: LinearGradient(
-                //   begin: Alignment.bottomCenter,
-                //   end:  Alignment.topCenter,
-                //   stops: [
-                //     0.0,0.9
-                //   ],
-                //   colors: [
-                //     Colors.white.withOpacity(1.0),
-                //     Colors.grey.withOpacity(0.0)
-                //   ]) 
-                gradient: LinearGradient(
-                  begin: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFF0C375B).withOpacity(.9),
-                    Colors.grey.withOpacity(.0)
-                  ])
+                image: DecorationImage(
+                  image: AssetImage(restau[currentIndex][0]),
+                  fit:  BoxFit.cover),
+                  
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    width: 90,
-                    margin: EdgeInsets.only(bottom: 60),
-                    child: Row(
-                      children: buildindicators(),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF0C375B).withOpacity(.9),
+                      Colors.grey.withOpacity(.0)
+                    ])
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      width: 90,
+                      margin: EdgeInsets.only(bottom: 60),
+                      child: Row(
+                        children: buildindicators(),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
           ),
+            
           ),
            Padding(
              padding: const EdgeInsets.only(left: 20,right: 20),
@@ -145,21 +136,23 @@ class _NewCarouselState extends State<NewCarousel> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                          mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Text(restau[currentIndex][1],
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Gilroy-ExtraBold',
-                            letterSpacing: 1,
-                          ),
-                          ),
+                        Text(restau[currentIndex][1],
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Gilroy-ExtraBold',
+                              letterSpacing: 1,
+                            ),
+                            ),
+                          
                           SizedBox(height: 5,),
                           Row(
                             children: <Widget>[
                                Icon(Icons.add_location,color: Colors.white,size: 15.0,),
                               SizedBox(width: 7.0,),
-                              Text(restau[currentIndex][2],
+                              Flexible(
+                                child: Text(restau[currentIndex][2],
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -168,17 +161,20 @@ class _NewCarouselState extends State<NewCarousel> {
                             letterSpacing: 1,
                           ),
                           ),
+                              ),
                             ],
                           ),
                           SizedBox(height: 10,),
                           Row(
                             children: <Widget>[
-                              Text("Reviews",
-                               style: TextStyle(
-                                 color: Colors.white,
-                                 fontSize: 10,
-                                 fontFamily: 'Gilroy-light'
-                               ),),
+                              Flexible(
+                                child: Text("Reviews",
+                                 style: TextStyle(
+                                   color: Colors.white,
+                                   fontSize: 10,
+                                   fontFamily: 'Gilroy-light'
+                                 ),),
+                              ),
                                SizedBox(width:5,),
                               Icon(Icons.star, size: 18, color: Colors.yellow[700],),
                               Icon(Icons.star, size: 18, color: Colors.yellow[700],),
@@ -186,12 +182,14 @@ class _NewCarouselState extends State<NewCarousel> {
                               Icon(Icons.star, size: 18, color: Colors.yellow[700],),
                               Icon(Icons.star_half, size: 18, color: Colors.yellow[700],),
                                SizedBox(width:5,),
-                               Text("4.5/5",
-                               style: TextStyle(
-                                 color: Colors.white,
-                                 fontSize: 10,
-                                 fontFamily: 'Gilroy-light'
-                               ),)
+                               Flexible(
+                                 child: Text("4.5/5",
+                                 style: TextStyle(
+                                   color: Colors.white,
+                                   fontSize: 10,
+                                   fontFamily: 'Gilroy-light'
+                                 ),),
+                               )
                             ],
                           )
                         ],
@@ -210,7 +208,7 @@ class _NewCarouselState extends State<NewCarousel> {
 
   Widget indicators(bool isture){
 
-    return Expanded(
+    return Flexible(
       child: Container(
         height: 4,
         margin: EdgeInsets.only(right: 5),
