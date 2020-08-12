@@ -9,11 +9,12 @@ StreamController<List<SearchDeposition>> streamApi =StreamController.broadcast()
 Sink<List<SearchDeposition>> get sinkApi =>streamApi.sink;
 Stream<List<SearchDeposition>> get stream =>streamApi.stream;
 
-Future<List<SearchDeposition>> getRest(String query) async {
+Future<void> getRest(String query) async {
 final response = await ApiCall().getRestarant('/getFeaturedRestaurant');
 List<SearchDeposition> search = searchDepoFromJson(response.body);
-var filter =search.where((element) => element.restaurantName.toLowerCase().contains(query.toLowerCase()) || element.restaurantName.toUpperCase().contains(query.toUpperCase()));
-return filter;
+var filter=search.where((element) => element.restaurantName.toLowerCase().contains(query.toLowerCase()) || 
+element.restaurantName.toUpperCase().contains(query.toUpperCase())).toList();
+sinkApi.add(filter);
 }
 
 

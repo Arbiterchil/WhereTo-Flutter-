@@ -8,11 +8,17 @@ import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/searchRestaurant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ntp/ntp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
-class CustomSearch extends SearchDelegate {
-BlocSearch blocSearch;
+class SearchResto extends StatefulWidget {
+  @override
+  _SearchRestoState createState() => _SearchRestoState();
+}
+
+class _SearchRestoState extends State<SearchResto> {
+  BlocSearch blocSearch;
    Future<void>getBloc(var id) async {
     await blocSearch.getRest(id);
   }
@@ -20,48 +26,56 @@ BlocSearch blocSearch;
   Future<void> disposeBloc() async {
     blocSearch.dispose();
   }
-  
-
+  TextEditingController search =TextEditingController();
   @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = "";
+  Widget build(BuildContext context) {
+    setState(() {
+    blocSearch = BlocSearch();
+    getBloc(search.text); 
+    });
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.black), onPressed: (){
+          Navigator.pop(context);
+        }),
+        actions: [
+          IconButton(icon: Icon(Icons.clear, color: Colors.black,), onPressed:(){
+            search.text ="";
           }),
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-      return StatefulBuilder(builder: (context, state){
-      blocSearch = BlocSearch();
-      getBloc(query.toString()); 
-      return Padding(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-      child: Container(
-        height: 700.0,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: Color(0xFFF2F2F2F2),
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+        ],
+        title: TextField(
+          controller: search,
+          onChanged: (val){
+            val =search.text;
+            getBloc(search.text); 
+          },
+          textInputAction: TextInputAction.search,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            fillColor: Colors.black,
+            hintText: "Search"
+          ),
         ),
-        child: StreamBuilder<List<SearchDeposition>>(
-          stream: blocSearch.stream,
-          builder: (context, snapshot){
-            if(snapshot.hasData){
+        
+      ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Padding(padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+          child: Container(
+            height: 700.0,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+            color: Color(0xFFF2F2F2F2),
+            borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          ),
+          child: StreamBuilder<List<SearchDeposition>>(
+            stream: blocSearch.stream,
+            builder: (context,snapshot){
+              if(snapshot.hasData){
               if(snapshot.data.length >0){
                 return new ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -131,12 +145,7 @@ BlocSearch blocSearch;
                                   showDial(context,
                                       "You have a pending Transaction order on this Restaurant.");
                                 } else {
-                                  if (int.parse(formatNow.split(":")[0]) >=
-                                          int.parse(
-                                              formatClosing.split(":")[0]) ||
-                                      int.parse(formatNow.split(":")[0]) >= 0 &&
-                                          int.parse(formatNow.split(":")[0]) <
-                                              08) {
+                                  if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
                                     print(
                                         "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
                                     showDial(context,
@@ -187,19 +196,11 @@ BlocSearch blocSearch;
                 ),
               );
             }
-            
           }),
+          ),
+          )
+        ],
       ),
     );
-      });
-      
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-  return Container(); 
-
-    
-     
   }
 }

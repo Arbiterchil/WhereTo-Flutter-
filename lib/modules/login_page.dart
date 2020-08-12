@@ -326,7 +326,7 @@ void _login() async{
 
     var res = await ApiCall().postData(data,'/login');
     
-    if(res.statusCode == 200){
+    
     var body = json.decode(res.body);
     if(body['success']){
        SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -367,9 +367,7 @@ void _login() async{
     }else{
       _showDial();
     }
-    }else{
-      _showDial();
-    }
+   
    
    
     }

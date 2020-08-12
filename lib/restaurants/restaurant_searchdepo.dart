@@ -6,6 +6,7 @@ import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/newSearch.dart';
+import 'package:WhereTo/restaurants/New_ViewRestaurant/search.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
 import 'package:WhereTo/restaurants/carousel_rest.dart';
 import 'package:WhereTo/restaurants/dialog.dart';
@@ -84,7 +85,10 @@ final scaffoldKey = new GlobalKey<ScaffoldState>();
                                 hintText: "Search",
                               ),
                               onTap: (){
-                                showSearch(context: context, delegate: CustomSearch());
+                                // showSearch(context: context, delegate: CustomSearch());
+                                Navigator.push(context, MaterialPageRoute(builder: (context){
+                                  return SearchResto();
+                                }));
                               },
                             )),
                       ),
