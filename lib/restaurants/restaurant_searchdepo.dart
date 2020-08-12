@@ -1,22 +1,9 @@
-import 'dart:convert';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
-import 'package:WhereTo/AnCustom/restaurant_front.dart';
-import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
-import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/newSearch.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
-import 'package:WhereTo/restaurants/carousel_rest.dart';
-import 'package:WhereTo/restaurants/dialog.dart';
-import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/new_Carousel.dart';
-import 'package:WhereTo/restaurants/searchRestaurant.dart';
 import 'package:flutter/material.dart';
-import 'package:ntp/ntp.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart';
-
 import 'FoodDisplay.dart';
 
 class SearchDepo extends StatefulWidget {
@@ -25,19 +12,12 @@ class SearchDepo extends StatefulWidget {
 }
 
 
-
-
 class _SearchDepoState extends State<SearchDepo> {
   
 final scaffoldKey = new GlobalKey<ScaffoldState>(); 
   TextEditingController search = new TextEditingController();
   String searchit;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
    return Scaffold(

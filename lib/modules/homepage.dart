@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    configSignal();
+    // configSignal();
     super.initState();
   }
 
