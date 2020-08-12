@@ -187,7 +187,7 @@ class _SearchRestoState extends State<SearchResto> {
               return Container(
                 child: Center(
                   child: Text(
-                    "Restaurants Searching..",
+                    "Restaurants Loading..",
                     style: TextStyle(
                         color: Colors.black,
                         fontFamily: 'Gilroy-light',

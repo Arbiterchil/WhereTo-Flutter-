@@ -112,14 +112,16 @@ class _XviewTransacState extends State<XviewTransac> {
                     ),
                         ),
                         SizedBox(height: 8,),
-                        Text(widget.status,
-                        style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13.0,
-                      letterSpacing: 1,
-                      fontFamily: 'Gilroy-light'
+                        Text(
+                      widget.status =="2" ? "Under Buying Process" :widget.status =="3" ? "Under Delivery Process":widget.status =="4" ?"Delivered": widget.status =="1" ? "Rider Accept the Order": "Not Accepted the Order Yet Please wait..",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        
+                          color: widget.status =="2" ? Colors.brown :widget.status =="3" ? Colors.orange: widget.status =="4" ?Colors.lightGreen:widget.status =="1" ?Colors.amber:Colors.red,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 13.0,
+                          fontFamily: 'Gilroy-light'),
                     ),
-                        ),
                         
                       ],
                     ),
