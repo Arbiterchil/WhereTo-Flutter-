@@ -21,7 +21,7 @@ var userData;
   var checkbool;
   @override
   void initState() {
-    configSignal();
+    // configSignal();
     _getUserInfo();
     postRiderId();
     super.initState();
