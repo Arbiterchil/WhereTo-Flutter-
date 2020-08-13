@@ -13,27 +13,32 @@ class _NewCarouselState extends State<NewCarousel> {
   final List<List<String>> restau = [
 
     [
-      'asset/img/carousel1.jpg',
+      // 'asset/img/carousel1.jpg',
+      'asset/img/61338547_p0.png',
       'KFC',
       'Located at GMALL of TAGUM'
     ],
     [
-      'asset/img/carousel2.jpg',
+      // 'asset/img/carousel2.jpg',
+      'asset/img/62512004_p0.png',
       'Jollibee',
       'Located at National HighWay'
     ],
     [
-      'asset/img/carousel3.jpg',
+      // 'asset/img/carousel3.jpg',
+      'asset/img/76134055_p0.png',
       'McDonalds',
       'Located at Rizal Street'
     ],
     [
-      'asset/img/carousel4.jpg',
+      // 'asset/img/carousel4.jpg',
+      'asset/img/fbmYkDz.jpg',
       'Chowking',
       'Located at National HighWay'
     ],
     [
-      'asset/img/carousel5.jpg',
+      // 'asset/img/carousel5.jpg',
+      'asset/img/mWWsAhL.jpg',
       'Penongs',
       'Located at Lapu-Lapu Street'
     ],
