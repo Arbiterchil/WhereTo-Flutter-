@@ -182,9 +182,13 @@ class _NewCarouselState extends State<NewCarousel> {
                               ),
                                SizedBox(width:5,),
                               Icon(Icons.star, size: 18, color: Colors.yellow[700],),
+
                               Icon(Icons.star, size: 18, color: Colors.yellow[700],),
+                              
                               Icon(Icons.star, size: 18, color: Colors.yellow[700],),
+                              
                               Icon(Icons.star, size: 18, color: Colors.yellow[700],),
+                              
                               Icon(Icons.star_half, size: 18, color: Colors.yellow[700],),
                                SizedBox(width:5,),
                                Flexible(
