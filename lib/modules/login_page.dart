@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:WhereTo/Admin/navbottom_admin.dart';
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/homepage.dart';
@@ -339,6 +340,12 @@ void _login() async{
         context,
         new MaterialPageRoute(
             builder: (context) => HomePage()));
+      }else if(body['userType'] == 4){
+        print('Welcome Admin');
+        Navigator.pushReplacement(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => AdminHomeDash()));
       }else{
         print('Rider');
         Navigator.pushReplacement(

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/modules/Tab_naviUser.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,13 +15,15 @@ class _HomePageState extends State<HomePage> {
  
     String _currentPage = "SearchRestaurant";
   
-   List<String> pageKeys = ["SearchRestaurant","UserProfile"];
+   List<String> pageKeys = ["SearchRestaurant","UserProfile","MyOrders"];
    Map<String,GlobalKey<NavigatorState>> _navigatorKeys =
     {
      "SearchRestaurant":GlobalKey<NavigatorState>(),
-     "UserProfile":GlobalKey<NavigatorState>()
+     "UserProfile":GlobalKey<NavigatorState>(),
+     "MyOrders":GlobalKey<NavigatorState>(),
    };
  int _selectedIndex = 0;
+  var userData;
   void _selectTab(String tabItem, int index) {
     if(tabItem == _currentPage ){
       _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
@@ -46,46 +51,39 @@ void configSignal() async {
    await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
 }
 
+
+  
+
   @override
   Widget build(BuildContext context) {
      return Scaffold(
       body: WillPopScope(
       onWillPop: () async {
-        
         final isFirstRouteInCurrentTab =
             !await _navigatorKeys[_currentPage].currentState.maybePop();
-            
         if (isFirstRouteInCurrentTab) {
           if (_currentPage != "SearchRestaurant") {
             _selectTab("SearchRestaurant", 1);
-            
             return false;
-            
           }
-          
         }
-        
         return isFirstRouteInCurrentTab ? UserDialog_Help.exit(context) : false ;
-      // return isFirstRouteInCurrentTab;
       },
           child: Stack(
           children: <Widget>[
             
             _buildOffstageNavigator("UserProfile"),
             _buildOffstageNavigator("SearchRestaurant"),
+             _buildOffstageNavigator("MyOrders"),
           ],
         ),
         
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: 
-        // Color(0xFF398AE5),
         Colors.white,
-        // unselectedItemColor: Colors.grey,
         backgroundColor:
         Color(0xFF0C375B), 
-        // Color(0xFFF2F2F2)
-        //  Color(0xFF398AE5),
         unselectedItemColor: 
         Color(0xFF176DB5),
         currentIndex: _selectedIndex,
@@ -100,8 +98,8 @@ void configSignal() async {
               title: new Text('Home'),
             ),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.inbox),
-              title: new Text('History'),
+              icon: new Icon(Icons.list),
+              title: new Text('My Orders'),
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.person),

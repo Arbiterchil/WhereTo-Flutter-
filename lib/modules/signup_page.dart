@@ -29,11 +29,6 @@ class SignupPage extends StatefulWidget{
 
 class _SignupPageState extends State<SignupPage>{
   
-
-
-
-  
-    
     String default_pick = "Customer";
     int default_number = 1;
      String selectPerson;
@@ -189,7 +184,7 @@ class _SignupPageState extends State<SignupPage>{
                             
                              DropdownButton(
                                   isExpanded: true ,
-                                  hint: Text( "Select District",
+                                  hint: Text( "Select Barangay",
                                   style: TextStyle(
                                       
                                       color: Colors.white,
@@ -516,7 +511,7 @@ void _signingIn() async {
     bool value = true;
 
   if(selectPerson == null){
-    print("Select District");
+    print("Select Barangay");
     _showDistictWarning();
   }else{
      if(formkey.currentState.validate()){

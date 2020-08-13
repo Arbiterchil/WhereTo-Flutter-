@@ -19,7 +19,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getUserInfo();
+    this._getUserInfo();
   }
 
 
@@ -59,6 +59,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                           child: Container(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 
                            Text(userData!= null ? '${userData['name']}':  'Fail get data.',

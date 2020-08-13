@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/Admin/navbottom_admin.dart';
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
@@ -40,9 +41,12 @@ class _PathWayState extends State<PathWay> {
    }
    timeStamp(){
       String  customer = "0";
+      String  admin = "4";
       String  value = widget.getStringthis.toString();
        if(customer.contains(value)){
         return  _isLoggedIn  ? HomePage() :  LoginPage();
+      }else if(admin.contains(value)){
+        return  _isLoggedIn  ? AdminHomeDash() :  LoginPage();
       }else{
         return _isLoggedIn  ? RiderProfile() :  LoginPage();
       }
