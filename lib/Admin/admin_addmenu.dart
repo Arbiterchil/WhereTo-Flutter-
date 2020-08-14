@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:WhereTo/Admin/admin_trial.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/editProfileScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../styletext.dart';
 
@@ -17,30 +20,16 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
     TextEditingController decription = TextEditingController();
     TextEditingController price = TextEditingController();
     int countname = 0;
-    String slectCategory;
-    
+    SharedPreferences prefs;
   @override
   void initState() {
     super.initState();
-    this.callCategory();
   }
-  List dataCategory = List();
-  callCategory() async{
-
-    var respon = await ApiCall().getCategory('/getCategories');
-    var bararang = json.decode(respon.body);
-  
-    setState(() {
-      dataCategory = bararang;
-    });
-    print(bararang);
-  }
-
   int count = 1;
-  
   @override
   Widget build(BuildContext context) {
-    
+
+     List<Widget> _categ = new List.generate(count, (index) => new TrialCardPratice()); 
 
     return Scaffold(
       body: WillPopScope(
@@ -105,7 +94,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                   height: 200,
                   child: new ListView(
                     scrollDirection: Axis.vertical,
-                    children: buildindicators(),
+                    children: _categ,
                   ),
                 ),
 
@@ -233,14 +222,15 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
   }
 
   Widget addMinus(){
-
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
          GestureDetector(
-                   onTap: (){
+                   onTap: () async {
                       setState(() {
-                        count = count + 1;
+                        count = count + 1; 
+                        
                       });
                    },
                    child: Container(
@@ -310,89 +300,4 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
 
   }
 
-  Widget  _categorgyForm(bool isTrue){
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text("Category",
-                    style: eLabelStyle,
-                    ),
-                    SizedBox(height: 10.0,),
-                    Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
-              decoration: eBoxDecorationStyle,
-              height: 50.0,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: DropdownButtonHideUnderline(
-                      child:
-            Stack(
-                        children: <Widget>[
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Icon(Icons.category,
-                            color: Colors.white,)),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 30),
-                            child:
-                             DropdownButton(
-                                  isExpanded: true ,
-                                  hint: Text( "Select Category",
-                                  style: TextStyle(
-                                      
-                                      color: Colors.white,
-                                      fontFamily: 'Gilroy-light'
-                                    ),),
-                                  dropdownColor:  Color(0xFF0C375B),
-                                  icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
-                                  
-                                  value: slectCategory,
-                                  items: dataCategory.map((item) {
-                                  return new DropdownMenuItem(
-                                    child: Text(item['categoryName'],
-                                    style: TextStyle(
-                                      
-                                      color: Colors.white,
-                                      fontFamily: 'Gilroy-light'
-                                    ),
-                                    ),
-                                    value: item['id'].toString(),
-                                  );
-                                }).toList(),
-                                  onChanged: (item){
-                                    setState(() {
-                                      slectCategory = item;
-                                      print(item);
-                                    });
-                                  }
-                                  ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  
-              )
-            ),
-            SizedBox(height: 15.0,),
-      ],
-    );
-  }
-
-  List<Widget> buildindicators(){
-
-    List<Widget> indicato = [];
-
-    for(int i = 0 ;  i <count ; i++){
-      if(count == i){
-        indicato.add(_categorgyForm(true));
-      }else{
-        indicato.add(_categorgyForm(false));
-      }
-    }
-
-    return indicato;
-
-  }
 }

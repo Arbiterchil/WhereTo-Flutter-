@@ -14,6 +14,8 @@ class AdminAddRestaurant extends StatefulWidget {
 
 class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 
+    
+
     final scaffoldKey = new GlobalKey<ScaffoldState>(); 
     TextEditingController retaurantname  = TextEditingController();
     TextEditingController address = TextEditingController();
@@ -25,6 +27,34 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
     String datesofdays;
     List dataBarangay = List();
     bool loading = false;
+
+
+    addRestaurant() async {
+      var data = 
+      {
+
+        "restaurantName": retaurantname.text,
+        "address": address.text,
+        "barangayId": selectPerson.toString(),
+        "contactNumber": contactnumber.text,
+        "openTime": opentimeString.toString(),
+        "closingTime": closetimeString.toString(),
+        "closeOn": datesofdays.toString(),
+        "isFeatured": 1,
+
+      };
+
+      var response = await ApiCall().addRestaurant(data, '/addRestaurant');
+
+       var body = json.decode(response.body);
+      print(body);
+        Navigator.pushReplacement(  
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => AddmenuAdmin()));
+    }
+
+
     List<String> weeks = 
     [
       "None",
@@ -491,7 +521,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                   context,
                   new MaterialPageRoute(
                       builder: (context) => AddmenuAdmin()));
-
+                  // addRestaurant();
                   },
                   elevation: 5.0,
                   padding: EdgeInsets.all(8.0),
@@ -516,6 +546,9 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
         ),
       );
     }
+
+    
+
   @override
   void initState() {
     super.initState();

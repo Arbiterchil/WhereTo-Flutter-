@@ -16,6 +16,14 @@ class ApiCall{
     );
   }
 
+  addRestaurant(data ,api) async {
+    var fullurl = url+api+ await _getToken();
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+
   playerIdSave(data ,api) async {
     var fullurl = url+api+ await _getToken();
     return http.post(fullurl,
