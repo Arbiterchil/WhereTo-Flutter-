@@ -327,20 +327,22 @@ void _login() async{
 
     var res = await ApiCall().postData(data,'/login');
     
-    
+  
     var body = json.decode(res.body);
-    if(body['success']){
+    if(body['success'] == true){
        SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
-      if(body['userType'] == 0){
+
+      
+          if(body['user']['userType'] == 0){
         print('Customer');
         Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
             builder: (context) => HomePage()));
-      }else if(body['userType'] == 4){
+      }else if(body['user']['userType'] == 4){
         print('Welcome Admin');
         Navigator.pushReplacement(
         context,
@@ -353,6 +355,11 @@ void _login() async{
         new MaterialPageRoute(
             builder: (context) => RiderProfile()));
       }
+       
+      
+
+
+      
 
      
       // var userJson = localStorage.getString('user'); 

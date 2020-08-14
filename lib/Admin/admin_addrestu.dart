@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/Admin/admin_addmenu.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/editProfileScreen.dart';
 import 'package:flutter/material.dart';
@@ -97,9 +98,6 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 
     }   
 
-
-
-
     Widget formAdd(){
       return Form(
         key: formkey,
@@ -110,7 +108,6 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
             children: <Widget>[
 
                Padding(
-
                 padding: const EdgeInsets.all(10),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -489,6 +486,12 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                 padding: EdgeInsets.symmetric(vertical: 25.0),
                 child: RaisedButton(
                   onPressed: (){
+
+                    Navigator.pushReplacement(  
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => AddmenuAdmin()));
+
                   },
                   elevation: 5.0,
                   padding: EdgeInsets.all(8.0),
