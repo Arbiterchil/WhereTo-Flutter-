@@ -89,9 +89,9 @@ class _TrialCardPraticeState extends State<TrialCardPratice> {
                                   );
                                 }).toList(),
                                   onChanged: (item){
-                                    setState(() {
+                                    setState(() async {
                                       slectCategory = item;
-                                       print(item);
+
                                     });
                                   }
                                   ),

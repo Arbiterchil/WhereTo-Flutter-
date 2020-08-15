@@ -13,11 +13,12 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
 
   String currentPageAdmin = "DashBoard";
 
-  List<String> _adminPages = ['DashBoard','Add_Restaurant'];
+  List<String> _adminPages = ['DashBoard','Add_Restaurant','Add_Rider'];
   Map<String,GlobalKey<NavigatorState>> _navAdminState = 
    {
      "DashBoard" : GlobalKey<NavigatorState>(),
-     "Add_Restaurant" : GlobalKey<NavigatorState>()
+     "Add_Restaurant" : GlobalKey<NavigatorState>(),
+    "Add_Rider": GlobalKey<NavigatorState>()
 
    };
    int selectedindex = 0;
@@ -67,6 +68,7 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
             
             _buildOffstageNavigator("DashBoard"),
             _buildOffstageNavigator("Add_Restaurant"),
+            _buildOffstageNavigator("Add_Rider"),
           ],
         ),
         
@@ -88,11 +90,11 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
             ),
            BottomNavigationBarItem(
               icon: new Icon(Icons.add_to_queue),
-              title: new Text('Restaurant'),
+              title: new Text('Add Restaurant'),
             ),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.monetization_on),
-              title: new Text('Sales Notif'),
+              icon: new Icon(Icons.motorcycle),
+              title: new Text('Add Rider'),
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.mail_outline),

@@ -21,6 +21,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
     TextEditingController price = TextEditingController();
     int countname = 0;
     SharedPreferences prefs;
+    bool loading = false;
   @override
   void initState() {
     super.initState();
@@ -99,6 +100,34 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                 ),
 
                 SizedBox(height: 25,),
+                Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(vertical: 25.0),
+                child: RaisedButton(
+                  onPressed: (){
+
+                  //   Navigator.pushReplacement(  
+                  // context,
+                  // new MaterialPageRoute(
+                  //     builder: (context) => AddmenuAdmin()));
+                  // addRestaurant();
+                  },
+                  elevation: 5.0,
+                  padding: EdgeInsets.all(8.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  color: Colors.white,
+                  child: Text(  loading ? 'Loading....' : 'Add',
+                  style: TextStyle(
+                    color: Color(0xFF527DAA),
+                    letterSpacing: 1.5,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Gilroy-light',
+                  ),),
+                  ),
+              ),  
                           ],
                         ) ,
                       )),

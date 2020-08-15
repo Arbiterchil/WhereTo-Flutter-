@@ -54,7 +54,6 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                       builder: (context) => AddmenuAdmin()));
     }
 
-
     List<String> weeks = 
     [
       "None",
@@ -111,7 +110,6 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 
   }
     phoneValidate(String val){
-
           Pattern pattern = r'^([+0]9)?[0-9]{10,11}$';
           RegExp regExp = new RegExp(pattern);
           if (val.length == 0 ){
@@ -127,7 +125,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
           }
 
     }   
-
+    
     Widget formAdd(){
       return Form(
         key: formkey,
