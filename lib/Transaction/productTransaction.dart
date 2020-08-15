@@ -1,5 +1,6 @@
 import 'dart:convert';
 // import 'package:geodesy/geodesy.dart';
+import 'package:WhereTo/Transaction/Barangay/Barangay.class.dart';
 import 'package:WhereTo/Transaction/button_deisngtransac.dart';
 import 'package:WhereTo/Transaction/getDeviceID/getDeviceID.class.dart';
 import 'package:WhereTo/Transaction/payload.dart';
@@ -21,8 +22,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class TransactionList extends StatefulWidget {
+  final String barangay;
   final String restauID;
-  TransactionList({this.restauID});
+  TransactionList({this.restauID, this.barangay});
   @override
   _TransactionListState createState() => _TransactionListState();
 }
@@ -31,9 +33,12 @@ class _TransactionListState extends State<TransactionList> {
   String lat;
   String long;
   List<dynamic> summary = [];
+  String displaytotal;
   @override
-  void setState(fn) {
+  void setState(fn) async{
+    
     super.setState(fn);
+    
     
   }
 
@@ -481,7 +486,10 @@ class _TransactionListState extends State<TransactionList> {
                                                     ),
                                                     ),
                                                   
-                                                   Padding(
+                                                   Stack(
+                                                     fit: StackFit.passthrough,
+                                                     children: [
+                                                       Padding(
                                                     padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
                                                     child: Container(
                                                       height: 55.0,
@@ -548,6 +556,9 @@ class _TransactionListState extends State<TransactionList> {
 
                                                     ),
                                                     ),
+                                                    
+                                                     ],
+                                                   ),
                                                   Padding(
                                                     padding: const EdgeInsets.all(25),
                                                     child: Align(
@@ -575,20 +586,192 @@ class _TransactionListState extends State<TransactionList> {
                                                             var userLocation =await location.getLocation();
                                                             var id;
                                                             var quantity;
-                                                            var transactID;
+                                                            var restoCharge;
+                                                            var userCharge;
+                                                            var totalOrder;
                                                             Map<String, dynamic> string;
                                                             Map<String, dynamic> post;
                                                             Map<String, int> converted = {};
                                                             List<dynamic> order = [];
                                                             List<dynamic> result = [];
-                                                            SharedPreferences localStorage =
-                                                                await SharedPreferences
-                                                                    .getInstance();
-                                                            var userJson = localStorage
-                                                                .getString('user');
-                                                            var user =
-                                                                json.decode(userJson);
-
+                                                            SharedPreferences localStorage =await SharedPreferences.getInstance();
+                                                            var userJson = localStorage.getString('user');
+                                                            var user =json.decode(userJson);
+                                                            final barangay =await ApiCall().getData('/getBarangayList');
+                                                            List<BarangayList> barangayResponse =barangayListFromJson(barangay.body);
+                                                            String barangayname;
+                                                            var istrue =false;
+                                                            for(int z=0;z<barangayResponse.length;z++){
+                                                              if(barangayResponse[z].id.toString().contains(user['barangayId'])){
+                                                                 barangayname =barangayResponse[z].barangayName;
+                                                                 istrue =true;
+                                                                 break; 
+                                                              }
+                                                            }
+                                                            if(istrue){
+                                                                if(widget.barangay.isNotEmpty){
+                                                                if(widget.barangay.contains("Magugpo")){
+                                                                 setState(() {
+                                                                   restoCharge =40;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Apokon") ){
+                                                                 setState(() {
+                                                                   restoCharge =15;
+                                                                   
+                                                                 });
+                                                               }else if(widget.barangay.contains("Bingcungan")){
+                                                                 setState(() {
+                                                                   restoCharge =20;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Busaon")){
+                                                                 setState(() {
+                                                                   restoCharge =50;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Canocotan")){
+                                                                 setState(() {
+                                                                   restoCharge =15;
+                                                                 });
+                                                               }else if(widget.barangay.contains("La Filipina")){
+                                                                 setState(() {
+                                                                   restoCharge =10;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Liboganon")){
+                                                                 setState(() {
+                                                                   restoCharge =50;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Madaum")){
+                                                                 setState(() {
+                                                                   restoCharge =30;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Magdum")){
+                                                                 setState(() {
+                                                                   restoCharge =10;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Mankilam")){
+                                                                 setState(() {
+                                                                   restoCharge =15;
+                                                                 });
+                                                               }else if(widget.barangay.contains("New Balamban")){
+                                                                 setState(() {
+                                                                   restoCharge =30;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Nueva Fuerza")){
+                                                                 setState(() {
+                                                                   restoCharge =40;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Pagsabangan")){
+                                                                 setState(() {
+                                                                   restoCharge =25;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Pandapan")){
+                                                                 setState(() {
+                                                                   restoCharge =45;
+                                                                 });
+                                                               }else if(widget.barangay.contains("San Agustin")){
+                                                                 setState(() {
+                                                                   restoCharge =45;
+                                                                 });
+                                                               }else if(widget.barangay.contains("San Isidro")){
+                                                                 setState(() {
+                                                                   restoCharge =20;
+                                                                 });
+                                                               }else if(widget.barangay.contains("San Miguel")){
+                                                                 setState(() {
+                                                                   restoCharge =15;
+                                                                 });
+                                                               }else if(widget.barangay.contains("Visayan")){
+                                                                 setState(() {
+                                                                   restoCharge =20;
+                                                                 });
+                                                               }
+                                                              }if(barangayname.isNotEmpty){
+                                                                if(barangayname.contains("Magugpo")){
+                                                                 setState(() {
+                                                                   userCharge =40;
+                                                                 });
+                                                               }else if(barangayname.contains("Apokon") ){
+                                                                 setState(() {
+                                                                   userCharge =15;
+                                                                   
+                                                                 });
+                                                               }else if(barangayname.contains("Bingcungan")){
+                                                                 setState(() {
+                                                                   userCharge =20;
+                                                                 });
+                                                               }else if(barangayname.contains("Busaon")){
+                                                                 setState(() {
+                                                                   userCharge =50;
+                                                                 });
+                                                               }else if(barangayname.contains("Canocotan")){
+                                                                 setState(() {
+                                                                   userCharge =15;
+                                                                 });
+                                                               }else if(barangayname.contains("La Filipina")){
+                                                                 setState(() {
+                                                                   userCharge =10;
+                                                                 });
+                                                               }else if(barangayname.contains("Liboganon")){
+                                                                 setState(() {
+                                                                   userCharge =50;
+                                                                 });
+                                                               }else if(barangayname.contains("Madaum")){
+                                                                 setState(() {
+                                                                   userCharge =30;
+                                                                 });
+                                                               }else if(barangayname.contains("Magdum")){
+                                                                 setState(() {
+                                                                   userCharge =10;
+                                                                 });
+                                                               }else if(barangayname.contains("Mankilam")){
+                                                                 setState(() {
+                                                                   userCharge =15;
+                                                                 });
+                                                               }else if(barangayname.contains("New Balamban")){
+                                                                 setState(() {
+                                                                   userCharge =30;
+                                                                 });
+                                                               }else if(barangayname.contains("Nueva Fuerza")){
+                                                                 setState(() {
+                                                                   userCharge =40;
+                                                                 });
+                                                               }else if(barangayname.contains("Pagsabangan")){
+                                                                 setState(() {
+                                                                   userCharge=25;
+                                                                 });
+                                                               }else if(barangayname.contains("Pandapan")){
+                                                                 setState(() {
+                                                                   userCharge =45;
+                                                                 });
+                                                               }else if(barangayname.contains("San Agustin")){
+                                                                 setState(() {
+                                                                   userCharge =45;
+                                                                 });
+                                                               }else if(barangayname.contains("San Isidro")){
+                                                                 setState(() {
+                                                                   userCharge =20;
+                                                                 });
+                                                               }else if(barangayname.contains("San Miguel")){
+                                                                 setState(() {
+                                                                   userCharge =15;
+                                                                 });
+                                                               }else if(barangayname.contains("Visayan")){
+                                                                 setState(() {
+                                                                   userCharge =20;
+                                                                 });
+                                                               }
+                                                              }
+                                                            }
+                                                            if(widget.barangay.contains("Magugpo") && barangayname.contains("Magugpo")){
+                                                              totalOrder =40;
+                                                            }else if(widget.barangay.contains("Magugpo") && barangayname !="Magugpo"){
+                                                              totalOrder =restoCharge +userCharge;
+                                                            }else if(widget.barangay!="Magugpo" && barangayname !="Magugpo"){
+                                                              totalOrder =40 +restoCharge +userCharge;
+                                                              setState(() {
+                                                                displaytotal =totalOrder;
+                                                              });
+                                                            }
+                                                            print("total: $totalOrder");
                                                             snapshot
                                                                 .forEach((element) async {
                                                               setState(() {
@@ -628,67 +811,68 @@ class _TransactionListState extends State<TransactionList> {
                                                                 'restaurantId':this.widget.restauID,
                                                                 'order': result,
                                                                 "deliveryAddress": "${userLocation.latitude},${userLocation.longitude}",
-                                                                "deliveryCharge":"100"
+                                                                "deliveryCharge":totalOrder
                                                               };
-                                                              print(post);
+                                                              // print(post);
                                                             });
-                                                          var res = await ApiCall().postData(post, '/putOrder');
-                                                          if (res.statusCode == 200) {
-                                                            var data = json.decode(res.body);
-                                                            setState(() {
-                                                               transactID =data; 
-                                                            });
-                                                            print(data);
-                                                            print("Success");
                                                           
-                                                          }
-                                                          final response =await ApiCall().getData('/getAllPlayerId');
-                                                          List<GetPlayerId> search =getPlayerIdFromJson(response.body);
-                                                          List<dynamic> player =[];
-                                                          search.forEach((element) {
-                                                            player.add(element.deviceId);
-                                                            print(element.deviceId);
-                                                          });
-                                                          await OneSignal.shared.setLocationShared(true);
-                                                          await OneSignal.shared.promptLocationPermission();
-                                                          await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-                                                          OneSignal.shared
-                                                              .setInFocusDisplayType(OSNotificationDisplayType.notification);
-                                                          OneSignal.shared
-                                                              .setNotificationReceivedHandler((OSNotification notification) {
+                                                          // var res = await ApiCall().postData(post, '/putOrder');
+                                                          // if (res.statusCode == 200) {
+                                                          //   var data = json.decode(res.body);
+                                                          //   setState(() {
+                                                          //      transactID =data; 
+                                                          //   });
+                                                          //   print(data);
+                                                          //   print("Success");
+                                                          
+                                                          // }
+                                                          // final response =await ApiCall().getData('/getAllPlayerId');
+                                                          // List<GetPlayerId> search =getPlayerIdFromJson(response.body);
+                                                          // List<dynamic> player =[];
+                                                          // search.forEach((element) {
+                                                          //   player.add(element.deviceId);
+                                                          //   print(element.deviceId);
+                                                          // });
+                                                          // await OneSignal.shared.setLocationShared(true);
+                                                          // await OneSignal.shared.promptLocationPermission();
+                                                          // await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+                                                          // OneSignal.shared
+                                                          //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
+                                                          // OneSignal.shared
+                                                          //     .setNotificationReceivedHandler((OSNotification notification) {
                                                           
                                                           
-                                                          });
+                                                          // });
 
-                                                          await OneSignal.shared.setSubscription(true);
-                                                          await OneSignal.shared.getTags();
-                                                          var status = await OneSignal.shared.getPermissionSubscriptionState();
-
-                                                          String url = 'https://onesignal.com/api/v1/notifications';
-                                                          var playerId = status.subscriptionStatus.userId;
-                                                          var contents = {
-                                                            "include_player_ids": player,
-                                                            "include_segments": ["All"],
-                                                            "excluded_segments": [],
-                                                            "contents": {"en": "FuCK you driver!"},
-                                                            "data": {
-                                                              "id": user['id'].toString(),
-                                                              "player_id": playerId.toString(),
-                                                              "transact_id": transactID.toString(),
-                                                            },
-                                                            "headings": {"en": "New Order"},
-                                                            "filter": [
-                                                              {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
-                                                            ],
-                                                            "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-                                                          };
-                                                          Map<String, String> headers = {
-                                                            'Content-Type': 'application/json',
-                                                            'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-                                                          };
+                                                          // await OneSignal.shared.setSubscription(true);
+                                                          // await OneSignal.shared.getTags();
+                                                          // var status = await OneSignal.shared.getPermissionSubscriptionState();
                                                           
-                                                          await http.post(url, headers: headers, body: json.encode(contents));
-                                                          print(playerId);
+                                                          // String url = 'https://onesignal.com/api/v1/notifications';
+                                                          // var playerId = status.subscriptionStatus.userId;
+                                                          // var contents = {
+                                                          //   "include_player_ids": player,
+                                                          //   "include_segments": ["All"],
+                                                          //   "excluded_segments": [],
+                                                          //   "contents": {"en": "FuCK you driver!"},
+                                                          //   "data": {
+                                                          //     "id": user['id'].toString(),
+                                                          //     "player_id": playerId.toString(),
+                                                          //     "transact_id": transactID.toString(),
+                                                          //   },
+                                                          //   "headings": {"en": "New Order"},
+                                                          //   "filter": [
+                                                          //     {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+                                                          //   ],
+                                                          //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+                                                          // };
+                                                          // Map<String, String> headers = {
+                                                          //   'Content-Type': 'application/json',
+                                                          //   'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+                                                          // };
+                                                          
+                                                          // await http.post(url, headers: headers, body: json.encode(contents));
+                                                          // print(playerId);
                                                           // print(tags);
                                                           // print(repo);
                                                           

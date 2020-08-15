@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:WhereTo/AnCustom/restaurant_front.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/restaurants/New_ViewRestaurant/FeaturedRestaurant.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/bloc.search.dart';
 import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
@@ -58,7 +59,7 @@ BlocSearch blocSearch;
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30), topRight: Radius.circular(30)),
         ),
-        child: StreamBuilder<List<SearchDeposition>>(
+        child: StreamBuilder<List<FeaturedRestaurant>>(
           stream: blocSearch.stream,
           builder: (context, snapshot){
             if(snapshot.hasData){
@@ -76,21 +77,19 @@ BlocSearch blocSearch;
                               restaurantName:
                                   snapshot.data[index].restaurantName,
                               restaurantAddress: snapshot.data[index].address,
-                              openAndclose: snapshot.data[index].openTime +
-                                  "-" +
-                                  snapshot.data[index].closingTime,
+                         
                               onTap: () async {
-                                final now = await NTP.now();
-                                final formatNow = DateFormat.Hm().format(now);
-                                DateFormat inputFormat = DateFormat("H:mm");
-                                DateTime dateCloseTime = inputFormat
-                                    .parse(snapshot.data[index].closingTime);
-                                DateTime dateOpen = inputFormat
-                                    .parse(snapshot.data[index].openTime);
-                                String formatClosing =
-                                    DateFormat.Hm().format(dateCloseTime);
-                                String formatOpen =
-                                    DateFormat.Hm().format(dateOpen);
+                                // final now = await NTP.now();
+                                // final formatNow = DateFormat.Hm().format(now);
+                                // DateFormat inputFormat = DateFormat("H:mm");
+                                // DateTime dateCloseTime = inputFormat
+                                //     .parse(snapshot.data[index].closingTime);
+                                // DateTime dateOpen = inputFormat
+                                //     .parse(snapshot.data[index].openTime);
+                                // String formatClosing =
+                                //     DateFormat.Hm().format(dateCloseTime);
+                                // String formatOpen =
+                                //     DateFormat.Hm().format(dateOpen);
                                 // int cpTime =int.parse(formatNow.substring(0, 2));
                                 // int restoTime =int.parse(formatClosing.substring(0, 1));
                                 // int restoOpen =int.parse(formatOpen.substring(0,1));
@@ -131,36 +130,36 @@ BlocSearch blocSearch;
                                   showDial(context,
                                       "You have a pending Transaction order on this Restaurant.");
                                 } else {
-                                  if (int.parse(formatNow.split(":")[0]) >=
-                                          int.parse(
-                                              formatClosing.split(":")[0]) ||
-                                      int.parse(formatNow.split(":")[0]) >= 0 &&
-                                          int.parse(formatNow.split(":")[0]) <
-                                              08) {
-                                    print(
-                                        "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
-                                    showDial(context,
-                                        "Sorry The Restaurant is close at the Moment Please Come Back");
-                                  } else {
-                                    if (int.parse(formatNow.split(":")[0]) >=
-                                        int.parse(formatOpen.split(":")[0])) {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          new MaterialPageRoute(
-                                              builder: (context) => ListStactic(
-                                                    restauID: snapshot
-                                                        .data[index].id
-                                                        .toString(),
-                                                    nameRestau: snapshot
-                                                        .data[index]
-                                                        .restaurantName
-                                                        .toString(),
-                                                  )));
-                                    } else {
-                                      showDial(context,
-                                          "Sorry The Restaurant is Not yet open at the Moment Please Wait!");
-                                    }
-                                  }
+                                  // if (int.parse(formatNow.split(":")[0]) >=
+                                  //         int.parse(
+                                  //             formatClosing.split(":")[0]) ||
+                                  //     int.parse(formatNow.split(":")[0]) >= 0 &&
+                                  //         int.parse(formatNow.split(":")[0]) <
+                                  //             08) {
+                                  //   print(
+                                  //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
+                                  //   showDial(context,
+                                  //       "Sorry The Restaurant is close at the Moment Please Come Back");
+                                  // } else {
+                                  //   if (int.parse(formatNow.split(":")[0]) >=
+                                  //       int.parse(formatOpen.split(":")[0])) {
+                                  //     Navigator.pushReplacement(
+                                  //         context,
+                                  //         new MaterialPageRoute(
+                                  //             builder: (context) => ListStactic(
+                                  //                   restauID: snapshot
+                                  //                       .data[index].id
+                                  //                       .toString(),
+                                  //                   nameRestau: snapshot
+                                  //                       .data[index]
+                                  //                       .restaurantName
+                                  //                       .toString(),
+                                  //                 )));
+                                  //   } else {
+                                  //     showDial(context,
+                                  //         "Sorry The Restaurant is Not yet open at the Moment Please Wait!");
+                                  //   }
+                                  // }
                                 }
                               },
                             ),

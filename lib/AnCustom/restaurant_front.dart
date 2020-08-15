@@ -8,10 +8,10 @@ class RestaurantFront extends StatefulWidget {
   final String image;
   final String restaurantName;
   final String restaurantAddress;
-  final String openAndclose;
-  final String closeOn;
+  // final String openAndclose;
+  // final String closeOn;
 
-  const RestaurantFront({Key key, this.onTap, this.image, this.restaurantName, this.restaurantAddress, this.openAndclose, this.closeOn}) : super(key: key); 
+  const RestaurantFront({Key key, this.onTap, this.image, this.restaurantName, this.restaurantAddress}) : super(key: key); 
 
   @override
   _RestaurantFrontState createState() => _RestaurantFrontState();
@@ -33,33 +33,33 @@ class _RestaurantFrontState extends State<RestaurantFront> {
           ),
           child: Stack(
             children: <Widget>[
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  height: 40,
-                  width: 130,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF0C375B),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(40),
-                      topRight: Radius.circular(20)
-                    )
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(widget.openAndclose,
-                      style :TextStyle(
-                              color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12.0,
-                                  fontFamily: 'Gilroy-light'
-                  ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.topRight,
+              //   child: Container(
+              //     height: 40,
+              //     width: 130,
+              //     decoration: BoxDecoration(
+              //       color: Color(0xFF0C375B),
+              //       borderRadius: BorderRadius.only(
+              //         bottomLeft: Radius.circular(40),
+              //         topRight: Radius.circular(20)
+              //       )
+              //     ),
+              //     child: Center(
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Text(widget.openAndclose,
+              //         style :TextStyle(
+              //                 color: Colors.white,
+              //                     fontWeight: FontWeight.bold,
+              //                     fontSize: 12.0,
+              //                     fontFamily: 'Gilroy-light'
+              //     ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(

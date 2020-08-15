@@ -22,7 +22,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ListStactic extends StatefulWidget {
   final String nameRestau;
   final String restauID;
-  const ListStactic({Key key, this.nameRestau, this.restauID}) : super(key: key);
+  final String baranggay;
+  const ListStactic({Key key, this.nameRestau, this.restauID, this.baranggay}) : super(key: key);
   @override
   _ListStacticState createState() => _ListStacticState();
 }
@@ -104,9 +105,11 @@ class _ListStacticState extends State<ListStactic>
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) => MyCart(
+                                                        barangay: widget.baranggay,
                                                         restauID: widget.restauID,
                                                         nameRestau:widget.nameRestau,
                                                       )));
+                                         
                                         }),
                                   ),
                                 );
@@ -185,7 +188,6 @@ class _ListStacticState extends State<ListStactic>
                                                                   child: FutureBuilder<List<RestaurantMenu>>(
                                                                       future: _menuList(ty.id, ty.categoryName),
                                                                       builder: (context, data) {
-                                                                       
                                                                         if(data.hasData){
                                                                           if(data.data.length >0){
                                                                             return ListView.builder(

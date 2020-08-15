@@ -533,6 +533,7 @@ void _signingIn() async {
       localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
+     
        Navigator.pushReplacement(
         context,
         new MaterialPageRoute(

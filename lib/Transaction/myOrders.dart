@@ -81,7 +81,7 @@ class _MyOrderState extends State<MyOrder> {
               child: GestureDetector(
                 onTap: (){
                   Navigator.pop(context);
-                  disposeBloc();
+                
                 },
                 child: Container(
                   height: 50,
@@ -154,7 +154,7 @@ class _MyOrderState extends State<MyOrder> {
                                 status: sunkist =="0" ?snapshot.data[index].status.toString() :sunkist,
                                 onTap: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return StepperStatus();
+                                    return StepperStatus(status: sunkist);
                                   }));
                                 },
                               ),

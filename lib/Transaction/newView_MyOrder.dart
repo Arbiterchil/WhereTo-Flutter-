@@ -159,7 +159,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
                                 status: sunkist =="0" ?snapshot.data[index].status.toString() :sunkist,
                                 onTap: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return StepperStatus();
+                                    return StepperStatus(status: sunkist,);
                                   }));
                                 },
                               ),
