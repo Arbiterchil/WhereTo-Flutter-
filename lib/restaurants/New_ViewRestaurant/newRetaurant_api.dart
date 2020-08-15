@@ -25,12 +25,7 @@ class NewRestaurantApi {
                 restaurantName: body['restaurantName'],
                 address: body['address'],
                 contactNumber: body['contactNumber'],
-                openTime: body['openTime'],
-                closingTime: body['closingTime'],
-                closeOn: body['closeOn'],
-                isFeatured: body['isFeatured'],
-                status: body['status']
-
+                barangayName: body['barangayName']
             );
             restaurantnew.add(neWRestaurant);
         }

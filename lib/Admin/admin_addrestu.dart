@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/Admin/admin_addmenu.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/editProfileScreen.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ class AdminAddRestaurant extends StatefulWidget {
 
 class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 
+    
+
     final scaffoldKey = new GlobalKey<ScaffoldState>(); 
     TextEditingController retaurantname  = TextEditingController();
     TextEditingController address = TextEditingController();
@@ -24,6 +27,33 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
     String datesofdays;
     List dataBarangay = List();
     bool loading = false;
+
+
+    addRestaurant() async {
+      var data = 
+      {
+
+        "restaurantName": retaurantname.text,
+        "address": address.text,
+        "barangayId": selectPerson.toString(),
+        "contactNumber": contactnumber.text,
+        "openTime": opentimeString.toString(),
+        "closingTime": closetimeString.toString(),
+        "closeOn": datesofdays.toString(),
+        "isFeatured": 1,
+
+      };
+
+      var response = await ApiCall().addRestaurant(data, '/addRestaurant');
+
+       var body = json.decode(response.body);
+      print(body);
+        Navigator.pushReplacement(  
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => AddmenuAdmin()));
+    }
+
     List<String> weeks = 
     [
       "None",
@@ -80,7 +110,6 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 
   }
     phoneValidate(String val){
-
           Pattern pattern = r'^([+0]9)?[0-9]{10,11}$';
           RegExp regExp = new RegExp(pattern);
           if (val.length == 0 ){
@@ -96,10 +125,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
           }
 
     }   
-
-
-
-
+    
     Widget formAdd(){
       return Form(
         key: formkey,
@@ -110,7 +136,6 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
             children: <Widget>[
 
                Padding(
-
                 padding: const EdgeInsets.all(10),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -489,6 +514,12 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                 padding: EdgeInsets.symmetric(vertical: 25.0),
                 child: RaisedButton(
                   onPressed: (){
+
+                    Navigator.pushReplacement(  
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => AddmenuAdmin()));
+                  // addRestaurant();
                   },
                   elevation: 5.0,
                   padding: EdgeInsets.all(8.0),
@@ -513,6 +544,9 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
         ),
       );
     }
+
+    
+
   @override
   void initState() {
     super.initState();

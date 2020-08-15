@@ -1,4 +1,5 @@
 
+import 'package:WhereTo/Admin/add_Rider.dart/addrider_view.dart';
 import 'package:WhereTo/Admin/admin_addrestu.dart';
 import 'package:WhereTo/Admin/admin_dash.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class TabSwitchAdmin extends StatelessWidget {
       child = AdminDash();
    else if(tabItem == "Add_Restaurant")
       child = AdminAddRestaurant();
-      
+   else if(tabItem == "Add_Rider")
+   child = AddRiderAccount();
     return Navigator(
       key: navigatorKey,
       onGenerateRoute: (routeSettings) {
