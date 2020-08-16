@@ -334,7 +334,7 @@ void _login() async{
       localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
-
+      print(body);
       
           if(body['user']['userType'] == 0){
         print('Customer');

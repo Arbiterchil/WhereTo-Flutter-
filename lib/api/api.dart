@@ -5,9 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiCall{
 
-    // final String url = 'http://10.0.2.2:8000/api';
-    final String url = 'https://wheretoapplication.azurewebsites.net/api';
-  
+    // final String url = 'http://10.0.2.2:8000/api',https://wheretoapplication.azurewebsites.net/api;
+    final String url = 'http://192.168.1.10:8000/api';
+    // final String url = 'https://wheretoapplication.azurewebsites.net/api';
     postData(data ,api) async {
     var fullurl = url+api+ await _getToken();
     return http.post(fullurl,
@@ -26,6 +26,13 @@ class ApiCall{
   }  
 
   addRestaurant(data ,api) async {
+    var fullurl = url+api+ await _getToken();
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+  addMenu(data ,api) async {
     var fullurl = url+api+ await _getToken();
     return http.post(fullurl,
     body: jsonEncode(data),
@@ -157,14 +164,14 @@ viewMenuTransac(api) async {
 
 
 
+        _setHeaders() => {
+        'Content-type' : 'application/json',
+        'Accept' : 'application/json', 
+        };
 
 
 
-  _setHeaders() => {
-  'Content-type' : 'application/json',
-        'Accept' : 'application/json',
-        
-  };
+
 
   _getToken() async {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
