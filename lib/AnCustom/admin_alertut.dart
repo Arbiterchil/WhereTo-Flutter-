@@ -72,7 +72,7 @@ class _AdminOutStageState extends State<AdminOutStage> {
                   child: Image.asset('asset/img/logo.png',height: 100,width: 100,),
                 )),
               SizedBox(height:24.0 ,),
-              Text("Do you want To exit?",
+              Text("Do you want To Log Out?",
               style: TextStyle(
                 color: Colors.white,
                             fontWeight: FontWeight.w700,
@@ -80,10 +80,9 @@ class _AdminOutStageState extends State<AdminOutStage> {
                             fontFamily: 'OpenSans'
               ),),
                SizedBox(height:16.0 ,),
-              Text("Are You Sure Want to Exit? Sure Choi ba muhawa naka unya na.",
+              Text("Are You Sure Want to Log Out? Sure Choi ba muhawa naka unya na.",
               textAlign: TextAlign.center,
               style: TextStyle(
-                
                 color: Colors.white,
                             fontWeight: FontWeight.w700,
                             fontSize: 12.0,

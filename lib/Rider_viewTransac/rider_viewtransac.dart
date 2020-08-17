@@ -38,6 +38,7 @@ var totalAll;
   var constant;
   var finalID;
   var playerId;
+  var user_coor;
   var userRN;
   var idgetter;
   
@@ -112,10 +113,12 @@ Future<List<RiderViewClass>> getTransac() async {
                     print(constant['id'].toString());
                     print(constant['transact_id'].toString());
                     print(constant['player_id'].toString());
+                    print(constant['user_coordinates'].toString());
                     // print(constant['transac_id'].toString());
                     getmessage = true;
                     finalID = constant['transact_id'];
                     playerId = constant['player_id'].toString();
+                    user_coor = constant['user_coordinates'].toString();
                   }else{
                     print("No Data");
                   }
@@ -228,7 +231,8 @@ Future<List<RiderViewClass>> getTransac() async {
                                                     riderID: snapshot.data[index].riderId.toString(),
                                                     deliveryCharge: snapshot.data[index].deliveryCharge.toString(),
                                                     nametran:  snapshot.data[index].name,
-                                                    playerId: playerId.toString(),);
+                                                    playerId: playerId.toString(),
+                                                    user_coor : user_coor.toString());
                                                 }));
 
                           },),
