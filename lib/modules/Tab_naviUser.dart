@@ -14,6 +14,8 @@ class TabNaviUserRoutes{
 class TabUserNav extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final String tabItem;
+
+  // const TabUserNav({Key key, this.navigatorKey, this.tabItem}) : super(key: key);
  
 
   TabUserNav({this.navigatorKey,this.tabItem});

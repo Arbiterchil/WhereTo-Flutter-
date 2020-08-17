@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
+import 'package:WhereTo/Transaction/newView_MyOrder.dart';
 import 'package:WhereTo/modules/Tab_naviUser.dart';
+import 'package:WhereTo/modules/profile.dart';
+import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,32 +55,45 @@ void configSignal() async {
 }
 
 
-  
+  final List<Widget> _child = 
+  [
+    SearchDepo(),
+    Profile(),
+    MyNewViewOrder()
+  ];
+
+void onTabTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
      return Scaffold(
       body: WillPopScope(
-      onWillPop: () async {
-        final isFirstRouteInCurrentTab =
-            !await _navigatorKeys[_currentPage].currentState.maybePop();
-        if (isFirstRouteInCurrentTab) {
-          if (_currentPage != "SearchRestaurant") {
-            _selectTab("SearchRestaurant", 1);
-            return false;
-          }
-        }
-        return isFirstRouteInCurrentTab ? UserDialog_Help.exit(context) : false ;
-      },
-          child: Stack(
-          children: <Widget>[
+        onWillPop: () async => false,
+      // onWillPop: () async {
+      //   final isFirstRouteInCurrentTab =
+      //       !await _navigatorKeys[_currentPage].currentState.maybePop();
+      //   if (isFirstRouteInCurrentTab) {
+      //     if (_currentPage != "SearchRestaurant") {
+      //       _selectTab("SearchRestaurant", 1);
+      //       return false;
+      //     }
+      //   }
+      //   return isFirstRouteInCurrentTab ? UserDialog_Help.exit(context) : false ;
+      // },
+        //   child: Stack(
+        //   children: <Widget>[
             
-            _buildOffstageNavigator("UserProfile"),
-            _buildOffstageNavigator("SearchRestaurant"),
-             _buildOffstageNavigator("MyOrders"),
-          ],
-        ),
-        
+        //     _buildOffstageNavigator("UserProfile"),
+        //     _buildOffstageNavigator("SearchRestaurant"),
+        //      _buildOffstageNavigator("MyOrders"),
+        //   ],
+        // ),
+        child: _child[_selectedIndex],
+
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: 
@@ -86,8 +102,11 @@ void configSignal() async {
         Color(0xFF0C375B), 
         unselectedItemColor: 
         Color(0xFF176DB5),
+
         currentIndex: _selectedIndex,
-        onTap: (int index) { _selectTab(pageKeys[index], index); },
+        onTap: onTabTapped,
+        // onTap: (int index) { _selectTab(pageKeys[index], index); },
+        
         items: [
               BottomNavigationBarItem(
               icon: new Icon(Icons.view_list),
@@ -111,13 +130,13 @@ void configSignal() async {
 
     );
   }
-    Widget _buildOffstageNavigator(String tabItem) {
-    return Offstage(
-      offstage: _currentPage != tabItem,
-      child: TabUserNav(
-        navigatorKey: _navigatorKeys[tabItem],
-        tabItem: tabItem,
-      ),
-    );
-  }
+  //   Widget _buildOffstageNavigator(String tabItem) {
+  //   return Offstage(
+  //     offstage: _currentPage != tabItem,
+  //     child: TabUserNav(
+  //       navigatorKey: _navigatorKeys[tabItem],
+  //       tabItem: tabItem,
+  //     ),
+  //   );
+  // }
 }

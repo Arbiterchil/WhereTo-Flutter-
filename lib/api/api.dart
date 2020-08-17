@@ -15,7 +15,7 @@ class ApiCall{
     headers: _setHeaders()
     );
   }
-
+  
 
   addRider(data ,api) async {
     var fullurl = url+api+ await _getToken();
