@@ -201,7 +201,7 @@ class _ListStacticState extends State<ListStactic>
                                                                                       menuDescription: data.data[index].description,
                                                                                       fixprice:  "₱ " +data.data[index].price.toString()+".00",
                                                                                       
-                                                                                           
+                      
                                                                                       onTap: (){
                                                                                          BlocProvider.of<
                                                                                                           OrderBloc>(

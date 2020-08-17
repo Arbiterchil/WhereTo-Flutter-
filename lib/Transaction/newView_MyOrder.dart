@@ -73,7 +73,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
   Widget build(BuildContext context) {
     setState(() {
       bloc = BlocAll();
-      getBloc(userData == null ? "0" : userData['id'].toString());  
+      getBloc(userData['id'].toString());  
     });
     return Scaffold(
       body: Stack(

@@ -6,8 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ApiCall{
 
     // final String url = 'http://10.0.2.2:8000/api',https://wheretoapplication.azurewebsites.net/api;
-    final String url = 'http://192.168.1.10:8000/api';
-    // final String url = 'https://wheretoapplication.azurewebsites.net/api';
+    // final String url = 'http://192.168.1.10:8000/api';
+    final String url = 'https://wheretoapplication.azurewebsites.net/api';
     postData(data ,api) async {
     var fullurl = url+api+ await _getToken();
     return http.post(fullurl,

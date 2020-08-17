@@ -33,7 +33,7 @@ class _Profile extends State<Profile> {
   @override
   void initState() {
     _getUserInfo();
-    // getLocation();
+    getLocation();
     super.initState();
   }
 
@@ -45,27 +45,27 @@ class _Profile extends State<Profile> {
       userData = user;
     });
   }
-//  getLocation() async{
-//     var location =Location();
-//     try{
-//       var userLocation =await location.getLocation();
-//       print("${userLocation.latitude},${userLocation.longitude}");
-//     } on Exception catch (e){
-//       print(e.toString());
-//     }
-//  }
+ getLocation() async{
+    var location =Location();
+    try{
+      var userLocation =await location.getLocation();
+      print("${userLocation.latitude},${userLocation.longitude}");
+    } on Exception catch (e){
+      print(e.toString());
+    }
+ }
 
-//  Future<void>getService() async{
-//    var location =Location();
-//    bool _serviceEnabled;
-//    _serviceEnabled = await location.serviceEnabled();
-//   if (!_serviceEnabled) {
-//   _serviceEnabled = await location.requestService();
-//   if (!_serviceEnabled) {
-//     return;
-//   }
-// }
-//  }
+ Future<void>getService() async{
+   var location =Location();
+   bool _serviceEnabled;
+   _serviceEnabled = await location.serviceEnabled();
+  if (!_serviceEnabled) {
+  _serviceEnabled = await location.requestService();
+  if (!_serviceEnabled) {
+    return;
+  }
+}
+ }
  Future<void>getPermission() async{
    var location =Location();
    PermissionStatus permissionStatus =await location.hasPermission();
@@ -76,16 +76,6 @@ class _Profile extends State<Profile> {
      }
    }
  }
-//  Future<void>getPermission() async{
-//    var location =Location();
-//    PermissionStatus permissionStatus =await location.hasPermission();
-//    if(permissionStatus ==PermissionStatus.denied){
-//      permissionStatus =await location.requestPermission();
-//      if(permissionStatus !=PermissionStatus.granted){
-//        return;
-//      }
-//    }
-//  }
 
 
 

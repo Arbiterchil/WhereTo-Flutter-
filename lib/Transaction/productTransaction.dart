@@ -576,12 +576,6 @@ class _TransactionListState extends State<TransactionList> {
                                                             print("No Order");
                                                              
                                                             }else{
-                                                               // Geodesy geodesy = Geodesy();
-                                                            // Position _currentPosition;
-                                                            // final point =LatLng(7.4281587, 125.8067275);
-                                                            // final c =<LatLng>[];
-                                                            // final destination = geodesy.pointsInRange(point, c, 100);
-                                                            // print("Points: ${destination} ${destination}");
                                                             var location =Location();
                                                             var userLocation =await location.getLocation();
                                                             var id;
@@ -589,6 +583,7 @@ class _TransactionListState extends State<TransactionList> {
                                                             var restoCharge;
                                                             var userCharge;
                                                             var totalOrder;
+                                                            var transactID;
                                                             Map<String, dynamic> string;
                                                             Map<String, dynamic> post;
                                                             Map<String, int> converted = {};
@@ -811,21 +806,22 @@ class _TransactionListState extends State<TransactionList> {
                                                                 'restaurantId':this.widget.restauID,
                                                                 'order': result,
                                                                 "deliveryAddress": "${userLocation.latitude},${userLocation.longitude}",
-                                                                "deliveryCharge":totalOrder
+                                                                "deliveryCharge":"$totalOrder",
+                                                                "barangayId":user['barangayId'],
                                                               };
                                                               // print(post);
                                                             });
                                                           
-                                                          // var res = await ApiCall().postData(post, '/putOrder');
-                                                          // if (res.statusCode == 200) {
-                                                          //   var data = json.decode(res.body);
-                                                          //   setState(() {
-                                                          //      transactID =data; 
-                                                          //   });
-                                                          //   print(data);
-                                                          //   print("Success");
+                                                          var res = await ApiCall().postData(post, '/putOrder');
+                                                          if (res.statusCode == 200) {
+                                                            var data = json.decode(res.body);
+                                                            setState(() {
+                                                               transactID =data; 
+                                                            });
+                                                            print(data);
+                                                            print("Success");
                                                           
-                                                          // }
+                                                          }
                                                           // final response =await ApiCall().getData('/getAllPlayerId');
                                                           // List<GetPlayerId> search =getPlayerIdFromJson(response.body);
                                                           // List<dynamic> player =[];
@@ -883,8 +879,8 @@ class _TransactionListState extends State<TransactionList> {
                                                               child: Text("Place Order",
                                                                style: TextStyle(
                                                                   color: Colors.white,
-                                                          fontSize: 15.0,
-                                                          fontFamily: 'Gilroy-light'
+                                                              fontSize: 15.0,
+                                                              fontFamily: 'Gilroy-light'
                                                                ),
                                                               ),
                                                             ),
