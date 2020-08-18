@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:WhereTo/MenuRestaurant/categ_type.dart';
@@ -17,26 +16,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class ListStactic extends StatefulWidget {
   final String nameRestau;
   final String restauID;
   final String baranggay;
-  const ListStactic({Key key, this.nameRestau, this.restauID, this.baranggay}) : super(key: key);
+  const ListStactic({Key key, this.nameRestau, this.restauID, this.baranggay})
+      : super(key: key);
   @override
   _ListStacticState createState() => _ListStacticState();
 }
 
 class _ListStacticState extends State<ListStactic>
     with SingleTickerProviderStateMixin {
-
-
   Future<List<TyepCateg>> _categRest() async {
     final response = await ApiCall().getCategory('/getCategories');
     final List<TyepCateg> category = tyepCategFromJson(response.body);
     return category;
   }
+
   Future<List<RestaurantMenu>> _menuList(int id, String menuName) async {
     final response = await ApiCall().getCategory('/getMenuCategory/$id');
     final List<RestaurantMenu> restList = restaurantMenuFromJson(response.body);
@@ -82,14 +79,15 @@ class _ListStacticState extends State<ListStactic>
                     backgroundColor: Colors.white10,
                     appBar: PreferredSize(
                       preferredSize: Size.fromHeight(130.0),
-                      child: AppBar(                    
+                      child: AppBar(
                         actions: <Widget>[
                           Container(
-                            child:
-                              BlocConsumer<OrderBloc, List<TransactionOrders>>(
+                            child: BlocConsumer<OrderBloc,
+                                List<TransactionOrders>>(
                               builder: (context, snapshot) {
                                 return Badge(
-                                  badgeContent: Text(snapshot.length.toString()),
+                                  badgeContent:
+                                      Text(snapshot.length.toString()),
                                   badgeColor: Colors.white,
                                   borderRadius: 20,
                                   position: BadgePosition.topLeft(),
@@ -100,23 +98,22 @@ class _ListStacticState extends State<ListStactic>
                                           color: Colors.white,
                                         ),
                                         onPressed: () {
-                                          
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) => MyCart(
-                                                        barangay: widget.baranggay,
-                                                        restauID: widget.restauID,
-                                                        nameRestau:widget.nameRestau,
+                                                        barangay:
+                                                            widget.baranggay,
+                                                        restauID:
+                                                            widget.restauID,
+                                                        nameRestau:
+                                                            widget.nameRestau,
                                                       )));
-                                         
                                         }),
                                   ),
                                 );
                               },
-                              listener: (BuildContext context, order) {
-                                 
-                                  },
+                              listener: (BuildContext context, order) {},
                             ),
                           ),
                           IconButton(
@@ -124,146 +121,140 @@ class _ListStacticState extends State<ListStactic>
                                 Icons.shopping_cart,
                                 color: Colors.white,
                               ),
-                              onPressed: () async{
-                                SharedPreferences local =await SharedPreferences.getInstance();
-                                var userjson =local.getString('user');
-                                var user =json.decode(userjson);
+                              onPressed: () async {
+                                SharedPreferences local =
+                                    await SharedPreferences.getInstance();
+                                var userjson = local.getString('user');
+                                var user = json.decode(userjson);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MyOrder(id: user['id'].toString())));
-                                                }),
-                                              ],
-                      // backgroundColor: Colors.amber,
-                      backgroundColor: Color(0xFF0C375B),
-                      leading: IconButton(
-                      icon: Icon(
-                      Icons.arrow_back_ios,
+                                        builder: (context) => MyOrder(
+                                            id: user['id'].toString())));
+                              }),
+                        ],
+                        // backgroundColor: Colors.amber,
+                        backgroundColor: Color(0xFF0C375B),
+                        leading: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchDepo()));
+                              // Navigator.pop(context);
+                              BlocProvider.of<OrderBloc>(context)
+                                  .add(Computation.deleteAll());
+                            }),
+
+                        title: Text(
+                          widget.nameRestau,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              letterSpacing: 2.0,
+                              color: Colors.white,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Brandon_Grotesque'),
+                        ),
+                        bottom: TabBar(
+                          unselectedLabelColor: Colors.amber,
+                          indicator: BoxDecoration(
+                            color: Color(0xFF176DB5),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          isScrollable: true,
+                          tabs: snapshot.data.map<Widget>((TyepCateg ty) {
+                            return Container(
+                              width: 80.0,
+                              child: Tab(
+                                text: ty.categoryName,
+                              ),
+                            );
+                          }).toList(),
+                        ),
                       ),
-                      onPressed: () {
-                                                                     Navigator.push(context, MaterialPageRoute(
-                                                                    builder: (context) => SearchDepo()));
-                      // Navigator.pop(context);
-                      BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
-                      }),
-                                                                  
-                      title: Text(
-                      widget.nameRestau,
-                      
-                      textAlign: TextAlign.center,
-                      
-                      style: TextStyle(
-                      letterSpacing: 2.0,
-                      color: Colors.white,
-                      fontSize: 24.0,
-                       fontWeight: FontWeight.bold,
-                       fontFamily: 'Brandon_Grotesque'),
-                      ),
-                      bottom: TabBar(
-                                                                unselectedLabelColor: Colors.amber,
-                                                                indicator: BoxDecoration(
-                                                                  color: Color(0xFF176DB5),
-                                                                  borderRadius: BorderRadius.only(
-                                                                    topLeft: Radius.circular(20),
-                                                                    topRight: Radius.circular(20),
-                                                                  ),
-                                                                ),
-                                                                isScrollable: true,
-                                                                tabs: snapshot.data.map<Widget>((TyepCateg ty) {
-                                                                  return Container(
-                                                                    width: 80.0,
-                                                                    child: Tab(
-                                                                      text: ty.categoryName,
-                                                                      
-                                                                    ),
-                                                                  );
-                                                                }).toList(),
-                                                              ),
-                                                            ),
-                                                      ),
-                                                          body: Builder(builder: (context) {
-                                                            return TabBarView(
-                                                              children: snapshot.data.map<Widget>((TyepCateg ty) {
-                                                                return Container(
-                                                                  child: FutureBuilder<List<RestaurantMenu>>(
-                                                                      future: _menuList(ty.id, ty.categoryName),
-                                                                      builder: (context, data) {
-                                                                        if(data.hasData){
-                                                                          if(data.data.length >0){
-                                                                            return ListView.builder(
-                                                                              itemCount: data.data.length,
-                                                                              itemBuilder: (context, index) {
-                                                                                if(data.data.length >0){
-                                                                                  return Padding(
-                                                                                  padding: EdgeInsets.all(15),
-                                                                                    child: MenuBoxRestaurant(
-                                                                                      menuName:data.data[index].menuName ,
-                                                                                      menuDescription: data.data[index].description,
-                                                                                      fixprice:  "₱ " +data.data[index].price.toString()+".00",
-                                                                                      
-                      
-                                                                                      onTap: (){
-                                                                                         BlocProvider.of<
-                                                                                                          OrderBloc>(
-                                                                                                      context)
-                                                                                                  .add(
-                                                                                                Computation.add(
-                                                                                                  TransactionOrders(
-                                                                                                      name: data
-                                                                                                          .data[index]
-                                                                                                          .menuName,
-                                                                                                      description: data
-                                                                                                          .data[index]
-                                                                                                          .description,
-                                                                                                      price: data
-                                                                                                          .data[index]
-                                                                                                          .price,
-                                                                                                      quantity: 1,
-                                                                                                      id: data
-                                                                                                          .data[index]
-                                                                                                          .id,
-                                                                                                       
-                                                                                                      ),
-                                                                                                ),
-                                                                                              );
-                      
-                                                                                      },
-                                                                                    )
-
-
-
-                                                                         
-                                                                                );
-                                                                                }else{
-                                                                                  return Container();
-                                                                                }
-                                                                              });
-                                                                          }else{
-                                                                            return Center(
-                                                                            child: Container()
-                                                                          );
-                                                                          }
-                                                                        }else{
-                                                                          return Center(
-                                                                            child: CircularProgressIndicator(),
-                                                                          );
-                                                                        }
-                                                                      }),
-                                                                );
-                                                              }).toList(),
-                                                            );
-                                                          }),
+                    ),
+                    body: Builder(builder: (context) {
+                      return TabBarView(
+                        children: snapshot.data.map<Widget>((TyepCateg ty) {
+                          return Container(
+                            child: FutureBuilder<List<RestaurantMenu>>(
+                                future: _menuList(ty.id, ty.categoryName),
+                                builder: (context, data) {
+                                  if (data.hasData) {
+                                    if (data.data.length > 0) {
+                                      return ListView.builder(
+                                          itemCount: data.data.length,
+                                          itemBuilder: (context, index) {
+                                            if (data.data.length > 0) {
+                                              return Padding(
+                                                  padding: EdgeInsets.all(15),
+                                                  child: MenuBoxRestaurant(
+                                                    menuName: data
+                                                        .data[index].menuName,
+                                                    menuDescription: data
+                                                        .data[index]
+                                                        .description,
+                                                    fixprice: "₱ " +
+                                                        data.data[index].price
+                                                            .toString() +
+                                                        ".00",
+                                                    onTap: () {
+                                                      BlocProvider.of<
+                                                                  OrderBloc>(
+                                                              context)
+                                                          .add(
+                                                        Computation.add(
+                                                          TransactionOrders(
+                                                            name: data
+                                                                .data[index]
+                                                                .menuName,
+                                                            description: data
+                                                                .data[index]
+                                                                .description,
+                                                            price: data
+                                                                .data[index]
+                                                                .price,
+                                                            quantity: 1,
+                                                            id: data
+                                                                .data[index].id,
+                                                          ),
                                                         ),
                                                       );
-                                                    }
-                                                  },
-                                                ),
-                                              );
-                                            }),
-                                          );
-                                        }
-                                      
-                                      
+                                                    },
+                                                  ));
+                                            } else {
+                                              return Container();
+                                            }
+                                          });
+                                    } else {
+                                      return Center(child: Container());
+                                    }
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                }),
+                          );
+                        }).toList(),
+                      );
+                    }),
+                  ),
+                );
+              }
+            },
+          ),
+        );
+      }),
+    );
+  }
 }
 //  Card(
 //                                                                                       color: Colors.white70,
@@ -305,8 +296,7 @@ class _ListStacticState extends State<ListStactic>
 //                                                                                           width: 50,
 //                                                                                           child: InkWell(
 //                                                                                             onTap: () {
-                                                                                             
-                                      
+
 //                                                                                               // Navigator.push(context, MaterialPageRoute(
 //                                                                                               // builder: (context) => MyHomePage()));
 //                                                                                             },

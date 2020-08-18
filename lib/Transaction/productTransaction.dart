@@ -532,7 +532,7 @@ class _TransactionListState extends State<TransactionList> {
                                                               }
                                                               return Center(
                                                                   child: Text(
-                                                                "Sub Total: $total",
+                                                                "Sub Total: ${double.parse(total.toString())}",
                                                                 style: GoogleFonts.archivo(
                                                                   decoration: TextDecoration.none,
                                                                     color: fCD,
@@ -592,12 +592,13 @@ class _TransactionListState extends State<TransactionList> {
                                                             SharedPreferences localStorage =await SharedPreferences.getInstance();
                                                             var userJson = localStorage.getString('user');
                                                             var user =json.decode(userJson);
+                                                            
                                                             final barangay =await ApiCall().getData('/getBarangayList');
                                                             List<BarangayList> barangayResponse =barangayListFromJson(barangay.body);
                                                             String barangayname;
                                                             var istrue =false;
                                                             for(int z=0;z<barangayResponse.length;z++){
-                                                              if(barangayResponse[z].id.toString().contains(user['barangayId'])){
+                                                              if(barangayResponse[z].id.toString().contains(user['barangayId'].toString())){
                                                                  barangayname =barangayResponse[z].barangayName;
                                                                  istrue =true;
                                                                  break; 
@@ -763,7 +764,7 @@ class _TransactionListState extends State<TransactionList> {
                                                             }else if(widget.barangay!="Magugpo" && barangayname !="Magugpo"){
                                                               totalOrder =40 +restoCharge +userCharge;
                                                               setState(() {
-                                                                displaytotal =totalOrder;
+                                                                displaytotal =totalOrder.toString();
                                                               });
                                                             }
                                                             print("total: $totalOrder");
@@ -805,7 +806,7 @@ class _TransactionListState extends State<TransactionList> {
                                                                 'userId': user['id'],
                                                                 'restaurantId':this.widget.restauID,
                                                                 'order': result,
-                                                                "deliveryAddress": "${userLocation.latitude},${userLocation.longitude}",
+                                                                "deliveryAddress": user['address'],
                                                                 "deliveryCharge":"$totalOrder",
                                                                 "barangayId":user['barangayId'],
                                                               };
@@ -822,53 +823,54 @@ class _TransactionListState extends State<TransactionList> {
                                                             print("Success");
                                                           
                                                           }
-                                                          // final response =await ApiCall().getData('/getAllPlayerId');
-                                                          // List<GetPlayerId> search =getPlayerIdFromJson(response.body);
-                                                          // List<dynamic> player =[];
-                                                          // search.forEach((element) {
-                                                          //   player.add(element.deviceId);
-                                                          //   print(element.deviceId);
-                                                          // });
-                                                          // await OneSignal.shared.setLocationShared(true);
-                                                          // await OneSignal.shared.promptLocationPermission();
-                                                          // await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-                                                          // OneSignal.shared
-                                                          //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
-                                                          // OneSignal.shared
-                                                          //     .setNotificationReceivedHandler((OSNotification notification) {
+                                                          final response =await ApiCall().getData('/getAllPlayerId');
+                                                          List<GetPlayerId> search =getPlayerIdFromJson(response.body);
+                                                          List<dynamic> player =[];
+                                                          search.forEach((element) {
+                                                            player.add(element.deviceId);
+                                                            print(element.deviceId);
+                                                          });
+                                                          await OneSignal.shared.setLocationShared(true);
+                                                          await OneSignal.shared.promptLocationPermission();
+                                                          await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+                                                          OneSignal.shared
+                                                              .setInFocusDisplayType(OSNotificationDisplayType.notification);
+                                                          OneSignal.shared
+                                                              .setNotificationReceivedHandler((OSNotification notification) {
                                                           
                                                           
-                                                          // });
+                                                          });
 
-                                                          // await OneSignal.shared.setSubscription(true);
-                                                          // await OneSignal.shared.getTags();
-                                                          // var status = await OneSignal.shared.getPermissionSubscriptionState();
+                                                          await OneSignal.shared.setSubscription(true);
+                                                          await OneSignal.shared.getTags();
+                                                          var status = await OneSignal.shared.getPermissionSubscriptionState();
                                                           
-                                                          // String url = 'https://onesignal.com/api/v1/notifications';
-                                                          // var playerId = status.subscriptionStatus.userId;
-                                                          // var contents = {
-                                                          //   "include_player_ids": player,
-                                                          //   "include_segments": ["All"],
-                                                          //   "excluded_segments": [],
-                                                          //   "contents": {"en": "FuCK you driver!"},
-                                                          //   "data": {
-                                                          //     "id": user['id'].toString(),
-                                                          //     "player_id": playerId.toString(),
-                                                          //     "transact_id": transactID.toString(),
-                                                          //   },
-                                                          //   "headings": {"en": "New Order"},
-                                                          //   "filter": [
-                                                          //     {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
-                                                          //   ],
-                                                          //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-                                                          // };
-                                                          // Map<String, String> headers = {
-                                                          //   'Content-Type': 'application/json',
-                                                          //   'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-                                                          // };
+                                                          String url = 'https://onesignal.com/api/v1/notifications';
+                                                          var playerId = status.subscriptionStatus.userId;
+                                                          var contents = {
+                                                            "include_player_ids": player,
+                                                            "include_segments": ["All"],
+                                                            "excluded_segments": [],
+                                                            "contents": {"en": "FuCK you driver!"},
+                                                            "data": {
+                                                              "id": user['id'].toString(),
+                                                              "player_id": playerId.toString(),
+                                                              "transact_id": transactID.toString(),
+                                                              "user_coordinates": "${userLocation.latitude},${userLocation.longitude}"
+                                                            },
+                                                            "headings": {"en": "New Order"},
+                                                            "filter": [
+                                                              {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+                                                            ],
+                                                            "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+                                                          };
+                                                          Map<String, String> headers = {
+                                                            'Content-Type': 'application/json',
+                                                            'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+                                                          };
                                                           
-                                                          // await http.post(url, headers: headers, body: json.encode(contents));
-                                                          // print(playerId);
+                                                          await http.post(url, headers: headers, body: json.encode(contents));
+                                                          print(playerId);
                                                           // print(tags);
                                                           // print(repo);
                                                           

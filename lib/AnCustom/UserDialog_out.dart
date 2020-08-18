@@ -73,7 +73,7 @@ var userData;
                   child: Image.asset('asset/img/logo.png',height: 100,width: 100,),
                 )),
               SizedBox(height:24.0 ,),
-              Text("Do you want To exit?",
+              Text("Do you want To Logout?",
               style: TextStyle(
                 color: Colors.white,
                             fontWeight: FontWeight.w700,
@@ -84,7 +84,6 @@ var userData;
               Text("Please Check Your other Unfisnihed Items in order for not to do some Complicated things.",
               textAlign: TextAlign.center,
               style: TextStyle(
-                
                 color: Colors.white,
                             fontWeight: FontWeight.w700,
                             fontSize: 12.0,

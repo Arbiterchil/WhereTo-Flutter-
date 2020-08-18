@@ -19,6 +19,7 @@ class SearchResto extends StatefulWidget {
 }
 
 class _SearchRestoState extends State<SearchResto> {
+  var focus = new FocusNode();
   BlocSearch blocSearch;
    Future<void>getBloc(var id) async {
     await blocSearch.getRest(id);
@@ -27,6 +28,7 @@ class _SearchRestoState extends State<SearchResto> {
   Future<void> disposeBloc() async {
     blocSearch.dispose();
   }
+  
   TextEditingController search =TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,8 @@ class _SearchRestoState extends State<SearchResto> {
     blocSearch = BlocSearch();
     getBloc(search.text); 
     });
+    FocusScope.of(context).requestFocus(focus);
+    focus.requestFocus();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -47,6 +51,7 @@ class _SearchRestoState extends State<SearchResto> {
           }),
         ],
         title: TextField(
+          focusNode: focus,
           controller: search,
           onChanged: (val){
             val =search.text;
