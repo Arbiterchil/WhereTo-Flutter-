@@ -25,8 +25,10 @@ class ViewMenuOnTransac extends StatefulWidget {
   final String nametran;
   final String playerId;
   final String transacIDs;
+  final String user_coor;
 
-  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs}) : super(key: key);
+  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor}) : super(key: key);
+
   
   @override
   _ViewMenuOnTransacState createState() => _ViewMenuOnTransacState();

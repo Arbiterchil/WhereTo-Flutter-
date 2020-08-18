@@ -10,6 +10,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../styletext.dart';
 
 class AddmenuAdmin extends StatefulWidget {
+
+  final String id;
+
+  const AddmenuAdmin({Key key, this.id}) : super(key: key);
+
   @override
   _AddmenuAdminState createState() => _AddmenuAdminState();
 }
@@ -391,7 +396,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                         }else{
                         if(formkey.currentState.validate()){
                         formkey.currentState.save();
-                        }
+                        
                         Map<String, int> id = {};
                         Map<String , int> shit = {};
                         List<dynamic> categs = [];
@@ -417,7 +422,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                         print(resultant);
                          var data =
                           {
-                                "restaurantId" : 3,
+                                "restaurantId" : widget.id.toString(),
                                 "menu":
                                 [{
                                 "menuName" : menuname.text,
@@ -437,6 +442,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                           });
                           _showDone();
                         }
+                         }
                       },
                       elevation: 5.0,
                       padding: EdgeInsets.all(8.0),

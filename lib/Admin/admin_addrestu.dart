@@ -29,32 +29,12 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
     bool loading = false;
 
 
-    addRestaurant() async {
-      var data = 
-      {
-
-        "restaurantName": retaurantname.text,
-        "address": address.text,
-        "barangayId": selectPerson.toString(),
-        "contactNumber": contactnumber.text,
-        "openTime": opentimeString.toString(),
-        "closingTime": closetimeString.toString(),
-        "closeOn": datesofdays.toString(),
-        "isFeatured": 1,
-
-      };
-
-      var response = await ApiCall().addRestaurant(data, '/addRestaurant');
-
-       var body = json.decode(response.body);
-      print(body);
-        Navigator.pushReplacement(  
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => AddmenuAdmin()));
-    }
-
-    List<String> weeks = 
+    var nani;
+    Map<String , String> weekDays = {};
+    List<dynamic> weekAdd = [];
+     List resultant = [];
+     Map<String , int> shit = {};
+     List<String> weeks = 
     [
       "None",
       "Monday",
@@ -65,6 +45,28 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
       "Saturaday",
       "Sunday"
     ];
+    void weekdays(){
+          for(int i = 0 ; i < weeks.length ; i++){
+            nani = i.toString();
+            weekDays = {
+              'dayname' : weeks[i],
+              'id': nani
+            };
+            weekAdd.add(weekDays);
+
+          }
+      for(int x = 0; x < weekAdd.length; x++){
+      resultant.add(weekAdd[x]);
+     }
+
+     shit.forEach((key ,val) { 
+      resultant.add(
+      {
+      'dayname': val,
+      'id': val
+      });
+      });
+    }
     List<String> opentime = 
     [
       "1:00:00",
@@ -237,7 +239,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
               child: TextFormField(
                 cursorColor: Colors.white,
               keyboardType: TextInputType.number,
-                controller: contactNumber,
+                controller: contactnumber,
                 validator: (val)=> phoneValidate(contactNumber.text = val),
                     onSaved: (val) => contactNumber.text = val,
                     
@@ -481,16 +483,16 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                                   icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
                                   
                                   value: datesofdays,
-                                  items: weeks.map((item) {
+                                  items: resultant.map((item) {
                                   return new DropdownMenuItem(
-                                    child: Text(item,
+                                    child: Text(item['dayname'],
                                     style: TextStyle(
                                       
                                       color: Colors.white,
                                       fontFamily: 'Gilroy-light'
                                     ),
                                     ),
-                                    value: item.toString(),
+                                    value: item['id'].toString(),
                                   );
                                 }).toList(),
                                   onChanged: (item){
@@ -514,12 +516,13 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                 padding: EdgeInsets.symmetric(vertical: 25.0),
                 child: RaisedButton(
                   onPressed: (){
-
-                    Navigator.pushReplacement(  
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => AddmenuAdmin()));
+                    print(resultant);
+                  //   Navigator.pushReplacement(  
+                  // context,
+                  // new MaterialPageRoute(
+                  //     builder: (context) => AddmenuAdmin()));
                   // addRestaurant();
+                  _addResturant();
                   },
                   elevation: 5.0,
                   padding: EdgeInsets.all(8.0),
@@ -545,12 +548,11 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
       );
     }
 
-    
-
   @override
   void initState() {
     super.initState();
     this.callBarangay();
+    this.weekdays();
   }
 
   @override
@@ -594,4 +596,269 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
         onWillPop: () async => false),
     );
   }
+
+  void _addResturant() async{
+setState(() {
+     loading =true;
+   });
+    if(selectPerson == null || opentimeString == null ||
+       closetimeString == null || datesofdays == null){
+         print('tan aw balik sa part');
+         _showDial();
+    }else{
+       if(formkey.currentState.validate()){
+                        formkey.currentState.save();
+        var data = {
+                "restaurantName": retaurantname.text,
+                "address": address.text, 
+                "barangayId": selectPerson.toString(), 
+                "contactNumber": contactnumber.text,
+                "openTime": opentimeString.toString(), 
+                "closingTime": closetimeString.toString(),
+                "closeOn": datesofdays.toString(),
+                "isFeatured": 1
+                };
+
+    var response = await ApiCall().addRestaurant(data, '/addRestaurant');
+    var body = json.decode(response.body);
+    print(body);
+    Navigator.pushReplacement(  
+    context,
+    new MaterialPageRoute(
+    builder: (context) => AddmenuAdmin(id: body.toString() )));
+    print(data);
+    print(body);
+    
+    } else{
+      print('Nope');
+     _showDone();
+
+    } 
+    }
+    
+setState(() {
+     loading =false;
+   });
+
+
+  }
+void _showDone(){
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context){
+      return Dialog(
+             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: mCustomDOne(context),
+    ); 
+    },);
+}
+ mCustomDOne(BuildContext context){
+
+       return Container(
+        height: 300.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+        color: Colors.white),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 150.0,
+                    ),
+                    Container(
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
+                         gradient: LinearGradient(
+                              stops: [0.2,4],
+                              colors: 
+                              [
+                                Color(0xFF0C375B),
+                                Color(0xFF176DB5)
+                              ],
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft),),
+
+                    ),
+                    Positioned(
+                      top: 50.0,
+                      left: 94.0,
+                      child: Container(
+                        height: 90,
+                        width: 90,
+                        padding: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(45),
+                          
+                          // border: Border.all(
+                          //   color: Colors.white,
+                          //   style: BorderStyle.solid,
+                          //   width: 2.0,
+                          // ),
+                          image: DecorationImage(
+                            image: AssetImage("asset/img/logo.png"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text("Restaurant Add Fail. Please Try Again",
+                  style: TextStyle(
+                    color: Color(0xFF0C375B),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20.0,
+                    fontFamily: 'Gilroy-light'
+                  ),
+                  
+                  ),),
+                  SizedBox(height: 25.0,),
+                  Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[         
+                RaisedButton(
+                  color:Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () {
+                      Navigator.of(context).pop();
+                      },   
+                      
+                  child: Text ( "OK", style :TextStyle(
+                  color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+                  ],
+                ), 
+              ],
+          ),
+        ),
+      );
+
+
+    }
+  
+void _showDial(){
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context){
+      return Dialog(
+             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: mCustom(context),
+    ); 
+    },);
+}
+ mCustom(BuildContext context){
+
+       return Container(
+        height: 300.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+        color: Colors.white),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 150.0,
+                    ),
+                    Container(
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
+                         gradient: LinearGradient(
+                              stops: [0.2,4],
+                              colors: 
+                              [
+                                Color(0xFF0C375B),
+                                Color(0xFF176DB5)
+                              ],
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft),),
+
+                    ),
+                    Positioned(
+                      top: 50.0,
+                      left: 94.0,
+                      child: Container(
+                        height: 90,
+                        width: 90,
+                        padding: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(45),
+                          
+                          // border: Border.all(
+                          //   color: Colors.white,
+                          //   style: BorderStyle.solid,
+                          //   width: 2.0,
+                          // ),
+                          image: DecorationImage(
+                            image: AssetImage("asset/img/logo.png"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text("Specify the empty Fields.",
+                  style: TextStyle(
+                    color: Color(0xFF0C375B),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.0,
+                    fontFamily: 'OpenSans'
+                  ),
+                  
+                  ),),
+                  SizedBox(height: 25.0,),
+                  Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[         
+                RaisedButton(
+                  color:Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () {
+                      Navigator.of(context).pop();
+                      },   
+                      
+                  child: Text ( "Yes", style :TextStyle(
+                  color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+                  ],
+                ), 
+              ],
+          ),
+        ),
+      );
+
+
+    }
+
 }
