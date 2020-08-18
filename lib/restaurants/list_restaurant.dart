@@ -7,6 +7,7 @@ import 'package:WhereTo/Transaction/mycart.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
+import 'package:WhereTo/modules/homepage.dart';
 import 'package:WhereTo/restaurants/card_menu.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:badges/badges.dart';
@@ -58,6 +59,7 @@ class _ListStacticState extends State<ListStactic>
           child: FutureBuilder(
             future: _categRest(),
             builder: (context, snapshot) {
+              
               if (snapshot.data == null) {
                 return Scaffold(
                   backgroundColor: Colors.white,
@@ -143,7 +145,7 @@ class _ListStacticState extends State<ListStactic>
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SearchDepo()));
+                                      builder: (context) => HomePage()));
                               // Navigator.pop(context);
                               BlocProvider.of<OrderBloc>(context)
                                   .add(Computation.deleteAll());

@@ -5,6 +5,7 @@ import 'package:WhereTo/designbuttons.dart';
 
 import 'package:WhereTo/modules/OtherFeatures/trans_port.dart';
 import 'package:WhereTo/restaurants/searchRestaurant.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:location/location.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
@@ -139,7 +140,6 @@ class _Profile extends State<Profile> {
   Widget build(BuildContext context) {
   return Scaffold(
       key: scaffoldKey,
-      backgroundColor:Color(0xFFF2F2F2) ,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
@@ -153,30 +153,23 @@ class _Profile extends State<Profile> {
                           alignment: Alignment.topCenter,
                           children: <Widget>[
                             Container(
-                          height: 230.0,
+                          height: 330.0,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              stops: [0.2,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topLeft),
-                            
+                            color: pureblue,
                             borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(140),
-                              bottomRight: Radius.circular(140),
+                              bottomRight: Radius.circular(290),
                             ),
                           ),
 
                         ),
-                          ],
-                        ),
-                           Transform.translate(
-                           offset: Offset(0, -60),
-                           child: Container(
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(padding: const EdgeInsets.only(left: 30,top: 40),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                textDirection: TextDirection.ltr,
+                                children: <Widget>[
+                                    Container(
                              height: 120,
                              width: 120,
                              decoration: BoxDecoration(
@@ -186,10 +179,10 @@ class _Profile extends State<Profile> {
                                  fit: BoxFit.cover),
                              ),
                            ),
-                         ),
-                         Text(userData!= null ? '${userData['name']}':  'Fail get data.',
+                                SizedBox(height: 10,),
+                                Text(userData!= null ? '${userData['name']}':  'Fail get data.',
                                                   style: TextStyle(
-                                                  color: Color(0xFF0C375B),
+                                                  color: Colors.white,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 40.0,
                                                   fontFamily: 'Gilroy-ExtraBold'
@@ -198,12 +191,21 @@ class _Profile extends State<Profile> {
                                                   SizedBox(height: 10,),
                                                   Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
                                                   style: TextStyle(
-                                                  color: Colors.black,
+                                                  color: Color(0xfff2f2f2),
                                                   fontWeight: FontWeight.normal,
                                                   fontSize: 20.0,
                                                   fontFamily: 'Gilroy-light'
                                                 ),
                                                   ),
+                                ],
+                              ),
+                              ),
+                            ),
+                          
+                          ],
+                        ),
+                           
+                         
                                                   SizedBox(height: 40,),
                                                  Padding(
                                                    padding: const EdgeInsets.only(left: 20,right: 20),
@@ -222,7 +224,29 @@ class _Profile extends State<Profile> {
                                  label: userData!= null ? '${userData['address']}' :  'Fail get data.',
                                                       ),
                                                     ),
-                                                
+                      SizedBox(height: 40,),
+                      GestureDetector(
+                            onTap: (){
+                               UserDialog_Help.exit(context);
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 140,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: Center(
+                                child: Text('Logout X',
+                                style: TextStyle(
+                                  fontFamily: 'Gilroy-ExtraBold',
+                                  fontSize: 18,
+                                  color: Colors.white
+                                ),
+                                ),
+                              ),
+                            ),
+                          ),              
                                              
                                       
 
@@ -252,17 +276,18 @@ class NCard extends StatelessWidget {
       child: Container(
         height: 50.0,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: Color(0xFF0C375B),
-          borderRadius: BorderRadius.all(Radius.circular(40))
-        ),
+        // decoration: BoxDecoration(
+        //   color: Color(0xFF0C375B),
+        //   borderRadius: BorderRadius.all(Radius.circular(40))
+        // ),
         // padding: EdgeInsets.symmetric(horizontal: 15,vertical: 7),
         // decoration: eBox,
+        decoration: eBoxDecorationStyle,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Row(
             children: <Widget>[
-              Icon(icon,color: Colors.white,size: 15.0,),
+              Icon(icon,color: pureblue,size: 15.0,),
               SizedBox(width: 7.0,),
 
                Flexible(
@@ -275,8 +300,7 @@ class NCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(
-                          color: Colors.white,
-                          // Color(0xFF0C375B),
+                          color: pureblue,
                           fontWeight: FontWeight.w700,
                           fontSize: 16.0,
                           fontFamily: 'Gilroy-light'

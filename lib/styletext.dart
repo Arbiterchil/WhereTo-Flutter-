@@ -12,6 +12,7 @@ Color sb4 = Colors.blueAccent;
 Color wheretoDark = Color(0xFF0C375B);
 Color wheretoLight =   Color(0xFF176DB5);                          
 Color white = Colors.white70.withOpacity(0.050);
+Color pureblue = Color(0xFF0F75BB);
 
 
 
@@ -163,20 +164,22 @@ BoxDecoration eMBox = BoxDecoration(
 BoxDecoration eMBoxActive = eMBox.copyWith(color: b2s);
 
 final eHintStyle = TextStyle(
-  color: Colors.white54,
+  color: pureblue,
   fontFamily: 'Gilroy-light',
 );
 
 final eLabelStyle = TextStyle(
-  color: Colors.white,
+  color: pureblue,
   fontWeight: FontWeight.bold,
   fontFamily: 'Gilroy-light',
 );
 
 final eBoxDecorationStyle = BoxDecoration(
   // color:  Color(0xFF398AE5),
-  color: wheretoDark,
-  borderRadius: BorderRadius.circular(10.0),
+  color: Colors.white,
+  borderRadius: BorderRadius.circular(100.0),
+  border: Border.all(width: 1, color: pureblue ),
+
   // boxShadow: [
   //   BoxShadow(
   //     color: sb3,

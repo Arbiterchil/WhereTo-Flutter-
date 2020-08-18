@@ -5,6 +5,7 @@ import 'package:WhereTo/Transaction/newView_MyOrder.dart';
 import 'package:WhereTo/modules/Tab_naviUser.dart';
 import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,8 +59,8 @@ void configSignal() async {
   final List<Widget> _child = 
   [
     SearchDepo(),
+    MyNewViewOrder(),
     Profile(),
-    MyNewViewOrder()
   ];
 
 void onTabTapped(int index) {
@@ -99,31 +100,30 @@ void onTabTapped(int index) {
         selectedItemColor: 
         Colors.white,
         backgroundColor:
-        Color(0xFF0C375B), 
+        pureblue, 
         unselectedItemColor: 
-        Color(0xFF176DB5),
+        Color(0xFF0C375B),
 
         currentIndex: _selectedIndex,
         onTap: onTabTapped,
         // onTap: (int index) { _selectTab(pageKeys[index], index); },
-        
         items: [
               BottomNavigationBarItem(
               icon: new Icon(Icons.view_list),
               title: new Text('Search'),
-            ),
-           BottomNavigationBarItem(
-              icon: new Icon(Icons.home),
-              title: new Text('Home'),
-            ),
+            ), 
             BottomNavigationBarItem(
               icon: new Icon(Icons.list),
               title: new Text('My Orders'),
             ),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.person),
-              title: new Text('Edit'),
+              icon: new Icon(Icons.home),
+              title: new Text('Home'),
             ),
+            // BottomNavigationBarItem(
+            //   icon: new Icon(Icons.person),
+            //   title: new Text('Edit'),
+            // ),
         ],
         type: BottomNavigationBarType.fixed,
         ),   

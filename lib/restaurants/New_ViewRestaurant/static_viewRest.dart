@@ -1,3 +1,4 @@
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 
 class StaticviewsRestaurant extends StatefulWidget {
@@ -27,7 +28,7 @@ class _StaticviewsRestaurantState extends State<StaticviewsRestaurant> {
               width: MediaQuery.of(context).size.width,
               height: 90.0,
               decoration: BoxDecoration(
-                  color:  Color(0xFF0C375B),
+                  color:  pureblue,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(90),
                     bottomRight: Radius.circular(30)),

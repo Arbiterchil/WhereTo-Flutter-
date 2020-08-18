@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:WhereTo/Transaction/x_view.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -112,9 +113,9 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
               child: Text(
                 "My Orders",
                 style: TextStyle(
-                    fontSize: 30,
-                    color: Color(0xFF0C375B),
-                    fontFamily: 'Gilroy-light',
+                    fontSize: 36,
+                    color: pureblue,
+                    fontFamily: 'Gilroy-ExtraBold',
                     fontWeight: FontWeight.w500),
 
               ),

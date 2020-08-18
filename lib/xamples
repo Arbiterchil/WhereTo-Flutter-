@@ -445,3 +445,71 @@
                     //     ),
                     //   ),
                     // ),
+
+
+
+//     return Scaffold(
+//  body: Container(
+//          width: MediaQuery.of(context).size.width,
+//          decoration: BoxDecoration(
+//                   //  color:  Color(0xFF398AE5),
+//                    gradient: LinearGradient(
+//                               stops: [0.1,3],
+//                               colors: 
+//                               [
+//                                 Color(0xFF0C375B),
+//                                 Color(0xFF176DB5)
+//                               ],
+//                               begin: Alignment.bottomLeft,
+//                               end: Alignment.topRight),
+//                   ),
+//                  child: SafeArea(
+//                    child: SingleChildScrollView(
+//                      physics: AlwaysScrollableScrollPhysics(),
+//                      padding: EdgeInsets.symmetric(
+//                        horizontal: 40.0,
+//                        vertical: 80.0,
+//                      ),
+                     
+//                        child: Column(
+//                          mainAxisAlignment: MainAxisAlignment.center,
+//                          children: <Widget>[
+//                              Text(
+//                             'Sign In',
+//                             style: TextStyle(
+//                               color: Colors.white,
+//                               fontFamily: 'Gilroy-light',
+//                               fontSize: 35.0,
+//                               fontWeight: FontWeight.bold,
+//                             ),
+//                           ),
+//                           SizedBox(height: 20.0),
+//                           Container(
+//                             width: 130.0,
+//                             height: 130.0,
+//                             child: Image.asset("asset/img/logo.png"),
+//                           ),
+//                           _formGet(context),
+//                           SizedBox(height: 15.0,),
+//                           Text(
+//                             '- OR -',
+//                             style: TextStyle(
+//                               color: Colors.white,
+//                               fontWeight: FontWeight.w400,
+//                             ),
+//                           ),
+//                           SizedBox(height: 20.0),
+//                           Text(
+//                             'Sign in with',
+//                             style: eLabelStyle,
+//                           ),
+//                           _buildSocialBtnRow(),
+//                           SizedBox(height: 20.0),
+//                           _botDownSignUp(),
+                        
+//                          ],
+//                      ),
+//                    ),
+//                  ), 
+//        ),
+//     );

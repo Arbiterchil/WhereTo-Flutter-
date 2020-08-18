@@ -1,3 +1,4 @@
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 
 
@@ -66,7 +67,7 @@ class _RestaurantFrontState extends State<RestaurantFront> {
                   height: 70,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Color(0xFF0C375B),
+                    color: pureblue,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(40),
                       bottomLeft: Radius.circular(20),
@@ -88,7 +89,7 @@ class _RestaurantFrontState extends State<RestaurantFront> {
                   SizedBox(height: 5.0,),
                   Text (widget.restaurantAddress,
                          style :TextStyle(
-                            color: Colors.grey,
+                            color: Colors.white,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 12.0,
                                 fontFamily: 'Gilroy-light'

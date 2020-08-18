@@ -80,12 +80,12 @@ class _SignupPageState extends State<SignupPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           textDirection: TextDirection.ltr,
           children: <Widget>[
-            Text(
-              'Full Name',
-              style: eLabelStyle,
-            ),
+            // Text(
+            //   'Full Name',
+            //   style: eLabelStyle,
+            // ),
             SizedBox(
-              height: 10.0,
+              height: 15.0,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -93,12 +93,12 @@ class _SignupPageState extends State<SignupPage> {
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: fulname,
                 validator: (val) =>
                     val.isEmpty ? ' Please Put Your Full Name' : null,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -106,22 +106,22 @@ class _SignupPageState extends State<SignupPage> {
                   contentPadding: EdgeInsets.only(top: 14.0),
                   prefixIcon: Icon(
                     Icons.person,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: 'Full Name',
                   hintStyle: eHintStyle,
                 ),
               ),
             ),
+            // SizedBox(
+            //   height: 10.0,
+            // ),
+            // Text(
+            //   'Email',
+            //   style: eLabelStyle,
+            // ),
             SizedBox(
               height: 15.0,
-            ),
-            Text(
-              'Email',
-              style: eLabelStyle,
-            ),
-            SizedBox(
-              height: 10.0,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -129,12 +129,12 @@ class _SignupPageState extends State<SignupPage> {
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: email,
                 validator: (val) => emailValidate(email.text = val),
                 onSaved: (val) => email.text = val,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -142,22 +142,22 @@ class _SignupPageState extends State<SignupPage> {
                   contentPadding: EdgeInsets.only(top: 14.0),
                   prefixIcon: Icon(
                     Icons.email,
-                    color: Colors.white,
+                    color:pureblue,
                   ),
                   hintText: 'Email',
                   hintStyle: eHintStyle,
                 ),
               ),
             ),
+            // SizedBox(
+            //   height: 15.0,
+            // ),
+            // Text(
+            //   "Barangay",
+            //   style: eLabelStyle,
+            // ),
             SizedBox(
               height: 15.0,
-            ),
-            Text(
-              "Barangay",
-              style: eLabelStyle,
-            ),
-            SizedBox(
-              height: 10.0,
             ),
             Container(
                 width: MediaQuery.of(context).size.width,
@@ -173,7 +173,7 @@ class _SignupPageState extends State<SignupPage> {
                             alignment: Alignment.centerLeft,
                             child: Icon(
                               Icons.place,
-                              color: Colors.white,
+                              color: pureblue,
                             )),
                         Padding(
                           padding: const EdgeInsets.only(left: 30),
@@ -182,13 +182,13 @@ class _SignupPageState extends State<SignupPage> {
                               hint: Text(
                                 "Select Barangay",
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: pureblue,
                                     fontFamily: 'Gilroy-light'),
                               ),
-                              dropdownColor: Color(0xFF0C375B),
+                              dropdownColor: Colors.white,
                               icon: Icon(
                                 Icons.arrow_drop_down,
-                                color: Colors.white,
+                                color:pureblue,
                               ),
                               value: selectPerson,
                               items: dataBarangay.map((item) {
@@ -196,7 +196,7 @@ class _SignupPageState extends State<SignupPage> {
                                   child: Text(
                                     item['barangayName'],
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: pureblue,
                                         fontFamily: 'Gilroy-light'),
                                   ),
                                   value: item['id'].toString(),
@@ -214,15 +214,15 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                 )),
+            // SizedBox(
+            //   height: 15.0,
+            // ),
+            // Text(
+            //   "Address",
+            //   style: eLabelStyle,
+            // ),
             SizedBox(
               height: 15.0,
-            ),
-            Text(
-              "Address",
-              style: eLabelStyle,
-            ),
-            SizedBox(
-              height: 10.0,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -280,7 +280,7 @@ class _SignupPageState extends State<SignupPage> {
                 validator: (val) =>
                     val.isEmpty ? ' Please Put Your Address' : null,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -288,22 +288,22 @@ class _SignupPageState extends State<SignupPage> {
                   contentPadding: EdgeInsets.only(top: 14.0),
                   prefixIcon: Icon(
                     Icons.my_location,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: 'Address',
                   hintStyle: eHintStyle,
                 ),
               ),
             ),
+            // SizedBox(
+            //   height: 15.0,
+            // ),
+            // Text(
+            //   'Password',
+            //   style: eLabelStyle,
+            // ),
             SizedBox(
               height: 15.0,
-            ),
-            Text(
-              'Password',
-              style: eLabelStyle,
-            ),
-            SizedBox(
-              height: 10.0,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -311,13 +311,13 @@ class _SignupPageState extends State<SignupPage> {
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: ownpass,
                 validator: (input) =>
                     ownpass.text.length < 8 ? 'Password to Short' : null,
                 obscureText: true,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -325,22 +325,22 @@ class _SignupPageState extends State<SignupPage> {
                   contentPadding: EdgeInsets.only(top: 14.0),
                   prefixIcon: Icon(
                     Icons.lock,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: '********',
                   hintStyle: eHintStyle,
                 ),
               ),
             ),
+            // SizedBox(
+            //   height: 15.0,
+            // ),
+            // Text(
+            //   'Confirm Password',
+            //   style: eLabelStyle,
+            // ),
             SizedBox(
               height: 15.0,
-            ),
-            Text(
-              'Confirm Password',
-              style: eLabelStyle,
-            ),
-            SizedBox(
-              height: 10.0,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -348,11 +348,11 @@ class _SignupPageState extends State<SignupPage> {
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: ownconpass,
                 validator: (val) {
                   if (val.isEmpty) {
-                    return "Gilroy-light";
+                    return "Please Input Confirm Password";
                   }
                   if (val != ownpass.text) {
                     return "Password not Match";
@@ -361,7 +361,7 @@ class _SignupPageState extends State<SignupPage> {
                 },
                 obscureText: true,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -369,22 +369,22 @@ class _SignupPageState extends State<SignupPage> {
                   contentPadding: EdgeInsets.only(top: 14.0),
                   prefixIcon: Icon(
                     Icons.lock,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: '********',
                   hintStyle: eHintStyle,
                 ),
               ),
             ),
+            // SizedBox(
+            //   height: 15.0,
+            // ),
+            // Text(
+            //   'Contact Number',
+            //   style: eLabelStyle,
+            // ),
             SizedBox(
               height: 15.0,
-            ),
-            Text(
-              'Contact Number',
-              style: eLabelStyle,
-            ),
-            SizedBox(
-              height: 10.0,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -392,13 +392,13 @@ class _SignupPageState extends State<SignupPage> {
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 keyboardType: TextInputType.number,
                 controller: ownNumber,
                 validator: (val) => phoneValidate(ownNumber.text = val),
                 onSaved: (val) => ownNumber.text = val,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -406,41 +406,41 @@ class _SignupPageState extends State<SignupPage> {
                   contentPadding: EdgeInsets.only(top: 14.0),
                   prefixIcon: Icon(
                     Icons.phone_android,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: '09**********',
                   hintStyle: eHintStyle,
                 ),
               ),
             ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(vertical: 25.0),
-              child: RaisedButton(
-                onPressed: () {
-                  _signingIn();
-                },
-                elevation: 5.0,
-                padding: EdgeInsets.all(8.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                color: Colors.white,
-                child: Text(
-                  loading ? 'Loading....' : 'Register',
-                  style: TextStyle(
-                    color: Color(0xFF527DAA),
-                    letterSpacing: 1.5,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Gilroy-light',
-                  ),
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: 10.0,
+            // ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   padding: EdgeInsets.symmetric(vertical: 25.0),
+            //   child: RaisedButton(
+            //     onPressed: () {
+            //       // _signingIn();
+            //     },
+            //     elevation: 5.0,
+            //     padding: EdgeInsets.all(8.0),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(30.0),
+            //     ),
+            //     color: Colors.white,
+            //     child: Text(
+            //       loading ? 'Loading....' : 'Register',
+            //       style: TextStyle(
+            //         color: Color(0xFF527DAA),
+            //         letterSpacing: 1.5,
+            //         fontSize: 16.0,
+            //         fontWeight: FontWeight.bold,
+            //         fontFamily: 'Gilroy-light',
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -459,19 +459,19 @@ class _SignupPageState extends State<SignupPage> {
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Have an Account? ',
+              text: 'Have An Account Already?',
               style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.0,
-                fontWeight: FontWeight.w400,
+                color: pureblue,
+                fontSize: 14.0,
+                fontFamily: 'Gilroy-light'
               ),
             ),
             TextSpan(
-              text: 'Sign In',
+              text: 'Sign In Now.',
               style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.0,
-                fontWeight: FontWeight.bold,
+                color: pureblue,
+                fontSize: 14.0,
+                fontFamily: 'Gilroy-ExtraBold'
               ),
             ),
           ],
@@ -500,54 +500,71 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async => false,
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            // color: Color(0xFF398AE5),
-            gradient: LinearGradient(
-                stops: [0.1, 4],
-                colors: [Color(0xFF0C375B), Color(0xFF176DB5)],
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft),
+      body: WillPopScope(child: SafeArea(
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 10,),
+                 Text(
+                            'Sign up',
+                            style: TextStyle(
+                              color: pureblue,
+                              fontFamily: 'Gilroy-ExtraBold',
+                              fontSize: 45.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                SizedBox(height: 20,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 40,right: 40),
+                  child: _formRegister(context),
+                ),
+                SizedBox(height: 20,),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>
+                    [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 40),
+                          child: GestureDetector(
+                            onTap: _signingIn,
+                            child: Container(
+                              height: 50,
+                              width: 110,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: Center(
+                                child: Text( loading ? '....' : 'Register <',
+                                style: TextStyle(
+                                  fontFamily: 'Gilroy-ExtraBold',
+                                  fontSize: 18,
+                                  color: Colors.white
+                                ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 60,),
+                 _botDownSignIn()
+            ],
           ),
-          child: SafeArea(
-            child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
-              padding: EdgeInsets.symmetric(
-                horizontal: 40.0,
-                vertical: 80.0,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Gilroy-light',
-                      letterSpacing: 1,
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 25.0,
-                  ),
-                  _formRegister(context),
-                  SizedBox(
-                    height: 25.0,
-                  ),
-                  _botDownSignIn(),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+        )),
+       onWillPop: () async => false),
     );
   }
 
