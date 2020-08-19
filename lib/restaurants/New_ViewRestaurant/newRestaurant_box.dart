@@ -1,4 +1,5 @@
 
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 
 class NewRestaurantBox extends StatefulWidget {
@@ -50,7 +51,7 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
                       topRight: Radius.circular(50),
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),),
-                    color: Color(0xFF0C375B),
+                    color: pureblue,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -67,7 +68,7 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
                         SizedBox(height: 5.0,),
                         Text(widget.address,
                         style: TextStyle(
-                            color:Colors.grey,
+                            color:Colors.white,
                                 fontWeight: FontWeight.normal,
                                     fontSize: 8.0,
                                     fontFamily: 'Gilroy-light' 

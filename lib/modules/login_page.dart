@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:WhereTo/ATrial/animation_trial.dart';
 import 'package:WhereTo/Admin/navbottom_admin.dart';
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/api/api.dart';
@@ -20,7 +21,7 @@ import '../styletext.dart';
   }
 
 
-class _LoginPageState extends State<LoginPage>{
+class _LoginPageState extends State<LoginPage> {
   var userData;
   bool isLoading = false;
     final key = GlobalKey<FormState>();
@@ -51,11 +52,11 @@ class _LoginPageState extends State<LoginPage>{
           crossAxisAlignment: CrossAxisAlignment.start,
           textDirection: TextDirection.ltr,
           children: <Widget>[
-           Text('Contact Number',
+          //  Text('Contact Number',
            
-            style: eLabelStyle,
-            ),
-            SizedBox(height: 10.0,),
+          //   style: eLabelStyle,
+          //   ),
+            SizedBox(height: 5.0,),
              Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
@@ -67,9 +68,9 @@ class _LoginPageState extends State<LoginPage>{
                   return phoneValidate(val);
                 },
                 keyboardType: TextInputType.number,
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -77,30 +78,30 @@ class _LoginPageState extends State<LoginPage>{
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.phone_android,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: 'Contact Number',
                   hintStyle: eHintStyle,
                 ),
               ),
             ),
-            SizedBox(height: 30.0,),
-             Text('Password',
-            style: eLabelStyle,
-            ),
-            SizedBox(height: 10.0,),
+            // SizedBox(height: 30.0,),
+            //  Text('Password',
+            // style: eLabelStyle,
+            // ),
+            SizedBox(height: 20.0,),
             Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: passwordController,
                 validator: (val) => val.isEmpty ? ' Please Put Your Password' : null,
                 obscureText: true,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -108,7 +109,7 @@ class _LoginPageState extends State<LoginPage>{
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.lock,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: '******',
                   hintStyle: eHintStyle,
@@ -118,7 +119,7 @@ class _LoginPageState extends State<LoginPage>{
             SizedBox(height: 10.0,),
             Container(
               width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerLeft,
               child: FlatButton(
                 onPressed: (){},
                 padding: EdgeInsets.only(right: 0.0),
@@ -127,36 +128,13 @@ class _LoginPageState extends State<LoginPage>{
                  ),
                  ),
             ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(vertical: 25.0),
-                child: RaisedButton(
-                  onPressed: (){
-                    _login();
-                  },
-                  elevation: 5.0,
-                  padding: EdgeInsets.all(8.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  color: Colors.white,
-                  child: Text(  isLoading ? 'Loading....' : 'LOGIN',
-                  style: TextStyle(
-                    color: Color(0xFF527DAA),
-                    letterSpacing: 1.5,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Gilroy-light',
-                  ),),
-                  ),
-              ),
           ],
         ),
         ),
       );
   }
 
-     Widget _buildSocialBtn(Function onTap, AssetImage logo) {
+     Widget _buildSocialBtn(Function onTap, String text) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -164,21 +142,16 @@ class _LoginPageState extends State<LoginPage>{
         width: 60.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white,
-    //       boxShadow: [
-    //         BoxShadow(
-    //   color: sb3,
-    //   offset: Offset(10, 10),
-    //   blurRadius: 10
-    // ),
-    // BoxShadow(
-    //   color: b2,
-    //   offset: Offset(-10, -10),
-    //   blurRadius: 10
-    // )
-    //       ],
-          image: DecorationImage(
-            image: logo,
+          color: pureblue,
+          
+        ),
+        child: Center(
+          child: Text(text,
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Gilroy-ExtraBold',
+            fontSize: 40,
+          ),
           ),
         ),
       ),
@@ -192,15 +165,11 @@ class _LoginPageState extends State<LoginPage>{
         children: <Widget>[
           _buildSocialBtn(
             () => print('Login with Facebook'),
-            AssetImage(
-              'asset/img/fb.png',
-            ),
+            "F"
           ),
           _buildSocialBtn(
             () => print('Login with Google'),
-            AssetImage(
-              'asset/img/gmail.png',
-            ),
+           "G"
           ),
         ],
       ),
@@ -217,19 +186,21 @@ class _LoginPageState extends State<LoginPage>{
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Don\'t have an Account? ',
+              text: 'Don\'t Have an Account Yet? ',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12.0,
                 fontWeight: FontWeight.w400,
+                fontFamily: 'Gilroy-light'
               ),
             ),
             TextSpan(
-              text: 'Sign Up',
+              text: 'Sign Up Now.',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12.0,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Gilroy-ExtraBold'
               ),
             ),
           ],
@@ -239,74 +210,127 @@ class _LoginPageState extends State<LoginPage>{
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    
-    return Scaffold(
- body: Container(
-         width: MediaQuery.of(context).size.width,
-         decoration: BoxDecoration(
-                  //  color:  Color(0xFF398AE5),
-                   gradient: LinearGradient(
-                              stops: [0.1,3],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight),
+
+
+
+      return Scaffold(
+
+        body: SafeArea(
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>
+                    [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 30),
+                          child: Container(
+                            height: 60,
+                            width:  60,
+                            child: Image.asset('asset/img/logo.png'),
+                          ),),
+                      )
+                    ],
                   ),
-                 child: SafeArea(
-                   child: SingleChildScrollView(
-                     physics: AlwaysScrollableScrollPhysics(),
-                     padding: EdgeInsets.symmetric(
-                       horizontal: 40.0,
-                       vertical: 80.0,
-                     ),
-                     
-                       child: Column(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         children: <Widget>[
-                             Text(
+                ),
+                SizedBox(height: 10,),
+                 Text(
                             'Sign In',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Gilroy-light',
-                              fontSize: 35.0,
+                              color: pureblue,
+                              fontFamily: 'Gilroy-ExtraBold',
+                              fontSize: 45.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 20.0),
-                          Container(
-                            width: 130.0,
-                            height: 130.0,
-                            child: Image.asset("asset/img/logo.png"),
-                          ),
-                          _formGet(context),
-                          SizedBox(height: 15.0,),
-                          Text(
-                            '- OR -',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
+                SizedBox(height: 20,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 40,right: 40),
+                  child: _formGet(context),
+                ),
+                SizedBox(height: 10,),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>
+                    [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 30),
+                          child: GestureDetector(
+                            onTap: _login,
+                            child: Container(
+                              height: 50,
+                              width: 110,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: Center(
+                                child: Text( isLoading ? '....' : 'Login >',
+                                style: TextStyle(
+                                  fontFamily: 'Gilroy-ExtraBold',
+                                  fontSize: 18,
+                                  color: Colors.white
+                                ),
+                                ),
+                              ),
                             ),
                           ),
-                          SizedBox(height: 20.0),
+                          ),
+                      )
+                    ],
+                  ),
+                ),
+                          SizedBox(height: 10.0),
                           Text(
                             'Sign in with',
                             style: eLabelStyle,
                           ),
                           _buildSocialBtnRow(),
-                          SizedBox(height: 20.0),
-                          _botDownSignUp(),
-                        
-                         ],
-                     ),
-                   ),
-                 ), 
-       ),
-    );
+                Container(
+                  height: 190,
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>
+                    [
+                      Align(
+                        alignment: Alignment.center,
+                        child: AnimationWaveTrial(),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 40),
+                          child: _botDownSignUp(),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+
+              ],
+            ),
+          )),
+
+      );
   }
+
+
+
+
 
 void _login() async{
  String hens ;
@@ -355,13 +379,6 @@ void _login() async{
         new MaterialPageRoute(
             builder: (context) => RiderProfile()));
       }
-       
-      
-
-
-      
-
-     
       // var userJson = localStorage.getString('user'); 
       // var user = json.decode(userJson);
       // setState(() {

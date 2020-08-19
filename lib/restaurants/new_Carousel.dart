@@ -1,3 +1,4 @@
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 
 class NewCarousel extends StatefulWidget {
@@ -95,14 +96,14 @@ class _NewCarouselState extends State<NewCarousel> {
                   
               ),
               child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomRight,
-                    colors: [
-                      Color(0xFF0C375B).withOpacity(.9),
-                      Colors.grey.withOpacity(.0)
-                    ])
-                ),
+                // decoration: BoxDecoration(
+                //   gradient: LinearGradient(
+                //     begin: Alignment.bottomRight,
+                //     colors: [
+                //       pureblue.withOpacity(.9),
+                //       Colors.grey.withOpacity(.0)
+                //     ])
+                // ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
@@ -120,19 +121,19 @@ class _NewCarouselState extends State<NewCarousel> {
             
           ),
            Padding(
-             padding: const EdgeInsets.only(left: 20,right: 20),
+             padding: const EdgeInsets.only(right: 80),
              child: Transform.translate(
                 offset: Offset(0, -40),
                   child: Container(
                     height: 150,
                     decoration: BoxDecoration(
                       // color: Color(0xFFF2F2F2),
-                      color: Color(0xFF0C375B),
+                      color: pureblue,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40),
-                        bottomRight: Radius.circular(40),
-                        bottomLeft: Radius.circular(40)
+                        
+                        topRight: Radius.circular(240),
+                        bottomRight: Radius.circular(240),
+                        
                       )
                     ),
                     child: Padding(

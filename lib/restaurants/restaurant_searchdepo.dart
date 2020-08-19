@@ -11,6 +11,7 @@ import 'package:WhereTo/restaurants/carousel_rest.dart';
 import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/new_Carousel.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,7 +47,7 @@ class _SearchDepoState extends State<SearchDepo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF0C375B),
+        backgroundColor: pureblue,
         title: Padding(
           padding: EdgeInsets.only(left: 0),
           child: Container(
@@ -73,7 +74,7 @@ class _SearchDepoState extends State<SearchDepo> {
         ),
         leading: Padding(
           padding: EdgeInsets.only(left: 0),
-          child: Icon(Icons.location_on_rounded),
+          child: Icon(Icons.location_on),
         ),
         actions: [
           Padding(
@@ -207,19 +208,17 @@ class _SearchDepoState extends State<SearchDepo> {
                     ),
                   ],
                 ),
-                SharedPrefCallnameData(),
-                SizedBox(
-                  height: 40,
-                ),
+                // SharedPrefCallnameData(),
+                
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Container(
                     width: 170,
                     height: 40,
                     child: Text(
-                      "Popular Food in Restaurant's",
+                      "Featured Food's in Restaurant's",
                       style: TextStyle(
-                          color: Color(0xFF0C375B),
+                          color: pureblue,
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0,
                           fontFamily: 'Gilroy-light'),
@@ -239,9 +238,9 @@ class _SearchDepoState extends State<SearchDepo> {
                     width: 170,
                     height: 40,
                     child: Text(
-                      "Popular Fast Food",
+                      "Featured Fast Food",
                       style: TextStyle(
-                          color: Color(0xFF0C375B),
+                          color:pureblue,
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0,
                           fontFamily: 'Gilroy-light'),
