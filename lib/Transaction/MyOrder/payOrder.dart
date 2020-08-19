@@ -12,7 +12,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 class PayOrder extends StatefulWidget {
-  final String fee;
+  final double fee;
   final String restauID;
   PayOrder({this.fee, this.restauID});
   @override
@@ -89,8 +89,7 @@ class _PayOrderState extends State<PayOrder> {
                     for (int z = 0; z < snapshot.length; z++) {
                       total += snapshot[z].price * snapshot[z].quantity;
                     }
-                    double totalOrder = double.parse(widget.fee) +
-                        double.parse(total.toString());
+                    double totalOrder = widget.fee +double.parse(total.toString());
                     return Column(
                       children: [
                         Padding(

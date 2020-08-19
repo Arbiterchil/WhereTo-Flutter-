@@ -8,11 +8,11 @@ class RestaurantFront extends StatefulWidget {
   final Function onTap;
   final String image;
   final String restaurantName;
-  final String restaurantAddress;
+  final String menuName;
   // final String openAndclose;
   // final String closeOn;
 
-  const RestaurantFront({Key key, this.onTap, this.image, this.restaurantName, this.restaurantAddress}) : super(key: key); 
+  const RestaurantFront({Key key, this.onTap, this.image, this.restaurantName,this.menuName}) : super(key: key); 
 
   @override
   _RestaurantFrontState createState() => _RestaurantFrontState();
@@ -87,7 +87,7 @@ class _RestaurantFrontState extends State<RestaurantFront> {
                                 fontFamily: 'Gilroy-ExtraBold'
                   ),),
                   SizedBox(height: 5.0,),
-                  Text (widget.restaurantAddress,
+                  Text (widget.menuName,
                          style :TextStyle(
                             color: Colors.white,
                                 fontWeight: FontWeight.w700,

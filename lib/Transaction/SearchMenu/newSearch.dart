@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:WhereTo/AnCustom/restaurant_front.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
+import 'package:WhereTo/Transaction/SearchMenu/FeaturedRestaurant.dart';
+import 'package:WhereTo/Transaction/SearchMenu/bloc.search.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/FeaturedRestaurant.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/bloc.search.dart';
 import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/searchRestaurant.dart';
@@ -76,7 +76,7 @@ BlocSearch blocSearch;
                                   "asset/img/${snapshot.data[index].restaurantName}.jpg",
                               restaurantName:
                                   snapshot.data[index].restaurantName,
-                              restaurantAddress: snapshot.data[index].address,
+                              // restaurantAddress: snapshot.data[index].address,
                          
                               onTap: () async {
                                 // final now = await NTP.now();

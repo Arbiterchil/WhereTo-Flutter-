@@ -2,16 +2,16 @@ import 'dart:convert';
 
 import 'package:WhereTo/AnCustom/LocationSet.dart';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
+import 'package:WhereTo/Transaction/SearchMenu/search.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/newSearch.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/search.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
 import 'package:WhereTo/restaurants/carousel_rest.dart';
 import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/new_Carousel.dart';
 import 'package:WhereTo/styletext.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -144,10 +144,26 @@ class _SearchDepoState extends State<SearchDepo> {
                               ),
                               onTap: () {
                                 // showSearch(context: context, delegate: CustomSearch());
-                                Navigator.push(context,
+                                if(userData['address'].toString().contains("Tagum")){
+                                  Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
                                   return SearchResto();
                                 }));
+                                }else{
+                                AwesomeDialog(
+                                context: context,
+                                headerAnimationLoop: false,
+                                animType: AnimType.SCALE,
+                                dialogType: DialogType.INFO,
+                                title: "Location Not Available",
+                                desc: "Only for Tagum City is Available to use this APP",
+                                btnOkText: "Okay",
+                                btnOkColor: Color(0xFF0C375B),
+                                btnOkOnPress: () async {
+                                
+                                }).show();
+                                }
+                                
                               },
                             )),
                       ),

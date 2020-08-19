@@ -81,7 +81,7 @@ class _MyOrderState extends State<MyOrder> {
               child: GestureDetector(
                 onTap: (){
                   Navigator.pop(context);
-                
+                  disposeBloc();
                 },
                 child: Container(
                   height: 50,

@@ -1,12 +1,15 @@
+import 'dart:convert';
 
+import 'package:WhereTo/Transaction/Barangay/Barangay.class.dart';
 import 'package:WhereTo/Transaction/MyOrder/ComputationFee.dart';
 import 'package:WhereTo/Transaction/MyOrder/payOrder.dart';
+import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionList extends StatefulWidget {
   final String barangay;
@@ -355,22 +358,20 @@ class _TransactionListState extends State<TransactionList> {
                                     width: double.infinity,
                                     child: GestureDetector(
                                       onTap: () async {
-                                        
-                                       var fee =await ComputationFee().getFee(widget.barangay);
-                                         if(snapshot.length ==0){
-                                           print("No Order");
-                                         }else{
-                                           Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => PayOrder(
-                                                      fee: fee.toString(),
-                                                      restauID: widget.restauID
-                                                    )));
-                                         }
+                                         var fee =await ComputationFee().getFee(widget.barangay);
+                                           if(snapshot.length ==0){
+                                             print("No Order");
+                                           }else{
+                                             Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => PayOrder(
+                                                        fee: fee,
+                                                        restauID: widget.restauID
+                                                      )));
+                                           }
+                                          
                                        
-                                       
-                                        
                                       },
                                       child: Container(
                                         height: 60,

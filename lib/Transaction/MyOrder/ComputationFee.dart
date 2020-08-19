@@ -8,11 +8,10 @@ import 'package:WhereTo/api/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ComputationFee{
-  Future<int> getFee(String barangayWidget) async {
-    var restoCharge;
-    var userCharge;
-    var totalOrder;
-    int displaytotal;
+  Future<double> getFee(String barangayWidget) async {
+    double restoCharge;
+    double userCharge;
+    double totalOrder;
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
     var user = json.decode(userJson);
@@ -184,9 +183,9 @@ class ComputationFee{
       totalOrder = restoCharge + userCharge;
     } else if (barangayWidget != "Magugpo" && barangayname != "Magugpo") {
       totalOrder = 40 + restoCharge + userCharge;
-        displaytotal = totalOrder;
+        
      
     }
-    return displaytotal;
+    return totalOrder;
   }
 }
