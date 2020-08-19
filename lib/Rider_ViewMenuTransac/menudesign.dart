@@ -25,17 +25,17 @@ class _MenuDesignState extends State<MenuDesign> {
        decoration: BoxDecoration(
 
         borderRadius: BorderRadius.circular(15.0),
-        gradient: LinearGradient(
+        // gradient: LinearGradient(
           
-          stops: [0.2,4],
-           colors: 
-           [
-           Color(0xFF0C375B),
-           Color(0xFF176DB5)
-           ],
-           begin: Alignment.bottomRight,
-           end: Alignment.topLeft),
-
+        //   stops: [0.2,4],
+        //    colors: 
+        //    [
+        //    Color(0xFF0C375B),
+        //    Color(0xFF176DB5)
+        //    ],
+        //    begin: Alignment.bottomRight,
+        //    end: Alignment.topLeft),
+        color: pureblue,
        ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

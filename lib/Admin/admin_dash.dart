@@ -1,5 +1,10 @@
+import 'dart:convert';
+
+import 'package:WhereTo/Admin/r_source.dart';
+import 'package:WhereTo/Admin/view_allID.dart';
 import 'package:WhereTo/AnCustom/admin_help.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 
 class AdminDash extends StatefulWidget {
@@ -11,6 +16,8 @@ class _AdminDashState extends State<AdminDash> {
 
   final scaffoldKey = new GlobalKey<ScaffoldState>(); 
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,39 +25,24 @@ class _AdminDashState extends State<AdminDash> {
       // backgroundColor: Color(0xFFF7F7F7),
       // backgroundColor: Color(0xFF0C375B),
       body: WillPopScope(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-           width: MediaQuery.of(context).size.width,
-           decoration: BoxDecoration(
-                      // color: Color(0xFF398AE5),
-                      gradient: LinearGradient(
-                              stops: [0.1,2],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topLeft),
-                    ),
+        
           child: SafeArea(
             child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-              
                    Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
                       child: Container(
                         height: 140,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: pureblue,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           //  boxShadow: [
                           //        BoxShadow(
-                          //          color: Color(0xfff2f2f2),
+                          //          color: Colors.grey[500],
                           //          spreadRadius: 3.3,
                           //          blurRadius: 3.3
                           //        ),
@@ -71,7 +63,7 @@ class _AdminDashState extends State<AdminDash> {
                             height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: pureblue,
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             //  boxShadow: [
                             //        BoxShadow(
@@ -86,14 +78,14 @@ class _AdminDashState extends State<AdminDash> {
                             children: <Widget>[
                               Text("Admins",
                               style: TextStyle(
-                                color:  Color(0xFF0C375B),
+                                color:  Colors.white,
                                 fontFamily: 'Gilroy-light',
                                 fontSize: 16,
                               ),),
                               SizedBox(height: 10,),
                               Text("6",
                               style: TextStyle(
-                                color:  Color(0xFF0C375B),
+                                color:  Colors.amber,
                                 fontFamily: 'Gilroy-ExtraBold',
                                 fontSize: 16,
                               ),),
@@ -105,7 +97,7 @@ class _AdminDashState extends State<AdminDash> {
                             height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: pureblue,
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             //  boxShadow: [
                             //        BoxShadow(
@@ -120,7 +112,7 @@ class _AdminDashState extends State<AdminDash> {
                             children: <Widget>[
                               Text("Users",
                               style: TextStyle(
-                                color:  Color(0xFF0C375B),
+                                color:  Colors.white,
                                 fontFamily: 'Gilroy-light',
                                 fontSize: 16,
                               ),),
@@ -140,7 +132,7 @@ class _AdminDashState extends State<AdminDash> {
                             height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: pureblue,
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             //  boxShadow: [
                             //        BoxShadow(
@@ -155,14 +147,14 @@ class _AdminDashState extends State<AdminDash> {
                             children: <Widget>[
                               Text("Riders",
                               style: TextStyle(
-                                color:Color(0xFF0C375B),
+                                color:Colors.white,
                                 fontFamily: 'Gilroy-light',
                                 fontSize: 16,
                               ),),
                               SizedBox(height: 10,),
                               Text("6",
                               style: TextStyle(
-                                color:  Colors.green,
+                                color:  Colors.amber,
                                 fontFamily: 'Gilroy-ExtraBold',
                                 fontSize: 16,
                               ),),
@@ -175,13 +167,54 @@ class _AdminDashState extends State<AdminDash> {
                       
                       ),
                       SizedBox(height: 10,),
+                      Padding(
+                      padding: const EdgeInsets.only(left: 10,right: 10,top: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.pushReplacement(context,
+                new MaterialPageRoute(builder: (context) => ViewAllImageId()));
+                            },
+                            child: Container(
+                              height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: pureblue,
+                              shape: BoxShape.circle,
+                              // borderRadius: BorderRadius.all(Radius.circular(10)),
+                              //  boxShadow: [
+                              //        BoxShadow(
+                              //          color: Color(0xfff2f2f2),
+                              //          spreadRadius: 3.3,
+                              //          blurRadius: 3.3
+                              //        ),
+                              //      ],
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.image,
+                                size: 50,
+                                color: Colors.white,
+                              ),
+                            )
+                            ),
+                          ),
+
+                          
+                          
+                          ],
+                        ),
+                      
+                      ),
                        Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
                       child: Container(
                         height: 300,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: pureblue,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           //  boxShadow: [
                           //        BoxShadow(
@@ -191,13 +224,17 @@ class _AdminDashState extends State<AdminDash> {
                           //        ),
                           //      ],
                         ),
+                     
                       ),
                       ),
+
+                    
+
                 ],
               ),
             ),
             ),
-        ),
+        
        onWillPop:() async => Admin_out.exit(context)),
     );
   }

@@ -39,7 +39,7 @@ class _MShowStepState extends State<MShowStep> {
       setState(() {
         riderID = user;
       });
-                  print(idgetter+"-"+playerID);
+                  // print(idgetter+"-"+playerID);
      String url = 'https://onesignal.com/api/v1/notifications';
         var contents = {
           "include_player_ids": ['$playerID'],

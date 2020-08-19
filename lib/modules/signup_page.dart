@@ -1,20 +1,26 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/bara_rang.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloudinary_client/cloudinary_client.dart';
+import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 // import 'package:geolocation/geolocation.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 // import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../styletext.dart';
 import 'homepage.dart';
-
+import 'package:path/path.dart' as path;
+import 'package:http/http.dart' as http;
 class MyChoice {
   String pickchoice;
   int numberpick;
@@ -28,7 +34,10 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   String default_pick = "Customer";
+  File _idPickerImage;
+  final pick = ImagePicker();
   int default_number = 1;
+  String stringPath;
   String selectPerson;
   var idbararangSaika;
   List<MyChoice> picks = [
@@ -46,6 +55,7 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController ownconpass = TextEditingController();
 
   bool loading = false;
+  bool isprocess = false;
 
   phoneValidate(String val) {
     Pattern pattern = r'^([+0]9)?[0-9]{10,11}$';
@@ -498,6 +508,90 @@ class _SignupPageState extends State<SignupPage> {
     print(bararang);
   }
 
+
+  Widget _getImage(){
+
+    if(_idPickerImage != null){
+
+      return Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.all(Radius.circular(10),
+        ),
+        ),
+        child: Image.file(
+            _idPickerImage,
+            fit: BoxFit.cover,
+        ),
+      );
+    }else{
+        return Container(
+          width: 80,
+        height: 80,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: pureblue
+          ),
+          child: Center(
+            child: Icon(
+              Icons.person,
+              size: 40,
+              color: Colors.white,
+            ),
+          ),
+        );
+    }
+
+  }  
+
+  getYourIdImage( ImageSource source) async{
+
+    var imageIdValid = await pick.getImage(source: source); 
+       File crop = await ImageCropper.cropImage(
+      sourcePath: imageIdValid.path ,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'Where To Id Cropper',
+          toolbarColor: pureblue,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+      ) );
+    setState(() {
+      _idPickerImage = crop;
+      
+      // print(imageIdValid.path);
+    });
+    
+
+  }
+
+
+  Future uploadImagtoCloud() async{
+    var viewthis = path.basename(_idPickerImage.path);
+    CloudinaryClient client = new CloudinaryClient(
+      "661529868759591",
+      "6HJCxVBM8oUap_rIjqc24kKfR5w",
+      "ddoiozfmr");
+    await client.uploadImage( _idPickerImage.path ,filename: viewthis) .then((result){
+         stringPath = result.secure_url;
+             print(stringPath);
+      
+      })
+      .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -515,11 +609,73 @@ class _SignupPageState extends State<SignupPage> {
                             style: TextStyle(
                               color: pureblue,
                               fontFamily: 'Gilroy-ExtraBold',
-                              fontSize: 45.0,
+                              fontSize: 30.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                 SizedBox(height: 20,),
+                // 
+                  _getImage(),
+                SizedBox(height: 15,),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>
+                    [
+                       Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 70),
+                          child: GestureDetector(
+                            onTap: (){
+                              getYourIdImage(ImageSource.camera);
+                            }, 
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: Center(
+                               child: Icon(Icons.camera,
+                               size: 20,
+                               color: Colors.white
+                               ),
+                              ),
+                            ),
+                          ),
+                          ),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 70),
+                          child: GestureDetector(
+                            onTap: (){
+                              getYourIdImage(ImageSource.gallery);
+                            }, 
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: Center(
+                               child: Icon(Icons.picture_in_picture,
+                               size: 20,
+                               color: Colors.white
+                               ),
+                              ),
+                            ),
+                          ),
+                          ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10,),
                 Padding(
                   padding: const EdgeInsets.only(left: 40,right: 40),
                   child: _formRegister(context),
@@ -535,7 +691,10 @@ class _SignupPageState extends State<SignupPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 40),
                           child: GestureDetector(
-                            onTap: _signingIn,
+                            onTap:(){
+                              uploadImagtoCloud();
+                            },
+                            // _signingIn,
                             child: Container(
                               height: 50,
                               width: 110,
@@ -560,7 +719,8 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                 ),
                 SizedBox(height: 60,),
-                 _botDownSignIn()
+                 _botDownSignIn(),
+                 SizedBox(height: 50,),
             ],
           ),
         )),
@@ -587,7 +747,8 @@ class _SignupPageState extends State<SignupPage> {
           'contactNumber': ownNumber.text,
           'address': ownAddress.text,
           'password': ownpass.text,
-          'barangayId': selectPerson.toString()
+          'barangayId': selectPerson.toString(),
+          
         };
         var res = await ApiCall().postData(data, '/register');
 
@@ -599,7 +760,7 @@ class _SignupPageState extends State<SignupPage> {
             localStorage.setBool('check', value);
             localStorage.setString('token', body['token']);
             localStorage.setString('user', json.encode(body['user']));
-
+            uploadImagtoCloud();
             Navigator.pushReplacement(context,
                 new MaterialPageRoute(builder: (context) => HomePage()));
           } else {

@@ -6,20 +6,6 @@ class AddRiderAccount extends StatelessWidget {
   Widget build(BuildContext context) {
      return Scaffold(
       body: WillPopScope(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                              stops: [0.1,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topLeft),
-                    ),
           child: SafeArea(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(
@@ -32,7 +18,7 @@ class AddRiderAccount extends StatelessWidget {
                          ],
                        ),
             )),
-        ), 
+        
       onWillPop: () async => false),
     );
   }

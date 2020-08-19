@@ -105,7 +105,8 @@ Widget _views(NewRestaurantResponse newFeatured){
                    return Column(
                      children: <Widget>[
                        NewRestaurantBox(
-                         image: "asset/img/${nf[index].restaurantName}.jpg",
+                        //  image: "asset/img/${nf[index].restaurantName}.jpg",
+                        image: "https://res.cloudinary.com/ddoiozfmr/image/upload/Images/${nf[index].restaurantName}.jpg",
                          restaurantName:nf[index].restaurantName ,
                          address: nf[index].address,
                          onTap: (){},

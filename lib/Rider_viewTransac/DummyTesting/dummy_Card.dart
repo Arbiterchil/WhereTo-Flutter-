@@ -19,7 +19,7 @@ class _DontenNoMichiState extends State<DontenNoMichi> {
      return  Container(
          width: MediaQuery.of(context).size.width,
          decoration: BoxDecoration(
-           color: Colors.white,
+           color: pureblue,
            borderRadius: BorderRadius.circular(20),
            boxShadow: [
                              BoxShadow(
@@ -31,26 +31,30 @@ class _DontenNoMichiState extends State<DontenNoMichi> {
          ),
          child: Column(
            children: <Widget>[
+             SizedBox(width: 10.0,),
              Row(
+               
+               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                      children: <Widget>[
-                                    Container(
-                                    height: 80,
-                                    width: 80,
-                                    decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
+                                       SizedBox(width: 20.0,),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: Container(
+                                      height: 70,
+                                      width: 70,
+                                      padding: EdgeInsets.all(40),
+                                      decoration: BoxDecoration(
                                         color: Colors.white,
-                           
-                                        width: 2.0,
-                                      ),
-                                      image: DecorationImage(
-                                        image: AssetImage("asset/img/logo.png"))
-                                      ),
-                                      padding: EdgeInsets.all(15.0),
-                                      // child: CircleAvatar(
-                                      //   backgroundImage: AssetImage("asset/img/app.jpg"),
-                                      // ),
+                                      shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          image: AssetImage("asset/img/logo.png"))
                                         ),
+                                        
+                                        // child: CircleAvatar(
+                                        //   backgroundImage: AssetImage("asset/img/app.jpg"),
+                                        // ),
+                                          ),
+                                    ),
                                     SizedBox(width: 5.0,),
                                     Flexible(
                                       child: Container(
@@ -61,7 +65,7 @@ class _DontenNoMichiState extends State<DontenNoMichi> {
                                         children: <Widget>[
                                                 Text(widget.boldName,
                                                 style: TextStyle(
-                                                color: Colors.black,
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16.0,
                                                 fontFamily: 'OpenSans'
@@ -83,54 +87,21 @@ class _DontenNoMichiState extends State<DontenNoMichi> {
                                     ),
                                      ],
                                    ),
-            //  Divider(
-            //       height: 6.0,
-            //       thickness:2,
-            //       color: Color(0xFF0C375B),
-            //       indent: 30.0,
-            //       endIndent: 30.0,
-            //     ), 
             SizedBox(height: 5.0,),
              Padding(
                padding: const EdgeInsets.only(left: 20,right: 20.0 ),
                child: Text(widget.description,
                maxLines: 4,
                   style: TextStyle(
-                   color: Colors.black,
+                   color: Colors.white,
                    fontWeight: FontWeight.normal,
                     fontSize: 12.0,
                      fontFamily: 'OpenSans'
                       ),
                        ),
-             ),
-            //   SizedBox(height: 15.0,),
-            //  Padding(
-            //     padding: const EdgeInsets.only(left: 20,right: 20.0 ),
-            //     child: Container(
-            //       width: MediaQuery.of(context).size.width,
-            //       child: Stack(
-            //         children: <Widget>[
-            //           Align(
-            //             alignment: Alignment.centerRight,
-            //             child:  Row(
-            //                     crossAxisAlignment: CrossAxisAlignment.end,
-            //                     mainAxisAlignment: MainAxisAlignment.end,
-            //                     children: <Widget>[
-            //                       Icon(Icons.star,size: 15,color: Colors.amber,),
-            //                        Icon(Icons.star,size: 15,color: Colors.amber,),
-            //                         Icon(Icons.star,size: 15,color: Colors.amber,),
-            //                          Icon(Icons.star,size: 15,color: Colors.amber,),
-            //                           Icon(Icons.star,size: 15,color: Colors.grey,),
-            //                     ],
-            //                   ),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
+             ), 
 
-            //      ),
-
-                 
+              SizedBox(height: 15.0,),    
            ],
          ),
       

@@ -50,13 +50,13 @@ class _ViewTransacRiderState extends State<ViewTransacRider> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("ID: "+widget.transacId+" - "+widget.name,
+                      Text(widget.name,
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
-                    fontFamily: 'OpenSans',
+                    fontFamily: 'Gilroy-ExtraBold',
                       ),
                       ),
                       Divider(
@@ -67,26 +67,26 @@ class _ViewTransacRiderState extends State<ViewTransacRider> {
                     endIndent: 15.0,
                       ),
                       SizedBox(height: 10.0,),
-                      Text("Restaurant: "+widget.restaurantName,
+                      Text(widget.restaurantName,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12.0,
                         fontWeight: FontWeight.normal,
-                    fontFamily: 'OpenSans',),),
+                    fontFamily: 'Gilroy-light',),),
                     SizedBox(height: 7.0,),
-                     Text("Address: "+widget.address,
+                     Text(widget.address,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 10.0,
                         fontWeight: FontWeight.normal,
-                    fontFamily: 'OpenSans',),),
+                    fontFamily: 'Gilroy-light',),),
                     SizedBox(height: 7.0,),
-                    Text("To: "+widget.deliveryAddress,
+                    Text(widget.deliveryAddress,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 10.0,
                         fontWeight: FontWeight.normal,
-                    fontFamily: 'OpenSans',),),
+                    fontFamily: 'Gilroy-light',),),
 
                     ],
                   ),

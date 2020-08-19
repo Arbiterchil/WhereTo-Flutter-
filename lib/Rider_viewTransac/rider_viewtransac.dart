@@ -114,7 +114,7 @@ Future<List<RiderViewClass>> getTransac() async {
                     print(constant['transact_id'].toString());
                     print(constant['player_id'].toString());
                     print(constant['user_coordinates'].toString());
-                    // print(constant['transac_id'].toString());
+                    print(constant['transac_id'].toString());
                     getmessage = true;
                     finalID = constant['transact_id'];
                     playerId = constant['player_id'].toString();
@@ -183,9 +183,7 @@ Future<List<RiderViewClass>> getTransac() async {
                   itemBuilder: (context,index){
                      return Column(
                        children: <Widget>[
-                        
-                                
-                        
+
                         Customgettransac( image: "asset/img/app.jpg",
                           transacId: snapshot.data[index].id.toString(),
                           name: snapshot.data[index].name,

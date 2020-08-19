@@ -64,7 +64,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                                 
                            Text(userData!= null ? '${userData['name']}':  'Fail get data.',
                                                     style: TextStyle(
-                                                    color: Color(0xFF0C375B),
+                                                    color: Colors.white,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16.0,
                                                     fontFamily: 'Gilroy-ExtraBold'
@@ -73,7 +73,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                                                     SizedBox(height: 2,),
                                                     Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
                                                     style: TextStyle(
-                                                    color: Colors.black,
+                                                    color: Colors.white,
                                                     fontWeight: FontWeight.normal,
                                                     fontSize: 10.0,
                                                     fontFamily: 'Gilroy-light'
@@ -121,7 +121,7 @@ class NCard extends StatelessWidget {
         // decoration: eBox,
         child: Row(
           children: <Widget>[
-            Icon(icon,color: Color(0xFF0C375B),size: 15.0,),
+            Icon(icon,color: Colors.white,size: 15.0,),
             SizedBox(width: 7.0,),
         
              Flexible(
@@ -134,7 +134,7 @@ class NCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: TextStyle(
-                        color: Color(0xFF0C375B),
+                        color: Colors.white,
                         fontWeight: FontWeight.w700,
                         fontSize: 12.0,
                         fontFamily: 'Gilroy-light'

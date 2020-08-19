@@ -28,8 +28,7 @@ class ViewMenuOnTransac extends StatefulWidget {
   final String user_coor;
 
   const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor}) : super(key: key);
-
-  
+ 
   @override
   _ViewMenuOnTransacState createState() => _ViewMenuOnTransacState();
 }
@@ -68,9 +67,9 @@ var idgetter;
 @override
   void initState() {
     _getUserInfo();
-    
-    super.initState();
     riderCheck();
+    super.initState();
+    
   }
 
   notif2() async {
@@ -133,7 +132,6 @@ var idgetter;
         await http.post(url, headers: headers, body: json.encode(contents));
         print(repo.body);
   }
-
    Widget _viewMenus(){
 
         return Visibility(
@@ -358,7 +356,7 @@ var checkVal = localStorage.getBool('check');
             
             if(checkVal != null){
               if(checkVal){
-                print(userData['id'].toString()+"-"+riderId);
+              
                 if(riderId != userData['id'].toString()){
                     okAvail = !okAvail;
                 }else{
@@ -379,10 +377,6 @@ var checkVal = localStorage.getBool('check');
 
     }
 
-
-   
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -395,315 +389,294 @@ var checkVal = localStorage.getBool('check');
               child: SafeArea(
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
-                    child: Column(
-                      children: <Widget>[
-                        Stack(
-                      alignment: AlignmentDirectional.topCenter,
-                      overflow: Overflow.visible,
-                      children: <Widget>[                      
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 30,right: 30),
+                      child: Column(
+                        
+                        children: <Widget>[
+                        SizedBox(height: 10,),
                         Container(
-                          height: 230.0,
+                          height: 140,
+                          width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              stops: [0.2,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight),
-                              
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(40),
-                              bottomRight: Radius.circular(40),
+                            color: pureblue,
+                            borderRadius: BorderRadius.all(Radius.circular(20),
                             ),
                           ),
-
-                        ),
-                       Padding(
-                         padding: const EdgeInsets.only(top: 5,left: 30,right: 30),
-                         child: Container(
-                               height: 220.0,
-                               child: Column(
-                                 children: <Widget>[
-                                   Padding(
-                                     padding: const EdgeInsets.only(top: 35.0),
-                                     child: Row(
-                                       children: <Widget>[
-                                      Container(
-                                      height: 90,
-                                      width: 90,
-                                      decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                          color: Colors.white,
-                                          //  Color(0xFF398AE5),
-                                          width: 2.0,
-                                        ),
-                                        
-                                        ),
-                                        padding: EdgeInsets.all(8.0),
-                                        child: CircleAvatar(
-                                          backgroundImage: AssetImage("asset/img/app.jpg"),
-                                        ),
-                                          ),
-                                      SizedBox(width: 20.0,),
-                                      Flexible(
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                          
-                                          children: <Widget>[
-                                                  Text("${widget.nametran}",
-                                                  style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16.0,
-                                                  fontFamily: 'OpenSans'
-                                                ),
-                                                  ),
-                                                  SizedBox(height: 2,),
-                                                  Text("Restaurant : ${widget.restaurantName}",
-                                                  maxLines: 2,
-                                                  style: TextStyle(
-                                                  color: Colors.grey[300],
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 12.0,
-                                                  fontFamily: 'OpenSans'
-                                                ),
-                                                  ),
-                                                  SizedBox(height: 2,),
-                                                  Text("Deliver To : ${widget.deliverTo}",
-                                                  maxLines: 2,
-                                                  style: TextStyle(
-                                                  
-                                                  color: Colors.grey[300],
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 12.0,
-                                                  fontFamily: 'OpenSans'
-                                                ),
-                                                  ),
-                                                  SizedBox(height: 5,),
-                                                  Text("${widget.deliveryCharge}",
-                                                  style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16.0,
-                                                  fontFamily: 'OpenSans'
-                                                ),
-                                                  ),
-                                                ],
-                                              ),
-                                        ),
-                                      ),
-                                    
-                                        
-
-
-                                       ],
-                                     ),
-                                   ), 
-                                   Padding(
-                                      padding: const EdgeInsets.only(top: 15,left: 50,right: 50),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Visibility(
-                                            visible: backTF,
-                                            child: RaisedButton(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    onPressed: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                                  return RiderTransaction();
-                                                }));
-                    },                
-                    child: Text ( "BACK", style :TextStyle(
-                    color: Color(0xFF0C375B),
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12.0,
-                                fontFamily: 'OpenSans'
-                  ),),),
-                                          ),
-                   SizedBox(width: 30.0,),
-                                           Visibility(
-                                        visible: available,
-                                        child: DesignButton(
-                                          height: 55,
-                                          width: 55,
-                                          color: Color(0xFF398AE5),
-                                          offblackBlue: Offset(-4, -4),
-                                          offsetBlue: Offset(4, 4),
-                                          blurlevel: 4.0,
-                                          icon: Icons.motorcycle,
-                                          iconSize: 30.0,
-                                          onTap: (){
-                                                xDilogAhow(context);
-                                            print(userData['id']);
-
-                                          },
-                                        ),
-                                      ),
-                                         
-                                          
-                                        ],
-                                      ),
-                                     ), 
-                                 ],
-                               ),
-                             ),
-                       ),
-                        Padding(padding: const EdgeInsets.only(top:210,left: 40,right: 40),
-                        child: Container(
-                         height: 50.0,
-                         width: 120,
-                         decoration: BoxDecoration(
-                           color: Colors.white,
-                           borderRadius: BorderRadius.circular(10.0),
-                           boxShadow: [
-                             BoxShadow(
-                               color: Colors.black12,
-                               spreadRadius: 5.5,
-                               blurRadius: 5.5
-                             ),
-                           ],
-                         ),
-                          
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                             Padding(
-                               padding: const EdgeInsets.all(8.0),
-                               child:  Text("₱ ${widget.gotTotal}",
-                                              style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 25.0,
-                                              fontFamily: 'OpenSans'
-                                            ),
-                                              ),),
+                              Container(
+                                height: 90,
+                                width: 90,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage("asset/img/app.jpg") )
+                                ),
+                              ),
+
+                              Flexible(
+                                child: Container(
+                                  child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                      Text("${widget.nametran}",
+                                                      style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16.0,
+                                                      fontFamily: 'OpenSans'
+                                                    ),
+                                                      ),
+                                                      SizedBox(height: 2,),
+                                                      Text("Restaurant : ${widget.restaurantName}",
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                      color: Colors.grey[300],
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 12.0,
+                                                      fontFamily: 'OpenSans'
+                                                    ),
+                                                      ),
+                                                      SizedBox(height: 2,),
+                                                      Text("Deliver To : ${widget.deliverTo}",
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                      
+                                                      color: Colors.grey[300],
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 12.0,
+                                                      fontFamily: 'OpenSans'
+                                                    ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text("${widget.deliveryCharge}",
+                                                      style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16.0,
+                                                      fontFamily: 'OpenSans'
+                                                    ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                ),
+                              ),
+
                             ],
                           ),
                         ),
-                        )
-                      ],
-                    ),
-          
-                      SizedBox(height: 10.0,),
-                        complete ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Container(
-                              height: 200,
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0),
-                                 gradient: LinearGradient(
-                              stops: [0.2,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topLeft),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("Done! Orders Successfully Delivered.",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'OpenSans',
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),),
-                                  SizedBox(height: 30.0,),
-                                  Text("Again Job Well Done!.",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'OpenSans',
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),),
-                                  SizedBox(height: 10.0,),
-                                   RaisedButton(
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                                  onPressed: () async {
-                                    SharedPreferences localStorage = await SharedPreferences.getInstance();
-                                    localStorage.remove('menuplustrans');
-                                    localStorage.remove('playerIDS');
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                                  return RiderTransaction();
-                                                }));
-
-                                        //   setState(() {
-                                        //   complete = false;                    
-
-                                        // });
-                                  // Navigator.of(context).pop();
-                                      },   
-                                  child: Text ( "Yes", style :TextStyle(
-                                  color: Color(0xFF398AE5),
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 12.0,
-                                              fontFamily: 'OpenSans'
-                                ),),),
-                                ],
-                              ),
+                         SizedBox(height: 10,),
+                         Container(
+                          height: 90,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: pureblue,
+                            borderRadius: BorderRadius.all(Radius.circular(20),
                             ),
                           ),
-                        ):
-                        
-                        Visibility(
-                          visible: okAvail,
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 450.0,
-                              child: Stepper(
-                                  steps: steps,
-                                  // type: stepperType,
-                                  currentStep: currentStep,
-                                  onStepContinue: nextSteps,
-                                  onStepTapped: (step) => goTo(step),
-                                  onStepCancel: cancel,
-                                  controlsBuilder: (
-                                    BuildContext context ,{VoidCallback onStepContinue,VoidCallback onStepCancel}){
-                                       return Row(
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         mainAxisAlignment: MainAxisAlignment.center,
-                                         children: <Widget>[
-                                            NCard1Button(
-                                          width: 100,
-                                          icon: Icons.skip_next,
-                                          label: "OK",
-                                          onTap: onStepContinue,
-                                          active: false,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                                                        Visibility(
+                                              visible: backTF,
+                                              child: RaisedButton(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                      onPressed: (){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                                    return RiderTransaction();
+                                                  }));
+                      },                
+                      child: Text ( "BACK", style :TextStyle(
+                      color: Color(0xFF0C375B),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12.0,
+                                  fontFamily: 'OpenSans'
+                  ),),),
                                             ),
-                                            SizedBox(width: 30.0,),
-                                            NCard1Button(
-                                          width: 115,
-                                          icon: Icons.cancel,
-                                          label: "CANCEL",
-                                          onTap: onStepCancel,
-                                          active: true,
+                   SizedBox(width: 30.0,),
+                                             Visibility(
+                                          visible: available,
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              xDilogAhow(context);
+                                              print(userData['id']);
+                                            },
+                                            child: Container(
+                                              height: 60,
+                                              width: 60,
+                                              decoration: BoxDecoration(
+                                                color: wheretoDark,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.motorcycle,
+                                                  size: 30,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
                                             ),
 
-                                         ],
-                                       ); 
-                                  },
+
+                                          ),
+                                        ),
+
+                            ],
+                          ),
+                        ),
+                            SizedBox(height: 10,),
+                           Container(
+                           height: 50.0,
+                           width: 120,
+                           decoration: BoxDecoration(
+                             color: Colors.white,
+                             borderRadius: BorderRadius.circular(10.0),
+                             boxShadow: [
+                               BoxShadow(
+                                 color: Colors.black12,
+                                 spreadRadius: 5.5,
+                                 blurRadius: 5.5
+                               ),
+                             ],
+                           ),
+                            
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                               Padding(
+                                 padding: const EdgeInsets.all(8.0),
+                                 child:  Text("₱ ${widget.gotTotal}",
+                                                style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 25.0,
+                                                fontFamily: 'OpenSans'
+                                              ),
+                                                ),),
+                              ],
+                            ),
+                          ),
+                        SizedBox(height: 10.0,),
+                          complete ? Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Container(
+                                height: 200,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                   gradient: LinearGradient(
+                                stops: [0.2,4],
+                                colors: 
+                                [
+                                  Color(0xFF0C375B),
+                                  Color(0xFF176DB5)
+                                ],
+                                begin: Alignment.bottomRight,
+                                end: Alignment.topLeft),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 20,right: 20),
+                                      child: Text("Done! Orders Successfully Delivered.",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'OpenSans',
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w700,
+                                      ),),
+                                    ),
+                                    SizedBox(height: 30.0,),
+                                    Text("Again Job Well Done!.",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'OpenSans',
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w700,
+                                    ),),
+                                    SizedBox(height: 10.0,),
+                                     RaisedButton(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                                    onPressed: () async {
+                                      SharedPreferences localStorage = await SharedPreferences.getInstance();
+                                      localStorage.remove('menuplustrans');
+                                      localStorage.remove('playerIDS');
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                                    return RiderTransaction();
+                                                  }));
+                                          //   setState(() {
+                                          //   complete = false;                    
+
+                                          // });
+                                    // Navigator.of(context).pop();
+                                        },   
+                                    child: Text ( "Yes", style :TextStyle(
+                                    color: Color(0xFF398AE5),
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 12.0,
+                                                fontFamily: 'OpenSans'
+                                  ),),),
+                                  ],
+                                ),
                               ),
                             ),
-                          
-                        ),
-                        
-                      SizedBox(height: 80.0,),
-                    _viewMenus(),
-                      ],
-                    
+                          ):                         
+                          Visibility(
+                            visible: okAvail,
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 450.0,
+                                child: Stepper(
+                                    steps: steps,
+                                    // type: stepperType,
+                                    currentStep: currentStep,
+                                    onStepContinue: nextSteps,
+                                    onStepTapped: (step) => goTo(step),
+                                    onStepCancel: cancel,
+                                    controlsBuilder: (
+                                      BuildContext context ,{VoidCallback onStepContinue,VoidCallback onStepCancel}){
+                                         return SingleChildScrollView(
+                                           scrollDirection: Axis.horizontal,
+                                           child: Row(
+                                             crossAxisAlignment: CrossAxisAlignment.center,
+                                             mainAxisAlignment: MainAxisAlignment.center,
+                                             children: <Widget>[
+                                                NCard1Button(
+                                              width: 100,
+                                              icon: Icons.skip_next,
+                                              label: "OK",
+                                              onTap: onStepContinue,
+                                              active: false,
+                                                ),
+                                                SizedBox(width: 30.0,),
+                                                NCard1Button(
+                                              width: 115,
+                                              icon: Icons.cancel,
+                                              label: "CANCEL",
+                                              onTap: onStepCancel,
+                                              active: true,
+                                                ),
+
+                                             ],
+                                           ),
+                                         ); 
+                                    },
+                                ),
+                              ),
+                            
+                          ), 
+                        SizedBox(height: 20.0,),
+                      _viewMenus(),
+                        ],
+                      
+                      ),
                     ),
                     
                     ),
@@ -863,17 +836,12 @@ var checkVal = localStorage.getBool('check');
       }else{
         print("FALSE");
       }
-
-
-                                                setState(() {
-                                                available = !available;
-                                                menuHide = !menuHide;
-                                                backTF = !backTF;
-                                                
-                                                riderCheck();
-                                               
-
-                                              });
+      setState(() {
+      available = !available;
+      menuHide = !menuHide;
+      backTF = !backTF;
+      riderCheck();
+      });
                    Navigator.of(context).pop();
                       },   
                       
@@ -893,10 +861,6 @@ var checkVal = localStorage.getBool('check');
 
     }
 }
-
-
-
-
 class NCard extends StatelessWidget {
   final bool active;
   final IconData icon;

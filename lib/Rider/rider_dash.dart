@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:WhereTo/AnCustom/dialogHelp.dart';
 import 'package:WhereTo/Rider_viewTransac/DummyTesting/dummy_Card.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/modules/login_page.dart';
-import 'dart:io';
+import 'package:WhereTo/modules/gobal_call.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -95,68 +94,125 @@ void configSignal() async {
    await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
 }
 
-  // Color(0xFFF2F2F2)
-  // #0C375B
-  // #176DB5
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
-      backgroundColor:Color(0xFFF2F2F2) ,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                    Stack(
-                      alignment: AlignmentDirectional.topCenter,
-                      overflow: Overflow.visible,
-                      children: <Widget>[                      
-                        Container(
-                          height: 230.0,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30,right: 30),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 10,),
+                Container(
+                  
+                  decoration: BoxDecoration(
+                    color: pureblue,
+                    boxShadow: [
+               BoxShadow(
+                               color: Colors.black12,
+                               spreadRadius: 5.5,
+                               blurRadius: 5.5
+                             ),
+            ],
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SharedPrefCallnameData(),
+                  ),
+                ),
+                SizedBox(height: 15,),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                    Container(
+                          height: 70,
+                          width: 90,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              stops: [0.2,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight),
-                              
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(40),
-                              bottomRight: Radius.circular(40),
+                            color: pureblue,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                             BoxShadow(
+                               color: Colors.black12,
+                               spreadRadius: 3.3,
+                               blurRadius: 3.3
+                             ),
+                          ],
+                          ),
+                          child: Center(
+                            child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: 'Ratings: ',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Gilroy-light'
+              ),
+            ),
+            
+            TextSpan(
+              text: '4.5',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Gilroy-ExtraBold'
+              ),
+            ),
+          ],
+        ),
+      ) ,
+                          ),
+                        ),
+                    Container(
+                          height: 70,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: pureblue,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                             BoxShadow(
+                               color: Colors.black12,
+                               spreadRadius: 3.3,
+                               blurRadius: 3.3
+                             ),
+                          ],
+                          ),
+                          child: Center(
+                            child: Text('1140',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Gilroy-ExtraBold',
+                              fontSize: 18
+                            ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10,right: 15.0),
-                          child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: Container(
-                                      width: 66,
-                                      height: 55,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF176DB5),
-                                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color(0xFF176DB5) ,
-                                            blurRadius: 6,
-                                            offset: Offset(-6, -6),
-
-                                          ),
-                                          BoxShadow(
-                                            color:Color(0xFF0C375B),
-                                            blurRadius: 6,
-                                            offset: Offset(6, 6),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Switch(
+                    Container(
+                          height: 70,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: pureblue,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                             BoxShadow(
+                               color: Colors.black12,
+                               spreadRadius: 3.3,
+                               blurRadius: 3.3
+                             ),
+                          ],
+                          ),
+                          child: Center(
+                            child: Switch(
                                         value: online,
                                         activeColor: Colors.lightGreen,
                                         // onChanged: ((bool e)=>toOnline(e)),
@@ -166,220 +222,58 @@ void configSignal() async {
                                                  
                                                 Dialog_Helper.exit(context); 
                                            
-                                         },
-                                      ),
-                                       
-                                    )
+                                         }, 
                                   ),
+                          ),
                         ),
-                       Padding(
-                         padding: const EdgeInsets.only(top: 5,left: 30,right: 30),
-                         child: Container(
-                               height: 220.0,
-                               child: Column(
-                                 children: <Widget>[
-                                   Padding(
-                                     padding: const EdgeInsets.only(top: 35.0),
-                                     child: Row(
-                                       children: <Widget>[
-                                      Container(
-                                      height: 90,
-                                      width: 90,
-                                      decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                          color: Colors.white,
-                                          //  Color(0xFF398AE5),
-                                          width: 2.0,
-                                        ),
-                                        
-                                        ),
-                                        padding: EdgeInsets.all(8.0),
-                                        child: CircleAvatar(
-                                          backgroundImage: AssetImage("asset/img/app.jpg"),
-                                        ),
-                                          ),
-                                      SizedBox(width: 20.0,),
-                                      Flexible(
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                          
-                                          children: <Widget>[
-                                                  Text(userData!= null ? '${userData['name']}':  'Fail get data.',
-                                                  style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16.0,
-                                                  fontFamily: 'OpenSans'
-                                                ),
-                                                  ),
-                                                  SizedBox(height: 2,),
-                                                  Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
-                                                  style: TextStyle(
-                                                  color: Colors.grey[300],
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 10.0,
-                                                  fontFamily: 'OpenSans'
-                                                ),
-                                                  ),
-                                                 NCard(
-                                                      active: false,
-                                 icon: Icons.phone_android,
-                                 label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
-                                                    ),
-                                                    NCard(
-                                                      active: false,
-                                 icon: Icons.my_location,
-                                 label: userData!= null ? '${userData['address']}' :  'Fail get data.',
-                                                    ),
-                                                
-                                                ],
-                                              ),
-                                        ),
-                                      ),
-                                    
-                                        
-
-
-                                       ],
-                                     ),
-                                   ),
-                                   
-                                   Padding(
-                                      padding: const EdgeInsets.only(top: 15,left: 50,right: 50),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text("00",
-                                              style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0,
-                                              fontFamily: 'OpenSans'
-                                            ),
-                                              ),
-                                              SizedBox(height: 2.0,),
-                                              Text('Tax',
-                                              style: TextStyle(
-                                              color: Colors.grey[300],
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 11.0,
-                                              fontFamily: 'OpenSans'
-                                            ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(width: 30.0,),
-                                          RaisedButton(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    onPressed: (){},                
-                    child: Text ( "EDIT PROFILE", style :TextStyle(
-                    color: Color(0xFF0C375B),
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12.0,
-                                fontFamily: 'OpenSans'
-                  ),),),
-                                        ],
-                                      ),
-                                     ), 
-                                 ],
-                               ),
-                             ),
-                       ),
-                        Padding(padding: const EdgeInsets.only(top:210,left: 40,right: 40),
-                        child: Container(
-                         height: 70.0,
-                         decoration: BoxDecoration(
-                           color: Colors.white,
-                           borderRadius: BorderRadius.circular(10.0),
-                           boxShadow: [
-                             BoxShadow(
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15,),
+                Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: pureblue,
+                    boxShadow: [
+               BoxShadow(
                                color: Colors.black12,
                                spreadRadius: 5.5,
                                blurRadius: 5.5
                              ),
-                           ],
-                         ),
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                             Padding(
-                               padding: const EdgeInsets.all(8.0),
-                               child:  Text("Star Rate:",
-                                              style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 8.0,
-                                              fontFamily: 'OpenSans'
-                                            ),
-                                              ),),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20.0,right: 20.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.star,size: 25,color: Colors.amber,),
-                                     Icon(Icons.star,size: 25,color: Colors.amber,),
+            ],
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
                                       Icon(Icons.star,size: 25,color: Colors.amber,),
                                        Icon(Icons.star,size: 25,color: Colors.amber,),
-                                        Icon(Icons.star,size: 25,color: Colors.grey,),
-                                  ],
-                                ),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                        )
-                      ],
-                    ),
-
-                    Container(
-                      height: 380,
-                      width: MediaQuery.of(context).size.width,
-                      child: ListView(
-                        children: <Widget>[
-                           SizedBox(height: 15.0,),
-                     Padding(
-                       padding: const EdgeInsets.only(left: 40,right: 40,top: 10,bottom: 10),
-                       child: Container(
-                            height: 200.0,
-                            width: MediaQuery.of(context).size.width,
-                            child: DontenNoMichi(
+                                        Icon(Icons.star,size: 25,color: Colors.amber,),
+                                         Icon(Icons.star,size: 25,color: Colors.amber,),
+                                          Icon(Icons.star_half,size: 25,color: Colors.amber,),
+                                    ],
+                                  ),
+                  ),
+                ),
+                 SizedBox(height: 15,),
+                 DontenNoMichi(
                               boldName: "Admin: Erchil Amad",
                               subtitle: "Hi. Rider .",
                               description: "$coma A Reminder and Also a Heed that please be true on your work of Delivery And Good Speed. $coma",
                             ),
-                          ),
-                     ),
-                     Padding(
-                       padding: const EdgeInsets.only(left: 40,right: 40,top: 10,bottom: 10),
-                       child: Container(
-                            height: 200.0,
-                            width: MediaQuery.of(context).size.width,
-                            child: DontenNoMichi(
+                            SizedBox(height: 15,),
+                            DontenNoMichi(
                               boldName: "Admin : Jayce Mico",
                               subtitle: "For more Info",
                               description: "$coma Hi. if you're a new Rider feel Free to ask on our marketing staff to answer your Questions and God bless.$coma",
                             ),
-                          ),
-                     ),
-                        ],
-                      ),
-                    ),
-                     
-                             
-                ],
-              ),
+                            
+              ],
             ),
+          ),
         ),
       ),
     );

@@ -101,17 +101,17 @@ void configSignal() async {
         Colors.white,
         // unselectedItemColor: Colors.grey,
         backgroundColor:
-        Color(0xFF0C375B), 
+        pureblue , 
         // Color(0xFFF2F2F2)
         //  Color(0xFF398AE5),
         unselectedItemColor: 
-        Color(0xFF176DB5),
+        Color(0xFF0C375B),
         currentIndex: _selectedIndex,
         onTap: (int index) { _selectTab(pageKeys[index], index); },
         items: [
        
            BottomNavigationBarItem(
-              icon: new Icon(Icons.home),
+              icon: new Icon(Icons.dashboard),
               title: new Text('DashBoard'),
             ),
             BottomNavigationBarItem(
@@ -122,10 +122,10 @@ void configSignal() async {
               icon: new Icon(Icons.inbox),
               title: new Text('Inbox'),
             ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.person),
-              title: new Text('Edit'),
-            ),
+            // BottomNavigationBarItem(
+            //   icon: new Icon(Icons.person),
+            //   title: new Text('Edit'),
+            // ),
             //  BottomNavigationBarItem(
             //   icon: new Icon(Icons.directions_railway),
             //   title: new Text('Trasport'),

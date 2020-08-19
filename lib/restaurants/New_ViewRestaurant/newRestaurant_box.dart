@@ -28,7 +28,7 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
             image: DecorationImage(
-              image: AssetImage(widget.image),
+              image: NetworkImage(widget.image),
               fit: BoxFit.cover
               ),
                boxShadow: [

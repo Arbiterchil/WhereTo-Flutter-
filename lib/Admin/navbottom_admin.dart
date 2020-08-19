@@ -1,5 +1,6 @@
 import 'package:WhereTo/Admin/admin_tabswitch.dart';
 import 'package:WhereTo/AnCustom/admin_help.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
@@ -77,10 +78,10 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
         selectedItemColor: 
         Colors.white,
         backgroundColor:
-        Color(0xFF0C375B), 
+        pureblue, 
         unselectedItemColor: 
         // Color(0xFF176DB5),
-        Colors.amberAccent,
+        Color(0xFF0C375B),
         currentIndex: selectedindex,
         onTap: (int index) { selectAdmintab(_adminPages[index], index); },
         items: [

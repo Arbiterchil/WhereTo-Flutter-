@@ -56,97 +56,54 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: WillPopScope(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-           width: MediaQuery.of(context).size.width,
-           decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                              stops: [0.1,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topLeft),
-                    ),
                     child: SafeArea(
                       child: SingleChildScrollView(
                         physics: AlwaysScrollableScrollPhysics(),
-                         padding: EdgeInsets.symmetric(
-                         horizontal: 40.0,
-                         vertical: 80.0,
-                       ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Stack(
-                              children: <Widget>[
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: GestureDetector(
-                                    onTap: (){
-                                      Navigator.pushAndRemoveUntil(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => AdminAddRestaurant()),ModalRoute.withName('/'));
-                                    },
-                                    child: Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(Radius.circular(50))
-                                      ),
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.backspace,
-                                          color: Color(0xFF0C375B),
-                                          size: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 40,right: 40),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: Stack(
+                                children: <Widget>[
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        Navigator.pushAndRemoveUntil(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => AdminAddRestaurant()),ModalRoute.withName('/'));
+                                      },
+                                      child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          color: pureblue,
+                                          borderRadius: BorderRadius.all(Radius.circular(50))
+                                        ),
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.backspace,
+                                            color: Colors.white,
+                                            size: 30,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),  
-                            Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.white
-                    )
-                  ),
-                  child: Center(
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(100))
-                      ),
-                      child: Center(
-                        child: Icon(Icons.add,
-                        size: 30,
-                        color: Color(0xFF0C375B),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-               ), 
-                _menuForm(),
+                                ],
+                              ),
+                            ),  
+                            SizedBox(height: 30,),
+                            _menuForm(),
 
-                          ],
-                        ) ,
-                      )),
+                            ],
+                          
+                      ),
+                        )),
         ),
        onWillPop: () async => false),
     );
@@ -163,21 +120,21 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                   textDirection: TextDirection.ltr,
                   children: <Widget>[
             SizedBox(height: 10.0,),
-            Text('Menu Name',
-                    style: eLabelStyle,
-                    ),
-            SizedBox(height: 10.0,),
+            // Text('Menu Name',
+            //         style: eLabelStyle,
+            //         ),
+            // SizedBox(height: 10.0,),
             Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: menuname,
                 validator: (val) => val.isEmpty ? ' Please Put Your Menu Name' : null,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -185,7 +142,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.menu,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: 'Menu Name',
                   hintStyle: eHintStyle,
@@ -193,10 +150,10 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
               ),
             ),
             SizedBox(height: 15.0,),
-            Text('Description',
-                    style: eLabelStyle,
-                    ),
-            SizedBox(height: 10.0,),
+            // Text('Description',
+            //         style: eLabelStyle,
+            //         ),
+            // SizedBox(height: 10.0,),
             Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
@@ -205,11 +162,11 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
               child: TextFormField(
                 maxLines: 8,
                 keyboardType: TextInputType.multiline,
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: decription,
                 validator: (val) => val.isEmpty ? ' Please Put Your Description on this.' : null,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -217,7 +174,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.description,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: 'Description',
                   hintStyle: eHintStyle,
@@ -225,17 +182,17 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
               ),
             ),
             SizedBox(height: 15.0,),
-            Text('Price',
-                    style: eLabelStyle,
-                    ),
-            SizedBox(height: 10.0,),
+            // Text('Price',
+            //         style: eLabelStyle,
+            //         ),
+            // SizedBox(height: 10.0,),
             Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
               keyboardType: TextInputType.number,
                 controller: price,
                 validator: (val) => val.isEmpty ? ' Please Put Your Price' : null,
@@ -243,7 +200,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                     
                 
                 style: TextStyle(
-                  color: Colors.white,
+                  color:pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -251,16 +208,16 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.attach_money,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: '0.00',
                   hintStyle: eHintStyle,
                 ),
               ),
             ),
-            Text("Category",
-                      style: eLabelStyle,
-                      ),
+            // Text("Category",
+            //           style: eLabelStyle,
+            //           ),
             SizedBox(height: 10.0,),
 
             Provider<Holder>(
@@ -291,7 +248,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                 width: 50,
                 decoration: eBoxDecorationStyle ,
                 child: Icon(Icons.category,
-                color: Colors.white,),
+                color: pureblue,),
               )),
             ),
             Padding(
@@ -304,18 +261,18 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
               isExpanded: true ,
               hint: Text( "Select Category",
               style: TextStyle(
-              color: Colors.white,
+              color: pureblue,
               fontFamily: 'Gilroy-light'
               ),),
-              dropdownColor:  Color(0xFF0C375B),
-              icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
+              dropdownColor:  Colors.white,
+              icon: Icon(Icons.arrow_drop_down,color:pureblue,),
               value: slectCategory,
               items: dataCategory.map((item) {
               nameCategory = item['categoryName'];
               return new DropdownMenuItem(
               child: Text(nameCategory!=null ? nameCategory : "Nope",
               style: TextStyle(
-              color: Colors.white,
+              color: pureblue,
               fontFamily: 'Gilroy-light'
               ),),
               value: item['id'].toString(),);}).toList(),
@@ -345,7 +302,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                                     style: TextStyle(
                                       fontFamily: 'Gilroy-light',
                                       fontSize: 20,
-                                      color: Colors.white
+                                      color: pureblue
                                     ),
                                     
                                   ),
@@ -356,42 +313,19 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                           
                       }),
                   ),
-                          Container(
-                        width: 120,
-                      child:RaisedButton(
-                      onPressed: (){
-                        setState(() {
-                           model.remove();
-                        });
-                      },
-                      elevation: 5.0,
-                      padding: EdgeInsets.all(8.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      color: Colors.white,
-                      child: Text('Remove All',
-                      style: TextStyle(
-                        color: Color(0xFF0C375B),
-                        letterSpacing: 1,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Gilroy-light',
-                      ),),
-                      )
-                    
-                   
-                  
-                ),
-
-                SizedBox(height: 10,),
-                Container(
-                        width: 120,
-                      child:RaisedButton(
-                      onPressed: () async {
-
-                        if(slectCategory == null){
-                      print("Select Barangay");
+                  SizedBox(height: 15,),
+                  Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>
+                    [
+                      Align(
+                        alignment: Alignment.topLeft,
+                          child: GestureDetector(
+                            onTap: 
+                            () async{
+                                          if(slectCategory == null){
+                      // print("Select Barangay");
                       _showDistictWarning();
                         }else{
                         if(formkey.currentState.validate()){
@@ -428,12 +362,13 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                                 "menuName" : menuname.text,
                                 "description" : decription.text,
                                 "price":price.text,
+                                "imagePath": "https://res.cloudinary.com/ddoiozfmr/image/upload/Images/xamples/${menuname.text}.jpg",
                                 "category": resultant
                                 }]
                                 };
-                          print(data);
 
-                          await ApiCall().addMenu(data, '/addMenu');
+                          var response =  await ApiCall().addMenu(data, '/addMenu');
+                          print(response.body);
                           menuname.clear();
                           decription.clear();
                           price.clear();
@@ -443,26 +378,169 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                           _showDone();
                         }
                          }
-                      },
-                      elevation: 5.0,
-                      padding: EdgeInsets.all(8.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+                            },
+                            // _addResturant,
+                            child: Container(
+                              height: 50,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: Center(
+                                child: Text( loading ? '....' : 'Add Menu >',
+                                style: TextStyle(
+                                  fontFamily: 'Gilroy-ExtraBold',
+                                  fontSize: 18,
+                                  color: Colors.white
+                                ),
+                                ),
+                              ),
+                            
+                          ),
+                          ),
                       ),
-                      color: Colors.white,
-                      child: Text('Add Menu',
-                      style: TextStyle(
-                        color: Color(0xFF0C375B),
-                        letterSpacing: 1,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Gilroy-light',
-                      ),),
-                      )
+                      Align(
+                        alignment: Alignment.topRight,
+                          child: GestureDetector(
+                            onTap: 
+                            (){
+                              setState(() {
+                           model.remove();
+                              });
+                            },
+                            // _addResturant,
+                            child: Container(
+                              height: 50,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: Center(
+                                child: Text( loading ? '....' : 'Remove All <',
+                                style: TextStyle(
+                                  fontFamily: 'Gilroy-ExtraBold',
+                                  fontSize: 18,
+                                  color: Colors.white
+                                ),
+                                ),
+                              ),
+                            
+                          ),
+                          ),
+                      ),
+                    ],
+                  ),
+                       ),
+
+                //           Container(
+                //         width: 120,
+                //       child:RaisedButton(
+                //       onPressed: (){
+                //         setState(() {
+                //            model.remove();
+                //         });
+                //       },
+                //       elevation: 5.0,
+                //       padding: EdgeInsets.all(8.0),
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(30.0),
+                //       ),
+                //       color: Colors.white,
+                //       child: Text('Remove All',
+                //       style: TextStyle(
+                //         color: Color(0xFF0C375B),
+                //         letterSpacing: 1,
+                //         fontSize: 16.0,
+                //         fontWeight: FontWeight.bold,
+                //         fontFamily: 'Gilroy-light',
+                //       ),),
+                //       )
                     
                    
                   
-                ), 
+                // ),
+
+                // SizedBox(height: 10,),
+                // Container(
+                //         width: 120,
+                //       child:RaisedButton(
+                //       onPressed: () async {
+
+                //         if(slectCategory == null){
+                //       print("Select Barangay");
+                //       _showDistictWarning();
+                //         }else{
+                //         if(formkey.currentState.validate()){
+                //         formkey.currentState.save();
+                        
+                //         Map<String, int> id = {};
+                //         Map<String , int> shit = {};
+                //         List<dynamic> categs = [];
+                //         List resultant = [];
+                        
+                //        for(int i = 0 ; i < model._items.length; i++){
+                //            ids = int.parse(model._items[i]);
+                //             id = {
+                //                 'id': ids
+                //             };
+                //            categs.add(id);
+                //             } 
+                    
+                //         for(int x = 0; x< categs.length; x++){
+                //             resultant.add(categs[x]);
+                //         }
+                //         shit.forEach((key ,val) { 
+                //           resultant.add(
+                //             {
+                //               'id': val
+                //             });
+                //         });
+                //         print(resultant);
+                //          var data =
+                //           {
+                //                 "restaurantId" : widget.id.toString(),
+                //                 "menu":
+                //                 [{
+                //                 "menuName" : menuname.text,
+                //                 "description" : decription.text,
+                //                 "price":price.text,
+                //                 "category": resultant
+                //                 }]
+                //                 };
+                //           print(data);
+
+                //           await ApiCall().addMenu(data, '/addMenu');
+                //           menuname.clear();
+                //           decription.clear();
+                //           price.clear();
+                //           setState(() {
+                //              model.remove();
+                //           });
+                //           _showDone();
+                //         }
+                //          }
+                //       },
+                //       elevation: 5.0,
+                //       padding: EdgeInsets.all(8.0),
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(30.0),
+                //       ),
+                //       color: Colors.white,
+                //       child: Text('Add Menu',
+                //       style: TextStyle(
+                //         color: Color(0xFF0C375B),
+                //         letterSpacing: 1,
+                //         fontSize: 16.0,
+                //         fontWeight: FontWeight.bold,
+                //         fontFamily: 'Gilroy-light',
+                //       ),),
+                //       )
+                    
+                   
+                  
+                // ), 
 
                   
 

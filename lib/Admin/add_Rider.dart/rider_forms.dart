@@ -72,40 +72,10 @@ class _RiderFormsState extends State<RiderForms> {
         crossAxisAlignment: CrossAxisAlignment.start,
         textDirection: TextDirection.ltr,
         children: <Widget>[
-
-          Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.white
-                    )
-                  ),
-                  child: Center(
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(100))
-                      ),
-                      child: Center(
-                        child: Icon(Icons.add,
-                        size: 30,
-                        color: Color(0xFF0C375B),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-               ), 
-          SizedBox(height: 10.0,),
-          Text('Full Name',
-                    style: eLabelStyle,
-                    ),
+          // SizedBox(height: 10.0,),
+          // Text('Full Name',
+          //           style: eLabelStyle,
+          //           ),
           SizedBox(height: 10.0,),
           Container(
               width: MediaQuery.of(context).size.width,
@@ -113,11 +83,11 @@ class _RiderFormsState extends State<RiderForms> {
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: fullanme,
                 validator: (val) => val.isEmpty ? ' Please Put Your Restaurant Name' : null,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -125,7 +95,7 @@ class _RiderFormsState extends State<RiderForms> {
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.shop,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: 'Full Name',
                   hintStyle: eHintStyle,
@@ -133,22 +103,22 @@ class _RiderFormsState extends State<RiderForms> {
               ),
             ),
           SizedBox(height: 15.0,),
-          Text('Email',
-                    style: eLabelStyle,
-                    ),
-          SizedBox(height: 10.0,),
+          // Text('Email',
+          //           style: eLabelStyle,
+          //           ),
+          // SizedBox(height: 10.0,),
           Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: email,
                 validator: (val)=> emailValidate(email.text = val),
                     onSaved: (val) => email.text = val,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -156,28 +126,29 @@ class _RiderFormsState extends State<RiderForms> {
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.email,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: 'Email',
                   hintStyle: eHintStyle,
                 ),
               ),
             ),
-          Text('Address',
-                    style: eLabelStyle,
-                    ),
-          SizedBox(height: 10.0,),
+          // Text('Address',
+          //           style: eLabelStyle,
+          //           ),
+          // SizedBox(height: 10.0,),
+          SizedBox(height: 15.0,),
           Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: addressmadafa,
                 validator: (val) => val.isEmpty ? ' Please Put A Address Name' : null,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -185,7 +156,7 @@ class _RiderFormsState extends State<RiderForms> {
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.my_location,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: 'Address',
                   hintStyle: eHintStyle,
@@ -193,23 +164,23 @@ class _RiderFormsState extends State<RiderForms> {
               ),
             ),
           SizedBox(height: 15.0,),
-          Text('Contact Number',
-                    style: eLabelStyle,
-                    ),
-          SizedBox(height: 10.0,),
+          // Text('Contact Number',
+          //           style: eLabelStyle,
+          //           ),
+          // SizedBox(height: 10.0,),
           Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor:pureblue,
               keyboardType: TextInputType.number,
                 controller: contactnumber,
                 validator: (val)=> phoneValidate(contactnumber.text = val),
                 onSaved: (val) => contactnumber.text = val,    
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -217,7 +188,7 @@ class _RiderFormsState extends State<RiderForms> {
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.phone_android,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: '09**********',
                   hintStyle: eHintStyle,
@@ -225,10 +196,10 @@ class _RiderFormsState extends State<RiderForms> {
               ),
             ),
           SizedBox(height: 15.0,),
-          Text("Barangay",
-                    style: eLabelStyle,
-                    ),
-          SizedBox(height: 10.0,),
+          // Text("Barangay",
+          //           style: eLabelStyle,
+          //           ),
+          // SizedBox(height: 10.0,),
           Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
@@ -242,7 +213,7 @@ class _RiderFormsState extends State<RiderForms> {
                         children: <Widget>[
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Icon(Icons.place,color: Colors.white,)),
+                            child: Icon(Icons.place,color: pureblue)),
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
                             child:
@@ -253,11 +224,11 @@ class _RiderFormsState extends State<RiderForms> {
                                   hint: Text( "Select Barangay",
                                   style: TextStyle(
                                       
-                                      color: Colors.white,
+                                      color: pureblue,
                                       fontFamily: 'Gilroy-light'
                                     ),),
-                                  dropdownColor:  Color(0xFF0C375B),
-                                  icon: Icon(Icons.arrow_drop_down,color: Colors.white,),
+                                  dropdownColor:  Colors.white,
+                                  icon: Icon(Icons.arrow_drop_down,color: pureblue,),
                                   
                                   value: selectPerson,
                                   items: dataBarangay.map((item) {
@@ -265,7 +236,7 @@ class _RiderFormsState extends State<RiderForms> {
                                     child: Text(item['barangayName'],
                                     style: TextStyle(
                                       
-                                      color: Colors.white,
+                                      color: pureblue,
                                       fontFamily: 'Gilroy-light'
                                     ),
                                     ),
@@ -287,21 +258,21 @@ class _RiderFormsState extends State<RiderForms> {
               )
             ),
           SizedBox(height: 15.0,),
-          Text('License Number',
-                    style: eLabelStyle,
-                    ),
-          SizedBox(height: 10.0,),
+          // Text('License Number',
+          //           style: eLabelStyle,
+          //           ),
+          // SizedBox(height: 10.0,),
           Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: licensenumber,
                 validator: (val) => val.isEmpty ? ' Please Put A License Number' : null,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -309,7 +280,7 @@ class _RiderFormsState extends State<RiderForms> {
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.confirmation_number,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: 'License Number',
                   hintStyle: eHintStyle,
@@ -317,21 +288,21 @@ class _RiderFormsState extends State<RiderForms> {
               ),
             ),
           SizedBox(height: 15.0,),
-          Text('Plate Name',
-                    style: eLabelStyle,
-                    ),
-          SizedBox(height: 10.0,),
+          // Text('Plate Name',
+          //           style: eLabelStyle,
+          //           ),
+          // SizedBox(height: 10.0,),
           Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
-                cursorColor: Colors.white,
+                cursorColor: pureblue,
                 controller: plateNumber,
                 validator: (val) => val.isEmpty ? ' Please Put A Plate Number' : null,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: pureblue,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -339,7 +310,7 @@ class _RiderFormsState extends State<RiderForms> {
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     Icons.details,
-                    color: Colors.white,
+                    color: pureblue,
                   ),
                   hintText: 'Plate Number',
                   hintStyle: eHintStyle,
@@ -347,30 +318,69 @@ class _RiderFormsState extends State<RiderForms> {
               ),
             ),
           SizedBox(height: 15.0,),
-         Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(vertical: 25.0),
-                child: RaisedButton(
-                  onPressed: (){
+        //  Container(
+        //         width: MediaQuery.of(context).size.width,
+        //         padding: EdgeInsets.symmetric(vertical: 25.0),
+        //         child: RaisedButton(
+        //           onPressed: (){
 
-                 saveForm();
-                  },
-                  elevation: 5.0,
-                  padding: EdgeInsets.all(8.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+        //          saveForm();
+        //           },
+        //           elevation: 5.0,
+        //           padding: EdgeInsets.all(8.0),
+        //           shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(30.0),
+        //           ),
+        //           color: Colors.white,
+        //           child: Text(  loading ? 'Loading....' : 'Register',
+        //           style: TextStyle(
+        //             color: Color(0xFF527DAA),
+        //             letterSpacing: 1.5,
+        //             fontSize: 16.0,
+        //             fontWeight: FontWeight.bold,
+        //             fontFamily: 'Gilroy-light',
+        //           ),),
+        //           ),
+        //       ),  
+        Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>
+                    [
+                      Align(
+                        alignment: Alignment.topRight,
+                          child: GestureDetector(
+                            onTap: 
+                            // (){
+                            //   Navigator.pushReplacement(  
+                            // context,
+                            // new MaterialPageRoute(
+                            //     builder: (context) => AddmenuAdmin()));
+                            // },
+                            saveForm,
+                            child: Container(
+                              height: 50,
+                              width: 110,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: Center(
+                                child: Text( loading ? '....' : 'Register <',
+                                style: TextStyle(
+                                  fontFamily: 'Gilroy-ExtraBold',
+                                  fontSize: 18,
+                                  color: Colors.white
+                                ),
+                                ),
+                              ),
+                            
+                          ),
+                          ),
+                      ),
+                    ],
                   ),
-                  color: Colors.white,
-                  child: Text(  loading ? 'Loading....' : 'Register',
-                  style: TextStyle(
-                    color: Color(0xFF527DAA),
-                    letterSpacing: 1.5,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Gilroy-light',
-                  ),),
-                  ),
-              ),  
+                       ),
         ],
       ),
       
@@ -419,7 +429,6 @@ class _RiderFormsState extends State<RiderForms> {
     loading = false;
   });
   }
-
   void _showDistictWarning(){
   showDialog(
     context: context,
