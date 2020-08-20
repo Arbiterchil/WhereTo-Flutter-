@@ -6,6 +6,7 @@ import 'package:WhereTo/AnCustom/admin_help.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class AdminDash extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _AdminDashState extends State<AdminDash> {
 
   final scaffoldKey = new GlobalKey<ScaffoldState>(); 
 
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,7 @@ class _AdminDashState extends State<AdminDash> {
                       ),
                       ),
                     SizedBox(height: 10,),
+                    
                     Padding(
                       padding: const EdgeInsets.only(left: 10,right: 10,top: 10),
                         child: Row(
@@ -178,8 +180,8 @@ class _AdminDashState extends State<AdminDash> {
                 new MaterialPageRoute(builder: (context) => ViewAllImageId()));
                             },
                             child: Container(
-                              height: 100,
-                            width: 100,
+                              height: 80,
+                            width: 80,
                             decoration: BoxDecoration(
                               color: pureblue,
                               shape: BoxShape.circle,
@@ -195,39 +197,18 @@ class _AdminDashState extends State<AdminDash> {
                             child: Center(
                               child: Icon(
                                 Icons.image,
-                                size: 50,
+                                size: 30,
                                 color: Colors.white,
                               ),
                             )
                             ),
                           ),
-
-                          
                           
                           ],
                         ),
                       
                       ),
-                       Padding(
-                      padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
-                      child: Container(
-                        height: 300,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: pureblue,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          //  boxShadow: [
-                          //        BoxShadow(
-                          //          color: Color(0xfff2f2f2),
-                          //          spreadRadius: 3.3,
-                          //          blurRadius: 3.3
-                          //        ),
-                          //      ],
-                        ),
-                     
-                      ),
-                      ),
-
+                    
                     
 
                 ],

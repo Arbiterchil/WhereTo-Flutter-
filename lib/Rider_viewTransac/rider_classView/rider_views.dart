@@ -8,6 +8,7 @@ import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_reponse.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_stream.dart';
 import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 
 class RiderViewing extends StatefulWidget {
@@ -64,7 +65,7 @@ var constant;
                   height: 25.0,
                   width: 25.0,
                   child:  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    valueColor: AlwaysStoppedAnimation<Color>(pureblue),
                     strokeWidth: 4.0,
                   ),
                 ),

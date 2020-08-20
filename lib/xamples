@@ -513,3 +513,101 @@
 //                  ), 
 //        ),
 //     );
+
+//           SizedBox(height: 20.0,),
+      //           Container(
+      //             height: 500,
+      //             width: MediaQuery.of(context).size.width,
+      //             child: FutureBuilder(
+      //   builder: ( context,  snapshot) {
+      //     if (snapshot.hasData == null) {
+      //       return Center(child: Text("Getting Images Please Wait.",
+      //       style: TextStyle(
+      //         color: pureblue,
+      //         fontFamily: 'Gilroy-ExtraBold',
+      //         fontSize: 35
+      //       ),),);
+      //     }else if (snapshot.data != null) {
+      //         Map<String ,String > url = {};
+      //         Map<String ,String > ushit = {};
+      //         List<dynamic> dataurls = [];
+      //         List result = [];
+      //         List<Resources>resources = snapshot.data;
+            
+
+      //         resources.forEach((element) { 
+      //           url = {
+
+      //             "link": element.secureUrl,
+      //             "format" : element.publicId+"."+element.format,
+      //             "name": element.publicId  
+      //           };
+      //           dataurls.add(url);
+      //         });
+      //         for(int i =0 ; i < dataurls.length; i++){
+      //           // result.add();
+      //           if(dataurls[i]['name'].toString().startsWith("image_cropper")){
+      //               result.add(
+      //                 {
+      //                   'link': dataurls[i]['link'],
+      //                   'name': dataurls[i]['name']
+      //                 }
+      //               );
+      //           }
+      //         }
+      //       ushit.forEach((key, value) {
+      //           result.add(
+      //             {
+      //               'link': value,
+      //               // 'format': value,
+      //               'name': value
+      //             }
+      //           );
+      //       });
+      //       print(result);
+      //         return Padding(
+      //           padding: const EdgeInsets.only(left: 20,right: 20),
+      //           child: GridView.count(
+      //             crossAxisCount: 2,
+      //             childAspectRatio: 0.74,
+      //             shrinkWrap: false,
+      //             children: result.map((i) {
+      //               return GestureDetector(
+      //                 onTap: () {
+      //                   getThis = i['link'];
+      //                   _showDial(i['link']);
+                        
+      //                   print(getThis);
+                      
+      //                 },
+      //                 child: Card(
+      //                   elevation: 5.0,
+      //                   child: Column(
+      //                     children: <Widget>[
+      //                       new ClipRRect(
+      //                         borderRadius: BorderRadius.circular(4.0),
+      //                         child: Hero(
+      //                           tag: i['link'],
+      //                           child: Image.network(
+      //                             i['link'],
+      //                             width: MediaQuery.of(context).size.width,
+      //                             height: 208,
+      //                             fit: BoxFit.cover,
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ),
+      //               );
+      //             }).toList(),
+      //           ),
+      //         );
+      //       } 
+      //     else {
+      //       return Center(child: CircularProgressIndicator());
+      //     }
+      //   },
+      //   future: getPhotos(),
+      // ), 
+      //           ),

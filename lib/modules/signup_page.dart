@@ -40,6 +40,7 @@ class _SignupPageState extends State<SignupPage> {
   String stringPath;
   String selectPerson;
   var idbararangSaika;
+  var thimagelink;
   List<MyChoice> picks = [
     MyChoice(numberpick: 1, pickchoice: "Customer"),
     MyChoice(numberpick: 2, pickchoice: "Rider")
@@ -513,15 +514,18 @@ class _SignupPageState extends State<SignupPage> {
 
     if(_idPickerImage != null){
 
-      return Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.all(Radius.circular(10),
-        ),
-        ),
-        child: Image.file(
-            _idPickerImage,
-            fit: BoxFit.cover,
+      return Padding(
+        padding: const EdgeInsets.only(left: 20,right: 20),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.all(Radius.circular(10),
+          ),
+          ),
+          child: Image.file(
+              _idPickerImage,
+              fit: BoxFit.cover,
+          ),
         ),
       );
     }else{
@@ -575,7 +579,7 @@ class _SignupPageState extends State<SignupPage> {
   }
 
 
-  Future uploadImagtoCloud() async{
+  void uploadImagtoCloud() async{
     var viewthis = path.basename(_idPickerImage.path);
     CloudinaryClient client = new CloudinaryClient(
       "661529868759591",
@@ -583,8 +587,8 @@ class _SignupPageState extends State<SignupPage> {
       "ddoiozfmr");
     await client.uploadImage( _idPickerImage.path ,filename: viewthis) .then((result){
          stringPath = result.secure_url;
-             print(stringPath);
-      
+          print(stringPath);
+          thimagelink = stringPath;
       })
       .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
   }
@@ -614,7 +618,16 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ),
                 SizedBox(height: 20,),
-                // 
+                 Text(
+                            'Valid Id or Student Id',
+                            style: TextStyle(
+                              color: pureblue,
+                              fontFamily: 'Gilroy-ExtraBold',
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 10,),
                   _getImage(),
                 SizedBox(height: 15,),
                 Container(
@@ -691,10 +704,8 @@ class _SignupPageState extends State<SignupPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 40),
                           child: GestureDetector(
-                            onTap:(){
-                              uploadImagtoCloud();
-                            },
-                            // _signingIn,
+                            onTap:
+                            _signingIn,
                             child: Container(
                               height: 50,
                               width: 110,
@@ -727,7 +738,6 @@ class _SignupPageState extends State<SignupPage> {
        onWillPop: () async => false),
     );
   }
-
   void _signingIn() async {
     setState(() {
       loading = true;
@@ -736,11 +746,13 @@ class _SignupPageState extends State<SignupPage> {
     bool value = true;
 
     if (selectPerson == null) {
-      print("Select Barangay");
-      _showDistictWarning();
+      _showDistictWarning("Select Barangay");
+    } else if(_idPickerImage == null){
+       _showDistictWarning("Please put you Valid ID or Student ID");
     } else {
       if (formkey.currentState.validate()) {
         formkey.currentState.save();
+         
         var data = {
           'name': fulname.text,
           'email': email.text,
@@ -751,22 +763,41 @@ class _SignupPageState extends State<SignupPage> {
           
         };
         var res = await ApiCall().postData(data, '/register');
-
+        var body = json.decode(res.body);
         if (res.statusCode == 200) {
-          var body = json.decode(res.body);
           if (body['success']) {
+           var viewthis = path.basename(_idPickerImage.path);
+    CloudinaryClient client = new CloudinaryClient(
+      "661529868759591",
+      "6HJCxVBM8oUap_rIjqc24kKfR5w",
+      "ddoiozfmr");
+    await client.uploadImage( _idPickerImage.path ,filename: viewthis) .then((result){
+         stringPath = result.secure_url;
+          print(stringPath);
+          thimagelink = stringPath;
+      })
+      .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
+            var valididData = {
+          "userId": body['user']['id'], 
+          "imagePath": thimagelink
+            };
+            var valid = await ApiCall().validId(valididData, '/submitVerification');
+            print(valid.body);
+
             SharedPreferences localStorage =
                 await SharedPreferences.getInstance();
             localStorage.setBool('check', value);
             localStorage.setString('token', body['token']);
             localStorage.setString('user', json.encode(body['user']));
-            uploadImagtoCloud();
+            
             Navigator.pushReplacement(context,
                 new MaterialPageRoute(builder: (context) => HomePage()));
           } else {
-            _showDial();
+           
             throw Exception('Failed to Save');
           }
+        }else{
+           _showDial(body);
         }
       }
     }
@@ -776,9 +807,9 @@ class _SignupPageState extends State<SignupPage> {
     });
   }
 
-  void _showDial() {
+  void _showDial(String message) {
     showDialog(
-      context: context,
+    context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
@@ -787,14 +818,7 @@ class _SignupPageState extends State<SignupPage> {
           ),
           elevation: 0,
           backgroundColor: Colors.transparent,
-          child: mCustom(context),
-        );
-      },
-    );
-  }
-
-  mCustom(BuildContext context) {
-    return Container(
+          child:Container(
       height: 300.0,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -832,12 +856,6 @@ class _SignupPageState extends State<SignupPage> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(45),
-
-                      // border: Border.all(
-                      //   color: Colors.white,
-                      //   style: BorderStyle.solid,
-                      //   width: 2.0,
-                      // ),
                       image: DecorationImage(
                         image: AssetImage("asset/img/logo.png"),
                         fit: BoxFit.cover,
@@ -850,7 +868,7 @@ class _SignupPageState extends State<SignupPage> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
-                "Please check the fields Or Phone Number already Exists.",
+               message,
                 style: TextStyle(
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,
@@ -886,10 +904,13 @@ class _SignupPageState extends State<SignupPage> {
           ],
         ),
       ),
+    ),
+        );
+      },
     );
   }
-
-  void _showDistictWarning() {
+  
+  void _showDistictWarning(String meesage) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -900,14 +921,7 @@ class _SignupPageState extends State<SignupPage> {
           ),
           elevation: 0,
           backgroundColor: Colors.transparent,
-          child: mCustomDistictWarning(context),
-        );
-      },
-    );
-  }
-
-  mCustomDistictWarning(BuildContext context) {
-    return Container(
+          child:Container(
       height: 300.0,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -963,7 +977,7 @@ class _SignupPageState extends State<SignupPage> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
-                "Please Select a District.",
+                meesage,
                 style: TextStyle(
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,
@@ -999,6 +1013,9 @@ class _SignupPageState extends State<SignupPage> {
           ],
         ),
       ),
+    ),
+        );
+      },
     );
   }
 }

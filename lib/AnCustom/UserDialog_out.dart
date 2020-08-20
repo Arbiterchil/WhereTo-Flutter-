@@ -109,14 +109,14 @@ var userData;
                 color: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 onPressed: () async{
-                  var res = await ApiCall().getData('/logout');
-                            var body = json.decode(res.body);
+                  // var res = await ApiCall().getData('/logout');
+                  //           var body = json.decode(res.body);
                            
                                SharedPreferences localStorage = await SharedPreferences.getInstance();
                                localStorage.remove('user');
                                localStorage.remove('token');
                                localStorage.remove('menuplustrans');
-                               print(body);
+                              //  print(body);
                                 Navigator.pushAndRemoveUntil(
                               context,
                               new MaterialPageRoute(

@@ -100,9 +100,7 @@ class RiderApi {
       List<RiderComments> comment = [];
       for(var body in body){
           RiderComments riderComments = RiderComments(
-
             comment: body['comment']
-
           );
 
           comment.add(riderComments);

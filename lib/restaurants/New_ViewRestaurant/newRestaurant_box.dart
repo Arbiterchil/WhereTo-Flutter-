@@ -58,21 +58,31 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(widget.restaurantName,
-                        style: TextStyle(
-                            color:Colors.white,
-                                fontWeight: FontWeight.bold,
-                                    fontSize: 14.0,
-                                    fontFamily: 'Gilroy-ExtraBold' 
-                        ),),
+                        Flexible(
+                          child: Container(
+                            child: Text(widget.restaurantName,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color:Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                        fontSize: 14.0,
+                                        fontFamily: 'Gilroy-ExtraBold' 
+                            ),),
+                          ),
+                        ),
                         SizedBox(height: 5.0,),
-                        Text(widget.address,
-                        style: TextStyle(
-                            color:Colors.white,
-                                fontWeight: FontWeight.normal,
-                                    fontSize: 8.0,
-                                    fontFamily: 'Gilroy-light' 
-                        ),),
+                        Flexible(
+                          child: Container(
+                            child: Text(widget.address,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color:Colors.white,
+                                    fontWeight: FontWeight.normal,
+                                        fontSize: 8.0,
+                                        fontFamily: 'Gilroy-light' 
+                            ),),
+                          ),
+                        ),
                       ],
                     ),
                   ),

@@ -15,10 +15,32 @@ class ApiCall{
     headers: _setHeaders()
     );
   }
+
+  postVerify(api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
   
+  getunverified(api) async {
+    var fullurl = url+api;
+    return http.get(
+    fullurl,
+    headers: _setHeaders()
+    );
+  }
+
+  validId(data ,api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
 
   addRider(data ,api) async {
-    var fullurl = url+api+ await _getToken();
+    var fullurl = url+api;
     return http.post(fullurl,
     body: jsonEncode(data),
     headers: _setHeaders()
@@ -26,14 +48,14 @@ class ApiCall{
   }  
 
   addRestaurant(data ,api) async {
-    var fullurl = url+api+ await _getToken();
+    var fullurl = url+api;
     return http.post(fullurl,
     body: jsonEncode(data),
     headers: _setHeaders()
     );
   }
   addMenu(data ,api) async {
-    var fullurl = url+api+ await _getToken();
+    var fullurl = url+api;
     return http.post(fullurl,
     body: jsonEncode(data),
     headers: _setHeaders()
@@ -41,7 +63,7 @@ class ApiCall{
   }
 
   playerIdSave(data ,api) async {
-    var fullurl = url+api+ await _getToken();
+    var fullurl = url+api;
     return http.post(fullurl,
     body: jsonEncode(data),
     headers: _setHeaders()

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/Transaction/newView_MyOrder.dart';
 import 'package:WhereTo/modules/Tab_naviUser.dart';
+import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:WhereTo/styletext.dart';
@@ -41,10 +42,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // configSignal();
+    this.configSignal();
     super.initState();
   }
-
+String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
+ var data;
 void configSignal() async {
      await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
@@ -52,7 +54,27 @@ void configSignal() async {
 
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();
-   await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
+   await OneSignal.shared.sendTags({'UR': 'TRUE'});
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared
+        .setNotificationReceivedHandler((OSNotification notification){
+      data = notification.payload.additionalData;
+      setState(() {
+        //  constant = notification.payload.additionalData;
+        
+        setState(() {
+          if(data != null){
+            if(data["force"] == "penalty"){
+              print(data['force'].toString());
+                _showDone(meesages.toString());
+            }
+             
+          }
+        });
+        
+      });
+    });                            
 }
 
 
@@ -139,4 +161,104 @@ void onTabTapped(int index) {
   //     ),
   //   );
   // }
+
+void _showDone(String message){
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context){
+      return Dialog(
+             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child:Container(
+        height: 300.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+        color: Colors.white),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 150.0,
+                    ),
+                    Container(
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        color: pureblue,
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
+                         ),
+
+                    ),
+                    Positioned(
+                      top: 50.0,
+                      left: 94.0,
+                      child: Container(
+                        height: 90,
+                        width: 90,
+                        padding: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(45),
+                          image: DecorationImage(
+                            image: AssetImage("asset/img/logo.png"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(message,
+                  style: TextStyle(
+                    color: Color(0xFF0C375B),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 11.0,
+                    fontFamily: 'Gilroy-light'
+                  ),
+                  
+                  ),),
+                  SizedBox(height: 25.0,),
+                  Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[         
+                RaisedButton(
+                  color:Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () async {
+                      SharedPreferences localStorage = await SharedPreferences.getInstance();
+                               localStorage.remove('user');
+                               localStorage.remove('token');
+                               localStorage.remove('menuplustrans');
+                              //  print(body);
+                                Navigator.pushAndRemoveUntil(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
+                      },   
+                      
+                  child: Text ( "OK", style :TextStyle(
+                  color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+                  ],
+                ), 
+              ],
+          ),
+        ),
+      ),
+    ); 
+    },);
+}
+
 }

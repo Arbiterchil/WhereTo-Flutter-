@@ -4,6 +4,7 @@ import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/designbuttons.dart';
 
 import 'package:WhereTo/modules/OtherFeatures/trans_port.dart';
+import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/restaurants/searchRestaurant.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:location/location.dart';
@@ -28,6 +29,7 @@ class _Profile extends State<Profile> {
   var userData;
   var constant;
   bool casting;
+   
   String getRestaurant;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
    TextEditingController search = new TextEditingController();
@@ -76,65 +78,70 @@ class _Profile extends State<Profile> {
 //      }
 //    }
 //  }
-
-
-
-//   void configSignal() async {
-//     var data;
-//     await OneSignal.shared.setLocationShared(true);
-//     await OneSignal.shared.promptLocationPermission();
-//     await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-//     OneSignal.shared
-//         .setInFocusDisplayType(OSNotificationDisplayType.notification);
-//     OneSignal.shared
-//         .setNotificationReceivedHandler((OSNotification notification) {
-//       setState(() {
-//         //  constant = notification.payload.additionalData;
-//         data =notification.payload.additionalData;
+  
+  
+  // void configSignal() async {
+  //   OneSignal.shared
+  //       .setInFocusDisplayType(OSNotificationDisplayType.notification);
+  //   OneSignal.shared
+  //       .setNotificationReceivedHandler((OSNotification notification){
+  //     setState(() {
+  //       //  constant = notification.payload.additionalData;
+  //       data = notification.payload.additionalData;
+  //       setState(() {
+  //         if(data != null){
+  //           if(data['force'].toString() == 'penalty'){
+  //               _showDone(meesages.toString());
+  //           }
+             
+  //         }
+  //       });
         
-//       });
-//     });
-//     await OneSignal.shared.setSubscription(true);
-//     var tags = await OneSignal.shared.getTags();
-//     var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
-//     var status = await OneSignal.shared.getPermissionSubscriptionState();
+  //     });
+  //   });
+  //   // await OneSignal.shared.setSubscription(true);
+  //   // var tags = await OneSignal.shared.getTags();
+  //   // var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
+  //   // var status = await OneSignal.shared.getPermissionSubscriptionState();
 
-//     String url = 'https://onesignal.com/api/v1/notifications';
-//     var playerId = status.subscriptionStatus.userId;
-//     var idChil = "1106b49d-60f0-435a-b44f-5d2f4849cb38";
-//     var numb = "3";
-//     var contents = {
-//       "include_player_ids": [idChil,playerId],
-//       "include_segments": ["Users Notif"],
-//       "excluded_segments": [],
-//       "contents": {"en": "This is a test."},
+  //   // String url = 'https://onesignal.com/api/v1/notifications';
+  //   // var playerId = status.subscriptionStatus.userId;
+  //   // var idChil = "1106b49d-60f0-435a-b44f-5d2f4849cb38";
+  //   // var numb = "3";
+  //   // var contents = {
+  //   //   "include_player_ids": [idChil,playerId],
+  //   //   "include_segments": ["Users Notif"],
+  //   //   "excluded_segments": [],
+  //   //   "contents": {"en": "This is a test."},
 
-//       "data": {"id": numb},
+  //   //   "data": {"id": numb},
 
-//       "headings": {"en": "Erchil Testings"},
-//       "filter": [
-//         {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
-//       ],
-//       "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-//     };
-//     Map<String, String> headers = {
-//       'Content-Type': 'application/json',
-//       'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-//     };
-//     var repo =
-//         await http.post(url, headers: headers, body: json.encode(contents));
+  //   //   "headings": {"en": "Erchil Testings"},
+  //   //   "filter": [
+  //   //     {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+  //   //   ],
+  //   //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+  //   // };
+  //   // Map<String, String> headers = {
+  //   //   'Content-Type': 'application/json',
+  //   //   'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+  //   // };
+  //   // var repo =
+  //   //     await http.post(url, headers: headers, body: json.encode(contents));
 
-//     // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
-//     print(data.toString());
-//     print(tags);
-//     print(sendtag);
-//     print(playerId);
-//     print(repo.body);
+  //   // // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
+  //   // print(data.toString());
+  //   // print(tags);
+  //   // print(sendtag);
+  //   // print(playerId);
+  //   // print(repo.body);
   
     
-//   }
+  // }
 
 
+
+   
 
   @override
   Widget build(BuildContext context) {
@@ -259,6 +266,10 @@ class _Profile extends State<Profile> {
     
   );
   }
+
+  
+ 
+
 }
 
 class NCard extends StatelessWidget {
