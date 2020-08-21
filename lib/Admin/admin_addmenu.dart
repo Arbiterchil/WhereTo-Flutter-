@@ -362,7 +362,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                                 "menuName" : menuname.text,
                                 "description" : decription.text,
                                 "price":price.text,
-                                "imagePath": "https://res.cloudinary.com/ddoiozfmr/image/upload/Images/xamples/${menuname.text}.jpg",
+                                "imagePath": "https://res.cloudinary.com/ddoiozfmr/image/upload/c_thumb,w_200,g_face/Images/xamples/${menuname.text}.jpg",
                                 "category": resultant
                                 }]
                                 };

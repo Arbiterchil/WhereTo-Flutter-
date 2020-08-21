@@ -39,7 +39,6 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
     super.initState();
     this.configSignal();
   }
-
   void configSignal() async {
      await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
@@ -96,10 +95,6 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
             BottomNavigationBarItem(
               icon: new Icon(Icons.motorcycle),
               title: new Text('Add Rider'),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.mail_outline),
-              title: new Text('Monitoring'),
             ),
         ],
         type: BottomNavigationBarType.fixed,

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/Transaction/newView_MyOrder.dart';
+import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/Tab_naviUser.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
@@ -42,11 +43,26 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    this.getShared();
     this.configSignal();
+    this.postuserId();
     super.initState();
   }
 String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
  var data;
+ var checkbool;
+ void getShared() async {
+
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var userJson = localStorage.getString('user');
+      checkbool = localStorage.getBool('check'); 
+      var user = json.decode(userJson);
+      setState(() {
+        userData = user;
+      });
+  
+
+ }
 void configSignal() async {
      await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
@@ -76,7 +92,17 @@ void configSignal() async {
       });
     });                            
 }
-
+void postuserId() async {
+   var status = await OneSignal.shared.getPermissionSubscriptionState();
+    var playerId = status.subscriptionStatus.userId;
+    var data =
+    {
+      "userId" : userData['id'].toString(),
+      "playerId" : playerId
+    };
+    var responses = await ApiCall().playerIdSave(data,'/assignPlayerId');
+    print(responses);
+}
 
   final List<Widget> _child = 
   [

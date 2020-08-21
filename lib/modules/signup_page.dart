@@ -622,13 +622,15 @@ class _SignupPageState extends State<SignupPage> {
                             'Valid Id or Student Id',
                             style: TextStyle(
                               color: pureblue,
-                              fontFamily: 'Gilroy-ExtraBold',
+                              fontFamily: 'Gilroy-light',
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           SizedBox(height: 10,),
+                          
                   _getImage(),
+
                 SizedBox(height: 15,),
                 Container(
                   width: MediaQuery.of(context).size.width,

@@ -354,12 +354,19 @@ void _login() async{
   
     var body = json.decode(res.body);
     if(body['success'] == true){
-       SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var bods = await ApiCall().logVerify('/isAccountSuspended/${body['user']['id']}');
+      if(bods.body == "true"){
+        print('can\'t login');
+
+         _showDial("This Account is Suspended Due to Violating our Rules.");
+
+      }else{
+        print('can go in');
+         SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
       print(body);
-      
           if(body['user']['userType'] == 0){
         print('Customer');
         Navigator.pushReplacement(
@@ -379,6 +386,10 @@ void _login() async{
         new MaterialPageRoute(
             builder: (context) => RiderProfile()));
       }
+      }
+    
+
+      
       // var userJson = localStorage.getString('user'); 
       // var user = json.decode(userJson);
       // setState(() {
@@ -394,9 +405,9 @@ void _login() async{
       //       PathWay(
       //         getStringthis: hens,
       //       )));
-      print('success Login');
+      // print('success Login');
     }else{
-      _showDial();
+      _showDial("Password or Contact Number is Wrong.");
     }
    
    
@@ -415,7 +426,7 @@ void _login() async{
 
   }
 
-void _showDial(){
+void _showDial(String message){
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -425,13 +436,7 @@ void _showDial(){
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: mCustom(context),
-    ); 
-    },);
-}
- mCustom(BuildContext context){
-
-       return Container(
+      child: Container(
         height: 300.0,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
@@ -470,12 +475,6 @@ void _showDial(){
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(45),
-                          
-                          // border: Border.all(
-                          //   color: Colors.white,
-                          //   style: BorderStyle.solid,
-                          //   width: 2.0,
-                          // ),
                           image: DecorationImage(
                             image: AssetImage("asset/img/logo.png"),
                             fit: BoxFit.cover,
@@ -487,7 +486,7 @@ void _showDial(){
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: Text("Contact Number Or Password is Wrong.",
+                  child: Text(message,
                   style: TextStyle(
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,
@@ -519,9 +518,9 @@ void _showDial(){
               ],
           ),
         ),
-      );
-
-
-    }
+      ),
+    ); 
+    },);
+}
 }
 

@@ -610,7 +610,7 @@ setState(() {
                 "closingTime": closetimeString.toString(),
                 "closeOn": datesofdays.toString(),
                 "isFeatured": 1,
-                "imagePath": "https://res.cloudinary.com/ddoiozfmr/image/upload/Images/${retaurantname.text}.jpg"
+                "imagePath": "https://res.cloudinary.com/ddoiozfmr/image/upload/c_thumb,w_200,g_face/Images/${retaurantname.text}.jpg"
                 };
 
     var response = await ApiCall().addRestaurant(data, '/addRestaurant');

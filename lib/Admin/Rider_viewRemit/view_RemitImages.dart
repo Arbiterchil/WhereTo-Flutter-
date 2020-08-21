@@ -1,68 +1,34 @@
-import 'dart:convert';
+
 import 'dart:ui';
 
-import 'package:WhereTo/Admin/User_Verification/user_getterres.dart';
-import 'package:WhereTo/Admin/User_Verification/user_stream.dart';
-import 'package:WhereTo/Admin/User_Verification/user_verifyclass.dart';
+import 'package:WhereTo/Admin/Rider_viewRemit/view_remit.dart';
+import 'package:WhereTo/Admin/Rider_viewRemit/view_remitStream.dart';
+import 'package:WhereTo/Admin/Rider_viewRemit/view_responseRem.dart';
 import 'package:WhereTo/Admin/admin_dash.dart';
-import 'package:WhereTo/Admin/navbottom_admin.dart';
-import 'package:WhereTo/Admin/r_source.dart';
-import 'package:WhereTo/Admin/view_imageda.dart';
-import 'package:WhereTo/Transaction/Data/stream.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/modules/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:http/http.dart' as http;
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../styletext.dart';
-class ViewAllImageId extends StatefulWidget {
+import '../../styletext.dart';
+import '../navbottom_admin.dart';
 
+class RemitViewImagesAdmin extends StatefulWidget {
   @override
-  _ViewAllImageIdState createState() => _ViewAllImageIdState();
+  _RemitViewImagesAdminState createState() => _RemitViewImagesAdminState();
 }
+class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
 
 
-class _ViewAllImageIdState extends State<ViewAllImageId> {
-  List url = List();
-  var getThis;
-  var sample;
-  bool loading = true;
-  bool barrier = false;
-  // var consti = "https://661529868759591:6HJCxVBM8oUap_rIjqc24kKfR5w@api.cloudinary.com/v1_1/ddoiozfmr/resources/image/upload";
-  
-  // Future<List<Resources>>  getPhotos() async {
-  //   return await http.get(consti).then((response) {
-  //     Data an = Data.fromJson(json.decode(response.body.toString()));
-  //     return an.resources;
-     
-  //   });
-
-  
-  // }
-  
   @override
   void initState() {
-      userVerifying..getViewUnverified();
+    remittanceStream..getViewRemits();
     super.initState();
   }
-
-  @override
-  void dispose() {
-    userVerifying..drainStream();
-    super.dispose();
-   
-  }
-
-  var constant;
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: WillPopScope(
-        onWillPop: () async => false,
         child: SafeArea(
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
@@ -81,8 +47,10 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                             padding: const EdgeInsets.only(right: 40),
                             child: GestureDetector(
                               onTap: () =>
-                                Navigator.pushReplacement(context,
-                           new MaterialPageRoute(builder: (context) => AdminDash())),
+                                Navigator.pushAndRemoveUntil(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => AdminDash()),ModalRoute.withName('/')),
                               child: Container(
                                 height: 50,
                                 width: 110,
@@ -108,13 +76,13 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                 ),
                  ),
                  SizedBox(height: 20.0,),
-                Container(
+                  Container(
                     height: 600,
                     width: MediaQuery.of(context).size.width,
-                    child: StreamBuilder<UserVerified>(
+                    child: StreamBuilder<RemitResponse>(
 
-                      stream: userVerifying.subject.stream,
-                      builder: (context, AsyncSnapshot<UserVerified> asyncSnapshot){
+                      stream: remittanceStream.subject.stream,
+                      builder: (context, AsyncSnapshot<RemitResponse> asyncSnapshot){
                         if(asyncSnapshot.hasData){
                             if(asyncSnapshot.data.error !=null && asyncSnapshot.data.error.length > 0){
                             return _error(asyncSnapshot.data.error);
@@ -134,13 +102,12 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
       
               ],
             ),
-          )),
-      ),
+          ),
+        ),
+      onWillPop:() async => false),
       
     );
-
   }
-
    Widget _load(){
       return Center(
         child: Column(
@@ -160,7 +127,7 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
         ),
       );
     }
-     Widget _error(String error){
+    Widget _error(String error){
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -170,9 +137,9 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
             ),
           );
 }
-  Widget _views(UserVerified userVerified){
+ Widget _views(RemitResponse remitResponse){
 
-      List<Unverified> un = userVerified.userView;
+      List<ViewRemit> un = remitResponse.viewRemit;
 
       if(un.length == 0 ){
           return Center(
@@ -187,7 +154,6 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
             ),
           );
         }else{
-
             return Padding(
               padding: const EdgeInsets.only(left: 20,right: 20),
               child:  new StaggeredGridView.countBuilder(
@@ -198,7 +164,7 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                    
                   return   GestureDetector(
                     onTap:  () {
-                      _showDial(un[index].imagePath,un[index].userId,un[index].name);
+                      _showDial(un[index].imagePath,un[index].riderId,un[index].name);
                       }, 
                     child: Container(
                       decoration: BoxDecoration(
@@ -224,87 +190,11 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                 staggeredTileBuilder: (index){
                   return new StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
                 },),
-              // child: GridView.builder(
-              //   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              //   shrinkWrap: false,
-              //   itemCount: un.length,
-              //   itemBuilder: (context, index){
-
-              //     return GestureDetector(
-              //       onTap: (){},
-              //       // child: Container(
-              //       //   child: Image.network(un[index].imagePath,
-              //       //   fit: BoxFit.cover,),
-              //       // ),
-              //     child: Container(
-              //       height: 215,
-                    
-              //       child: Card(
-              //             elevation: 5.0,
-              //             child: Column(
-              //               children: <Widget>[
-              //                 new ClipRRect(
-              //                   borderRadius: BorderRadius.circular(4.0),
-              //                   child: Hero(
-              //                     tag: un[index].imagePath,
-              //                     child: Image.network(
-              //                       un[index].imagePath,
-              //                       width: MediaQuery.of(context).size.width,
-              //                       height: 208,
-              //                       fit: BoxFit.cover,
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //       ),
-              //     ),
-              //     );
-
-              //   },)
               );
 
 
         }
-
-  }
-
-  void sendNotiftoUserScammer(String id) async{
-
-    var bods = await ApiCall().getDeviceUserScammer('/getUserDeviceId/${id.toString()}');
-    var body = json.decode(bods.body);
-    print(body[0]['deviceId']);
-    String url = 'https://onesignal.com/api/v1/notifications';
-    var contents = {
-      "include_player_ids": [body[0]['deviceId']],
-      "include_segments": ["Users Notif"],
-      "excluded_segments": [],
-      "contents": {"en": "This is a a Fucking test"},
-      "data": 
-        {
-        "force": "penalty"
-        },
-      "headings": {"en": "Admin Notice:"},
-      "filter": [
-        {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
-      ],
-      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-    };
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-    };
-    // var repo =
-    await http.post(url, headers: headers, body: json.encode(contents));
-     OneSignal.shared
-        .setInFocusDisplayType(OSNotificationDisplayType.notification);
-    OneSignal.shared
-        .setNotificationReceivedHandler((OSNotification notification) {
-                constant =notification.payload.additionalData; 
-                print(constant['force']);
-    });
-    
-  }
+ }
 
   void _showDial(String resources, int id ,String name){
 
@@ -334,7 +224,7 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
 
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 290,
+                  height: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
@@ -408,7 +298,7 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                               child: GestureDetector(
                                 onTap: () {
                                   
-                                     ApiCall().postVerify('/verifyUser/${id.toString()}');
+                                     ApiCall().postVerify('/approveRemittance/${id.toString()}');
                                       print(id.toString());
                                    Navigator.pushReplacement(
                                   context,
@@ -435,43 +325,6 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                               ),
                               ),
                           ),
-                          
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 5 ,left: 5),
-                              child: GestureDetector(
-                                onTap: () {
-                                  
-                                  
-                                     sendNotiftoUserScammer(id.toString());
-                                        ApiCall().susVerify('/suspendAccount/${id.toString()}');
-                                      print(id.toString());
-                                   Navigator.pushReplacement(
-                                  context,
-                                  new MaterialPageRoute(
-                                      builder: (context) => AdminHomeDash()));
-                                },
-                                child: Container(
-                                  height: 50,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    color: pureblue,
-                                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                                  ),
-                                  child: Center(
-                                    child: Text(' Suspend >',
-                                    style: TextStyle(
-                                      fontFamily: 'Gilroy-ExtraBold',
-                                      fontSize: 12,
-                                      color: Colors.white
-                                    ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              ),
-                          )
                         ],
                       ),
                   ),
@@ -486,6 +339,4 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
 
 
 }
-
 }
-

@@ -418,6 +418,7 @@ var checkVal = localStorage.getBool('check');
 
                               Flexible(
                                 child: Container(
+                                  width: 120,
                                   child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                               mainAxisAlignment: MainAxisAlignment.center,
@@ -431,7 +432,7 @@ var checkVal = localStorage.getBool('check');
                                                     ),
                                                       ),
                                                       SizedBox(height: 2,),
-                                                      Text("Restaurant : ${widget.restaurantName}",
+                                                      Text("${widget.restaurantName}",
                                                       maxLines: 2,
                                                       style: TextStyle(
                                                       color: Colors.grey[300],
@@ -441,16 +442,7 @@ var checkVal = localStorage.getBool('check');
                                                     ),
                                                       ),
                                                       SizedBox(height: 2,),
-                                                      Text("Deliver To : ${widget.deliverTo}",
-                                                      maxLines: 2,
-                                                      style: TextStyle(
-                                                      
-                                                      color: Colors.grey[300],
-                                                      fontWeight: FontWeight.normal,
-                                                      fontSize: 12.0,
-                                                      fontFamily: 'OpenSans'
-                                                    ),
-                                                      ),
+                                                    
                                                       SizedBox(height: 5,),
                                                       Text("${widget.deliveryCharge}",
                                                       style: TextStyle(
@@ -529,6 +521,22 @@ var checkVal = localStorage.getBool('check');
                           ),
                         ),
                             SizedBox(height: 10,),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                                        child: Container(
+                                                          child: Text("${widget.deliverTo}",
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                          
+                                                          color: wheretoDark,
+                                                          fontWeight: FontWeight.normal,
+                                                          fontSize: 22.0,
+                                                          fontFamily: 'OpenSans'
+                                                    ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                       SizedBox(height: 10,),
                            Container(
                            height: 50.0,
                            width: 120,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/Admin/Rider_viewRemit/view_RemitImages.dart';
 import 'package:WhereTo/Admin/r_source.dart';
 import 'package:WhereTo/Admin/view_allID.dart';
 import 'package:WhereTo/AnCustom/admin_help.dart';
@@ -196,7 +197,28 @@ class _AdminDashState extends State<AdminDash> {
                             ),
                             child: Center(
                               child: Icon(
-                                Icons.image,
+                                Icons.verified_user,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                            )
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: (){
+                           Navigator.pushReplacement(context,
+                new MaterialPageRoute(builder: (context) => RemitViewImagesAdmin()));
+                            },
+                            child: Container(
+                              height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              color: pureblue,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.money_off,
                                 size: 30,
                                 color: Colors.white,
                               ),

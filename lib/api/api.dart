@@ -8,10 +8,40 @@ class ApiCall{
     // final String url = 'http://10.0.2.2:8000/api',https://wheretoapplication.azurewebsites.net/api;
     // final String url = 'http://192.168.1.10:8000/api';
     final String url = 'https://wheretoapplication.azurewebsites.net/api';
+    
     postData(data ,api) async {
     var fullurl = url+api+ await _getToken();
     return http.post(fullurl,
     body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+
+   postApproveRemit(data ,api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+   postRemitRider(data ,api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+
+  getDeviceUserScammer(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
+    headers: _setHeaders()
+    );
+  }
+
+  logVerify(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
     headers: _setHeaders()
     );
   }
@@ -22,8 +52,21 @@ class ApiCall{
     headers: _setHeaders()
     );
   }
+   susVerify(api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
   
   getunverified(api) async {
+    var fullurl = url+api;
+    return http.get(
+    fullurl,
+    headers: _setHeaders()
+    );
+  }
+  getRemitImage(api) async {
     var fullurl = url+api;
     return http.get(
     fullurl,

@@ -118,14 +118,14 @@ var userData;
 
                                               var bod = json.decode(offline.body);
                                               print(bod); 
-                  var res = await ApiCall().getData('/logout');
-                            var body = json.decode(res.body);
+                  // var res = await ApiCall().getData('/logout');
+                  //           var body = json.decode(res.body);
                            
                                SharedPreferences localStorage = await SharedPreferences.getInstance();
                                localStorage.remove('user');
                                localStorage.remove('token');
                                localStorage.remove('menuplustrans');
-                               print(body);
+                              //  print(body);
                                 Navigator.pushAndRemoveUntil(
                               context,
                               new MaterialPageRoute(

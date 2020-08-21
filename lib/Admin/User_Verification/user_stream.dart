@@ -9,12 +9,10 @@ class UserStream {
   final UserApi _userapi = UserApi();
   final BehaviorSubject<UserVerified> _behaviorSubjectuser = BehaviorSubject<UserVerified>();
 
-
   getViewUnverified() async{
  UserVerified userVerified= await _userapi.getUserUnVerified();
   _behaviorSubjectuser.sink.add(userVerified);
   }
-
   void drainStream(){_behaviorSubjectuser.value = null;}
   @mustCallSuper
   void dispose() async{
@@ -22,8 +20,5 @@ class UserStream {
     _behaviorSubjectuser.close();
   }
   BehaviorSubject<UserVerified> get subject => _behaviorSubjectuser;
-
-
 }
-
 final userVerifying = UserStream();

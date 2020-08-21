@@ -29,73 +29,82 @@ class _CustomgettransacState extends State<Customgettransac> {
                color: pureblue,
                borderRadius: BorderRadius.all(Radius.circular(20)),
              ),
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-               crossAxisAlignment: CrossAxisAlignment.center,
+             child: Stack(
                children: <Widget>[
-                 Container(
-                   height: 100,
-                   width: 100,
-                   decoration: BoxDecoration(
-                     shape: BoxShape.circle,
-                     image: DecorationImage(
-                       image: AssetImage(widget.image) )
+                 Align(
+                   alignment: Alignment.centerLeft,
+                   child: Padding(
+                     padding: const EdgeInsets.only(left: 20),
+                     child: Container(
+                       height: 100,
+                       width: 100,
+                       decoration: BoxDecoration(
+                         shape: BoxShape.circle,
+                         image: DecorationImage(
+                           image: AssetImage(widget.image) )
+                       ),
+                     
+                     ),
                    ),
-                 
                  ),
-                 Container(
-                   child: Column(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     textDirection: TextDirection.ltr,
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: <Widget>[
-                      Text(widget.name,
-                                                  style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18.0,
-                                                  fontFamily: 'Gilroy-ExtraBold'
-                                                ),
-                                                  ),
-                                                  SizedBox(height: 7.0,),
-                                                  Text(widget.restaurantName,
-                                                  style: TextStyle(
-                                                  color: Color(0xFFF2F2F2),
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 11.0,
-                                                  fontFamily: 'Gilroy-light'
-                                                ),
-                                                  ),
-                                                   SizedBox(height: 3.0,),
-                                                  SingleChildScrollView(
-                                                    scrollDirection: Axis.horizontal,
-                                                   
-                                                      child: Text(widget.address,
-                                                      overflow: TextOverflow.ellipsis,
+                 Align(
+                   alignment: Alignment.centerRight,
+                   child: Padding(
+                     padding: const EdgeInsets.only(right: 20),
+                     child: Container(
+                        width: 190,
+                       child: Column(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: <Widget>[
+                          Text(widget.name,
                                                       style: TextStyle(
-                                                      color: Color(0xFFF2F2F2),
-                                                      fontWeight: FontWeight.normal,
-                                                      fontSize: 11.0,
-                                                      fontFamily: 'Gilroy-light'
-                                                ),
-                                                      ),
-                                                  
-                                                  ),
-                                                  SizedBox(height: 3.0,),
-                                                   SingleChildScrollView(
-                                                    scrollDirection: Axis.horizontal,
-                                                 
-                                                      child: Text('To: '+widget.deliveryAddress,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                      color: Color(0xFFF2F2F2),
-                                                      fontWeight: FontWeight.normal,
-                                                      fontSize: 11.0,
-                                                      fontFamily: 'Gilroy-light'
-                                                ),
-                                                      ),
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18.0,
+                                                      fontFamily: 'Gilroy-ExtraBold'
                                                     ),
-                     ],
+                                                      ),
+                                                      SizedBox(height: 7.0,),
+                                                      Text(widget.restaurantName,
+                                                      style: TextStyle(
+                                                      color: Color(0xFFF2F2F2),
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 11.0,
+                                                      fontFamily: 'Gilroy-light'
+                                                    ),
+                                                      ),
+                                                       SizedBox(height: 3.0,),
+
+                                                       Text(widget.address,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                          color: Color(0xFFF2F2F2),
+                                                          fontWeight: FontWeight.normal,
+                                                          fontSize: 11.0,
+                                                          fontFamily: 'Gilroy-light'
+                                                    ),
+                                                          ),
+                                                      
+                                                      
+                                                      SizedBox(height: 3.0,), 
+                                                      Flexible(
+                                                            child: Container(
+                                                              child: Text('To: '+widget.deliveryAddress,
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: TextStyle(
+                                                              color: Color(0xFFF2F2F2),
+                                                              fontWeight: FontWeight.normal,
+                                                              fontSize: 11.0,
+                                                              fontFamily: 'Gilroy-light'
+                                                    ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                       
+                         ],
+                       ),
+                     ),
                    ),
                  ),
                ],

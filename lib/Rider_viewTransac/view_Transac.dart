@@ -81,12 +81,17 @@ class _ViewTransacRiderState extends State<ViewTransacRider> {
                         fontWeight: FontWeight.normal,
                     fontFamily: 'Gilroy-light',),),
                     SizedBox(height: 7.0,),
-                    Text(widget.deliveryAddress,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10.0,
-                        fontWeight: FontWeight.normal,
-                    fontFamily: 'Gilroy-light',),),
+                    Flexible(
+                      child: Container(
+                        child: Text(widget.deliveryAddress,
+                        overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10.0,
+                            fontWeight: FontWeight.normal,
+                        fontFamily: 'Gilroy-light',),),
+                      ),
+                    ),
 
                     ],
                   ),

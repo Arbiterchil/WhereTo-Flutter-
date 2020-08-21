@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:WhereTo/AnCustom/dialogHelp.dart';
+import 'package:WhereTo/Rider/rider_sendRem.dart';
 import 'package:WhereTo/Rider_viewTransac/DummyTesting/dummy_Card.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
@@ -87,8 +88,7 @@ void configSignal() async {
   await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
      await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
-    
-
+  
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();
    await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
@@ -173,30 +173,36 @@ void configSignal() async {
       ) ,
                           ),
                         ),
-                    Container(
-                          height: 70,
-                          width: 90,
-                          decoration: BoxDecoration(
-                            color: pureblue,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            boxShadow: [
-                             BoxShadow(
-                               color: Colors.black12,
-                               spreadRadius: 3.3,
-                               blurRadius: 3.3
-                             ),
-                          ],
-                          ),
-                          child: Center(
-                            child: Text('1140',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Gilroy-ExtraBold',
-                              fontSize: 18
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushReplacement(context,
+                new MaterialPageRoute(builder: (context) => RiderRemit()));
+                      },
+                      child: Container(
+                            height: 70,
+                            width: 90,
+                            decoration: BoxDecoration(
+                              color: pureblue,
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              boxShadow: [
+                               BoxShadow(
+                                 color: Colors.black12,
+                                 spreadRadius: 3.3,
+                                 blurRadius: 3.3
+                               ),
+                            ],
                             ),
+                            child: Center(
+                              child: Text('1140',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Gilroy-ExtraBold',
+                                fontSize: 18
+                              ),
+                              ),
                             ),
                           ),
-                        ),
+                    ),
                     Container(
                           height: 70,
                           width: 90,
