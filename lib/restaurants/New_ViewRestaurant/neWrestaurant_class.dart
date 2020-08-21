@@ -15,6 +15,7 @@ class NeWRestaurant {
         this.address,
         this.barangayName,
         this.contactNumber,
+        this.imagePath
     });
 
     int id;
@@ -22,6 +23,7 @@ class NeWRestaurant {
     String address;
     String barangayName;
     String contactNumber;
+    String imagePath;
 
     factory NeWRestaurant.fromJson(Map<String, dynamic> json) => NeWRestaurant(
         id: json["id"],
@@ -29,6 +31,7 @@ class NeWRestaurant {
         address: json["address"],
         barangayName: json["barangayName"],
         contactNumber: json["contactNumber"],
+        imagePath :json["imagePath"]
     );
 
     Map<String, dynamic> toJson() => {
@@ -37,5 +40,6 @@ class NeWRestaurant {
         "address": address,
         "barangayName": barangayName,
         "contactNumber": contactNumber,
+        "imagePath" : imagePath
     };
 }

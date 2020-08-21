@@ -171,7 +171,7 @@ class _SearchRestoState extends State<SearchResto> {
                               Container(
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: NetworkImage("https://res.cloudinary.com/ddoiozfmr/image/upload/c_thumb,w_200,g_face/Images/${snapshot.data[index].restaurantName}.jpg",
+                                    image: NetworkImage(snapshot.data[index].imagePath,
                                     ),
                                     fit: BoxFit.cover)
                                 ),
