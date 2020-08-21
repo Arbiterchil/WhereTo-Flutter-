@@ -49,13 +49,6 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    userVerifying..drainStream();
-    super.dispose();
-   
-  }
-
   var constant;
   
   @override
