@@ -66,8 +66,9 @@ var idgetter;
 
 @override
   void initState() {
-    _getUserInfo();
-    riderCheck();
+    this.getTotalPrice();
+    this._getUserInfo();
+    this.riderCheck();
     super.initState();
     
   }
@@ -340,6 +341,42 @@ Future<List<RiverMenu>> getMenuTransac() async {
         
   }
 
+void getTotalPrice() async{
+
+
+final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/${widget.getID.toString()}');                     
+                              var body = json.decode(response.body);
+                              for(var body in body){
+                                  RiverMenu riverMenu = RiverMenu(
+                                    menuName: body["menuName"],
+                              description: body["description"],
+                              price: body["price"],
+                              quantity: body["quantity"],
+                                  );
+                                  List prices =  [riverMenu.price] ;
+                                  List quans =  [riverMenu.quantity];
+                                  for(var i = 0 ; i < prices.length; i++){
+                                    for(var x = 0 ; x < quans.length ; x++){
+                                        totalAll = prices[i]*quans[x];
+                                      List all =  [totalAll]; 
+                                      for(var z = 0 ; z < all.length; z++){
+                                        
+                                            priceTotal = priceTotal+all[z];
+                                            
+                              
+                                            
+                                      }
+                                  }
+                                  }           
+                              }
+                              setState(() {
+                                  totals = priceTotal;
+                              print(totals);
+
+                              });
+                            
+}
+
 void riderCheck() async{
 SharedPreferences localStorage = await SharedPreferences.getInstance();
 var checkVal = localStorage.getBool('check');
@@ -557,7 +594,7 @@ var checkVal = localStorage.getBool('check');
                               children: <Widget>[
                                Padding(
                                  padding: const EdgeInsets.all(8.0),
-                                 child:  Text("₱ ${widget.gotTotal}",
+                                 child:  Text("₱ $totals",
                                                 style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,

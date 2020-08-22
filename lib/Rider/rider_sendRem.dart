@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import '../styletext.dart';
-
+import 'package:http/http.dart' as http;
 class RiderRemit extends StatefulWidget {
   @override
   _RiderRemitState createState() => _RiderRemitState();
@@ -94,6 +94,7 @@ class _RiderRemitState extends State<RiderRemit> {
     @override
   void initState() {
     this._getUserInfo();
+    this.getAdminDevices();
     super.initState();
   }  
 void _getUserInfo() async {
@@ -105,7 +106,11 @@ void _getUserInfo() async {
       });
   }
 void sendRemitImage() async{
-
+   
+   if(_idPickerImage == null){
+      _showDial("Put your Screen Shot Image of Gcash.");
+   }else{
+       sendToAdmin();
    var viewthis = path.basename(_idPickerImage.path);
     CloudinaryClient client = new CloudinaryClient(
       "661529868759591",
@@ -125,8 +130,49 @@ void sendRemitImage() async{
   };
    var valid = await ApiCall().postRemitRider(data,'/riderRemit');
   print(valid.body);
-  _showDial("Done.");
+  
+  _showDial("Send Done to the Admins.");
+   }
+   
+  
 }
+List allresult = [];
+void getAdminDevices() async{
+ var bods = await ApiCall().getAdminDevice('/getAllAdminDeviceId');
+    List body = json.decode(bods.body);   
+    for(int i = 0 ; i < body.length ;i++){
+      allresult.add((body[i]['deviceId'].toString())); 
+    }
+    print(allresult);
+}
+void sendToAdmin() async{
+   
+  String url = 'https://onesignal.com/api/v1/notifications';
+    var contents = {
+      "include_player_ids": allresult,
+      "include_segments": ["Users Notif"],
+      "excluded_segments": [],
+      "contents": {"en": "For theFucking Admins."},
+      "data": 
+        {
+        "force": "penalty"
+        },
+      "headings": {"en": "Rider Remit Notice:"},
+      "filter": [
+        {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+      ],
+      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+    };
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+    };
+    var repo =
+    await http.post(url, headers: headers, body: json.encode(contents));
+    print(repo);
+}
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -319,8 +365,9 @@ void sendRemitImage() async{
                   color: Color(0xFF0C375B),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: () => Navigator.pushReplacement(context,
-                           new MaterialPageRoute(builder: (context) => RiderDash())),
+                  // onPressed: () => Navigator.pushReplacement(context,
+                  //          new MaterialPageRoute(builder: (context) => RiderProfile())),
+                  onPressed: () => Navigator.pop(context),
                   child: Text(
                     "Yes",
                     style: TextStyle(
