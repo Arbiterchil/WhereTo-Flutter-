@@ -142,10 +142,7 @@ class _ListStacticState extends State<ListStactic>
                               Icons.arrow_back_ios,
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()));
+                              Navigator.pop(context);
                               // Navigator.pop(context);
                               BlocProvider.of<OrderBloc>(context)
                                   .add(Computation.deleteAll());
