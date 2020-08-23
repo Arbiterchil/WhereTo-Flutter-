@@ -25,7 +25,8 @@ class NewRestaurantApi {
                 restaurantName: body['restaurantName'],
                 address: body['address'],
                 contactNumber: body['contactNumber'],
-                barangayName: body['barangayName']
+                barangayName: body['barangayName'],
+                imagePath: body['imagePath']
             );
             restaurantnew.add(neWRestaurant);
         }

@@ -41,7 +41,7 @@ class _PathWayState extends State<PathWay> {
    }
    timeStamp(){
       String  customer = "0";
-      String  admin = "4";
+      String  admin = "2";
       String  value = widget.getStringthis.toString();
        if(customer.contains(value)){
         return  _isLoggedIn  ? HomePage() :  LoginPage();

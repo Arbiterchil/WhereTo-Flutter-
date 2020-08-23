@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:WhereTo/Admin/admin_tabswitch.dart';
 import 'package:WhereTo/AnCustom/admin_help.dart';
+import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminHomeDash extends StatefulWidget {
   @override
@@ -23,6 +27,7 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
 
    };
    int selectedindex = 0;
+   var userData;
    void selectAdmintab(String tabadinitem, int index){
      if(tabadinitem == currentPageAdmin ){
       _navAdminState[tabadinitem].currentState.popUntil((route) => route.isFirst);
@@ -36,6 +41,8 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
 
   @override
   void initState() {
+    this.postuserId();
+    this.getShared();
     super.initState();
     this.configSignal();
   }
@@ -48,6 +55,31 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
     await OneSignal.shared.getTags();
    await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
 }
+  void getShared() async {
+
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var userJson = localStorage.getString('user');
+      var user = json.decode(userJson);
+      setState(() {
+        userData = user;
+      });
+  
+
+ }
+  void postuserId() async {
+   var status = await OneSignal.shared.getPermissionSubscriptionState();
+    var playerId = status.subscriptionStatus.userId;
+    var data =
+    {
+      "userId" : userData['id'].toString(),
+      "playerId" : playerId
+    };
+    var responses = await ApiCall().playerIdSave(data,'/assignPlayerId');
+    print(responses);
+}
+
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

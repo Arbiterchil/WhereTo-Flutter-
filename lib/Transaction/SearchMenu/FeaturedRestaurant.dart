@@ -15,6 +15,7 @@ class FeaturedRestaurant {
         this.address,
         this.barangayName,
         this.contactNumber,
+        this.imagePath
     });
 
     final int id;
@@ -22,6 +23,7 @@ class FeaturedRestaurant {
     final String address;
     final String barangayName;
     final String contactNumber;
+    final String imagePath;
 
     factory FeaturedRestaurant.fromJson(Map<String, dynamic> json) => FeaturedRestaurant(
         id: json["id"],
@@ -29,6 +31,7 @@ class FeaturedRestaurant {
         address: json["address"],
         barangayName: json["barangayName"],
         contactNumber: json["contactNumber"],
+        imagePath : json['imagePath']
     );
 
     Map<String, dynamic> toJson() => {
@@ -37,5 +40,6 @@ class FeaturedRestaurant {
         "address": address,
         "barangayName": barangayName,
         "contactNumber": contactNumber,
+        "imagePath" : imagePath
     };
 }

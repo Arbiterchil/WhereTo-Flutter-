@@ -4,6 +4,8 @@ import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/bara_rang.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
+import 'package:WhereTo/modules/tac/tac_help.dart';
+import 'package:WhereTo/modules/tac/terms_condition.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
@@ -33,18 +35,12 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  String default_pick = "Customer";
   File _idPickerImage;
   final pick = ImagePicker();
-  int default_number = 1;
   String stringPath;
   String selectPerson;
   var idbararangSaika;
   var thimagelink;
-  List<MyChoice> picks = [
-    MyChoice(numberpick: 1, pickchoice: "Customer"),
-    MyChoice(numberpick: 2, pickchoice: "Rider")
-  ];
 
   final formkey = GlobalKey<FormState>();
 
@@ -493,8 +489,10 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   void initState() {
-    super.initState();
+    
     this.callBarangay();
+    super.initState();
+    
   }
 
   List dataBarangay = List();
@@ -702,6 +700,23 @@ class _SignupPageState extends State<SignupPage> {
                     children: <Widget>
                     [
                       Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 50),
+                          child: GestureDetector(
+                   onTap: () => TermsAndConditions.show(context),
+                   child: Text("Terms And Conditions.",
+                   style: TextStyle(
+                     decoration: TextDecoration.underline,
+                     color: pureblue,
+                     fontSize: 12,
+                     fontFamily: 'Gilroy-light'
+                   ),
+                   ),
+                 ),
+                          ),
+                      ),
+                      Align(
                         alignment: Alignment.topRight,
                         child: Padding(
                           padding: const EdgeInsets.only(right: 40),
@@ -733,7 +748,8 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 60,),
                  _botDownSignIn(),
-                 SizedBox(height: 50,),
+                 SizedBox(height: 30,),
+                 
             ],
           ),
         )),

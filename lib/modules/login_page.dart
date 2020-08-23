@@ -373,7 +373,7 @@ void _login() async{
         context,
         new MaterialPageRoute(
             builder: (context) => HomePage()));
-      }else if(body['user']['userType'] == 4){
+      }else if(body['user']['userType'] == 2){
         print('Welcome Admin');
         Navigator.pushReplacement(
         context,

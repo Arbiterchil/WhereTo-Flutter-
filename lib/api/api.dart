@@ -32,6 +32,13 @@ class ApiCall{
     );
   }
 
+  getAdminDevice(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
+    headers: _setHeaders()
+    );
+  }
+
   getDeviceUserScammer(api) async {
     var fullurl = url+api;
     return http.get(fullurl,
