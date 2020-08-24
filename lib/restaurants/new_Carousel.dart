@@ -15,31 +15,31 @@ class _NewCarouselState extends State<NewCarousel> {
 
     [
       // 'asset/img/carousel1.jpg',
-      'asset/img/61338547_p0.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/Restaurant/KFC.jpg',
       'KFC',
       'Located at GMALL of TAGUM'
     ],
     [
       // 'asset/img/carousel2.jpg',
-      'asset/img/62512004_p0.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/Restaurant/Jollibee.jpg',
       'Jollibee',
       'Located at National HighWay'
     ],
     [
       // 'asset/img/carousel3.jpg',
-      'asset/img/76134055_p0.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/Restaurant/McDonalds.jpg',
       'McDonalds',
       'Located at Rizal Street'
     ],
     [
       // 'asset/img/carousel4.jpg',
-      'asset/img/fbmYkDz.jpg',
+      'https://res.cloudinary.com/amadpogi/image/upload/Restaurant/Chowking.jpg',
       'Chowking',
       'Located at National HighWay'
     ],
     [
       // 'asset/img/carousel5.jpg',
-      'asset/img/mWWsAhL.jpg',
+      'https://res.cloudinary.com/amadpogi/image/upload/Restaurant/Penongs.jpg',
       'Penongs',
       'Located at Lapu-Lapu Street'
     ],
@@ -91,7 +91,7 @@ class _NewCarouselState extends State<NewCarousel> {
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(restau[currentIndex][0]),
+                  image: NetworkImage(restau[currentIndex][0]),
                   fit:  BoxFit.cover),
                   
               ),

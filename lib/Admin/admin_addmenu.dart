@@ -147,7 +147,7 @@ void getAddMenu() async{
                                 "menuName" : menuname.text,
                                 "description" : decription.text,
                                 "price":price.text,
-                                "imagePath": "https://res.cloudinary.com/amadpogi/image/upload/c_thumb,w_200,g_face/Menu/${menuname.text}.jpg",
+                                "imagePath": "https://res.cloudinary.com/amadpogi/image/upload/Menu/${menuname.text}.jpg",
                                 "categoryId": selectPerson.toString()
                                 }]
                                 };

@@ -15,6 +15,9 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
+
+  
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -48,9 +51,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     this.getShared();
     this.configSignal();
-    
-    super.initState();
     this.postuserId();
+    super.initState();
+    
   }
 String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
  var data;
@@ -108,7 +111,7 @@ void postuserId() async {
     var responses = await ApiCall().playerIdSave(data,'/assignPlayerId');
     print(responses);
     // print(userData['id'].toString());
-    var response = await ApiCall().getCheckUser('/getUserVerification/${userData['id'].toString()}');
+    var response = await ApiCall().getCheckUser('/getUserVerification/${userData['id']}');
    var body = json.decode(response.body);
    print(body['imagePath']);
    if(body['imagePath'] == null){
