@@ -214,7 +214,7 @@ class _ListStacticState extends State<ListStactic>
                                             BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(
                                               name: snapshot.data[index].menuName,
                                               description: snapshot.data[index].description,
-                                              price: double.parse(snapshot.data[index].price.toString()),
+                                              price: snapshot.data[index].price,
                                               quantity: 1,
                                               id: snapshot.data[index].menuId,
                                             )));

@@ -166,11 +166,9 @@ class _TransactionListState extends State<TransactionList> {
                                                                           30))),
                                                       child: Center(
                                                         child: Text(
-                                                          "₱ " +
-                                                              snapshot[index]
+                                                          "₱ " +snapshot[index]
                                                                   .price
-                                                                  .toString() +
-                                                              ".00",
+                                                                  .toString(),
                                                           style: GoogleFonts
                                                               .roboto(
                                                             color: Colors.white,

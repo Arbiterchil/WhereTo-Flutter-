@@ -1,13 +1,16 @@
 
 
 
+import 'package:WhereTo/Services/connectivity_service.dart';
+import 'package:WhereTo/Services/connectivity_status.dart';
 import 'package:WhereTo/Transaction/MyOrder/bloc.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 
 import 'package:WhereTo/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:provider/provider.dart';
+import 'package:asuka/asuka.dart' as asuka;
 
 import 'api_restaurant_bloc/orderblocdelegate.dart';
 void main() {
@@ -51,12 +54,15 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
       
-      child: MaterialApp(
+      child: StreamProvider<ConnectivityStatus>(
+        create: (context) =>ConnectivityService().controller.stream,
+        child:MaterialApp(
+        builder: asuka.builder,
+        debugShowCheckedModeBanner: false,
+        home:SplashScreen(),
       
-      debugShowCheckedModeBanner: false,
-      home:SplashScreen(),
-      
-    ),
+      ),
+        ),
     );
   }
 }
