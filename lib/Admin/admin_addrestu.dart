@@ -668,7 +668,7 @@ setState(() {
                 "isFeatured": 1,
                 "owner": owner.text,
                 "representative" : respresent.text,
-                "imagePath": "https://res.cloudinary.com/ddoiozfmr/image/upload/c_thumb,w_200,g_face/Images/${retaurantname.text}.jpg"
+                "imagePath": "https://res.cloudinary.com/amadpogi/image/upload/c_thumb,w_200,g_face/Restaurant/${retaurantname.text}.jpg"
                 };
 
             var response = await ApiCall().addRestaurant(data, '/addRestaurant');
