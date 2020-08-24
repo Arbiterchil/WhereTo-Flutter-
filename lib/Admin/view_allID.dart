@@ -335,7 +335,7 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                     ),
                     image: DecorationImage(
                       image: NetworkImage(resources),
-                      fit: BoxFit.fitHeight)
+                      fit: BoxFit.fitWidth)
                   ),
                 ),    
                 SizedBox(height: 20,),

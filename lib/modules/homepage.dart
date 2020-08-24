@@ -47,18 +47,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  
   void initState() {
-    this.getShared();
-    this.configSignal();
-    this.postuserId();
+    _onsSignal();
+    configSignal();
+    getShared();
+    postuserId();
     super.initState();
     
+    
+  }
+
+  _onsSignal() async{
+    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+     await OneSignal.shared.setLocationShared(true);
+    await OneSignal.shared.promptLocationPermission();
+  
+    await OneSignal.shared.setSubscription(true);
+    await OneSignal.shared.getTags();
+   await OneSignal.shared.sendTags({'UR': 'TRUE'});  
+
   }
 String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
  var data;
  var checkbool;
  var idmine;
+ var gethis;
  void getShared() async {
 
       SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -72,21 +85,12 @@ String meesages = "You have Violated the Terms and Condition that your Valid Id 
 
  }
 void configSignal() async {
-     await OneSignal.shared.setLocationShared(true);
-    await OneSignal.shared.promptLocationPermission();
-    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
-
-    await OneSignal.shared.setSubscription(true);
-    await OneSignal.shared.getTags();
-   await OneSignal.shared.sendTags({'UR': 'TRUE'});
     OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
     OneSignal.shared
         .setNotificationReceivedHandler((OSNotification notification){
       data = notification.payload.additionalData;
       setState(() {
-        //  constant = notification.payload.additionalData;
-        
         setState(() {
           if(data != null){
             if(data["force"] == "penalty"){
@@ -110,14 +114,12 @@ void postuserId() async {
     };
     var responses = await ApiCall().playerIdSave(data,'/assignPlayerId');
     print(responses);
-    // print(userData['id'].toString());
-    var response = await ApiCall().getCheckUser('/getUserVerification/${userData['id']}');
+    gethis = userData['id'].toString();
+    var response = await ApiCall().getCheckUser('/getUserVerification/$gethis');
    var body = json.decode(response.body);
    print(body['imagePath']);
    if(body['imagePath'] == null){
      print("Fuck This");
-    //  UserDialog_Help.exit(context)
-    // SendsValidId.showgetValid(context);
     sendsValidId(userData['id'].toString());
    }else{
      print("getBack");

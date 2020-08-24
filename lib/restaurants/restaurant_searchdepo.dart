@@ -202,7 +202,7 @@ class _SearchDepoState extends State<SearchDepo> {
                             Text(
                               "Satisfy Your Own",
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: wheretoDark,
                                   fontWeight: FontWeight.normal,
                                   fontSize: 35.0,
                                   fontFamily: 'Gilroy-ExtraBold'),
