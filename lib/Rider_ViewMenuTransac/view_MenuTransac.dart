@@ -501,18 +501,13 @@ var checkVal = localStorage.getBool('check');
                          Container(
                           height: 90,
                           width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: pureblue,
-                            borderRadius: BorderRadius.all(Radius.circular(20),
-                            ),
-                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                                                         Visibility(
                                               visible: backTF,
                                               child: RaisedButton(
-                      color: Colors.white,
+                      color: pureblue,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                       onPressed: (){
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
@@ -520,7 +515,7 @@ var checkVal = localStorage.getBool('check');
                                                   }));
                       },                
                       child: Text ( "BACK", style :TextStyle(
-                      color: Color(0xFF0C375B),
+                      color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12.0,
                                   fontFamily: 'OpenSans'
@@ -538,7 +533,7 @@ var checkVal = localStorage.getBool('check');
                                               height: 60,
                                               width: 60,
                                               decoration: BoxDecoration(
-                                                color: wheretoDark,
+                                                color: pureblue,
                                                 shape: BoxShape.circle,
                                               ),
                                               child: Center(

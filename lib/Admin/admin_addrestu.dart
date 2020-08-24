@@ -16,7 +16,9 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 
     
 
-    final scaffoldKey = new GlobalKey<ScaffoldState>(); 
+    final scaffoldKey = new GlobalKey<ScaffoldState>();
+    TextEditingController owner  = TextEditingController();
+    TextEditingController respresent = TextEditingController(); 
     TextEditingController retaurantname  = TextEditingController();
     TextEditingController address = TextEditingController();
     TextEditingController contactnumber = TextEditingController();
@@ -137,6 +139,59 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                   textDirection: TextDirection.ltr,
             children: <Widget>[
                 SizedBox(height: 10.0,),
+
+                Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                cursorColor: pureblue,
+                controller: owner,
+                validator: (val) => val.isEmpty ? ' Please Put The Owner\'s Name' : null,
+                style: TextStyle(
+                  color: pureblue,
+                  fontFamily: 'Gilroy-light',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: pureblue,
+                  ),
+                  hintText: 'Owner\'s Name',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+            SizedBox(height: 15.0,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                cursorColor: pureblue,
+                controller: respresent,
+                validator: (val) => val.isEmpty ? ' Please Put The Representative Name' : null,
+                style: TextStyle(
+                  color: pureblue,
+                  fontFamily: 'Gilroy-light',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.person_add,
+                    color: pureblue,
+                  ),
+                  hintText: 'Representative Name',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+            SizedBox(height: 15.0,),
               //  Text('Restaurant Name',
               //       style: eLabelStyle,
               //       ),
@@ -580,6 +635,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                     ],
                   ),
                        ),
+                        SizedBox(height: 40,),
                   ],
                 ),
               ),
@@ -600,7 +656,7 @@ setState(() {
          _showDial();
     }else{
        if(formkey.currentState.validate()){
-                        formkey.currentState.save();
+          formkey.currentState.save();
         var data = {
                 "restaurantName": retaurantname.text,
                 "address": address.text, 
@@ -610,22 +666,24 @@ setState(() {
                 "closingTime": closetimeString.toString(),
                 "closeOn": datesofdays.toString(),
                 "isFeatured": 1,
+                "owner": owner.text,
+                "representative" : respresent.text,
                 "imagePath": "https://res.cloudinary.com/ddoiozfmr/image/upload/c_thumb,w_200,g_face/Images/${retaurantname.text}.jpg"
                 };
 
-    var response = await ApiCall().addRestaurant(data, '/addRestaurant');
-    var body = json.decode(response.body);
-    print(body);
-    Navigator.pushReplacement(  
-    context,
-    new MaterialPageRoute(
-    builder: (context) => AddmenuAdmin(id: body.toString() )));
-    print(data);
-    print(body);
+            var response = await ApiCall().addRestaurant(data, '/addRestaurant');
+            var body = json.decode(response.body);
+             _showDone(body.toString());
+            Navigator.pushReplacement(  
+            context,
+            new MaterialPageRoute(
+            builder: (context) => AddmenuAdmin(id: body.toString() )));
+   
     
     } else{
+       _showDone("Fail Data Save.");
       print('Nope');
-     _showDone();
+    
 
     } 
     }
@@ -636,7 +694,7 @@ setState(() {
 
 
   }
-void _showDone(){
+void _showDone(String message){
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -646,13 +704,7 @@ void _showDone(){
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: mCustomDOne(context),
-    ); 
-    },);
-}
- mCustomDOne(BuildContext context){
-
-       return Container(
+      child:Container(
         height: 300.0,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
@@ -709,7 +761,7 @@ void _showDone(){
                 
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: Text("Restaurant Add Fail. Please Try Again",
+                  child: Text(message,
                   style: TextStyle(
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,
@@ -741,10 +793,11 @@ void _showDone(){
               ],
           ),
         ),
-      );
+      ),
+    ); 
+    },);
+}
 
-
-    }
   
 void _showDial(){
   showDialog(

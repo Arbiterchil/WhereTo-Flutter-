@@ -362,7 +362,7 @@ void _login() async{
 
       }else{
         print('can go in');
-         SharedPreferences localStorage = await SharedPreferences.getInstance();
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));

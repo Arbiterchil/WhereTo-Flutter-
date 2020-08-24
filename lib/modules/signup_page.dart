@@ -508,88 +508,23 @@ class _SignupPageState extends State<SignupPage> {
   }
 
 
-  Widget _getImage(){
+  
 
-    if(_idPickerImage != null){
+ 
 
-      return Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20),
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.all(Radius.circular(10),
-          ),
-          ),
-          child: Image.file(
-              _idPickerImage,
-              fit: BoxFit.cover,
-          ),
-        ),
-      );
-    }else{
-        return Container(
-          width: 80,
-        height: 80,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: pureblue
-          ),
-          child: Center(
-            child: Icon(
-              Icons.person,
-              size: 40,
-              color: Colors.white,
-            ),
-          ),
-        );
-    }
-
-  }  
-
-  getYourIdImage( ImageSource source) async{
-
-    var imageIdValid = await pick.getImage(source: source); 
-       File crop = await ImageCropper.cropImage(
-      sourcePath: imageIdValid.path ,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      androidUiSettings: AndroidUiSettings(
-          toolbarTitle: 'Where To Id Cropper',
-          toolbarColor: pureblue,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false),
-      iosUiSettings: IOSUiSettings(
-        minimumAspectRatio: 1.0,
-      ) );
-    setState(() {
-      _idPickerImage = crop;
-      
-      // print(imageIdValid.path);
-    });
-    
-
-  }
-
-
-  void uploadImagtoCloud() async{
-    var viewthis = path.basename(_idPickerImage.path);
-    CloudinaryClient client = new CloudinaryClient(
-      "661529868759591",
-      "6HJCxVBM8oUap_rIjqc24kKfR5w",
-      "ddoiozfmr");
-    await client.uploadImage( _idPickerImage.path ,filename: viewthis) .then((result){
-         stringPath = result.secure_url;
-          print(stringPath);
-          thimagelink = stringPath;
-      })
-      .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
-  }
+  // void uploadImagtoCloud() async{
+  //   var viewthis = path.basename(_idPickerImage.path);
+  //   CloudinaryClient client = new CloudinaryClient(
+  //     "661529868759591",
+  //     "6HJCxVBM8oUap_rIjqc24kKfR5w",
+  //     "ddoiozfmr");
+  //   await client.uploadImage( _idPickerImage.path ,filename: viewthis) .then((result){
+  //        stringPath = result.secure_url;
+  //         print(stringPath);
+  //         thimagelink = stringPath;
+  //     })
+  //     .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
+  // }
 
 
 
@@ -616,78 +551,78 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ),
                 SizedBox(height: 20,),
-                 Text(
-                            'Valid Id or Student Id',
-                            style: TextStyle(
-                              color: pureblue,
-                              fontFamily: 'Gilroy-light',
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 10,),
+                //  Text(
+                //             'Valid Id or Student Id',
+                //             style: TextStyle(
+                //               color: pureblue,
+                //               fontFamily: 'Gilroy-light',
+                //               fontSize: 18.0,
+                //               fontWeight: FontWeight.bold,
+                //             ),
+                //           ),
+                //           SizedBox(height: 10,),
                           
-                  _getImage(),
+                  // _getImage(),
 
-                SizedBox(height: 15,),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Stack(
-                    children: <Widget>
-                    [
-                       Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 70),
-                          child: GestureDetector(
-                            onTap: (){
-                              getYourIdImage(ImageSource.camera);
-                            }, 
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color: pureblue,
-                                borderRadius: BorderRadius.all(Radius.circular(100)),
-                              ),
-                              child: Center(
-                               child: Icon(Icons.camera,
-                               size: 20,
-                               color: Colors.white
-                               ),
-                              ),
-                            ),
-                          ),
-                          ),
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 70),
-                          child: GestureDetector(
-                            onTap: (){
-                              getYourIdImage(ImageSource.gallery);
-                            }, 
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color: pureblue,
-                                borderRadius: BorderRadius.all(Radius.circular(100)),
-                              ),
-                              child: Center(
-                               child: Icon(Icons.picture_in_picture,
-                               size: 20,
-                               color: Colors.white
-                               ),
-                              ),
-                            ),
-                          ),
-                          ),
-                      )
-                    ],
-                  ),
-                ),
+                // SizedBox(height: 15,),
+                // Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   child: Stack(
+                //     children: <Widget>
+                //     [
+                //        Align(
+                //         alignment: Alignment.topLeft,
+                //         child: Padding(
+                //           padding: const EdgeInsets.only(left: 70),
+                //           child: GestureDetector(
+                //             onTap: (){
+                //               getYourIdImage(ImageSource.camera);
+                //             }, 
+                //             child: Container(
+                //               height: 40,
+                //               width: 40,
+                //               decoration: BoxDecoration(
+                //                 color: pureblue,
+                //                 borderRadius: BorderRadius.all(Radius.circular(100)),
+                //               ),
+                //               child: Center(
+                //                child: Icon(Icons.camera,
+                //                size: 20,
+                //                color: Colors.white
+                //                ),
+                //               ),
+                //             ),
+                //           ),
+                //           ),
+                //       ),
+                //       Align(
+                //         alignment: Alignment.topRight,
+                //         child: Padding(
+                //           padding: const EdgeInsets.only(right: 70),
+                //           child: GestureDetector(
+                //             onTap: (){
+                //               getYourIdImage(ImageSource.gallery);
+                //             }, 
+                //             child: Container(
+                //               height: 40,
+                //               width: 40,
+                //               decoration: BoxDecoration(
+                //                 color: pureblue,
+                //                 borderRadius: BorderRadius.all(Radius.circular(100)),
+                //               ),
+                //               child: Center(
+                //                child: Icon(Icons.picture_in_picture,
+                //                size: 20,
+                //                color: Colors.white
+                //                ),
+                //               ),
+                //             ),
+                //           ),
+                //           ),
+                //       )
+                //     ],
+                //   ),
+                // ),
                 SizedBox(height: 10,),
                 Padding(
                   padding: const EdgeInsets.only(left: 40,right: 40),
@@ -765,9 +700,10 @@ class _SignupPageState extends State<SignupPage> {
 
     if (selectPerson == null) {
       _showDistictWarning("Select Barangay");
-    } else if(_idPickerImage == null){
-       _showDistictWarning("Please put you Valid ID or Student ID");
-    } else {
+    // } else if(_idPickerImage == null){
+    //    _showDistictWarning("Please put you Valid ID or Student ID");
+    // } 
+    }else {
       if (formkey.currentState.validate()) {
         formkey.currentState.save();
          
@@ -784,22 +720,21 @@ class _SignupPageState extends State<SignupPage> {
         var body = json.decode(res.body);
         if (res.statusCode == 200) {
           if (body['success']) {
-           var viewthis = path.basename(_idPickerImage.path);
-    CloudinaryClient client = new CloudinaryClient(
-      "661529868759591",
-      "6HJCxVBM8oUap_rIjqc24kKfR5w",
-      "ddoiozfmr");
-    await client.uploadImage( _idPickerImage.path ,filename: viewthis) .then((result){
-         stringPath = result.secure_url;
-          print(stringPath);
-          thimagelink = stringPath;
-      })
-      .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
-            var valididData = {
-          "userId": body['user']['id'], 
-          "imagePath": thimagelink
-            };
-            var valid = await ApiCall().validId(valididData, '/submitVerification');
+
+            //  uploadImagtoCloud();
+    //          var viewthis = path.basename(_idPickerImage.path);
+    // CloudinaryClient client = new CloudinaryClient(
+    //   "661529868759591",
+    //   "6HJCxVBM8oUap_rIjqc24kKfR5w",
+    //   "ddoiozfmr");
+    // await client.uploadImage( _idPickerImage.path ,filename: viewthis) .then((result){
+    //      stringPath = result.secure_url;
+    //       print(stringPath);
+    //       thimagelink = stringPath;
+    //   })
+    //   .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
+
+            var valid = await ApiCall().getUserVerification('/submitVerification/${body['user']['id']}');
             print(valid.body);
 
             SharedPreferences localStorage =

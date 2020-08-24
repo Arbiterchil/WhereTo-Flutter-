@@ -39,6 +39,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
   var ids;
   List dataCategory = List();
   List<String> items = [];
+  String selectPerson;
   callCategory() async{
 
     var respon = await ApiCall().getCategory('/getCategories');
@@ -99,7 +100,28 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                             ),  
                             SizedBox(height: 30,),
                             _menuForm(),
-
+                             SizedBox(height: 30,),
+                             GestureDetector(
+                            onTap:getAddMenu,
+                            child: Container(
+                              height: 50,
+                              width: 110,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: Center(
+                                child: Text('Add Menu <',
+                                style: TextStyle(
+                                  fontFamily: 'Gilroy-ExtraBold',
+                                  fontSize: 12,
+                                  color: Colors.white
+                                ),
+                                ),
+                              ),
+                            
+                          ),
+                          ),
                             ],
                           
                       ),
@@ -108,6 +130,41 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
        onWillPop: () async => false),
     );
   }
+
+void getAddMenu() async{
+
+   if(selectPerson == null){
+    _showDistictWarning();
+
+   }else{
+      if(formkey.currentState.validate()){
+       formkey.currentState.save();
+      var data =
+                          {
+                                "restaurantId" : widget.id.toString(),
+                                "menu":
+                                [{
+                                "menuName" : menuname.text,
+                                "description" : decription.text,
+                                "price":price.text,
+                                "imagePath": "https://res.cloudinary.com/ddoiozfmr/image/upload/c_thumb,w_200,g_face/Images/xamples/${menuname.text}.jpg",
+                                "categoryId": selectPerson.toString()
+                                }]
+                                };
+
+                          var response =  await ApiCall().addMenu(data, '/addMenu');
+                          print(response.body);
+                          menuname.clear();
+                          decription.clear();
+                          price.clear();
+                          _showDone();
+      }else{
+
+
+      }
+   }
+  
+}
 
   Widget _menuForm(){
 
@@ -218,341 +275,394 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
             // Text("Category",
             //           style: eLabelStyle,
             //           ),
-            SizedBox(height: 10.0,),
-
-            Provider<Holder>(
-            create: (context) => Holder(),
-             child: Container(
-             width: MediaQuery.of(context).size.width,
-             alignment: Alignment.centerLeft,
-            // decoration: eBoxDecorationStyle,
-            height: 260.0,
-            child: Padding(
-            padding: const EdgeInsets.only(left: 2),
-            
-            child: Consumer<Holder>(
-            builder: (context, model , child){
-            
-            return  Column(
-            children: <Widget>[
-            DropdownButtonHideUnderline(
-            child:
-            Stack(
-            children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: eBoxDecorationStyle ,
-                child: Icon(Icons.category,
-                color: pureblue,),
-              )),
-            ),
-            Padding(
-            padding: const EdgeInsets.only(left: 60,top: 5),
-            child: Container(
-              height: 50,
-              padding: EdgeInsets.all(5),
-              decoration: eBoxDecorationStyle,
-              child: DropdownButton(
-              isExpanded: true ,
-              hint: Text( "Select Category",
-              style: TextStyle(
-              color: pureblue,
-              fontFamily: 'Gilroy-light'
-              ),),
-              dropdownColor:  Colors.white,
-              icon: Icon(Icons.arrow_drop_down,color:pureblue,),
-              value: slectCategory,
-              items: dataCategory.map((item) {
-              nameCategory = item['categoryName'];
-              return new DropdownMenuItem(
-              child: Text(nameCategory!=null ? nameCategory : "Nope",
-              style: TextStyle(
-              color: pureblue,
-              fontFamily: 'Gilroy-light'
-              ),),
-              value: item['id'].toString(),);}).toList(),
-              onChanged: (item){
-              setState(() {
-              slectCategory = item;
-              print(slectCategory);
-              model.addSome(slectCategory);
-              int index = int.parse(item); 
-              model.addSomeName(dataCategory[--index]['categoryName']);
-              });},),),),],),),
-                    Container(
-                    height: 90,
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: model._items.length,
-                      itemBuilder: ( context ,  index){
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Container(
-                              decoration: eBoxDecorationStyle,
-                              padding: EdgeInsets.all(5),
-                              child: Text(model._items[index].toString()
-                              +". "+
-                              model._itemNames[index].toString(),
+            SizedBox(height: 15.0,),
+            Container(
+                width: MediaQuery.of(context).size.width,
+                alignment: Alignment.centerLeft,
+                decoration: eBoxDecorationStyle,
+                height: 50.0,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: DropdownButtonHideUnderline(
+                    child: Stack(
+                      children: <Widget>[
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Icon(
+                              Icons.place,
+                              color: pureblue,
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: DropdownButton(
+                              isExpanded: true,
+                              hint: Text(
+                                "Select Category",
+                                style: TextStyle(
+                                    color: pureblue,
+                                    fontFamily: 'Gilroy-light'),
+                              ),
+                              dropdownColor: Colors.white,
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                color:pureblue,
+                              ),
+                              value: selectPerson,
+                              items: dataCategory.map((item) {
+                                return new DropdownMenuItem(
+                                  child: Text(
+                                    item['categoryName'],
                                     style: TextStyle(
-                                      fontFamily: 'Gilroy-light',
-                                      fontSize: 20,
-                                      color: pureblue
-                                    ),
-                                    
+                                        color: pureblue,
+                                        fontFamily: 'Gilroy-light'),
                                   ),
-                            ),
-                          );
+                                  value: item['id'].toString(),
+                                );
+                              }).toList(),
+                              onChanged: (item) {
+                                setState(() {
+                                  selectPerson = item;
+                                  print(selectPerson);
+                                });
+                              }),
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
+            // Provider<Holder>(
+            // create: (context) => Holder(),
+            //  child: Container(
+            //  width: MediaQuery.of(context).size.width,
+            //  alignment: Alignment.centerLeft,
+            // // decoration: eBoxDecorationStyle,
+            // height: 260.0,
+            // child: Padding(
+            // padding: const EdgeInsets.only(left: 2),
+            
+            // child: Consumer<Holder>(
+            // builder: (context, model , child){
+            
+            // return  Column(
+            // children: <Widget>[
+            // DropdownButtonHideUnderline(
+            // child:
+            // Stack(
+            // children: <Widget>[
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 5),
+            //   child: Align(
+            //   alignment: Alignment.centerLeft,
+            //   child: Container(
+            //     height: 50,
+            //     width: 50,
+            //     decoration: eBoxDecorationStyle ,
+            //     child: Icon(Icons.category,
+            //     color: pureblue,),
+            //   )),
+            // ),
+            // Padding(
+            // padding: const EdgeInsets.only(left: 60,top: 5),
+            // child: Container(
+            //   height: 50,
+            //   padding: EdgeInsets.all(5),
+            //   decoration: eBoxDecorationStyle,
+            //   child: DropdownButton(
+            //   isExpanded: true ,
+            //   hint: Text( "Select Category",
+            //   style: TextStyle(
+            //   color: pureblue,
+            //   fontFamily: 'Gilroy-light'
+            //   ),),
+            //   dropdownColor:  Colors.white,
+            //   icon: Icon(Icons.arrow_drop_down,color:pureblue,),
+            //   value: slectCategory,
+            //   items: dataCategory.map((item) {
+            //   nameCategory = item['categoryName'];
+            //   return new DropdownMenuItem(
+            //   child: Text(nameCategory!=null ? nameCategory : "Nope",
+            //   style: TextStyle(
+            //   color: pureblue,
+            //   fontFamily: 'Gilroy-light'
+            //   ),),
+            //   value: item['id'].toString(),);}).toList(),
+            //   onChanged: (item){
+            //   setState(() {
+            //   slectCategory = item;
+            //   print(slectCategory);
+            //   model.addSome(slectCategory);
+            //   int index = int.parse(item); 
+            //   model.addSomeName(dataCategory[--index]['categoryName']);
+            //   });},),),),],),),
+            //         Container(
+            //         height: 90,
+            //         width: MediaQuery.of(context).size.width,
+            //         child: ListView.builder(
+            //           scrollDirection: Axis.vertical,
+            //           itemCount: model._items.length,
+            //           itemBuilder: ( context ,  index){
+            //               return Padding(
+            //                 padding: const EdgeInsets.only(top: 10),
+            //                 child: Container(
+            //                   decoration: eBoxDecorationStyle,
+            //                   padding: EdgeInsets.all(5),
+            //                   child: Text(model._items[index].toString()
+            //                   +". "+
+            //                   model._itemNames[index].toString(),
+            //                         style: TextStyle(
+            //                           fontFamily: 'Gilroy-light',
+            //                           fontSize: 20,
+            //                           color: pureblue
+            //                         ),
+                                    
+            //                       ),
+            //                 ),
+            //               );
 
                    
                           
-                      }),
-                  ),
-                  SizedBox(height: 15,),
-                  Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Stack(
-                    children: <Widget>
-                    [
-                      Align(
-                        alignment: Alignment.topLeft,
-                          child: GestureDetector(
-                            onTap: 
-                            () async{
-                                          if(slectCategory == null){
-                      // print("Select Barangay");
-                      _showDistictWarning();
-                        }else{
-                        if(formkey.currentState.validate()){
-                        formkey.currentState.save();
+            //           }),
+            //       ),
+            //       SizedBox(height: 15,),
+            //       Container(
+            //       width: MediaQuery.of(context).size.width,
+            //       child: Stack(
+            //         children: <Widget>
+            //         [
+            //           Align(
+            //             alignment: Alignment.topLeft,
+            //               child: GestureDetector(
+            //                 onTap: 
+            //                 () async{
+            //                               if(slectCategory == null){
+            //           // print("Select Barangay");
+            //           _showDistictWarning();
+            //             }else{
+            //             if(formkey.currentState.validate()){
+            //             formkey.currentState.save();
                         
-                        Map<String, int> id = {};
-                        Map<String , int> shit = {};
-                        List<dynamic> categs = [];
-                        List resultant = [];
+            //             Map<String, int> id = {};
+            //             Map<String , int> shit = {};
+            //             List<dynamic> categs = [];
+            //             List resultant = [];
                         
-                       for(int i = 0 ; i < model._items.length; i++){
-                           ids = int.parse(model._items[i]);
-                            id = {
-                                'id': ids
-                            };
-                           categs.add(id);
-                            } 
+            //            for(int i = 0 ; i < model._items.length; i++){
+            //                ids = int.parse(model._items[i]);
+            //                 id = {
+            //                     'id': ids
+            //                 };
+            //                categs.add(id);
+            //                 } 
                     
-                        for(int x = 0; x< categs.length; x++){
-                            resultant.add(categs[x]);
-                        }
-                        shit.forEach((key ,val) { 
-                          resultant.add(
-                            {
-                              'id': val
-                            });
-                        });
-                        print(resultant);
-                         var data =
-                          {
-                                "restaurantId" : widget.id.toString(),
-                                "menu":
-                                [{
-                                "menuName" : menuname.text,
-                                "description" : decription.text,
-                                "price":price.text,
-                                "imagePath": "https://res.cloudinary.com/ddoiozfmr/image/upload/c_thumb,w_200,g_face/Images/xamples/${menuname.text}.jpg",
-                                "category": resultant
-                                }]
-                                };
+            //             for(int x = 0; x< categs.length; x++){
+            //                 resultant.add(categs[x]);
+            //             }
+            //             shit.forEach((key ,val) { 
+            //               resultant.add(
+            //                 {
+            //                   'id': val
+            //                 });
+            //             });
+            //             print(resultant);
+            //              var data =
+            //               {
+            //                     "restaurantId" : widget.id.toString(),
+            //                     "menu":
+            //                     [{
+            //                     "menuName" : menuname.text,
+            //                     "description" : decription.text,
+            //                     "price":price.text,
+            //                     "imagePath": "https://res.cloudinary.com/ddoiozfmr/image/upload/c_thumb,w_200,g_face/Images/xamples/${menuname.text}.jpg",
+            //                     "category": resultant
+            //                     }]
+            //                     };
 
-                          var response =  await ApiCall().addMenu(data, '/addMenu');
-                          print(response.body);
-                          menuname.clear();
-                          decription.clear();
-                          price.clear();
-                          setState(() {
-                             model.remove();
-                          });
-                          _showDone();
-                        }
-                         }
-                            },
-                            // _addResturant,
-                            child: Container(
-                              height: 50,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                color: pureblue,
-                                borderRadius: BorderRadius.all(Radius.circular(100)),
-                              ),
-                              child: Center(
-                                child: Text( loading ? '....' : 'Add Menu >',
-                                style: TextStyle(
-                                  fontFamily: 'Gilroy-ExtraBold',
-                                  fontSize: 18,
-                                  color: Colors.white
-                                ),
-                                ),
-                              ),
+            //               var response =  await ApiCall().addMenu(data, '/addMenu');
+            //               print(response.body);
+            //               menuname.clear();
+            //               decription.clear();
+            //               price.clear();
+            //               setState(() {
+            //                  model.remove();
+            //               });
+            //               _showDone();
+            //             }
+            //              }
+            //                 },
+            //                 // _addResturant,
+            //                 child: Container(
+            //                   height: 50,
+            //                   width: 120,
+            //                   decoration: BoxDecoration(
+            //                     color: pureblue,
+            //                     borderRadius: BorderRadius.all(Radius.circular(100)),
+            //                   ),
+            //                   child: Center(
+            //                     child: Text( loading ? '....' : 'Add Menu >',
+            //                     style: TextStyle(
+            //                       fontFamily: 'Gilroy-ExtraBold',
+            //                       fontSize: 18,
+            //                       color: Colors.white
+            //                     ),
+            //                     ),
+            //                   ),
                             
-                          ),
-                          ),
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                          child: GestureDetector(
-                            onTap: 
-                            (){
-                              setState(() {
-                           model.remove();
-                              });
-                            },
-                            // _addResturant,
-                            child: Container(
-                              height: 50,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                color: pureblue,
-                                borderRadius: BorderRadius.all(Radius.circular(100)),
-                              ),
-                              child: Center(
-                                child: Text( loading ? '....' : 'Remove All <',
-                                style: TextStyle(
-                                  fontFamily: 'Gilroy-ExtraBold',
-                                  fontSize: 18,
-                                  color: Colors.white
-                                ),
-                                ),
-                              ),
+            //               ),
+            //               ),
+            //           ),
+            //           Align(
+            //             alignment: Alignment.topRight,
+            //               child: GestureDetector(
+            //                 onTap: 
+            //                 (){
+            //                   setState(() {
+            //                model.remove();
+            //                   });
+            //                 },
+            //                 // _addResturant,
+            //                 child: Container(
+            //                   height: 50,
+            //                   width: 120,
+            //                   decoration: BoxDecoration(
+            //                     color: pureblue,
+            //                     borderRadius: BorderRadius.all(Radius.circular(100)),
+            //                   ),
+            //                   child: Center(
+            //                     child: Text( loading ? '....' : 'Remove All <',
+            //                     style: TextStyle(
+            //                       fontFamily: 'Gilroy-ExtraBold',
+            //                       fontSize: 18,
+            //                       color: Colors.white
+            //                     ),
+            //                     ),
+            //                   ),
                             
-                          ),
-                          ),
-                      ),
-                    ],
-                  ),
-                       ),
+            //               ),
+            //               ),
+            //           ),
+            //         ],
+            //       ),
+            //            ),
 
-                //           Container(
-                //         width: 120,
-                //       child:RaisedButton(
-                //       onPressed: (){
-                //         setState(() {
-                //            model.remove();
-                //         });
-                //       },
-                //       elevation: 5.0,
-                //       padding: EdgeInsets.all(8.0),
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(30.0),
-                //       ),
-                //       color: Colors.white,
-                //       child: Text('Remove All',
-                //       style: TextStyle(
-                //         color: Color(0xFF0C375B),
-                //         letterSpacing: 1,
-                //         fontSize: 16.0,
-                //         fontWeight: FontWeight.bold,
-                //         fontFamily: 'Gilroy-light',
-                //       ),),
-                //       )
+            //     //           Container(
+            //     //         width: 120,
+            //     //       child:RaisedButton(
+            //     //       onPressed: (){
+            //     //         setState(() {
+            //     //            model.remove();
+            //     //         });
+            //     //       },
+            //     //       elevation: 5.0,
+            //     //       padding: EdgeInsets.all(8.0),
+            //     //       shape: RoundedRectangleBorder(
+            //     //         borderRadius: BorderRadius.circular(30.0),
+            //     //       ),
+            //     //       color: Colors.white,
+            //     //       child: Text('Remove All',
+            //     //       style: TextStyle(
+            //     //         color: Color(0xFF0C375B),
+            //     //         letterSpacing: 1,
+            //     //         fontSize: 16.0,
+            //     //         fontWeight: FontWeight.bold,
+            //     //         fontFamily: 'Gilroy-light',
+            //     //       ),),
+            //     //       )
                     
                    
                   
-                // ),
+            //     // ),
 
-                // SizedBox(height: 10,),
-                // Container(
-                //         width: 120,
-                //       child:RaisedButton(
-                //       onPressed: () async {
+            //     // SizedBox(height: 10,),
+            //     // Container(
+            //     //         width: 120,
+            //     //       child:RaisedButton(
+            //     //       onPressed: () async {
 
-                //         if(slectCategory == null){
-                //       print("Select Barangay");
-                //       _showDistictWarning();
-                //         }else{
-                //         if(formkey.currentState.validate()){
-                //         formkey.currentState.save();
+            //     //         if(slectCategory == null){
+            //     //       print("Select Barangay");
+            //     //       _showDistictWarning();
+            //     //         }else{
+            //     //         if(formkey.currentState.validate()){
+            //     //         formkey.currentState.save();
                         
-                //         Map<String, int> id = {};
-                //         Map<String , int> shit = {};
-                //         List<dynamic> categs = [];
-                //         List resultant = [];
+            //     //         Map<String, int> id = {};
+            //     //         Map<String , int> shit = {};
+            //     //         List<dynamic> categs = [];
+            //     //         List resultant = [];
                         
-                //        for(int i = 0 ; i < model._items.length; i++){
-                //            ids = int.parse(model._items[i]);
-                //             id = {
-                //                 'id': ids
-                //             };
-                //            categs.add(id);
-                //             } 
+            //     //        for(int i = 0 ; i < model._items.length; i++){
+            //     //            ids = int.parse(model._items[i]);
+            //     //             id = {
+            //     //                 'id': ids
+            //     //             };
+            //     //            categs.add(id);
+            //     //             } 
                     
-                //         for(int x = 0; x< categs.length; x++){
-                //             resultant.add(categs[x]);
-                //         }
-                //         shit.forEach((key ,val) { 
-                //           resultant.add(
-                //             {
-                //               'id': val
-                //             });
-                //         });
-                //         print(resultant);
-                //          var data =
-                //           {
-                //                 "restaurantId" : widget.id.toString(),
-                //                 "menu":
-                //                 [{
-                //                 "menuName" : menuname.text,
-                //                 "description" : decription.text,
-                //                 "price":price.text,
-                //                 "category": resultant
-                //                 }]
-                //                 };
-                //           print(data);
+            //     //         for(int x = 0; x< categs.length; x++){
+            //     //             resultant.add(categs[x]);
+            //     //         }
+            //     //         shit.forEach((key ,val) { 
+            //     //           resultant.add(
+            //     //             {
+            //     //               'id': val
+            //     //             });
+            //     //         });
+            //     //         print(resultant);
+            //     //          var data =
+            //     //           {
+            //     //                 "restaurantId" : widget.id.toString(),
+            //     //                 "menu":
+            //     //                 [{
+            //     //                 "menuName" : menuname.text,
+            //     //                 "description" : decription.text,
+            //     //                 "price":price.text,
+            //     //                 "category": resultant
+            //     //                 }]
+            //     //                 };
+            //     //           print(data);
 
-                //           await ApiCall().addMenu(data, '/addMenu');
-                //           menuname.clear();
-                //           decription.clear();
-                //           price.clear();
-                //           setState(() {
-                //              model.remove();
-                //           });
-                //           _showDone();
-                //         }
-                //          }
-                //       },
-                //       elevation: 5.0,
-                //       padding: EdgeInsets.all(8.0),
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(30.0),
-                //       ),
-                //       color: Colors.white,
-                //       child: Text('Add Menu',
-                //       style: TextStyle(
-                //         color: Color(0xFF0C375B),
-                //         letterSpacing: 1,
-                //         fontSize: 16.0,
-                //         fontWeight: FontWeight.bold,
-                //         fontFamily: 'Gilroy-light',
-                //       ),),
-                //       )
+            //     //           await ApiCall().addMenu(data, '/addMenu');
+            //     //           menuname.clear();
+            //     //           decription.clear();
+            //     //           price.clear();
+            //     //           setState(() {
+            //     //              model.remove();
+            //     //           });
+            //     //           _showDone();
+            //     //         }
+            //     //          }
+            //     //       },
+            //     //       elevation: 5.0,
+            //     //       padding: EdgeInsets.all(8.0),
+            //     //       shape: RoundedRectangleBorder(
+            //     //         borderRadius: BorderRadius.circular(30.0),
+            //     //       ),
+            //     //       color: Colors.white,
+            //     //       child: Text('Add Menu',
+            //     //       style: TextStyle(
+            //     //         color: Color(0xFF0C375B),
+            //     //         letterSpacing: 1,
+            //     //         fontSize: 16.0,
+            //     //         fontWeight: FontWeight.bold,
+            //     //         fontFamily: 'Gilroy-light',
+            //     //       ),),
+            //     //       )
                     
                    
                   
-                // ), 
+            //     // ), 
 
                   
 
-                        ],
-                      );
+            //             ],
+            //           );
 
-                    },
-                  ),
+            //         },
+            //       ),
                     
-                )
-              ),
-                      ),
+            //     )
+            //   ),
+            //           ),
 
                   ],
         ),
@@ -781,24 +891,24 @@ void _showDone(){
     }
 
 }
-class Holder {
+// class Holder {
 
-  List<String> _items = []; 
-  List<String> _itemNames=[];
-  void addSome(String item){
-    _items.add(item);
-    print(_items);
-  }
-   void addSomeName(String item){
-    _itemNames.add(item);
-    print(_itemNames);
-  }
-  void remove(){
-    _items.clear();
-    _itemNames.clear();
+//   List<String> _items = []; 
+//   List<String> _itemNames=[];
+//   void addSome(String item){
+//     _items.add(item);
+//     print(_items);
+//   }
+//    void addSomeName(String item){
+//     _itemNames.add(item);
+//     print(_itemNames);
+//   }
+//   void remove(){
+//     _items.clear();
+//     _itemNames.clear();
 
-  }
+//   }
  
 
  
-}
+// }

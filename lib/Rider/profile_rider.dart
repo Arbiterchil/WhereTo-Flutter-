@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:WhereTo/Rider/Tab_navi.dart';
 import 'package:WhereTo/Rider/rider_dash.dart';
 import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
+import 'package:WhereTo/api/api.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:WhereTo/AnCustom/dialogHelp.dart';
@@ -49,8 +50,11 @@ class _RiderProfileState extends State<RiderProfile> {
   @override
   void initState() {
     configSignal();
+
     super.initState();
   }
+
+
 
 void configSignal() async {
      await OneSignal.shared.setLocationShared(true);

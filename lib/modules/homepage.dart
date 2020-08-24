@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
+import 'package:WhereTo/AnCustom/send_helpID.dart';
+import 'package:WhereTo/AnCustom/send_validId.dart';
 import 'package:WhereTo/Transaction/newView_MyOrder.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/Tab_naviUser.dart';
@@ -42,15 +44,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  
   void initState() {
     this.getShared();
     this.configSignal();
-    this.postuserId();
+    
     super.initState();
+    this.postuserId();
   }
 String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
  var data;
  var checkbool;
+ var idmine;
  void getShared() async {
 
       SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -102,8 +107,26 @@ void postuserId() async {
     };
     var responses = await ApiCall().playerIdSave(data,'/assignPlayerId');
     print(responses);
+    // print(userData['id'].toString());
+    var response = await ApiCall().getCheckUser('/getUserVerification/${userData['id'].toString()}');
+   var body = json.decode(response.body);
+   print(body['imagePath']);
+   if(body['imagePath'] == null){
+     print("Fuck This");
+    //  UserDialog_Help.exit(context)
+    // SendsValidId.showgetValid(context);
+    sendsValidId(userData['id'].toString());
+   }else{
+     print("getBack");
+   }
 }
+void sendsValidId(String message){
+showDialog(context: context,
+barrierDismissible: false,
+builder: (context) => ValidIds(id: message,));
 
+
+}
   final List<Widget> _child = 
   [
     SearchDepo(),
@@ -117,30 +140,13 @@ void onTabTapped(int index) {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
      return Scaffold(
       body: WillPopScope(
         onWillPop: () async => false,
-      // onWillPop: () async {
-      //   final isFirstRouteInCurrentTab =
-      //       !await _navigatorKeys[_currentPage].currentState.maybePop();
-      //   if (isFirstRouteInCurrentTab) {
-      //     if (_currentPage != "SearchRestaurant") {
-      //       _selectTab("SearchRestaurant", 1);
-      //       return false;
-      //     }
-      //   }
-      //   return isFirstRouteInCurrentTab ? UserDialog_Help.exit(context) : false ;
-      // },
-        //   child: Stack(
-        //   children: <Widget>[
-            
-        //     _buildOffstageNavigator("UserProfile"),
-        //     _buildOffstageNavigator("SearchRestaurant"),
-        //      _buildOffstageNavigator("MyOrders"),
-        //   ],
-        // ),
         child: _child[_selectedIndex],
 
       ),
@@ -178,16 +184,6 @@ void onTabTapped(int index) {
 
     );
   }
-  //   Widget _buildOffstageNavigator(String tabItem) {
-  //   return Offstage(
-  //     offstage: _currentPage != tabItem,
-  //     child: TabUserNav(
-  //       navigatorKey: _navigatorKeys[tabItem],
-  //       tabItem: tabItem,
-  //     ),
-  //   );
-  // }
-
 void _showDone(String message){
   showDialog(
     context: context,
@@ -286,5 +282,7 @@ void _showDone(String message){
     ); 
     },);
 }
+void _showSenValid(){
 
+}
 }

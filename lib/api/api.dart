@@ -17,6 +17,15 @@ class ApiCall{
     );
   }
 
+   
+   updateImageValid(data ,api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+
    postApproveRemit(data ,api) async {
     var fullurl = url+api;
     return http.post(fullurl,
@@ -28,6 +37,14 @@ class ApiCall{
     var fullurl = url+api;
     return http.post(fullurl,
     body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+
+  
+  getCurentUser(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
     headers: _setHeaders()
     );
   }
@@ -81,10 +98,15 @@ class ApiCall{
     );
   }
 
-  validId(data ,api) async {
+  getCheckUser(api) async {
     var fullurl = url+api;
     return http.post(fullurl,
-    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+  getUserVerification(api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
     headers: _setHeaders()
     );
   }
