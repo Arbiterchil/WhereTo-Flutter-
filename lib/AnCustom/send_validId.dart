@@ -134,7 +134,6 @@ class _ValidIdsState extends State<ValidIds> {
                 physics: AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: 10,),
                      Text(
                               'Valid Id or Student Id',
                               style: TextStyle(

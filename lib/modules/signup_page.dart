@@ -35,12 +35,8 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  File _idPickerImage;
-  final pick = ImagePicker();
-  String stringPath;
   String selectPerson;
   var idbararangSaika;
-  var thimagelink;
 
   final formkey = GlobalKey<FormState>();
 
@@ -508,6 +504,14 @@ class _SignupPageState extends State<SignupPage> {
   }
 
 
+  
+
+ 
+
+ 
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -608,7 +612,7 @@ class _SignupPageState extends State<SignupPage> {
 
     if (selectPerson == null) {
       _showDistictWarning("Select Barangay");
-    } else {
+    }else {
       if (formkey.currentState.validate()) {
         formkey.currentState.save();
         var data = {

@@ -25,7 +25,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
  
     String _currentPage = "SearchRestaurant";
-  
+    String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
+ var data;
+ var checkbool;
+ var idmine;
+ var gethis;
    List<String> pageKeys = ["SearchRestaurant","UserProfile","MyOrders"];
    Map<String,GlobalKey<NavigatorState>> _navigatorKeys =
     {
@@ -35,16 +39,6 @@ class _HomePageState extends State<HomePage> {
    };
  int _selectedIndex = 0;
   var userData;
-  void _selectTab(String tabItem, int index) {
-    if(tabItem == _currentPage ){
-      _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
-    } else {
-      setState(() {
-        _currentPage = pageKeys[index];
-        _selectedIndex = index;
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -67,11 +61,6 @@ class _HomePageState extends State<HomePage> {
    await OneSignal.shared.sendTags({'UR': 'TRUE'});  
 
   }
-String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
- var data;
- var checkbool;
- var idmine;
- var gethis;
  void getShared() async {
 
       SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -165,7 +154,6 @@ void onTabTapped(int index) {
 
         currentIndex: _selectedIndex,
         onTap: onTabTapped,
-        // onTap: (int index) { _selectTab(pageKeys[index], index); },
         items: [
               BottomNavigationBarItem(
               icon: new Icon(Icons.view_list),
@@ -179,10 +167,6 @@ void onTabTapped(int index) {
               icon: new Icon(Icons.home),
               title: new Text('Home'),
             ),
-            // BottomNavigationBarItem(
-            //   icon: new Icon(Icons.person),
-            //   title: new Text('Edit'),
-            // ),
         ],
         type: BottomNavigationBarType.fixed,
         ),   
