@@ -608,29 +608,23 @@ class _SignupPageState extends State<SignupPage> {
 
     if (selectPerson == null) {
       _showDistictWarning("Select Barangay");
-    } else if(_idPickerImage == null){
-       _showDistictWarning("Please put you Valid ID or Student ID");
     } else {
       if (formkey.currentState.validate()) {
         formkey.currentState.save();
-         
         var data = {
           'name': fulname.text,
           'email': email.text,
           'contactNumber': ownNumber.text,
           'address': ownAddress.text,
           'password': ownpass.text,
-          'barangayId': selectPerson.toString(),
-          
+          'barangayId': selectPerson.toString(),          
         };
         var res = await ApiCall().postData(data, '/register');
         var body = json.decode(res.body);
         if (res.statusCode == 200) {
           if (body['success']) {
-
             var valid = await ApiCall().getUserVerification('/submitVerification/${body['user']['id']}');
             print(valid.body);
-
             SharedPreferences localStorage =
                 await SharedPreferences.getInstance();
             localStorage.setBool('check', value);

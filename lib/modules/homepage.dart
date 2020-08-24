@@ -287,7 +287,4 @@ void _showDone(String message){
     ); 
     },);
 }
-void _showSenValid(){
-
-}
 }
