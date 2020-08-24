@@ -784,22 +784,8 @@ class _SignupPageState extends State<SignupPage> {
         var body = json.decode(res.body);
         if (res.statusCode == 200) {
           if (body['success']) {
-           var viewthis = path.basename(_idPickerImage.path);
-    CloudinaryClient client = new CloudinaryClient(
-      "661529868759591",
-      "6HJCxVBM8oUap_rIjqc24kKfR5w",
-      "ddoiozfmr");
-    await client.uploadImage( _idPickerImage.path ,filename: viewthis) .then((result){
-         stringPath = result.secure_url;
-          print(stringPath);
-          thimagelink = stringPath;
-      })
-      .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
-            var valididData = {
-          "userId": body['user']['id'], 
-          "imagePath": thimagelink
-            };
-            var valid = await ApiCall().validId(valididData, '/submitVerification');
+
+            var valid = await ApiCall().getUserVerification('/submitVerification/${body['user']['id']}');
             print(valid.body);
 
             SharedPreferences localStorage =
