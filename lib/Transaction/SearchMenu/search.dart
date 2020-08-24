@@ -25,7 +25,7 @@ class SearchResto extends StatefulWidget {
 class _SearchRestoState extends State<SearchResto> {
   var focus = new FocusNode();
     
-  BlocSearch blocSearch;
+    BlocSearch blocSearch;
     Future<void>getBloc(String id) async {
     await blocSearch.getmenu(id);
     }
@@ -37,7 +37,7 @@ class _SearchRestoState extends State<SearchResto> {
   TextEditingController search =TextEditingController();
   @override
   Widget build(BuildContext context) {
-     setState(() {
+    setState(() {
     blocSearch = BlocSearch();
     getBloc(search.text); 
     });
@@ -61,7 +61,7 @@ class _SearchRestoState extends State<SearchResto> {
           controller: search,
           onChanged: (val){
             val =search.text;
-            getBloc(search.text); 
+            getBloc(val); 
           },
           textInputAction: TextInputAction.search,
           decoration: InputDecoration(
@@ -143,7 +143,6 @@ class _SearchRestoState extends State<SearchResto> {
                                 
                                 }).show();
                                 } else {
-<<<<<<< HEAD
                                   // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
                                   //   print(
                                   //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
@@ -152,21 +151,21 @@ class _SearchRestoState extends State<SearchResto> {
                                   // } else {
                                   //   if (int.parse(formatNow.split(":")[0]) >=
                                   //       int.parse(formatOpen.split(":")[0])) {
+                                    
                                       Navigator.push(
-=======
-                                    Navigator.pushReplacement(
->>>>>>> e418047223027811543f8780517ab06a0d1c9489
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) => ListStactic(
                                                     restauID: snapshot
-                                                        .data[index].id
+                                                        .data[index].restaurantId
                                                         .toString(),
                                                     nameRestau: snapshot
                                                         .data[index]
                                                         .restaurantName
                                                         .toString(),
                                                         baranggay: snapshot.data[index].barangayName,
+                                                     address:snapshot.data[index].address.toString(),
+                                                     categID: snapshot.data[index].categoryId.toString(),  
                                                   )));
                                    
                                 }

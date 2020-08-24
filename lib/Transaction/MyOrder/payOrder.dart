@@ -85,7 +85,7 @@ class _PayOrderState extends State<PayOrder> {
                       result1.add({"name": key, "quantity": value});
                     });
 
-                    int total = 0;
+                    double total = 0;
                     for (int z = 0; z < snapshot.length; z++) {
                       total += snapshot[z].price * snapshot[z].quantity;
                     }
@@ -247,7 +247,7 @@ class _PayOrderState extends State<PayOrder> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 250),
+                          padding: EdgeInsets.only(top: 50),
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: Stack(

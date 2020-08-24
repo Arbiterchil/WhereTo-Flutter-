@@ -12,30 +12,27 @@ class Menu {
         this.menuId,
         this.restaurantId,
         this.restaurantName,
-        this.address,
-        this.barangayName,
         this.menuName,
-        this.categoryName,
+        this.description,
+        this.price,
         this.imagePath,
     });
 
     final int menuId;
     final int restaurantId;
     final String restaurantName;
-    final String address;
-    final String barangayName;
     final String menuName;
-    final String categoryName;
+    final String description;
+    final int price;
     final String imagePath;
 
     factory Menu.fromJson(Map<String, dynamic> json) => Menu(
         menuId: json["menuId"],
         restaurantId: json["restaurantId"],
         restaurantName: json["restaurantName"],
-        address: json["address"],
-        barangayName: json["barangayName"],
         menuName: json["menuName"],
-        categoryName: json["categoryName"],
+        description: json["description"],
+        price: json["price"],
         imagePath: json["imagePath"],
     );
 
@@ -43,11 +40,9 @@ class Menu {
         "menuId": menuId,
         "restaurantId": restaurantId,
         "restaurantName": restaurantName,
-        "address": address,
-        "barangayName": barangayName,
         "menuName": menuName,
-        "categoryName": categoryName,
+        "description": description,
+        "price": price,
         "imagePath": imagePath,
     };
 }
-

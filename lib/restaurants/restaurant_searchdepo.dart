@@ -156,7 +156,7 @@ class _SearchDepoState extends State<SearchDepo> {
                                 animType: AnimType.SCALE,
                                 dialogType: DialogType.INFO,
                                 title: "Location Not Available",
-                                desc: "Only for Tagum City is Available to use this APP for a while!",
+                                desc: "This app is only available in Tagum City for the mean time",
                                 btnOkText: "Comeback Later",
                                 btnOkColor: Color(0xFF0C375B),
                                 btnOkOnPress: () async {

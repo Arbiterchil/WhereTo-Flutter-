@@ -49,7 +49,7 @@ Userid.getUser(UserID userID){
 class TransactionOrders{
   String name;
   String description;
-  int price;
+  double price;
   int quantity;
   int total;
   int id;
