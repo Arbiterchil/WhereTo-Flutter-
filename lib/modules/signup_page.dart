@@ -234,50 +234,51 @@ class _SignupPageState extends State<SignupPage> {
               height: 50.0,
               child: TextFormField(
                 readOnly: true,
-                onTap: () {
-                  AwesomeDialog(
-                      context: context,
-                      headerAnimationLoop: false,
-                      animType: AnimType.SCALE,
-                      dialogType: DialogType.INFO,
-                      title: "Location",
-                      desc: "Get Delivery Address Location",
-                      btnOkText: "Get Address",
-                      btnOkColor: Color(0xFF0C375B),
-                      btnOkOnPress: () async {
-                        // var location = Location();
-                        // bool _serviceEnabled;
-                        // _serviceEnabled = await location.serviceEnabled();
-                        // if (!_serviceEnabled) {
-                        //   _serviceEnabled = await location.requestService();
-                        //   if (!_serviceEnabled) {
-                        //     return;
-                        //   }
-                        // }
-                        // PermissionStatus permissionStatus =
-                        //     await location.hasPermission();
-                        // if (permissionStatus == PermissionStatus.denied) {
-                        //   permissionStatus = await location.requestPermission();
-                        //   if (permissionStatus != PermissionStatus.granted) {
-                        //     return;
-                        //   }
-                        // }else if(permissionStatus ==PermissionStatus.deniedForever){
-                        //   permissionStatus = await location.requestPermission();
-                        //   if (permissionStatus != PermissionStatus.granted) {
-                        //     return;
-                        //   }
-                        // }
-                        // var userLocation = await location.getLocation();
-                        // setState(() {
-
-                        //   ownAddress.text ="${userLocation.latitude},${userLocation.longitude}";
-                        // });
-                          Position postion =await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+                onTap: ()  async{
+                   Position postion =await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                           final coordinates =new Coordinates(postion.latitude,postion.longitude);
                           var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
                           var first =addresses.first;
                           ownAddress.text ="${first.addressLine}";
-                      }).show();
+                  // AwesomeDialog(
+                  //     context: context,
+                  //     headerAnimationLoop: false,
+                  //     animType: AnimType.SCALE,
+                  //     dialogType: DialogType.INFO,
+                  //     title: "Location",
+                  //     desc: "Get Delivery Address Location",
+                  //     btnOkText: "Get Address",
+                  //     btnOkColor: Color(0xFF0C375B),
+                  //     btnOkOnPress: () async {
+                  //       // var location = Location();
+                  //       // bool _serviceEnabled;
+                  //       // _serviceEnabled = await location.serviceEnabled();
+                  //       // if (!_serviceEnabled) {
+                  //       //   _serviceEnabled = await location.requestService();
+                  //       //   if (!_serviceEnabled) {
+                  //       //     return;
+                  //       //   }
+                  //       // }
+                  //       // PermissionStatus permissionStatus =
+                  //       //     await location.hasPermission();
+                  //       // if (permissionStatus == PermissionStatus.denied) {
+                  //       //   permissionStatus = await location.requestPermission();
+                  //       //   if (permissionStatus != PermissionStatus.granted) {
+                  //       //     return;
+                  //       //   }
+                  //       // }else if(permissionStatus ==PermissionStatus.deniedForever){
+                  //       //   permissionStatus = await location.requestPermission();
+                  //       //   if (permissionStatus != PermissionStatus.granted) {
+                  //       //     return;
+                  //       //   }
+                  //       // }
+                  //       // var userLocation = await location.getLocation();
+                  //       // setState(() {
+
+                  //       //   ownAddress.text ="${userLocation.latitude},${userLocation.longitude}";
+                  //       // });
+                         
+                  //     }).show();
                 },
                 controller: ownAddress,
                 validator: (val) =>
