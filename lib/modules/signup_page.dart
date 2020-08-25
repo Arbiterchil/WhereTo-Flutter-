@@ -629,6 +629,7 @@ class _SignupPageState extends State<SignupPage> {
           if (body['success']) {
             var valid = await ApiCall().getUserVerification('/submitVerification/${body['user']['id']}');
             print(valid.body);
+            
             SharedPreferences localStorage =
                 await SharedPreferences.getInstance();
             localStorage.setBool('check', value);

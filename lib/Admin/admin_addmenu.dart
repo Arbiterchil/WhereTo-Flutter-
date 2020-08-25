@@ -1,12 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:WhereTo/Admin/admin_addrestu.dart';
 import 'package:WhereTo/Admin/admin_trial.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:path/path.dart' as path;
 import '../styletext.dart';
 
 class AddmenuAdmin extends StatefulWidget {
@@ -40,6 +44,10 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
   List dataCategory = List();
   List<String> items = [];
   String selectPerson;
+  final pick = ImagePicker();
+   File _idPickerImage;
+   String stringPath;
+   var thimagelink;
   callCategory() async{
 
     var respon = await ApiCall().getCategory('/getCategories');
@@ -53,6 +61,76 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
  
   String slectCategory;
   String nameCategory;
+
+   getYourIdImage( ImageSource source) async{
+
+    var imageIdValid = await pick.getImage(source: source); 
+       File crop = await ImageCropper.cropImage(
+      sourcePath: imageIdValid.path ,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'Where To Id Cropper',
+          toolbarColor: pureblue,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+      ) );
+    setState(() {
+      _idPickerImage = crop;
+      
+      // print(imageIdValid.path);
+    });
+    
+
+  }
+
+
+   Widget _getImage(){
+
+    if(_idPickerImage != null){
+
+      return Padding(
+        padding: const EdgeInsets.only(left: 20,right: 20),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.all(Radius.circular(10),
+          ),
+          ),
+          child: Image.file(
+              _idPickerImage,
+              fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }else{
+        return Container(
+          width: 80,
+        height: 80,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: pureblue
+          ),
+          child: Center(
+            child: Icon(
+              Icons.person,
+              size: 40,
+              color: Colors.white,
+            ),
+          ),
+        );
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +143,30 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
+                               SizedBox(height: 10,),
+                    _getImage(),
+                    SizedBox(height: 20,),
+                     GestureDetector(
+                              onTap: (){
+                                getYourIdImage(ImageSource.gallery);
+
+                              }, 
+                              child: Container(
+                                height: 40,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                  color: pureblue,
+                                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                                ),
+                                child: Center(
+                                 child: Icon(Icons.picture_in_picture,
+                                 size: 20,
+                                 color: Colors.white
+                                 ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10,),
                             Container(
                               width: MediaQuery.of(context).size.width,
                               child: Stack(
@@ -134,12 +236,24 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
 void getAddMenu() async{
 
    if(selectPerson == null){
-    _showDistictWarning();
-
-   }else{
+    _showDistictWarning("Select a Category");
+ }else if(_idPickerImage == null){
+      _showDistictWarning("Please Select an Image.");
+    }else{
       if(formkey.currentState.validate()){
        formkey.currentState.save();
-      var data =
+           var viewthis = path.basename(_idPickerImage.path);
+                            CloudinaryClient client = new CloudinaryClient(
+                              "822285642732717",
+                              "6k0dMMg3As30mPmjeWLeFL5-qQ4",
+                              "amadpogi");
+                            await client.uploadImage( _idPickerImage.path ,filename: "Menu/$viewthis") .then((result){
+                                stringPath = result.secure_url;
+                                  print(stringPath);
+                                  thimagelink = stringPath;
+                              })
+                              .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
+                        var data =    
                           {
                                 "restaurantId" : widget.id.toString(),
                                 "menu":
@@ -147,7 +261,7 @@ void getAddMenu() async{
                                 "menuName" : menuname.text,
                                 "description" : decription.text,
                                 "price":price.text,
-                                "imagePath": "https://res.cloudinary.com/amadpogi/image/upload/Menu/${menuname.text}.jpg",
+                                "imagePath": thimagelink,
                                 "categoryId": selectPerson.toString()
                                 }]
                                 };
@@ -671,7 +785,7 @@ void getAddMenu() async{
     );
 
   }
-   void _showDistictWarning(){
+   void _showDistictWarning(String message){
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -681,13 +795,7 @@ void getAddMenu() async{
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: mCustomDistictWarning(context),
-    ); 
-    },);
-}
- mCustomDistictWarning(BuildContext context){
-
-       return Container(
+      child: Container(
         height: 300.0,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
@@ -744,7 +852,7 @@ void getAddMenu() async{
                 
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: Text("Please Select a Category.",
+                  child: Text(message,
                   style: TextStyle(
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,
@@ -776,10 +884,10 @@ void getAddMenu() async{
               ],
           ),
         ),
-      );
-
-
-    }
+      ),
+    ); 
+    },);
+}
 void _showDone(){
   showDialog(
     context: context,

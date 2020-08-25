@@ -153,7 +153,7 @@ class _SearchRestoState extends State<SearchResto> {
                                   //       int.parse(formatOpen.split(":")[0])) {
                                     
                                       setState(() {
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) => ListStactic(
