@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:WhereTo/Admin/admin_addmenu.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/editProfileScreen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 import '../styletext.dart';
 
 class AdminAddRestaurant extends StatefulWidget {
@@ -29,7 +32,10 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
     String datesofdays;
     List dataBarangay = List();
     bool loading = false;
-
+    final pick = ImagePicker();
+   File _idPickerImage;
+   String stringPath;
+   var thimagelink;
 
     var nani;
     Map<String , String> weekDays = {};
@@ -572,6 +578,77 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
         ),
       );
     }
+
+     getYourIdImage( ImageSource source) async{
+
+    var imageIdValid = await pick.getImage(source: source); 
+       File crop = await ImageCropper.cropImage(
+      sourcePath: imageIdValid.path ,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'Where To Id Cropper',
+          toolbarColor: pureblue,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+      ) );
+    setState(() {
+      _idPickerImage = crop;
+      
+      // print(imageIdValid.path);
+    });
+    
+
+  }
+
+
+   Widget _getImage(){
+
+    if(_idPickerImage != null){
+
+      return Padding(
+        padding: const EdgeInsets.only(left: 20,right: 20),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.all(Radius.circular(10),
+          ),
+          ),
+          child: Image.file(
+              _idPickerImage,
+              fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }else{
+        return Container(
+          width: 80,
+        height: 80,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: pureblue
+          ),
+          child: Center(
+            child: Icon(
+              Icons.person,
+              size: 40,
+              color: Colors.white,
+            ),
+          ),
+        );
+    }
+
+  }
+
+
 
   @override
   void initState() {

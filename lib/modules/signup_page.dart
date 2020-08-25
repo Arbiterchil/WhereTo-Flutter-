@@ -536,7 +536,6 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ),
                 SizedBox(height: 20,),
-                SizedBox(height: 10,),
                 Padding(
                   padding: const EdgeInsets.only(left: 40,right: 40),
                   child: _formRegister(context),
