@@ -47,22 +47,22 @@ class _SearchDepoState extends State<SearchDepo> {
 
   @override
   Widget build(BuildContext context) {
-    var connectionStatus =Provider.of<ConnectivityStatus>(context);
-    if(connectionStatus ==ConnectivityStatus.Wifi){
-      asuka.showSnackBar(SnackBar(content: Text("Connected",style: TextStyle(
-        color: Colors.green
-      ),)));
-    }
-    if(connectionStatus ==ConnectivityStatus.Offline){
-      asuka.showSnackBar(SnackBar(content: Text("No Internet",style: TextStyle(
-        color: Colors.red
-      ),)));
-    }
-    if(connectionStatus ==ConnectivityStatus.Cellular){
-      asuka.showSnackBar(SnackBar(content: Text("Mobile Data",style: TextStyle(
-        color: Colors.orange
-      ),)));
-    }
+    // var connectionStatus =Provider.of<ConnectivityStatus>(context);
+    // if(connectionStatus ==ConnectivityStatus.Wifi){
+    //   asuka.showSnackBar(SnackBar(content: Text("Connected",style: TextStyle(
+    //     color: Colors.green
+    //   ),)));
+    // }
+    // if(connectionStatus ==ConnectivityStatus.Offline){
+    //   asuka.showSnackBar(SnackBar(content: Text("No Internet",style: TextStyle(
+    //     color: Colors.red
+    //   ),)));
+    // }
+    // if(connectionStatus ==ConnectivityStatus.Cellular){
+    //   asuka.showSnackBar(SnackBar(content: Text("Mobile Data",style: TextStyle(
+    //     color: Colors.orange
+    //   ),)));
+    // }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: pureblue,

@@ -152,7 +152,8 @@ class _SearchRestoState extends State<SearchResto> {
                                   //   if (int.parse(formatNow.split(":")[0]) >=
                                   //       int.parse(formatOpen.split(":")[0])) {
                                     
-                                      Navigator.push(
+                                      setState(() {
+                                        Navigator.push(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) => ListStactic(
@@ -167,6 +168,7 @@ class _SearchRestoState extends State<SearchResto> {
                                                      address:snapshot.data[index].address.toString(),
                                                      categID: snapshot.data[index].categoryId.toString(),  
                                                   )));
+                                      });
                                    
                                 }
                         },
