@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:WhereTo/Admin/admin_addmenu.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/editProfileScreen.dart';
+import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -671,6 +672,30 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                     SizedBox(height: 10,),
+                    _getImage(),
+                    SizedBox(height: 20,),
+                        GestureDetector(
+                              onTap: (){
+                                getYourIdImage(ImageSource.gallery);
+
+                              }, 
+                              child: Container(
+                                height: 40,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                  color: pureblue,
+                                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                                ),
+                                child: Center(
+                                 child: Icon(Icons.picture_in_picture,
+                                 size: 20,
+                                 color: Colors.white
+                                 ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10,),
                       formAdd(),
                       SizedBox(height: 40,),
                        Container(
@@ -682,11 +707,14 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                         alignment: Alignment.topRight,
                           child: GestureDetector(
                             onTap: 
-                            // (){
-                            //   Navigator.pushReplacement(  
-                            // context,
-                            // new MaterialPageRoute(
-                            //     builder: (context) => AddmenuAdmin()));
+                            // () async{
+
+                              
+
+                            // //   Navigator.pushReplacement(  
+                            // // context,
+                            // // new MaterialPageRoute(
+                            // //     builder: (context) => AddmenuAdmin()));
                             // },
                             _addResturant,
                             child: Container(
@@ -727,13 +755,43 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 setState(() {
      loading =true;
    });
+    // if(_idPickerImage == null){
+    //                             print("Please Select your valid id. ");
+    //                          }else{
+
+    //                            var viewthis = path.basename(_idPickerImage.path);
+    //                         CloudinaryClient client = new CloudinaryClient(
+    //                           "822285642732717",
+    //                           "6k0dMMg3As30mPmjeWLeFL5-qQ4",
+    //                           "amadpogi");
+    //                         await client.uploadImage( _idPickerImage.path ,filename: "Restaurant/$viewthis") .then((result){
+    //                             stringPath = result.secure_url;
+    //                               print(stringPath);
+    //                               thimagelink = stringPath;
+    //                           })
+    //                           .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
+
+    //                          }
     if(selectPerson == null || opentimeString == null ||
        closetimeString == null || datesofdays == null){
          print('tan aw balik sa part');
-         _showDial();
+         _showDial("Please Specify all empty Fields");
+    }else if(_idPickerImage == null){
+      _showDial("Please Select an Image.");
     }else{
        if(formkey.currentState.validate()){
           formkey.currentState.save();
+          var viewthis = path.basename(_idPickerImage.path);
+                            CloudinaryClient client = new CloudinaryClient(
+                              "822285642732717",
+                              "6k0dMMg3As30mPmjeWLeFL5-qQ4",
+                              "amadpogi");
+                            await client.uploadImage( _idPickerImage.path ,filename: "Restaurant/$viewthis") .then((result){
+                                stringPath = result.secure_url;
+                                  print(stringPath);
+                                  thimagelink = stringPath;
+                              })
+                              .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
         var data = {
                 "restaurantName": retaurantname.text,
                 "address": address.text, 
@@ -745,7 +803,7 @@ setState(() {
                 "isFeatured": 1,
                 "owner": owner.text,
                 "representative" : respresent.text,
-                "imagePath": "https://res.cloudinary.com/amadpogi/image/upload/Restaurant/${retaurantname.text}.jpg"
+                "imagePath": thimagelink
                 };
 
             var response = await ApiCall().addRestaurant(data, '/addRestaurant');
@@ -876,7 +934,7 @@ void _showDone(String message){
 }
 
   
-void _showDial(){
+void _showDial( String message){
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -886,13 +944,7 @@ void _showDial(){
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: mCustom(context),
-    ); 
-    },);
-}
- mCustom(BuildContext context){
-
-       return Container(
+      child: Container(
         height: 300.0,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
@@ -948,7 +1000,7 @@ void _showDial(){
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: Text("Specify the empty Fields.",
+                  child: Text(message,
                   style: TextStyle(
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,
@@ -980,9 +1032,10 @@ void _showDial(){
               ],
           ),
         ),
-      );
-
-
-    }
+      ),
+    ); 
+    },);
+}
+ 
 
 }

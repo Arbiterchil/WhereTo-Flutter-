@@ -217,7 +217,7 @@ class _ValidIdsState extends State<ValidIds> {
                               "822285642732717",
                               "6k0dMMg3As30mPmjeWLeFL5-qQ4",
                               "amadpogi");
-                            await client.uploadImage( _idPickerImage.path ,filename: viewthis) .then((result){
+                            await client.uploadImage( _idPickerImage.path ,filename: "Valid ID/$viewthis") .then((result){
                                 stringPath = result.secure_url;
                                   print(stringPath);
                                   thimagelink = stringPath;
