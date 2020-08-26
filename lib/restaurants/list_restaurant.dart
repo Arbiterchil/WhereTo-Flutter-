@@ -14,12 +14,13 @@ import 'package:WhereTo/restaurants/New_ViewRestaurant/blocMenu.dart';
 import 'package:WhereTo/restaurants/card_menu.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:badges/badges.dart';
-import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 class ListStactic extends StatefulWidget {
   final String nameRestau;
@@ -45,12 +46,14 @@ class _ListStacticState extends State<ListStactic>
   TabController _tabController;
   @override
   void initState() {
+   
     super.initState();
     
   }
 
   @override
   Widget build(BuildContext context) {
+    
     setState(() {
       menuBloc = MenuBloc();
       getCateg();
@@ -169,12 +172,14 @@ class _ListStacticState extends State<ListStactic>
                           Align(
                             alignment: Alignment.topCenter,
                             child:TabBar(
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            indicator: BubbleTabIndicator(
-                              indicatorHeight: 20.0,
-                              indicatorColor: Colors.blue,
-                              tabBarIndicatorSize: TabBarIndicatorSize.tab
-                            ),
+                            physics: AlwaysScrollableScrollPhysics(),
+                            indicatorSize: TabBarIndicatorSize.label,
+                            labelColor: Colors.white,
+                            unselectedLabelColor:Colors.transparent,
+                            indicator: MD2Indicator(
+                              indicatorHeight: 5, 
+                              indicatorColor: Colors.blue, 
+                              indicatorSize:MD2IndicatorSize.normal),
                             isScrollable: true,
                             tabs: datasnapshot.data.map<Widget>((Category category){
                               // _tabController = new TabController(length: category.id, vsync: this);

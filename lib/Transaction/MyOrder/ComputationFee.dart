@@ -177,13 +177,15 @@ class ComputationFee{
     }
     if (barangayWidget.contains("Magugpo") &&
         barangayname.contains("Magugpo")) {
-      totalOrder = 40;
+        totalOrder = 40;
     } else if (barangayWidget.contains("Magugpo") &&
         barangayname != "Magugpo") {
-      totalOrder = restoCharge + userCharge;
+        totalOrder = restoCharge + userCharge;
+    } else if (barangayWidget!="Magugpo" &&
+        barangayname.contains("Magugpo")) {
+        totalOrder = restoCharge + userCharge;
     } else if (barangayWidget != "Magugpo" && barangayname != "Magugpo") {
-      totalOrder = 40 + restoCharge + userCharge;
-        
+        totalOrder = 40 + restoCharge + userCharge; 
      
     }
     return totalOrder;

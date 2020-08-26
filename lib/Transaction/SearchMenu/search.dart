@@ -18,6 +18,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ntp/ntp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 class SearchResto extends StatefulWidget {
   @override
   _SearchRestoState createState() => _SearchRestoState();
@@ -89,6 +90,22 @@ class _SearchRestoState extends State<SearchResto> {
           child: StreamBuilder<List<FilterRestaurant>>(
             stream: blocSearch.streamMenuApi,
             builder: (context,snapshot){
+              ProgressDialog pr = ProgressDialog(context);
+              pr.style(
+                message: "Loading Please Wait..",
+                borderRadius: 10.0,
+                backgroundColor: Colors.white,
+                progressWidget: CircularProgressIndicator(),
+                elevation: 10.0,
+                insetAnimCurve: Curves.easeInExpo,
+                progressTextStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w300,
+                    fontFamily: "Gilroy-light"
+                )
+              );
+              pr =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
               if(snapshot.hasData){
               if(snapshot.data.length >0){
 
@@ -100,7 +117,8 @@ class _SearchRestoState extends State<SearchResto> {
                          if(snapshot.data.length >0){
                             return GestureDetector(
                         onTap: () async{
-                           SharedPreferences local =
+                               await pr.show();
+                                SharedPreferences local =
                                 await SharedPreferences.getInstance();
                                 var userjson = local.getString('user');
                                 var user = json.decode(userjson);
@@ -132,8 +150,10 @@ class _SearchRestoState extends State<SearchResto> {
                                   }
                                 }
                                 if (isRead) {
+                                  await pr.hide();
                                 UserDialog_Help.restaurantDialog(context);
                                 } else {
+                                  await pr.hide();
                                   // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
                                   //   print(
                                   //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");

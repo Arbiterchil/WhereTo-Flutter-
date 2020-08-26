@@ -4,6 +4,7 @@ import 'package:WhereTo/Transaction/x_view.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'MyOrder/StatusStepper.dart';
@@ -35,15 +36,30 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
 
   var userData;
   var userID;
+  bool isTrue =false;
+  SharedPreferences localStorage;
   @override
   void initState() {
     getData();
-    _getUserInfo().then((id){
-      setState(() {
-        userID =id;
-      });
-    });
     super.initState();
+    SharedPreferences.getInstance().then((SharedPreferences value){
+    localStorage =value;
+    var userJson =localStorage.getString('user');
+    var user = json.decode(userJson);
+    setState(() {
+       userData = user;
+      if(userData['id'] ==null){
+        isTrue =false;
+      }else{
+        isTrue =true;
+      }
+      if(isTrue){
+        userID =userData['id'];
+      }else{
+        userID ="0";
+      }
+    });
+    });
     
   }
    getData() async{
@@ -66,21 +82,12 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
       });
   }
 
-    _getUserInfo() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var userJson = localStorage.getString('user');
-    var user = json.decode(userJson);
-    setState(() {
-      userData = user;
-    });
-    return userData;
-  }
-
+    
   @override
   Widget build(BuildContext context) {
     setState(() {
       bloc = BlocAll();
-      getBloc(userID['id'].toString());  
+      getBloc(userID);  
     });
     return Scaffold(
       body: Stack(

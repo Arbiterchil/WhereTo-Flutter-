@@ -9,7 +9,8 @@ import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
 
 class TransactionList extends StatefulWidget {
   final String barangay;
@@ -104,6 +105,22 @@ class _TransactionListState extends State<TransactionList> {
                       return false;
                     },
                     builder: (context, snapshot) {
+                      ProgressDialog pr = ProgressDialog(context);
+                      pr.style(
+                          message: "Calculating Please Wait a Moment..",
+                          borderRadius: 10.0,
+                          backgroundColor: Colors.white,
+                          progressWidget: CircularProgressIndicator(),
+                          elevation: 10.0,
+                          insetAnimCurve: Curves.easeInExpo,
+                          progressTextStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 10.0,
+                              fontWeight: FontWeight.w300,
+                              fontFamily: "Gilroy-light"));
+                      pr = ProgressDialog(context,
+                          type: ProgressDialogType.Normal,
+                          isDismissible: false);
                       return Stack(
                         children: <Widget>[
                           Padding(
@@ -166,7 +183,8 @@ class _TransactionListState extends State<TransactionList> {
                                                                           30))),
                                                       child: Center(
                                                         child: Text(
-                                                          "₱ " +snapshot[index]
+                                                          "₱ " +
+                                                              snapshot[index]
                                                                   .price
                                                                   .toString(),
                                                           style: GoogleFonts
@@ -356,20 +374,22 @@ class _TransactionListState extends State<TransactionList> {
                                     width: double.infinity,
                                     child: GestureDetector(
                                       onTap: () async {
-                                         var fee =await ComputationFee().getFee(widget.barangay);
-                                           if(snapshot.length ==0){
-                                             print("No Order");
-                                           }else{
-                                             Navigator.push(
+                                        pr.show();
+                                        var fee = await ComputationFee().getFee(widget.barangay);
+                                        if (snapshot.length == 0) {
+                                          print("No Order");
+                                          pr.hide();
+                                        } else {
+                                          pr.hide();
+                                          Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => PayOrder(
-                                                        fee: fee,
-                                                        restauID: widget.restauID
-                                                      )));
-                                           }
-                                          
-                                       
+                                                  builder: (context) =>
+                                                      PayOrder(
+                                                          fee: fee,
+                                                          restauID: widget
+                                                              .restauID)));
+                                        }
                                       },
                                       child: Container(
                                         height: 60,
