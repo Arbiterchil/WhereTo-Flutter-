@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/AnCustom/restaurant_front.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/Transaction/SearchMenu/FeaturedRestaurant.dart';
@@ -24,7 +25,7 @@ class SearchResto extends StatefulWidget {
 
 class _SearchRestoState extends State<SearchResto> {
   var focus = new FocusNode();
-    
+     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     BlocSearch blocSearch;
     Future<void>getBloc(String id) async {
     await blocSearch.getmenu(id);
@@ -44,6 +45,7 @@ class _SearchRestoState extends State<SearchResto> {
     // FocusScope.of(context).requestFocus(focus);
     // focus.requestFocus();
     return Scaffold(
+      key: _scaffoldKey,
       // backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -99,7 +101,7 @@ class _SearchRestoState extends State<SearchResto> {
                             return GestureDetector(
                         onTap: () async{
                            SharedPreferences local =
-                                    await SharedPreferences.getInstance();
+                                await SharedPreferences.getInstance();
                                 var userjson = local.getString('user');
                                 var user = json.decode(userjson);
                                 var restaurant;
@@ -130,18 +132,7 @@ class _SearchRestoState extends State<SearchResto> {
                                   }
                                 }
                                 if (isRead) {
-                                AwesomeDialog(
-                                context: context,
-                                headerAnimationLoop: false,
-                                animType: AnimType.SCALE,
-                                dialogType: DialogType.INFO,
-                                title: "You Have a Pending Transaction",
-                                desc: "Only One transaction on this Restaurant",
-                                btnOkText: "Okay",
-                                btnOkColor: Color(0xFF0C375B),
-                                btnOkOnPress: () async {
-                                
-                                }).show();
+                                UserDialog_Help.restaurantDialog(context);
                                 } else {
                                   // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
                                   //   print(
@@ -152,8 +143,7 @@ class _SearchRestoState extends State<SearchResto> {
                                   //   if (int.parse(formatNow.split(":")[0]) >=
                                   //       int.parse(formatOpen.split(":")[0])) {
                                     
-                                      setState(() {
-                                        Navigator.push(
+                                      Navigator.pushReplacement(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) => ListStactic(
@@ -168,7 +158,6 @@ class _SearchRestoState extends State<SearchResto> {
                                                      address:snapshot.data[index].address.toString(),
                                                      categID: snapshot.data[index].categoryId.toString(),  
                                                   )));
-                                      });
                                    
                                 }
                         },

@@ -51,7 +51,7 @@ class LocationSet extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30.0)),
               onPressed: () async {},
               child: Text(
-                "Get Location Address",
+                "You have a pending transaction on this Restaurant",
                 style: TextStyle(
                     color: Color(0xFF398AE5),
                     fontWeight: FontWeight.w700,

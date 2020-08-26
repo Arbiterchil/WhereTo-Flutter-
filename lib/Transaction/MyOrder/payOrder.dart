@@ -155,7 +155,7 @@ class _PayOrderState extends State<PayOrder> {
                                             ),
                                           ),
                                           trailing: Text(
-                                            "‎$total",
+                                            "‎${total.toStringAsFixed(2)}",
                                             style: TextStyle(
                                               fontFamily: "Gilroy-light",
                                               color: Colors.white,
@@ -231,7 +231,7 @@ class _PayOrderState extends State<PayOrder> {
                                             ),
                                           ),
                                           trailing: Text(
-                                            "‎$totalOrder",
+                                            "‎${totalOrder.toStringAsFixed(2)}",
                                             style: TextStyle(
                                               fontFamily: "Gilroy-light",
                                               color: Colors.white,

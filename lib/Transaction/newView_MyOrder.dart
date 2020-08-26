@@ -34,12 +34,17 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
   }
 
   var userData;
-
+  var userID;
   @override
   void initState() {
     getData();
+    _getUserInfo().then((id){
+      setState(() {
+        userID =id;
+      });
+    });
     super.initState();
-    _getUserInfo();
+    
   }
    getData() async{
      OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
@@ -61,20 +66,21 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
       });
   }
 
-  void _getUserInfo() async {
+    _getUserInfo() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
     var user = json.decode(userJson);
     setState(() {
       userData = user;
     });
+    return userData;
   }
 
   @override
   Widget build(BuildContext context) {
     setState(() {
       bloc = BlocAll();
-      getBloc(userData['id'].toString());  
+      getBloc(userID['id'].toString());  
     });
     return Scaffold(
       body: Stack(

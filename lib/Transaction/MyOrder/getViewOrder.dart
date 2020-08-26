@@ -6,7 +6,7 @@ import 'dart:convert';
 
 List<ViewUserOrder> viewUserOrderFromJson(String str) => List<ViewUserOrder>.from(json.decode(str).map((x) => ViewUserOrder.fromJson(x)));
 
-String viewUserOrderToJson(List<ViewUserOrder> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 
 class ViewUserOrder {
     ViewUserOrder({
