@@ -56,34 +56,46 @@ class _XviewTransacState extends State<XviewTransac> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Container(
+                    width: 190,
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(widget.restaurantName,
-                          style: TextStyle(
+                          Flexible(
+                            child: Text(widget.restaurantName,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
                         color: Colors.white,
                         fontSize: 18.0,
                         letterSpacing: 1,
                         fontFamily: 'Gilroy-ExtraBold'
                       ),
+                            ),
                           ),
                           SizedBox(height: 8,),
-                          Text(widget.address,
-                          style: TextStyle(
+                          Flexible(
+                            child: Text(widget.address,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
                         color: Colors.white,
                         fontSize: 13.0,
                         letterSpacing: 1,
                         fontFamily: 'Gilroy-light'
                       ),
-                          ),
+                            ),
+                          ), 
+
                           SizedBox(height: 8,),
-                          Text(widget.deliveryAddress,
-                          style: TextStyle(
+                          Flexible(
+                            child: Text(widget.deliveryAddress,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
                         color: Colors.white,
                         fontSize: 13.0,
                         letterSpacing: 1,
                         fontFamily: 'Gilroy-light'
                       ),
+                            ),
                           ),
                           SizedBox(height: 8,),
                           Text(
