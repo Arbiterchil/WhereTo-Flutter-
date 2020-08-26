@@ -89,6 +89,7 @@ void configSignal() async {
         // let system handle back button if we're on the first route
         
         return isFirstRouteInCurrentTab ? Dialog_Helper.exit(context) : false ;
+        // return isFirstRouteInCurrentTab ? false : false; 
       },
           child: Stack(
           children: <Widget>[

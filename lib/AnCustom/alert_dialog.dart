@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:WhereTo/Rider/rider_sendRem.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/splash_screen/splash_screen.dart';
@@ -114,24 +115,26 @@ var userData;
                 color: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 onPressed: () async{
-                   var offline = await ApiCall().getOffline('/goOffline/${userData['id']}');
+                  //  var offline = await ApiCall().getOffline('/goOffline/${userData['id']}');
 
-                                              var bod = json.decode(offline.body);
-                                              print(bod); 
-                  // var res = await ApiCall().getData('/logout');
+                  //                             var bod = json.decode(offline.body);
+                  //                             print(bod); 
+                  //              SharedPreferences localStorage = await SharedPreferences.getInstance();
+                  //              localStorage.remove('user');
+                  //              localStorage.remove('token');
+                  //              localStorage.remove('menuplustrans');
+                  //              var res = await ApiCall().getData('/logout');
                   //           var body = json.decode(res.body);
-                           
-                               SharedPreferences localStorage = await SharedPreferences.getInstance();
-                               localStorage.remove('user');
-                               localStorage.remove('token');
-                               localStorage.remove('menuplustrans');
-                              //  print(body);
-                                Navigator.pushAndRemoveUntil(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
+                  //          print(body);
+                  //             //  print(body);
+                  //               Navigator.pushAndRemoveUntil(
+                  //             context,
+                  //             new MaterialPageRoute(
+                  //                 builder: (context) => LoginPage()),ModalRoute.withName('/'));
                               // exit(0);
                               // print(body);
+                                      Navigator.pushReplacement(context,
+                new MaterialPageRoute(builder: (context) => RiderRemit()));
                             
                 },
                 

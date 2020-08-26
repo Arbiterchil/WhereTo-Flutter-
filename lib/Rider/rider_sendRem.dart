@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/Rider/rider_dash.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/login_page.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -25,6 +26,7 @@ class _RiderRemitState extends State<RiderRemit> {
   var thimagelink;
   var userData;
   String stringPath;
+  bool loading = false;
   Widget _getImage(){
 
     if(_idPickerImage != null){
@@ -106,11 +108,17 @@ void _getUserInfo() async {
       });
   }
 void sendRemitImage() async{
-   
+   setState(() {
+     loading = true;
+   });
    if(_idPickerImage == null){
       _showDial("Put your Screen Shot Image of Gcash.");
+
+      setState(() {
+     loading = false;
+   });
    }else{
-       sendToAdmin();
+       sendToAdmin();                         
    var viewthis = path.basename(_idPickerImage.path);
     CloudinaryClient client = new CloudinaryClient(
        "822285642732717",
@@ -130,11 +138,27 @@ void sendRemitImage() async{
   };
    var valid = await ApiCall().postRemitRider(data,'/riderRemit');
   print(valid.body);
-  
+   var offline = await ApiCall().getOffline('/goOffline/${userData['id']}');
+
+                                              var bod = json.decode(offline.body);
+                                              print(bod); 
+                               SharedPreferences localStorage = await SharedPreferences.getInstance();
+                               localStorage.remove('user');
+                               localStorage.remove('token');
+                               localStorage.remove('menuplustrans');
+                               var res = await ApiCall().getData('/logout');
+                            var body = json.decode(res.body);
+                           print(body);
+                              //  print(body);
+                                Navigator.pushAndRemoveUntil(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
   _showDial("Send Done to the Admins.");
-   }
-   
-  
+   setState(() {
+     loading =false;
+   });
+   }  
 }
 List allresult = [];
 void getAdminDevices() async{
@@ -196,7 +220,7 @@ void sendToAdmin() async{
                             child: GestureDetector(
                               onTap: () =>
                                 Navigator.pushReplacement(context,
-                           new MaterialPageRoute(builder: (context) => RiderDash())),
+                           new MaterialPageRoute(builder: (context) => RiderProfile())),
                               child: Container(
                                 height: 50,
                                 width: 110,
@@ -238,9 +262,12 @@ void sendToAdmin() async{
                                 borderRadius: BorderRadius.all(Radius.circular(100)),
                               ),
                               child: Center(
-                               child: Icon(Icons.send,
-                               size: 20,
-                               color: Colors.white
+                               child:Text(loading ? "...." : "Send",
+                               style: TextStyle(
+                                 color: Colors.white,
+                                 fontSize: 15,
+                                 fontFamily: 'Gilroy-light'
+                               ),
                                ),
                               ),
                             
