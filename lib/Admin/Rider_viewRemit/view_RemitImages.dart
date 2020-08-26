@@ -164,7 +164,7 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
                    
                   return   GestureDetector(
                     onTap:  () {
-                      _showDial(un[index].imagePath,un[index].riderId,un[index].name);
+                      _showDial(un[index].imagePath,un[index].riderId,un[index].amount.toString());
                       }, 
                     child: Container(
                       decoration: BoxDecoration(
@@ -197,8 +197,6 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
  }
 
   void _showDial(String resources, int id ,String name){
-
-  
   showDialog(
     context: context,
     barrierDismissible: true,

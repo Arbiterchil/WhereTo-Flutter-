@@ -175,8 +175,8 @@ void configSignal() async {
                         ),
                     GestureDetector(
                       onTap: (){
-                        Navigator.pushReplacement(context,
-                new MaterialPageRoute(builder: (context) => RiderRemit()));
+                //         Navigator.pushReplacement(context,
+                // new MaterialPageRoute(builder: (context) => RiderRemit()));
                       },
                       child: Container(
                             height: 70,
@@ -222,11 +222,19 @@ void configSignal() async {
                                         value: online,
                                         activeColor: Colors.lightGreen,
                                         // onChanged: ((bool e)=>toOnline(e)),
-                                        onChanged: (bool value) async {
+                                        // onChanged: (bool value) async {
                                          
-                                              online = !value;
+                                        //       // online = !value;
                                                  
-                                                Dialog_Helper.exit(context); 
+                                        //         // Dialog_Helper.exit(context); 
+                                           
+                                        //  }, 
+                                         onChanged: (bool value) async {
+                                           
+                                              // online = !value;
+                                                //  Navigator.pushReplacement(context,
+                // new MaterialPageRoute(builder: (context) => RiderRemit()));
+                                                // Dialog_Helper.exit(context); 
                                            
                                          }, 
                                   ),

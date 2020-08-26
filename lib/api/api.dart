@@ -9,6 +9,22 @@ class ApiCall{
     // final String url = 'http://192.168.1.10:8000/api';
     final String url = 'https://wheretoapplication.azurewebsites.net/api';
     
+
+  addRemittanceRecord(api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
+
+  checkRiderIfSuspended(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
+    headers: _setHeaders()
+    );
+  }
+
+
     postData(data ,api) async {
     var fullurl = url+api+ await _getToken();
     return http.post(fullurl,

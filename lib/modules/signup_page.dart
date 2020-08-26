@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
+import 'package:WhereTo/AnCustom/getAddress_diloag.dart';
+import 'package:WhereTo/AnCustom/pop.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/bara_rang.dart';
 import 'package:WhereTo/modules/login_page.dart';
@@ -234,7 +237,10 @@ class _SignupPageState extends State<SignupPage> {
               height: 50.0,
               child: TextFormField(
                 readOnly: true,
-                onTap: ()  async{
+                onTap: () async {
+                  
+             
+
                    Position postion =await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                           final coordinates =new Coordinates(postion.latitude,postion.longitude);
                           var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
@@ -294,7 +300,7 @@ class _SignupPageState extends State<SignupPage> {
                     Icons.my_location,
                     color: pureblue,
                   ),
-                  hintText: 'Address',
+                  hintText: 'Get Address Automatically',
                   hintStyle: eHintStyle,
                 ),
               ),
@@ -511,6 +517,90 @@ class _SignupPageState extends State<SignupPage> {
 
  
 
+  void openLogAddrs(){
+
+     showGeneralDialog(context: context,
+                  barrierDismissible: true,
+                  barrierLabel: '',
+                  transitionDuration: Duration(milliseconds: 300),
+                  transitionBuilder: (context,_animation,_secondary,_child){
+                    return MicoPops.grows(_animation, _secondary, _child);
+                  },
+                  pageBuilder: (_animation,_secondary,_child){
+                    return  BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 10,sigmaY: 10),
+      child: Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+        elevation: 0,
+        backgroundColor: pureblue,
+        child: Container(
+          height: 300,
+          decoration: BoxDecoration(
+            color: Color(0xFFF2F2F2),
+            borderRadius: BorderRadius.all(Radius.circular(50))
+          ),
+          child: Padding(padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 10,),
+              Text("Get Address Automatically?",
+              maxLines: 2,
+              style: TextStyle(
+                fontFamily: 'Gilroy-light',
+                fontSize: 16,
+                color: pureblue
+              ),
+              ),
+              SizedBox(height: 120,),
+              GestureDetector(
+                onTap: () async{
+                  Position postion =await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+                          final coordinates =new Coordinates(postion.latitude,postion.longitude);
+                          var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
+                          var first =addresses.first;
+                          ownAddress.text ="${first.addressLine}";
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: 50,
+                  width: 130,
+                  decoration: BoxDecoration(
+                    color: pureblue,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Icon(
+                          Icons.my_location,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        Text("Get Address",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Gilroy-light',
+                          fontSize: 12
+                        ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+
+            ],
+          ),
+          ),
+        ),
+      ),
+    );
+                  }
+                  );  
+
+  }
 
 
 

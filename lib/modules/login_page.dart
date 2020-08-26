@@ -380,11 +380,23 @@ void _login() async{
         new MaterialPageRoute(
             builder: (context) => AdminHomeDash()));
       }else{
-        print('Rider');
-        Navigator.pushReplacement(
-        context,
-        new MaterialPageRoute(
-            builder: (context) => RiderProfile()));
+         var respo = await ApiCall().addRemittanceRecord('/addRemittanceRecord/${body['user']['id']}');
+          print(respo.body);
+          print('Rider');
+
+          Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => RiderProfile()));
+        // var response = await ApiCall().checkRiderIfSuspended('/checkRiderIfSuspended/${body['user']['id']}');
+        // var bod = json.decode(response.body);
+        // if(bod == 1){
+        //   print("TRUE");
+        //   _showDial("You Have An Unttended Remittance to Approve Yet.");
+        // }else{
+         
+        // }
+        
       }
       }
     

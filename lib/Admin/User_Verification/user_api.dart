@@ -32,9 +32,13 @@ Future<UserVerified> getUserUnVerified() async {
       List<ViewRemit> viewRet = [];
       for(var bodies in bodies){
         ViewRemit vr = ViewRemit(
-           riderId: bodies["riderId"],
-        name: bodies["name"],
+        id: bodies["id"],
+        riderId: bodies["riderId"],
+        amount: bodies["amount"],
         imagePath: bodies["imagePath"],
+        status: bodies["status"],
+        createdAt: DateTime.parse(bodies["created_at"]),
+        updatedAt: DateTime.parse(bodies["updated_at"]),
         );
         viewRet.add(vr);
       }
