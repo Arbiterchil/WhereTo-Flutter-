@@ -6,40 +6,36 @@ String viewRemitToJson(List<ViewRemit> data) => json.encode(List<dynamic>.from(d
 
 class ViewRemit {
     ViewRemit({
-        this.id,
         this.riderId,
+        this.name,
         this.amount,
         this.imagePath,
         this.status,
         this.createdAt,
-        this.updatedAt,
     });
 
-    int id;
     int riderId;
+    String name;
     int amount;
     String imagePath;
     int status;
-    DateTime createdAt;
-    DateTime updatedAt;
+    String createdAt;
 
     factory ViewRemit.fromJson(Map<String, dynamic> json) => ViewRemit(
-        id: json["id"],
         riderId: json["riderId"],
+        name: json["name"],
         amount: json["amount"],
         imagePath: json["imagePath"],
         status: json["status"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"],
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id,
         "riderId": riderId,
+        "name": name,
         "amount": amount,
         "imagePath": imagePath,
         "status": status,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt,
     };
 }

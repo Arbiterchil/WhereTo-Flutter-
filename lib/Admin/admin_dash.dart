@@ -40,15 +40,11 @@ class _AdminDashState extends State<AdminDash> {
                         height: 140,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: pureblue,
+                          border: Border.all(
+                            width: 1,
+                            color: pureblue
+                          ),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
-                          //  boxShadow: [
-                          //        BoxShadow(
-                          //          color: Colors.grey[500],
-                          //          spreadRadius: 3.3,
-                          //          blurRadius: 3.3
-                          //        ),
-                          //      ],
                         ),
                         child:Center(
                           child: SharedPrefCallnameData(),
@@ -66,22 +62,18 @@ class _AdminDashState extends State<AdminDash> {
                             height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-                            color: pureblue,
+                            border: Border.all(
+                            width: 1,
+                            color: pureblue
+                          ),
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            //  boxShadow: [
-                            //        BoxShadow(
-                            //          color: Color(0xfff2f2f2),
-                            //          spreadRadius: 3.3,
-                            //          blurRadius: 3.3
-                            //        ),
-                            //      ],
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text("Admins",
                               style: TextStyle(
-                                color:  Colors.white,
+                                color:  pureblue,
                                 fontFamily: 'Gilroy-light',
                                 fontSize: 16,
                               ),),
@@ -100,29 +92,26 @@ class _AdminDashState extends State<AdminDash> {
                             height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-                            color: pureblue,
+                             border: Border.all(
+                            width: 1,
+                            color: pureblue
+                          ),
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            //  boxShadow: [
-                            //        BoxShadow(
-                            //          color: Color(0xfff2f2f2),
-                            //          spreadRadius: 3.3,
-                            //          blurRadius: 3.3
-                            //        ),
-                            //      ],
+                          
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text("Users",
                               style: TextStyle(
-                                color:  Colors.white,
+                                color:  pureblue,
                                 fontFamily: 'Gilroy-light',
                                 fontSize: 16,
                               ),),
                               SizedBox(height: 10,),
                               Text("10",
                               style: TextStyle(
-                                color:  Colors.amber, 
+                                color:  pureblue, 
                                 // Color(0xFF0C375B),
                                 fontFamily: 'Gilroy-ExtraBold',
                                 fontSize: 16,
@@ -135,29 +124,26 @@ class _AdminDashState extends State<AdminDash> {
                             height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-                            color: pureblue,
+                             border: Border.all(
+                            width: 1,
+                            color: pureblue
+                          ),
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            //  boxShadow: [
-                            //        BoxShadow(
-                            //          color: Color(0xfff2f2f2),
-                            //          spreadRadius: 3.3,
-                            //          blurRadius: 3.3
-                            //        ),
-                            //      ],
+                        
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text("Riders",
                               style: TextStyle(
-                                color:Colors.white,
+                                color:pureblue,
                                 fontFamily: 'Gilroy-light',
                                 fontSize: 16,
                               ),),
                               SizedBox(height: 10,),
                               Text("6",
                               style: TextStyle(
-                                color:  Colors.amber,
+                                color:  Colors.deepOrange,
                                 fontFamily: 'Gilroy-ExtraBold',
                                 fontSize: 16,
                               ),),
@@ -169,69 +155,134 @@ class _AdminDashState extends State<AdminDash> {
                         ),
                       
                       ),
-                      SizedBox(height: 10,),
-                      Padding(
-                      padding: const EdgeInsets.only(left: 10,right: 10,top: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                          GestureDetector(
-                            onTap: (){
-                              Navigator.pushReplacement(context,
-                new MaterialPageRoute(builder: (context) => ViewAllImageId()));
-                            },
-                            child: Container(
-                              height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              color: pureblue,
-                              shape: BoxShape.circle,
-                              // borderRadius: BorderRadius.all(Radius.circular(10)),
-                              //  boxShadow: [
-                              //        BoxShadow(
-                              //          color: Color(0xfff2f2f2),
-                              //          spreadRadius: 3.3,
-                              //          blurRadius: 3.3
-                              //        ),
-                              //      ],
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.verified_user,
-                                size: 30,
-                                color: Colors.white,
-                              ),
-                            )
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: (){
-                           Navigator.pushReplacement(context,
-                new MaterialPageRoute(builder: (context) => RemitViewImagesAdmin()));
-                            },
-                            child: Container(
-                              height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              color: pureblue,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.money_off,
-                                size: 30,
-                                color: Colors.white,
-                              ),
-                            )
-                            ),
-                          ),
-                          
-                          ],
-                        ),
-                      
+                      SizedBox(height: 40,),
+                    ButtonAdmins(
+                      icon: Icons.verified_user,
+                      namebutton: "Verify User Valid ID.",
+                      ontap: () =>Navigator.pushReplacement(context,
+                new MaterialPageRoute(builder: (context) => ViewAllImageId())),
+                    ),
+                    SizedBox(height: 30,),
+                    ButtonAdmins(
+                      icon: Icons.check,
+                      namebutton: "Approve Remittance.",
+                      ontap: () => Navigator.pushReplacement(context,
+                new MaterialPageRoute(builder: (context) => RemitViewImagesAdmin())),
+                    ),
+                  SizedBox(height: 20,),
+                  Padding(padding: const EdgeInsets.only(left: 30,right: 30),
+                  child: Text("Note : ",
+                  style: TextStyle(
+                    color: pureblue,
+                    fontFamily: 'Gilroy-ExtraBold',
+                    fontSize: 30
+                  ),
+                  ),
+                  ),
+                  SizedBox(height: 20,),
+                  Padding(padding: const EdgeInsets.only(left: 30,right: 30),
+                  child: RichText(text: TextSpan(
+                    children: [
+
+                      TextSpan(
+                        text: "1. ",
+                        style: TextStyle(
+                          color: pureblue,
+                          fontFamily: 'Gilroy-ExtraBold',
+                          fontSize: 12
+                        )
                       ),
-                    
-                    
+                       TextSpan(
+                        text: "Please Check Time to Time if there's a New User to Verify.",
+                        style: TextStyle(
+                          color: pureblue,
+                          fontFamily: 'Gilroy-light',
+                          fontSize: 12
+                        )
+                      ),
+
+                    ]
+                  ))
+                  ),
+                  SizedBox(height: 10,),
+                   Padding(padding: const EdgeInsets.only(left: 30,right: 30),
+                  child: RichText(text: TextSpan(
+                    children: [
+
+                      TextSpan(
+                        text: "2. ",
+                        style: TextStyle(
+                          color: pureblue,
+                          fontFamily: 'Gilroy-ExtraBold',
+                          fontSize: 12
+                        )
+                      ),
+                       TextSpan(
+                        text: "Also Watch Over the Remittance View if the rider made a mistake.",
+                        style: TextStyle(
+                          color: pureblue,
+                          fontFamily: 'Gilroy-light',
+                          fontSize: 12
+                        )
+                      ),
+
+                    ]
+                  ))
+                  ),
+                  SizedBox(height: 10,),
+                   Padding(padding: const EdgeInsets.only(left: 30,right: 30),
+                  child: RichText(text: TextSpan(
+                    children: [
+
+                      TextSpan(
+                        text: "3. ",
+                        style: TextStyle(
+                          color: pureblue,
+                          fontFamily: 'Gilroy-ExtraBold',
+                          fontSize: 12
+                        )
+                      ),
+                       TextSpan(
+                        text: "Don't Sleep on Working Hours",
+                        style: TextStyle(
+                          color: pureblue,
+                          fontFamily: 'Gilroy-light',
+                          fontSize: 12
+                        )
+                      ),
+
+                    ]
+                  ))
+                  ),
+                   SizedBox(height: 10,),
+                   Padding(padding: const EdgeInsets.only(left: 30,right: 30),
+                  child: RichText(text: TextSpan(
+                    children: [
+
+                      TextSpan(
+                        text: "4. ",
+                        style: TextStyle(
+                          color: pureblue,
+                          fontFamily: 'Gilroy-ExtraBold',
+                          fontSize: 12
+                        )
+                      ),
+                       TextSpan(
+                        text: "If You have Problems to Report Just Contact our Owner.",
+                        style: TextStyle(
+                          color: pureblue,
+                          fontFamily: 'Gilroy-light',
+                          fontSize: 12
+                        )
+                      ),
+
+                    ]
+                  ))
+                  ),
+
+
+
+
 
                 ],
               ),
@@ -241,4 +292,49 @@ class _AdminDashState extends State<AdminDash> {
        onWillPop:() async => Admin_out.exit(context)),
     );
   }
+}
+
+class ButtonAdmins extends StatelessWidget{
+  
+  final Function ontap;
+  final String namebutton;
+  final IconData icon;
+
+  const ButtonAdmins({Key key, this.ontap, this.namebutton, this.icon}) : super(key: key); 
+  
+  @override
+  Widget build(BuildContext context) {
+    
+    return GestureDetector(
+      onTap: ontap,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30,right: 30),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: <Widget>[
+              Icon(
+                icon,
+                size: 40,
+                color: pureblue,
+              ),
+              SizedBox(width: 15,),
+              Text(namebutton,
+              style: TextStyle(
+                color: pureblue,
+                fontSize: 14,
+                fontFamily: 'Gilroy-light'
+              ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+
+  }
+
+
+
+
 }

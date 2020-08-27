@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:http/http.dart' as http;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../styletext.dart';
@@ -333,10 +334,19 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)
                     ),
-                    image: DecorationImage(
-                      image: NetworkImage(resources),
-                      fit: BoxFit.fitWidth)
+                    // image: DecorationImage(
+                    //   image: NetworkImage(resources),
+                    //   fit: BoxFit.fitWidth)
                   ),
+                  child: PhotoView(
+                    backgroundDecoration: BoxDecoration(
+                      color: Colors.white,
+                     borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)
+                    ),
+                    ),
+                    imageProvider: NetworkImage(resources)),
                 ),    
                 SizedBox(height: 20,),
                 Padding(

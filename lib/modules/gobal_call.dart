@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,12 +46,16 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                       
                       children: <Widget>[
                          Container(
-                           height: 110,
-                           width: 110,
+                           height: 80,
+                           width: 80,
                            decoration: BoxDecoration(
+                            //  border: Border.all(
+                            //    width: 1,
+                            //    color: pureblue
+                            //  ),
                              shape: BoxShape.circle,
                              image: DecorationImage(
-                               image: AssetImage("asset/img/62512004_p0.png"),
+                               image: AssetImage("asset/img/logo.png"),
                                fit: BoxFit.cover),
                            ),
                          ),
@@ -64,7 +69,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                                 
                            Text(userData!= null ? '${userData['name']}':  'Fail get data.',
                                                     style: TextStyle(
-                                                    color: Colors.white,
+                                                    color: pureblue,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16.0,
                                                     fontFamily: 'Gilroy-ExtraBold'
@@ -73,7 +78,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                                                     SizedBox(height: 2,),
                                                     Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
                                                     style: TextStyle(
-                                                    color: Colors.white,
+                                                    color: pureblue,
                                                     fontWeight: FontWeight.normal,
                                                     fontSize: 10.0,
                                                     fontFamily: 'Gilroy-light'
@@ -121,7 +126,7 @@ class NCard extends StatelessWidget {
         // decoration: eBox,
         child: Row(
           children: <Widget>[
-            Icon(icon,color: Colors.white,size: 15.0,),
+            Icon(icon,color: pureblue,size: 15.0,),
             SizedBox(width: 7.0,),
         
              Flexible(
@@ -134,7 +139,7 @@ class NCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: pureblue,
                         fontWeight: FontWeight.w700,
                         fontSize: 12.0,
                         fontFamily: 'Gilroy-light'

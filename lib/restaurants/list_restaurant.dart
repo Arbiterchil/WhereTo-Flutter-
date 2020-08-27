@@ -172,7 +172,7 @@ class _ListStacticState extends State<ListStactic>
                           Align(
                             alignment: Alignment.topCenter,
                             child:TabBar(
-                            physics: AlwaysScrollableScrollPhysics(),
+                            // physics: AlwaysScrollableScrollPhysics(),
                             indicatorSize: TabBarIndicatorSize.label,
                             labelColor: Colors.white,
                             unselectedLabelColor:Colors.transparent,

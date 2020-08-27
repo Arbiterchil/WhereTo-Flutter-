@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:WhereTo/Admin/Rider_viewRemit/view_remit.dart';
@@ -8,8 +9,8 @@ import 'package:WhereTo/Admin/admin_dash.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:transparent_image/transparent_image.dart';
-
 import '../../styletext.dart';
 import '../navbottom_admin.dart';
 
@@ -25,6 +26,10 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
     remittanceStream..getViewRemits();
     super.initState();
   }
+
+bool lace =false;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,8 +127,6 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
                   ),
                 ),
           ],
-
-
         ),
       );
     }
@@ -164,7 +167,14 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
                    
                   return   GestureDetector(
                     onTap:  () {
-                      _showDial(un[index].imagePath,un[index].riderId,un[index].amount.toString());
+                      
+                      _showDial(
+                        un[index].imagePath,
+                        un[index].riderId,
+                        un[index].name,
+                        un[index].amount,
+                        un[index].createdAt,
+                        lace);
                       }, 
                     child: Container(
                       decoration: BoxDecoration(
@@ -196,7 +206,10 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
         }
  }
 
-  void _showDial(String resources, int id ,String name){
+  void _showDial(String resources, int id ,String name, int amount, String createdAt,bool laso){
+    
+    laso = false;
+
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -228,10 +241,20 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)
                     ),
-                    image: DecorationImage(
-                      image: NetworkImage(resources),
-                      fit: BoxFit.fitHeight)
+                    // image: DecorationImage(
+                    //   image: NetworkImage(resources),
+                    //   fit: BoxFit.fitHeight)
+                  
                   ),
+                  child: PhotoView(
+                    backgroundDecoration: BoxDecoration(
+                      color: Colors.white,
+                     borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)
+                    ),
+                    ),
+                    imageProvider:  NetworkImage(resources)),
                 ),    
                 SizedBox(height: 20,),
                 Padding(
@@ -281,6 +304,54 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
                     ]
                   )),
                 ),
+                SizedBox(height: 10,),
+                Padding(
+                 padding: const EdgeInsets.only(left: 10,right: 10),
+                  child: RichText(text: TextSpan(
+                    children: [
+                       TextSpan(
+                  text: 'Amount: ',
+                  style: TextStyle(
+                    color: pureblue,
+                    fontSize: 12.0,
+                    fontFamily: 'Gilroy-light'
+                  ),
+              ),
+              TextSpan(
+                  text: amount.toString(),
+                  style: TextStyle(
+                    color: pureblue,
+                    fontSize: 12.0,
+                    fontFamily: 'Gilroy-ExtraBold'
+                  ),
+              ),
+                    ]
+                  )),
+                ),
+                 SizedBox(height: 10,),
+                Padding(
+                 padding: const EdgeInsets.only(left: 10,right: 10),
+                  child: RichText(text: TextSpan(
+                    children: [
+                       TextSpan(
+                  text: 'Created At: ',
+                  style: TextStyle(
+                    color: pureblue,
+                    fontSize: 12.0,
+                    fontFamily: 'Gilroy-light'
+                  ),
+              ),
+              TextSpan(
+                  text: createdAt,
+                  style: TextStyle(
+                    color: pureblue,
+                    fontSize: 12.0,
+                    fontFamily: 'Gilroy-ExtraBold'
+                  ),
+              ),
+                    ]
+                  )),
+                ),
                 SizedBox(height: 20,),
                  Padding(
                      padding: const EdgeInsets.only(left: 20,right: 20),
@@ -294,14 +365,23 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 5,right: 5),
                               child: GestureDetector(
-                                onTap: () {
-                                  
-                                     ApiCall().postVerify('/approveRemittance/${id.toString()}');
-                                      print(id.toString());
+                                onTap: ()async{
+
+                                  setState(() {
+                                    laso = true;
+                                  });
+                                     var respawn = await ApiCall().getRiderRemit('/getRiderRemit/$id');
+                                    var bods = json.decode(respawn.body);
+                                      print(bods['id']); 
+                                   var response = await ApiCall().postVerify('/approveRemittance/${bods['id']}');
+                                      print(id.toString()+","+response.body);
                                    Navigator.pushReplacement(
                                   context,
                                   new MaterialPageRoute(
                                       builder: (context) => AdminHomeDash()));
+                                  setState(() {
+                                    laso = false;
+                                  });
                                 },
                                 child: Container(
                                   height: 50,
@@ -311,7 +391,7 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
                                     borderRadius: BorderRadius.all(Radius.circular(100)),
                                   ),
                                   child: Center(
-                                    child: Text( 'Verify >',
+                                    child: Text(laso ? '....' :'Verify >',
                                     style: TextStyle(
                                       fontFamily: 'Gilroy-ExtraBold',
                                       fontSize: 12,
@@ -322,11 +402,94 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
                                 ),
                               ),
                               ),
+
+                              
                           ),
+                           Align(
+                            alignment: Alignment.topRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5,right: 5),
+                              child: GestureDetector(
+                                onTap: ()async{
+
+                                  setState(() {
+                                    laso = true;
+                                  });
+                                    
+                                    var getSus = await ApiCall().suspendRider('/suspendRider/$id');
+                                    print(getSus.body);
+                                    Navigator.pushReplacement(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (context) => AdminHomeDash()));
+                                  setState(() {
+                                    laso = false;
+                                  });
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: pureblue,
+                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  ),
+                                  child: Center(
+                                    child: Text(laso ? '....' :'Suspend >',
+                                    style: TextStyle(
+                                      fontFamily: 'Gilroy-ExtraBold',
+                                      fontSize: 12,
+                                      color: Colors.white
+                                    ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              ),
+                           ),
                         ],
                       ),
                   ),
                    ),
+                 SizedBox(height: 20,),
+                 Padding(
+                              padding: const EdgeInsets.only(left: 20,right: 5),
+                              child: GestureDetector(
+                                onTap: ()async{
+
+                                  setState(() {
+                                    laso = true;
+                                  });
+                                     var respawn = await ApiCall().getRiderRemit('/unSuspendRider/$id');
+                                      print(respawn.body); 
+                                  
+                                   Navigator.pushReplacement(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (context) => AdminHomeDash()));
+                                  setState(() {
+                                    laso = false;
+                                  });
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: pureblue,
+                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  ),
+                                  child: Center(
+                                    child: Text(laso ? '....' :'UnSuspend >',
+                                    style: TextStyle(
+                                      fontFamily: 'Gilroy-ExtraBold',
+                                      fontSize: 12,
+                                      color: Colors.white
+                                    ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              ),
+                               SizedBox(height: 20,),
                 ],
             ),
           ),

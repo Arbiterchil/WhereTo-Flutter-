@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:WhereTo/ATrial/animation_trial.dart';
 import 'package:WhereTo/Admin/navbottom_admin.dart';
 import 'package:WhereTo/Rider/profile_rider.dart';
+import 'package:WhereTo/Rider/rider_sendRem.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/homepage.dart';
 import 'package:WhereTo/modules/signup_page.dart';
@@ -52,11 +53,11 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           textDirection: TextDirection.ltr,
           children: <Widget>[
-          //  Text('Contact Number',
+           Text('Contact Number',
            
-          //   style: eLabelStyle,
-          //   ),
-            SizedBox(height: 5.0,),
+            style: eLabelStyle,
+            ),
+           SizedBox(height: 20.0,),
              Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
@@ -85,10 +86,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            // SizedBox(height: 30.0,),
-            //  Text('Password',
-            // style: eLabelStyle,
-            // ),
+            SizedBox(height: 30.0,),
+             Text('Password',
+            style: eLabelStyle,
+            ),
             SizedBox(height: 20.0,),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -117,17 +118,17 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(height: 10.0,),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
-              child: FlatButton(
-                onPressed: (){},
-                padding: EdgeInsets.only(right: 0.0),
-                 child: Text('Forget Password',
-                 style: eLabelStyle,
-                 ),
-                 ),
-            ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   alignment: Alignment.centerLeft,
+            //   child: FlatButton(
+            //     onPressed: (){},
+            //     padding: EdgeInsets.only(right: 0.0),
+            //      child: Text('Forget Password',
+            //      style: eLabelStyle,
+            //      ),
+            //      ),
+            // ),
           ],
         ),
         ),
@@ -212,55 +213,56 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
+    // AnimationWaveTrial();
   }
 
   @override
   Widget build(BuildContext context) {
 
+    return Scaffold(
 
-
-      return Scaffold(
-
-        body: SafeArea(
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Stack(
-                    children: <Widget>
-                    [
-                      Align(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Stack(
+                  children: <Widget>[
+                     Align(
                         alignment: Alignment.topRight,
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 30),
+                          padding: const EdgeInsets.only(right: 30,top: 10),
                           child: Container(
                             height: 60,
                             width:  60,
                             child: Image.asset('asset/img/logo.png'),
                           ),),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10,),
-                 Text(
-                            'Sign In',
-                            style: TextStyle(
-                              color: pureblue,
-                              fontFamily: 'Gilroy-ExtraBold',
-                              fontSize: 45.0,
-                              fontWeight: FontWeight.bold,
+                      ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(padding: const EdgeInsets.only(top: 90),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: 20,),
+                            Text(
+                                        'Sign In',
+                                        style: TextStyle(
+                                          color: pureblue,
+                                          fontFamily: 'Gilroy-ExtraBold',
+                                          fontSize: 45.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                            SizedBox(height: 20,),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 40,right: 40),
+                              child: _formGet(context),
                             ),
-                          ),
-                SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 40,right: 40),
-                  child: _formGet(context),
-                ),
-                SizedBox(height: 10,),
-                Container(
+                             SizedBox(height: 40,),
+                            Container(
                   width: MediaQuery.of(context).size.width,
                   child: Stack(
                     children: <Widget>
@@ -294,19 +296,11 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                          SizedBox(height: 10.0),
-                          Text(
-                            'Sign in with',
-                            style: eLabelStyle,
-                          ),
-                          _buildSocialBtnRow(),
-                Container(
-                  height: 190,
-                  width: MediaQuery.of(context).size.width,
-                  child: Stack(
-                    children: <Widget>
-                    [
-                      Align(
+                        ],
+                      )
+                      ),
+                    ),
+                     Align(
                         alignment: Alignment.center,
                         child: AnimationWaveTrial(),
                       ),
@@ -317,15 +311,125 @@ class _LoginPageState extends State<LoginPage> {
                           child: _botDownSignUp(),
                         ),
                       )
-                    ],
-                  ),
+                  ],
                 ),
+              ),
+            ],
+          ),
+        ),
+      ),
 
-              ],
-            ),
-          )),
+    );
 
-      );
+      // return Scaffold(
+
+      //   body: SafeArea(
+      //     child: SingleChildScrollView(
+      //       physics: AlwaysScrollableScrollPhysics(),
+      //       child: Column(
+      //         children: <Widget>[
+      //           Container(
+      //             width: MediaQuery.of(context).size.width,
+      //             height: 100,
+      //             child: Stack(
+      //               children: <Widget>
+      //               [
+      //                 Align(
+      //                   alignment: Alignment.topRight,
+      //                   child: Padding(
+      //                     padding: const EdgeInsets.only(right: 30),
+      //                     child: Container(
+      //                       height: 60,
+      //                       width:  60,
+      //                       child: Image.asset('asset/img/logo.png'),
+      //                     ),),
+      //                 ),
+                      
+      //               ],
+      //             ),
+      //           ),
+      //           SizedBox(height: 20,),
+      //            Text(
+      //                       'Sign In',
+      //                       style: TextStyle(
+      //                         color: pureblue,
+      //                         fontFamily: 'Gilroy-ExtraBold',
+      //                         fontSize: 45.0,
+      //                         fontWeight: FontWeight.bold,
+      //                       ),
+      //                     ),
+      //           SizedBox(height: 20,),
+      //           Padding(
+      //             padding: const EdgeInsets.only(left: 40,right: 40),
+      //             child: _formGet(context),
+      //           ),
+      //           SizedBox(height: 20,),
+      //           Container(
+      //             width: MediaQuery.of(context).size.width,
+      //             child: Stack(
+      //               children: <Widget>
+      //               [
+      //                 Align(
+      //                   alignment: Alignment.topRight,
+      //                   child: Padding(
+      //                     padding: const EdgeInsets.only(right: 30),
+      //                     child: GestureDetector(
+      //                       onTap: _login,
+      //                       child: Container(
+      //                         height: 50,
+      //                         width: 110,
+      //                         decoration: BoxDecoration(
+      //                           color: pureblue,
+      //                           borderRadius: BorderRadius.all(Radius.circular(100)),
+      //                         ),
+      //                         child: Center(
+      //                           child: Text( isLoading ? '....' : 'Login >',
+      //                           style: TextStyle(
+      //                             fontFamily: 'Gilroy-ExtraBold',
+      //                             fontSize: 18,
+      //                             color: Colors.white
+      //                           ),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ),
+      //                     ),
+      //                 )
+      //               ],
+      //             ),
+      //           ),
+      //                     // SizedBox(height: 10.0),
+      //                     // Text(
+      //                     //   'Sign in with',
+      //                     //   style: eLabelStyle,
+      //                     // ),
+      //                     // _buildSocialBtnRow(),
+      //           Container(
+      //             height: 190,
+      //             width: MediaQuery.of(context).size.width,
+      //             child: Stack(
+      //               children: <Widget>
+      //               [
+      //                 Align(
+      //                   alignment: Alignment.center,
+      //                   child: AnimationWaveTrial(),
+      //                 ),
+      //                 Align(
+      //                   alignment: Alignment.bottomCenter,
+      //                   child: Padding(
+      //                     padding: const EdgeInsets.only(bottom: 40),
+      //                     child: _botDownSignUp(),
+      //                   ),
+      //                 )
+      //               ],
+      //             ),
+      //           ),
+
+      //         ],
+      //       ),
+      //     )),
+
+      // );
   }
 
 
@@ -350,16 +454,13 @@ void _login() async{
 
 
     var res = await ApiCall().postData(data,'/login');
-    
   
     var body = json.decode(res.body);
     if(body['success'] == true){
       var bods = await ApiCall().logVerify('/isAccountSuspended/${body['user']['id']}');
       if(bods.body == "true"){
         print('can\'t login');
-
          _showDial("This Account is Suspended Due to Violating our Rules.");
-
       }else{
         print('can go in');
       SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -380,47 +481,59 @@ void _login() async{
         new MaterialPageRoute(
             builder: (context) => AdminHomeDash()));
       }else{
-         var respo = await ApiCall().addRemittanceRecord('/addRemittanceRecord/${body['user']['id']}');
+
+           var respo = await ApiCall().addRemittanceRecord('/addRemittanceRecord/${body['user']['id']}');
           print(respo.body);
           print('Rider');
-
           Navigator.pushReplacement(
           context,
           new MaterialPageRoute(
               builder: (context) => RiderProfile()));
-        // var response = await ApiCall().checkRiderIfSuspended('/checkRiderIfSuspended/${body['user']['id']}');
-        // var bod = json.decode(response.body);
-        // if(bod == 1){
-        //   print("TRUE");
-        //   _showDial("You Have An Unttended Remittance to Approve Yet.");
-        // }else{
-         
-        // }
-        
+              print("Nice");
       }
       }
-    
-
-      
-      // var userJson = localStorage.getString('user'); 
-      // var user = json.decode(userJson);
-      // setState(() {
-      //   userData = user;
-      // });
-
-      // hens = userData['userType'].toString();
-      
-      // Navigator.pushReplacement(
-      //   context,
-      //   new MaterialPageRoute(
-      //       builder: (context) => 
-      //       PathWay(
-      //         getStringthis: hens,
-      //       )));
-      // print('success Login');
+    }else if(body['suspended'] == true){
+         print("Nigga Thats Hurt");
+               _showDial("You've Been Suspended go ot the Office Now.");
+    }else if(body['remitPending'] == true){
+            print("Bearly Good");
+             _showDial("You still have A Pending Remit");
+             print(body['user']['id']);
+             Navigator.pushReplacement(context,
+                new MaterialPageRoute(builder: (context) => RiderRemit(idFromLog : body['user']['id'].toString())));
     }else{
+
       _showDial("Password or Contact Number is Wrong.");
+
     }
+    // }else{
+
+    //      if(body['suspended'] == true){
+    //           print("Nigga Thats Hurt");
+    //            _showDial("You've Been Suspended go ot the Office Now.");
+    //       }else if(body['remitPending'] == true){
+    //         print("Bearly Good");
+    //          _showDial("You still have A Pending Remit");
+
+    //       }else{
+    //         print('Nice');
+    //          var respo = await ApiCall().addRemittanceRecord('/addRemittanceRecord/${body['user']['id']}');
+    //       print(respo.body);
+    //       print('Rider');
+
+    //       Navigator.pushReplacement(
+    //       context,
+    //       new MaterialPageRoute(
+    //           builder: (context) => RiderProfile()));
+    //           print("Nice");
+    //       }
+     
+
+    //         _showDial("Password or Contact Number is Wrong.");
+          
+
+     
+    // }
    
    
    

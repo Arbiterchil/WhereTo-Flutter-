@@ -134,7 +134,7 @@ var userData;
                               // exit(0);
                               // print(body);
                                       Navigator.pushReplacement(context,
-                new MaterialPageRoute(builder: (context) => RiderRemit()));
+                new MaterialPageRoute(builder: (context) => RiderRemit(idFromLog : userData['id'].toString())));
                             
                 },
                 

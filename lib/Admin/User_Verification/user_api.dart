@@ -27,18 +27,17 @@ Future<UserVerified> getUserUnVerified() async {
 }
   Future<RemitResponse> getRemitImages() async {
     try{
-      var response = await ApiCall().getRemitImage('/viewRiderRemittance');
+      var response = await ApiCall().getRemitImage('/viewRemittedList');
       var bodies = json.decode(response.body);
       List<ViewRemit> viewRet = [];
       for(var bodies in bodies){
         ViewRemit vr = ViewRemit(
-        id: bodies["id"],
-        riderId: bodies["riderId"],
+       riderId: bodies["riderId"],
+        name: bodies["name"],
         amount: bodies["amount"],
         imagePath: bodies["imagePath"],
         status: bodies["status"],
-        createdAt: DateTime.parse(bodies["created_at"]),
-        updatedAt: DateTime.parse(bodies["updated_at"]),
+        createdAt: bodies["created_at"].toString(),
         );
         viewRet.add(vr);
       }

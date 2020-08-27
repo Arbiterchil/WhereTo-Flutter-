@@ -14,6 +14,11 @@ import 'package:path/path.dart' as path;
 import '../styletext.dart';
 import 'package:http/http.dart' as http;
 class RiderRemit extends StatefulWidget {
+
+  final String idFromLog;
+
+  const RiderRemit({Key key, this.idFromLog}) : super(key: key);
+
   @override
   _RiderRemitState createState() => _RiderRemitState();
 }
@@ -24,7 +29,8 @@ class _RiderRemitState extends State<RiderRemit> {
   File _idPickerImage;
   final pick = ImagePicker();
   var thimagelink;
-  var userData;
+  // var userData;
+  var amountData;
   String stringPath;
   bool loading = false;
   Widget _getImage(){
@@ -95,18 +101,35 @@ class _RiderRemitState extends State<RiderRemit> {
 
     @override
   void initState() {
-    this._getUserInfo();
-    this.getAdminDevices();
+      getAmount();
+    // _getUserInfo();
+    getAdminDevices();
+      
     super.initState();
-  }  
-void _getUserInfo() async {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      var userJson = localStorage.getString('user');
-      var user = json.decode(userJson);
-      setState(() {
-        userData = user;
-      });
-  }
+
+  } 
+
+void getAmount() async{
+
+    var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.toString()}');
+  var bods = json.decode(response.body)['amount'];
+  print(bods);
+  setState(() {
+    amountData = bods;
+  });
+
+}
+
+
+
+// void _getUserInfo() async {
+//       SharedPreferences localStorage = await SharedPreferences.getInstance();
+//       var userJson = localStorage.getString('user');
+//       var user = json.decode(userJson);
+//       setState(() {
+//         userData = user;
+//       });
+//   }
 void sendRemitImage() async{
    setState(() {
      loading = true;
@@ -118,7 +141,8 @@ void sendRemitImage() async{
      loading = false;
    });
    }else{
-       sendToAdmin();                         
+       sendToAdmin(); 
+                        
    var viewthis = path.basename(_idPickerImage.path);
     CloudinaryClient client = new CloudinaryClient(
        "822285642732717",
@@ -130,15 +154,16 @@ void sendRemitImage() async{
           thimagelink = stringPath;
       })
       .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
-
+var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.toString()}');
+  var bods = json.decode(response.body)['id'];
   var data=
   {
-    'riderId':userData['id'].toString(),
+    'remitId':bods,
     'imagePath': thimagelink
   };
    var valid = await ApiCall().postRemitRider(data,'/riderRemit');
   print(valid.body);
-   var offline = await ApiCall().getOffline('/goOffline/${userData['id']}');
+   var offline = await ApiCall().getOffline('/goOffline/${widget.idFromLog.toString()}');
 
                                               var bod = json.decode(offline.body);
                                               print(bod); 
@@ -149,7 +174,6 @@ void sendRemitImage() async{
                                var res = await ApiCall().getData('/logout');
                             var body = json.decode(res.body);
                            print(body);
-                              //  print(body);
                                 Navigator.pushAndRemoveUntil(
                               context,
                               new MaterialPageRoute(
@@ -195,8 +219,6 @@ void sendToAdmin() async{
     await http.post(url, headers: headers, body: json.encode(contents));
     print(repo);
 }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -245,6 +267,29 @@ void sendToAdmin() async{
                     ),
                 ),
                     SizedBox(height: 40,),
+                    RichText(text: 
+                    TextSpan(
+                      children: [
+
+                        TextSpan(text :'Amount: ',
+                          style: TextStyle(
+                           color: pureblue,
+                           fontFamily: 'Gilroy-light',
+                           fontSize: 18, 
+                          )
+                        ),
+                        TextSpan(text :amountData==null ?"...." :amountData.toString(),
+                          style: TextStyle(
+                           color: pureblue,
+                           fontFamily: 'Gilroy-ExtraBold',
+                           fontSize: 18, 
+                          )
+                        )
+
+                      ]
+                    ),
+                    ),
+                    SizedBox(height: 50,),
                     Container(
                   width: MediaQuery.of(context).size.width,
                   child: Stack(

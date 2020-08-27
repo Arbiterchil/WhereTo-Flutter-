@@ -10,6 +10,36 @@ class ApiCall{
     final String url = 'https://wheretoapplication.azurewebsites.net/api';
     
 
+
+  changepasssword(data ,api) async {
+    var fullurl = url+api+ await _getToken();
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+
+
+  unSuspendRider(api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
+  suspendRider(api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
+  
+  getRiderRemit(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
+    headers: _setHeaders()
+    );
+  }
+
   addRemittanceRecord(api) async {
     var fullurl = url+api;
     return http.post(fullurl,

@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
  var checkbool;
  var idmine;
  var gethis;
+ bool lace =false;
    List<String> pageKeys = ["SearchRestaurant","UserProfile","MyOrders"];
    Map<String,GlobalKey<NavigatorState>> _navigatorKeys =
     {
@@ -147,9 +148,9 @@ void onTabTapped(int index) {
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: 
-        Colors.white,
+        pureblue,
         backgroundColor:
-        pureblue, 
+        Colors.white, 
         unselectedItemColor: 
         Color(0xFF0C375B),
 
@@ -246,6 +247,7 @@ void _showDone(String message){
                   color:Color(0xFF0C375B),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                   onPressed: () async {
+                    
                       SharedPreferences localStorage = await SharedPreferences.getInstance();
                                localStorage.remove('user');
                                localStorage.remove('token');
@@ -257,7 +259,8 @@ void _showDone(String message){
                                   builder: (context) => LoginPage()),ModalRoute.withName('/'));
                       },   
                       
-                  child: Text ( "OK", style :TextStyle(
+                  child: Text ( "OK",
+                   style :TextStyle(
                   color: Colors.white,
                               fontWeight: FontWeight.w700,
                               fontSize: 12.0,

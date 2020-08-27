@@ -35,7 +35,10 @@ class _MenuDesignState extends State<MenuDesign> {
         //    ],
         //    begin: Alignment.bottomRight,
         //    end: Alignment.topLeft),
-        color: pureblue,
+        border: Border.all(
+          width: 1,
+          color: pureblue
+        )
        ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +62,10 @@ class _MenuDesignState extends State<MenuDesign> {
                       width: 50,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white
+                        border: Border.all(
+                          width: 1,
+                          color: pureblue
+                        )
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -71,7 +77,7 @@ class _MenuDesignState extends State<MenuDesign> {
                 Divider(
                   height: 6.0,
                   thickness: 2,
-                  color: Colors.white,
+                  color: pureblue,
                   indent: 10.0,
                   endIndent: 10.0,
                 ),
@@ -85,7 +91,7 @@ class _MenuDesignState extends State<MenuDesign> {
                           Text(
                             widget.menuname,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: pureblue,
                           fontWeight: FontWeight.w700,
                           fontSize: 11.0,
                           fontFamily: 'OpenSans')
@@ -95,7 +101,7 @@ class _MenuDesignState extends State<MenuDesign> {
                             widget.description,
                             maxLines: 2,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: pureblue,
                           fontWeight: FontWeight.w700,
                           fontSize: 11.0,
                           fontFamily: 'OpenSans')
@@ -104,7 +110,7 @@ class _MenuDesignState extends State<MenuDesign> {
                           Text("Price : "+
                             widget.price,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: pureblue,
                           fontWeight: FontWeight.w700,
                           fontSize: 11.0,
                           fontFamily: 'OpenSans')
@@ -113,13 +119,11 @@ class _MenuDesignState extends State<MenuDesign> {
                           Text("Quantity : "+
                             widget.quantity,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: pureblue,
                           fontWeight: FontWeight.w700,
                           fontSize: 11.0,
                           fontFamily: 'OpenSans')
                             ),
-
-
                         ],
                       ),
                   ),

@@ -107,9 +107,9 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: 
-        Colors.white,
+         pureblue,
         backgroundColor:
-        pureblue, 
+        Colors.white,
         unselectedItemColor: 
         // Color(0xFF176DB5),
         Color(0xFF0C375B),
