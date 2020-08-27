@@ -32,6 +32,12 @@ class ApiCall{
     headers: _setHeaders()
     );
   }
+  postCancelOrder(api) async {
+    var fullurl = url+api+ await _getToken();
+    return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
 
    
    updateImageValid(data ,api) async {
@@ -200,6 +206,7 @@ class ApiCall{
       headers: _setHeaders()
       );
   }
+
   getOffline(api) async{
     var fullurl = url + api;
     // print(fullurl);

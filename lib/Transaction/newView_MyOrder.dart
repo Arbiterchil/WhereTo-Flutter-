@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:WhereTo/Transaction/x_view.dart';
+import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/styletext.dart';
+import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:platform_alert_dialog/platform_alert_dialog.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,7 +36,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
   Future<void> disposeBloc() async {
     bloc.dispose();
   }
-
+final _navigatorKey = GlobalKey<NavigatorState>();
   var userData;
   var userID;
   bool isTrue =false;
@@ -90,56 +93,57 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
       getBloc(userID);  
     });
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          // Padding(
-          //   padding: EdgeInsets.only(top: 40, left: 10, right: 10),
-          //   child: Align(
-          //     alignment: Alignment.topLeft,
-          //     child: GestureDetector(
-          //       onTap: (){
-          //         Navigator.pop(context);
-          //         disposeBloc();
-          //       },
-          //       child: Container(
-          //         height: 50,
-          //         width: 50,
-          //         decoration: BoxDecoration(
-          //           color: Color(0xFF0C375B),
-          //           shape: BoxShape.circle
-          //         ),
-          //         child: Center(
-          //           child: Icon(
-          //             Icons.arrow_back_ios,
-          //             color: Colors.white,
-          //           ),
-          //         ),
-          //       ),
-          //     )
-          //   ),
-          // ),
-          Padding(
-            padding: EdgeInsets.only(top: 55),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Text(
-                "My Orders",
-                style: TextStyle(
-                    fontSize: 36,
-                    color: pureblue,
-                    fontFamily: 'Gilroy-ExtraBold',
-                    fontWeight: FontWeight.w500),
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            // Padding(
+            //   padding: EdgeInsets.only(top: 40, left: 10, right: 10),
+            //   child: Align(
+            //     alignment: Alignment.topLeft,
+            //     child: GestureDetector(
+            //       onTap: (){
+            //         Navigator.pop(context);
+            //         disposeBloc();
+            //       },
+            //       child: Container(
+            //         height: 50,
+            //         width: 50,
+            //         decoration: BoxDecoration(
+            //           color: Color(0xFF0C375B),
+            //           shape: BoxShape.circle
+            //         ),
+            //         child: Center(
+            //           child: Icon(
+            //             Icons.arrow_back_ios,
+            //             color: Colors.white,
+            //           ),
+            //         ),
+            //       ),
+            //     )
+            //   ),
+            // ),
+            Padding(
+              padding: EdgeInsets.only(top: 55),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Text(
+                  "My Orders",
+                  style: TextStyle(
+                      fontSize: 36,
+                      color: pureblue,
+                      fontFamily: 'Gilroy-ExtraBold',
+                      fontWeight: FontWeight.w500),
 
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 70),
-            child: xStreamAsshole(),
-          ),
-        ],
-      ),
+            Padding(
+              padding: EdgeInsets.only(top: 70),
+              child: xStreamAsshole(),
+            ),
+          ],
+        ),
+      
     );
   }
 
@@ -171,10 +175,120 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
                                 address: snapshot.data[index].address,
                                 restaurantName: snapshot.data[index].restaurantName,
                                 status: sunkist =="0" ?snapshot.data[index].status.toString() :sunkist,
+                                onTapCancel: (){
+                                  if (sunkist == "0" ||snapshot.data[index].status.toString().contains("0")) {
+                                showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return PlatformAlertDialog(
+                                        title: Text(
+                                          "Canceling Your Order will not be notified the Rider.",
+                                          style: TextStyle(
+                                              decoration: TextDecoration.none,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily: 'Gilroy-light'),
+                                        ),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: [
+                                              Text(
+                                          "Cancel Order?",
+                                          style: TextStyle(
+                                              decoration: TextDecoration.none,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily: 'Gilroy-light'),
+                                            ),
+                                            ],
+                                            
+                                          ),
+                                        ),
+                                        actions: [
+                                          PlatformDialogAction(
+                                            actionType: ActionType.Preferred,
+                                            child: Text(
+                                          "Yes",
+                                          style: TextStyle(
+                                              decoration: TextDecoration.none,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.white,
+                                              fontFamily: 'Gilroy-light'),
+                                            ), 
+                                            onPressed: ()async{
+                                              if(snapshot.data[index].status.toString().contains("0")){
+                                                var res = await ApiCall().postCancelOrder('/cancelOrder/${snapshot.data[index].id}');
+                                                if (res.statusCode == 200) {
+                                                var data = json.decode(res.body);
+                                                print(data);
+                                                print("Success");
+                                                setState(() {
+                                                snapshot.data.removeAt(index);
+                                                });
+                                                Navigator.of(context).pop();
+                                            }
+                                              }else{
+                                              PlatformAlertDialog(
+                                              title: Text(
+                                            "The Order already accept by the Rider",
+                                            style: TextStyle(
+                                              decoration: TextDecoration.none,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily: 'Gilroy-light'),
+                                        ),
+                                        
+                                        actions: [
+                                         
+                                            PlatformDialogAction(
+                                            actionType: ActionType.Default,
+                                            child: Text(
+                                          "Okay",
+                                          style: TextStyle(
+                                              decoration: TextDecoration.none,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily: 'Gilroy-light'),
+                                            ), 
+                                            onPressed: (){
+                                              Navigator.of(context).pop();
+                                            }
+                                            ),
+                                        ],
+                                      );
+                                              }
+                                            }
+                                            ),
+                                            PlatformDialogAction(
+                                              actionType: ActionType.Default,
+                                            child: Text(
+                                          "No",
+                                          style: TextStyle(
+                                              decoration: TextDecoration.none,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily: 'Gilroy-light'),
+                                            ), 
+                                            onPressed: (){
+                                              Navigator.of(context).pop();
+                                            }
+                                            ),
+                                        ],
+                                      );
+                                    });
+                              } else {}
+                                },
                                 onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return StepperStatus(status: sunkist,);
-                                  }));
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context){
+                                  //   return StepperStatus(status: sunkist,);
+                                  // }));
+                                 
                                 },
                               ),
                             ],

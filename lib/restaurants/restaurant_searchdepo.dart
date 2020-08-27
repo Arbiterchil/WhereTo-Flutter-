@@ -18,7 +18,6 @@ import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'FoodDisplay.dart';
-import 'package:asuka/asuka.dart' as asuka;
 class SearchDepo extends StatefulWidget {
   @override
   _SearchDepoState createState() => _SearchDepoState();

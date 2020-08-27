@@ -11,7 +11,7 @@ import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:asuka/asuka.dart' as asuka;
+
 
 import 'api_restaurant_bloc/orderblocdelegate.dart';
 void main() {
@@ -59,7 +59,6 @@ class _MyAppState extends State<MyApp> {
       child: StreamProvider<ConnectivityStatus>(
         create: (context) =>ConnectivityService().controller.stream,
         child:MaterialApp(
-        builder: asuka.builder,
         debugShowCheckedModeBanner: false,
         home:SplashScreen(),
         ), 

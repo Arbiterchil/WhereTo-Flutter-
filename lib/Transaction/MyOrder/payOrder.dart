@@ -22,7 +22,7 @@ class PayOrder extends StatefulWidget {
   @override
   _PayOrderState createState() => _PayOrderState();
 }
-final navigatorKey = GlobalKey<NavigatorState>();
+final _navigatorKey = GlobalKey<NavigatorState>();
 class _PayOrderState extends State<PayOrder> {
   var userData;
   @override
@@ -33,7 +33,7 @@ class _PayOrderState extends State<PayOrder> {
   @override
   Widget build(BuildContext context) {
     return DropdownBanner(
-        navigatorKey: navigatorKey,
+        navigatorKey: _navigatorKey,
         child: Scaffold(
         backgroundColor: Colors.white,
         body: Stack(
@@ -355,14 +355,15 @@ class _PayOrderState extends State<PayOrder> {
                                             orders.hide();
                                             DropdownBanner.showBanner(
                                               text: "Order Succesfully Place",
-                                              color: Colors.greenAccent,
+                                              color: Colors.blue,
                                               textStyle: TextStyle(
                                                 fontFamily: "Gilroy-light",
-                                                color: Colors.black,
+                                                color: Colors.white,
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.w500
                                               )
                                               );
+                                              BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
                                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>HomePage()));
                                           }
                                           final response = await ApiCall()
