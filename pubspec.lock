@@ -70,7 +70,7 @@ packages:
       name: boolean_selector
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0-nullsafety"
+    version: "2.0.0"
   build:
     dependency: transitive
     description:
@@ -723,6 +723,23 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.0"
+<<<<<<< HEAD
+=======
+  petitparser:
+    dependency: transitive
+    description:
+      name: petitparser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
+  photo_view:
+    dependency: "direct main"
+    description:
+      name: photo_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.2"
+>>>>>>> 7cac0023436554799eb8a1d7db91283e1bcaadaf
   platform:
     dependency: transitive
     description:
