@@ -32,6 +32,13 @@ class ApiCall{
     headers: _setHeaders()
     );
   }
+
+  viewUnremittedList(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
+    headers: _setHeaders()
+    );
+  }
   
   getRiderRemit(api) async {
     var fullurl = url+api;
