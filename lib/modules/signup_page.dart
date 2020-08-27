@@ -239,8 +239,6 @@ class _SignupPageState extends State<SignupPage> {
                 readOnly: true,
                 onTap: () async {
                   
-             
-
                    Position postion =await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                           final coordinates =new Coordinates(postion.latitude,postion.longitude);
                           var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
@@ -711,7 +709,8 @@ class _SignupPageState extends State<SignupPage> {
           'contactNumber': ownNumber.text,
           'address': ownAddress.text,
           'password': ownpass.text,
-          'barangayId': selectPerson.toString(),          
+          'barangayId': selectPerson.toString(),
+          'imagePath': "None"          
         };
         var res = await ApiCall().postData(data, '/register');
         var body = json.decode(res.body);

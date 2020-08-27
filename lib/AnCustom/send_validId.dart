@@ -28,9 +28,11 @@ class _ValidIdsState extends State<ValidIds> {
    File _idPickerImage;
    String stringPath;
    var thimagelink;
+   bool lace = false;
   @override
   void initState() {
     this._getUserInfo();
+    lace = false;
     print(widget.id);
     super.initState();
   }
@@ -207,9 +209,16 @@ class _ValidIdsState extends State<ValidIds> {
                   SizedBox(height: 35,),
                   GestureDetector(
                               onTap: () async{
+                            
+                            setState(() {
+                              lace =true;
+                            });
 
                              if(_idPickerImage == null){
                                 _showDistictWarning("Please Select your valid id. ");
+                                setState(() {
+                                lace = false;
+                              });
                              }else{
 
                                var viewthis = path.basename(_idPickerImage.path);
@@ -234,7 +243,10 @@ class _ValidIdsState extends State<ValidIds> {
                               var valid = await ApiCall().updateImageValid(dataAss, '/updateVerification');
                               print(valid.body);  
                               Navigator.pop(context);
-
+                               _showDistictWarning("Send Success. We Are Checking you're ID Happy Buying.");
+                              setState(() {
+                                lace = false;
+                              });
                              }
                               }, 
                               child: Container(
@@ -245,7 +257,7 @@ class _ValidIdsState extends State<ValidIds> {
                                   borderRadius: BorderRadius.all(Radius.circular(100)),
                                 ),
                                 child: Center(
-                                 child: Icon(Icons.send,
+                                 child: Icon(lace ? Icons.perm_identity : Icons.send,
                                  size: 20,
                                  color: Colors.white
                                  ),
@@ -333,7 +345,7 @@ class _ValidIdsState extends State<ValidIds> {
                 style: TextStyle(
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,
-                    fontSize: 20.0,
+                    fontSize: 14.0,
                     fontFamily: 'Gilroy-light'),
               ),
             ),

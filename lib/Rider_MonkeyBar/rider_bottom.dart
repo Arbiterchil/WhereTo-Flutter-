@@ -26,7 +26,10 @@ class _CustomgettransacState extends State<Customgettransac> {
              height: 150,
              width: MediaQuery.of(context).size.width,
              decoration: BoxDecoration(
-               color: pureblue,
+               border: Border.all(
+                 width: 1,
+                 color: pureblue,
+               ),
                borderRadius: BorderRadius.all(Radius.circular(20)),
              ),
              child: Stack(
@@ -59,7 +62,7 @@ class _CustomgettransacState extends State<Customgettransac> {
                          children: <Widget>[
                           Text(widget.name,
                                                       style: TextStyle(
-                                                      color: Colors.white,
+                                                      color: pureblue,
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 18.0,
                                                       fontFamily: 'Gilroy-ExtraBold'
@@ -68,7 +71,7 @@ class _CustomgettransacState extends State<Customgettransac> {
                                                       SizedBox(height: 7.0,),
                                                       Text(widget.restaurantName,
                                                       style: TextStyle(
-                                                      color: Color(0xFFF2F2F2),
+                                                      color: pureblue,
                                                       fontWeight: FontWeight.normal,
                                                       fontSize: 11.0,
                                                       fontFamily: 'Gilroy-light'
@@ -79,7 +82,7 @@ class _CustomgettransacState extends State<Customgettransac> {
                                                        Text(widget.address,
                                                           overflow: TextOverflow.ellipsis,
                                                           style: TextStyle(
-                                                          color: Color(0xFFF2F2F2),
+                                                          color:pureblue,
                                                           fontWeight: FontWeight.normal,
                                                           fontSize: 11.0,
                                                           fontFamily: 'Gilroy-light'
@@ -93,7 +96,7 @@ class _CustomgettransacState extends State<Customgettransac> {
                                                               child: Text('To: '+widget.deliveryAddress,
                                                               overflow: TextOverflow.ellipsis,
                                                               style: TextStyle(
-                                                              color: Color(0xFFF2F2F2),
+                                                              color: pureblue,
                                                               fontWeight: FontWeight.normal,
                                                               fontSize: 11.0,
                                                               fontFamily: 'Gilroy-light'

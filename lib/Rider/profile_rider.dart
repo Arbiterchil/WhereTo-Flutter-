@@ -103,10 +103,11 @@ void configSignal() async {
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: 
         // Color(0xFF398AE5),
-        Colors.white,
+        // Colors.white,
+        pureblue,
         // unselectedItemColor: Colors.grey,
         backgroundColor:
-        pureblue , 
+        Colors.white, 
         // Color(0xFFF2F2F2)
         //  Color(0xFF398AE5),
         unselectedItemColor: 

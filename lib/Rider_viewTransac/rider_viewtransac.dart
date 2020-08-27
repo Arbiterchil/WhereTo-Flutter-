@@ -213,7 +213,7 @@ final response = await ApiCall().viewTransac('/getTransactionDetails/$id');
 
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
-                          child: Customgettransac( image: "asset/img/app.jpg",
+                          child: Customgettransac( image: "asset/img/logo.png",
                             transacId: inCommingtoSave[index]['id'],
                             name: inCommingtoSave[index]['name'],
                             address: inCommingtoSave[index]['address'],

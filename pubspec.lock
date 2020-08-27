@@ -84,18 +84,7 @@ packages:
       name: boolean_selector
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "2.1.0-nullsafety"
-=======
     version: "2.0.0"
-  bubble_tab_indicator:
-    dependency: "direct main"
-    description:
-      name: bubble_tab_indicator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.4"
->>>>>>> 1434bd5eb72fbd1445236d109421003718a56b16
   build:
     dependency: transitive
     description:
@@ -600,8 +589,7 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "0.12.10-nullsafety"
+    version: "0.12.6"
   md2_tab_indicator:
     dependency: "direct main"
     description:
@@ -609,9 +597,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-=======
-    version: "0.12.6"
->>>>>>> 1434bd5eb72fbd1445236d109421003718a56b16
   meta:
     dependency: transitive
     description:
@@ -745,6 +730,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  photo_view:
+    dependency: "direct main"
+    description:
+      name: photo_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.2"
   platform:
     dependency: transitive
     description:

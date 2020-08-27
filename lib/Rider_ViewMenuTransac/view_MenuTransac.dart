@@ -63,7 +63,6 @@ bool stepTf = true;
 bool menuHide = true;
 bool backTF =true;
 var idgetter;
-
 @override
   void initState() {
     this.getTotalPrice();
@@ -436,8 +435,11 @@ var checkVal = localStorage.getBool('check');
                           height: 140,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: pureblue,
-                            borderRadius: BorderRadius.all(Radius.circular(20),
+                            border: Border.all(
+                              width: 1,
+                              color: pureblue
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(10),
                             ),
                           ),
                           child: Row(
@@ -449,7 +451,7 @@ var checkVal = localStorage.getBool('check');
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: AssetImage("asset/img/app.jpg") )
+                                    image: AssetImage("asset/img/logo.png") )
                                 ),
                               ),
 
@@ -462,7 +464,7 @@ var checkVal = localStorage.getBool('check');
                                               children: <Widget>[
                                                       Text("${widget.nametran}",
                                                       style: TextStyle(
-                                                      color: Colors.white,
+                                                      color:pureblue,
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 16.0,
                                                       fontFamily: 'OpenSans'
@@ -472,7 +474,7 @@ var checkVal = localStorage.getBool('check');
                                                       Text("${widget.restaurantName}",
                                                       maxLines: 2,
                                                       style: TextStyle(
-                                                      color: Colors.grey[300],
+                                                      color: pureblue.withOpacity(.80),
                                                       fontWeight: FontWeight.normal,
                                                       fontSize: 12.0,
                                                       fontFamily: 'OpenSans'
@@ -483,7 +485,7 @@ var checkVal = localStorage.getBool('check');
                                                       SizedBox(height: 5,),
                                                       Text("${widget.deliveryCharge}",
                                                       style: TextStyle(
-                                                      color: Colors.white,
+                                                      color:pureblue,
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 16.0,
                                                       fontFamily: 'OpenSans'
@@ -497,31 +499,69 @@ var checkVal = localStorage.getBool('check');
                             ],
                           ),
                         ),
+                         SizedBox(height: 20 ,),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                                        child: Container(
+                                                          height: 55,
+                                                          decoration: BoxDecoration(
+                                                            // border: Border.all(
+                                                            //   width: 1,
+                                                            //   color: pureblue
+                                                            // ),
+                                                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                          ),
+                                                          child: Text("${widget.deliverTo}",
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                          
+                                                          color: pureblue,
+                                                          fontWeight: FontWeight.normal,
+                                                          fontSize: 22.0,
+                                                          fontFamily: 'Gilroy-light'
+                                                    ),
+                                                          ),
+                                                        ),
+                                                      ),
+
                          SizedBox(height: 10,),
                          Container(
-                          height: 90,
+                          height: 60,
                           width: MediaQuery.of(context).size.width,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                                                         Visibility(
                                               visible: backTF,
-                                              child: RaisedButton(
-                      color: pureblue,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                      onPressed: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                              child: 
+                                              GestureDetector(
+                                                onTap: (){
+                                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                                                     return RiderTransaction();
                                                   }));
-                      },                
-                      child: Text ( "BACK", style :TextStyle(
-                      color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12.0,
-                                  fontFamily: 'OpenSans'
-                  ),),),
+                                                },
+                                                child: Container(
+                                                   height: 60,
+                                              width: 60,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  width: 1,
+                                                  color: pureblue
+                                                ),
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.arrow_back,
+                                                  size: 30,
+                                                  color: pureblue,
+                                                ),
+                                              ),
+                                                ),
+                                              )
                                             ),
                    SizedBox(width: 30.0,),
+                    
                                              Visibility(
                                           visible: available,
                                           child: GestureDetector(
@@ -533,14 +573,17 @@ var checkVal = localStorage.getBool('check');
                                               height: 60,
                                               width: 60,
                                               decoration: BoxDecoration(
-                                                color: pureblue,
+                                                border: Border.all(
+                                                  width: 1,
+                                                  color: pureblue,
+                                                ),
                                                 shape: BoxShape.circle,
                                               ),
                                               child: Center(
                                                 child: Icon(
                                                   Icons.motorcycle,
                                                   size: 30,
-                                                  color: Colors.white,
+                                                  color: pureblue,
                                                 ),
                                               ),
                                             ),
@@ -552,36 +595,16 @@ var checkVal = localStorage.getBool('check');
                             ],
                           ),
                         ),
-                            SizedBox(height: 10,),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                                        child: Container(
-                                                          child: Text("${widget.deliverTo}",
-                                                          overflow: TextOverflow.ellipsis,
-                                                          style: TextStyle(
-                                                          
-                                                          color: wheretoDark,
-                                                          fontWeight: FontWeight.normal,
-                                                          fontSize: 22.0,
-                                                          fontFamily: 'OpenSans'
-                                                    ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                       SizedBox(height: 10,),
+                           
                            Container(
                            height: 50.0,
                            width: 120,
                            decoration: BoxDecoration(
-                             color: Colors.white,
+                             border: Border.all(
+                               width: 1,
+                               color: pureblue
+                             ),
                              borderRadius: BorderRadius.circular(10.0),
-                             boxShadow: [
-                               BoxShadow(
-                                 color: Colors.black12,
-                                 spreadRadius: 5.5,
-                                 blurRadius: 5.5
-                               ),
-                             ],
                            ),
                             
                             child: Column(
@@ -589,12 +612,11 @@ var checkVal = localStorage.getBool('check');
                               children: <Widget>[
                                Padding(
                                  padding: const EdgeInsets.all(8.0),
-                                 child:  Text("₱ $totals",
+                                 child:  Text(totals == null ? "..." : "₱ $totals",
                                                 style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
+                                                color: pureblue,
                                                 fontSize: 25.0,
-                                                fontFamily: 'OpenSans'
+                                                fontFamily: 'Gilroy-ExtraBold'
                                               ),
                                                 ),),
                               ],
