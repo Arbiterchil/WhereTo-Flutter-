@@ -213,7 +213,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                                 borderRadius: BorderRadius.all(Radius.circular(100)),
                               ),
                               child: Center(
-                                child: Text('Add Menu <',
+                                child: Text(loading ? '....': 'Add Menu <',
                                 style: TextStyle(
                                   fontFamily: 'Gilroy-ExtraBold',
                                   fontSize: 12,
@@ -224,6 +224,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                             
                           ),
                           ),
+                          SizedBox(height: 30,),
                             ],
                           
                       ),
@@ -234,6 +235,10 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
   }
 
 void getAddMenu() async{
+
+  setState(() {
+    loading =true;
+  });
 
    if(selectPerson == null){
     _showDistictWarning("Select a Category");
@@ -274,9 +279,16 @@ void getAddMenu() async{
                           _showDone();
       }else{
 
+           _showDistictWarning("Menu Add Fail Try Again.");
 
       }
+
+
    }
+   
+    setState(() {
+      loading = false;
+    });
   
 }
 
