@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:WhereTo/Admin/Restaurant.dart';
 import 'package:WhereTo/Admin/Rider_viewRemit/view_RemitImages.dart';
 import 'package:WhereTo/Admin/r_source.dart';
 import 'package:WhereTo/Admin/view_allID.dart';
@@ -303,15 +304,15 @@ class _AdminDashState extends State<AdminDash> {
                   ))
                   ),
                    SizedBox(height: 40,),
-                    Padding(
+                    Row(
+                      children: [
+                        Padding(
                       padding: const EdgeInsets.only(left: 30),
                       child: GestureDetector(
 
                                   onTap: (){
                                       print(userData['id'].toString());
                                       showDialogFam(userData['id'].toString());
-
-
                                   },
                                   child: Container(
                                     height: 50,
@@ -332,6 +333,35 @@ class _AdminDashState extends State<AdminDash> {
                                   ),
 
                                 ),
+                    ),
+                     Padding(
+                      padding: const EdgeInsets.only(left: 30),
+                      child: GestureDetector(
+
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  EditRestaurant()));
+                                  },
+                                  child: Container(
+                                    height: 50,
+                                    width: 140,
+                                    decoration: BoxDecoration(
+                                      color: pureblue,
+                                      borderRadius: BorderRadius.all(Radius.circular(40)),
+                                    ),
+                                    child: Center(
+                                      child: Text("Edit Restaurants",
+                                      style: TextStyle(
+                                        color:  Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Gilroy-light'
+                                      ),
+                                      ),
+                                    ),
+                                  ),
+
+                                ),
+                    ),
+                      ],
                     ),
                    SizedBox(height: 10,),
 
