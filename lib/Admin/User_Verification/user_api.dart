@@ -1,3 +1,5 @@
+import 'package:WhereTo/Admin/Rider_UnViewRemit/view_unremit.dart';
+import 'package:WhereTo/Admin/Rider_UnViewRemit/view_unresponse.dart';
 import 'package:WhereTo/Admin/Rider_viewRemit/view_remit.dart';
 import 'package:WhereTo/Admin/Rider_viewRemit/view_responseRem.dart';
 import 'package:WhereTo/Admin/User_Verification/user_getterres.dart';
@@ -47,5 +49,31 @@ Future<UserVerified> getUserUnVerified() async {
       return RemitResponse.withError("$error");
     }
   }
+
+  Future<UnRemitResponse> getUnRemitImages() async{
+
+    try{
+        var response = await ApiCall().getRemitImage('/viewUnremittedList');
+      var bodies = json.decode(response.body);
+      List<UnViewRemit> unviewRet = [];
+      for(var bodies in bodies){
+        UnViewRemit vr = UnViewRemit(
+       riderId: bodies["riderId"],
+        name: bodies["name"],
+        amount: bodies["amount"],
+        imagePath: bodies["imagePath"],
+        status: bodies["status"],
+        createdAt: bodies["created_at"].toString(),
+        );
+        unviewRet.add(vr);
+      }
+      return UnRemitResponse.fromJson(unviewRet);
+    }catch(stacktrace, error){
+      print("Error Occurence. $error and $stacktrace" );
+      return UnRemitResponse.withError("$error");
+    }
+
+  }
+
 
 }

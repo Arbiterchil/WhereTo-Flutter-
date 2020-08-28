@@ -1,39 +1,36 @@
-
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:WhereTo/Admin/Rider_UnViewRemit/view_unRemitedList.dart';
-import 'package:WhereTo/Admin/Rider_viewRemit/view_remit.dart';
-import 'package:WhereTo/Admin/Rider_viewRemit/view_remitStream.dart';
-import 'package:WhereTo/Admin/Rider_viewRemit/view_responseRem.dart';
-import 'package:WhereTo/Admin/admin_dash.dart';
+import 'package:WhereTo/Admin/Rider_UnViewRemit/view_unStrream.dart';
+import 'package:WhereTo/Admin/Rider_UnViewRemit/view_unremit.dart';
+import 'package:WhereTo/Admin/Rider_UnViewRemit/view_unresponse.dart';
+import 'package:WhereTo/Admin/Rider_viewRemit/view_RemitImages.dart';
+import 'package:WhereTo/Admin/navbottom_admin.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:transparent_image/transparent_image.dart';
+
 import '../../styletext.dart';
-import '../navbottom_admin.dart';
 
-class RemitViewImagesAdmin extends StatefulWidget {
+class UnRemitedView extends StatefulWidget {
   @override
-  _RemitViewImagesAdminState createState() => _RemitViewImagesAdminState();
+  _UnRemitedViewState createState() => _UnRemitedViewState();
 }
-class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
 
- 
+class _UnRemitedViewState extends State<UnRemitedView> {
+
+
   @override
   void initState() {
-    remittanceStream..getViewRemits();
+    unremitStream..getUnViewRemit();
     super.initState();
   }
 
-bool lace =false;
-
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+   return Scaffold(
       body: WillPopScope(
         child: SafeArea(
           child: SingleChildScrollView(
@@ -56,7 +53,7 @@ bool lace =false;
                                 Navigator.pushAndRemoveUntil(
                               context,
                               new MaterialPageRoute(
-                                  builder: (context) => AdminDash()),ModalRoute.withName('/')),
+                                  builder: (context) => RemitViewImagesAdmin()),ModalRoute.withName('/')),
                               child: Container(
                                 height: 50,
                                 width: 110,
@@ -76,36 +73,6 @@ bool lace =false;
                               ),
                             ),
                             ),
-                        ),
-                         Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 40),
-                            child: GestureDetector(
-                              onTap: () =>
-                                Navigator.pushAndRemoveUntil(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => UnRemitedView()),ModalRoute.withName('/')),
-                              child: Container(
-                                height: 50,
-                                width: 140,
-                                decoration: BoxDecoration(
-                                  color: pureblue,
-                                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                                ),
-                                child: Center(
-                                  child: Text( 'UnViewed >',
-                                  style: TextStyle(
-                                    fontFamily: 'Gilroy-ExtraBold',
-                                    fontSize: 18,
-                                    color: Colors.white
-                                  ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            ),
                         )
                       ],
                     ),
@@ -115,10 +82,10 @@ bool lace =false;
                   Container(
                     height: 600,
                     width: MediaQuery.of(context).size.width,
-                    child: StreamBuilder<RemitResponse>(
+                    child: StreamBuilder<UnRemitResponse>(
 
-                      stream: remittanceStream.subject.stream,
-                      builder: (context, AsyncSnapshot<RemitResponse> asyncSnapshot){
+                      stream: unremitStream.subject.stream,
+                      builder: (context, AsyncSnapshot<UnRemitResponse> asyncSnapshot){
                         if(asyncSnapshot.hasData){
                             if(asyncSnapshot.data.error !=null && asyncSnapshot.data.error.length > 0){
                             return _error(asyncSnapshot.data.error);
@@ -144,6 +111,9 @@ bool lace =false;
       
     );
   }
+
+
+
    Widget _load(){
       return Center(
         child: Column(
@@ -171,9 +141,11 @@ bool lace =false;
             ),
           );
 }
- Widget _views(RemitResponse remitResponse){
 
-      List<ViewRemit> un = remitResponse.viewRemit;
+
+Widget _views(UnRemitResponse remitResponse){
+
+      List<UnViewRemit> un = remitResponse.viewRemit;
 
       if(un.length == 0 ){
           return Center(
@@ -200,12 +172,12 @@ bool lace =false;
                     onTap:  () {
                       
                       _showDial(
-                        un[index].imagePath,
                         un[index].riderId,
                         un[index].name,
                         un[index].amount,
                         un[index].createdAt,
-                        lace);
+                        false,
+                        );
                       }, 
                     child: Container(
                       decoration: BoxDecoration(
@@ -214,12 +186,35 @@ bool lace =false;
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
-                        child: FadeInImage.memoryNetwork(
-                          // fadeInDuration: Duration(milliseconds: 1),
-                          // fadeOutDuration: Duration(milliseconds: 1),
-                          placeholder: kTransparentImage,
-                           image: un[index].imagePath,
-                           fit: BoxFit.cover,)
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("asset/img/logo.png")
+                            ),
+                          ),
+                          child: Stack(
+                            children: <Widget>[
+                              Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Padding(padding: const EdgeInsets.only(left: 10),
+                                child: Text(un[index].name,
+                                style: TextStyle(
+                                  color: pureblue,
+                                  fontFamily: 'Gilroy-ExtraBold',
+                                  fontSize: 20
+                                ),
+                                ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // child: FadeInImage.memoryNetwork(
+                        //   // fadeInDuration: Duration(milliseconds: 1),
+                        //   // fadeOutDuration: Duration(milliseconds: 1),
+                        //   placeholder: kTransparentImage,
+                        //    image: Image.asset("name"),
+                        //    fit: BoxFit.cover,)
 
                       ),
 
@@ -235,9 +230,10 @@ bool lace =false;
 
 
         }
- }
 
-  void _showDial(String resources, int id ,String name, int amount, String createdAt,bool laso){
+
+}
+void _showDial( int id ,String name, int amount, String createdAt,bool laso){
     
     laso = false;
 
@@ -285,7 +281,7 @@ bool lace =false;
                       topRight: Radius.circular(20)
                     ),
                     ),
-                    imageProvider:  NetworkImage(resources)),
+                    imageProvider: AssetImage("asset/img/logo.png")),
                 ),    
                 SizedBox(height: 20,),
                 Padding(
@@ -393,19 +389,17 @@ bool lace =false;
                         [
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5,right: 5),
+                            child:  Padding(
+                              padding: const EdgeInsets.only(left: 20,right: 5),
                               child: GestureDetector(
                                 onTap: ()async{
 
                                   setState(() {
                                     laso = true;
                                   });
-                                     var respawn = await ApiCall().getRiderRemit('/getRiderRemit/$id');
-                                    var bods = json.decode(respawn.body);
-                                      print(bods['id']); 
-                                   var response = await ApiCall().postVerify('/approveRemittance/${bods['id']}');
-                                      print(id.toString()+","+response.body);
+                                     var respawn = await ApiCall().getRiderRemit('/unSuspendRider/$id');
+                                      print(respawn.body); 
+                                  
                                    Navigator.pushReplacement(
                                   context,
                                   new MaterialPageRoute(
@@ -422,7 +416,7 @@ bool lace =false;
                                     borderRadius: BorderRadius.all(Radius.circular(100)),
                                   ),
                                   child: Center(
-                                    child: Text(laso ? '....' :'Verify >',
+                                    child: Text(laso ? '....' :'UnSuspend >',
                                     style: TextStyle(
                                       fontFamily: 'Gilroy-ExtraBold',
                                       fontSize: 12,
@@ -482,45 +476,6 @@ bool lace =false;
                   ),
                    ),
                  SizedBox(height: 20,),
-                 Padding(
-                              padding: const EdgeInsets.only(left: 20,right: 5),
-                              child: GestureDetector(
-                                onTap: ()async{
-
-                                  setState(() {
-                                    laso = true;
-                                  });
-                                     var respawn = await ApiCall().getRiderRemit('/unSuspendRider/$id');
-                                      print(respawn.body); 
-                                  
-                                   Navigator.pushReplacement(
-                                  context,
-                                  new MaterialPageRoute(
-                                      builder: (context) => AdminHomeDash()));
-                                  setState(() {
-                                    laso = false;
-                                  });
-                                },
-                                child: Container(
-                                  height: 50,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    color: pureblue,
-                                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                                  ),
-                                  child: Center(
-                                    child: Text(laso ? '....' :'UnSuspend >',
-                                    style: TextStyle(
-                                      fontFamily: 'Gilroy-ExtraBold',
-                                      fontSize: 12,
-                                      color: Colors.white
-                                    ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              ),
-                               SizedBox(height: 20,),
                 ],
             ),
           ),
