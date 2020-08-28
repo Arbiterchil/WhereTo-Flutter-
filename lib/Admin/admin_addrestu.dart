@@ -31,6 +31,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
     String opentimeString;
     String closetimeString;
     String datesofdays;
+    String features;
     List dataBarangay = List();
     bool loading = false;
     final pick = ImagePicker();
@@ -43,6 +44,40 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
     List<dynamic> weekAdd = [];
      List resultant = [];
      Map<String , int> shit = {};
+    var nandato;
+    Map<String,String> featu= {};
+    List<dynamic> addfea = [];
+    List finalres = [];
+    Map<String,int> shithis ={};   
+
+    List<String> featuring =
+    [
+      "Not Featured",
+      "Featured"
+    ];  
+
+    void _featured(){
+      for(int i=0; i < featuring.length;i++){
+        nandato = i.toString();
+        featu ={
+          'namaeh': featuring[i],
+          'id': nandato
+        };
+        addfea.add(featu);
+      }
+      for(int x= 0 ; x < addfea.length; x++){
+        finalres.add(addfea[x]);
+      }
+      shithis.forEach((key, value) { 
+        finalres.add(
+          {
+            'namaeh':value,
+              'id': value
+          }
+        );
+      });
+    }
+
      List<String> weeks = 
     [
       "None",
@@ -541,6 +576,62 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                   
               )
             ),
+            
+             SizedBox(height: 15.0,),
+                    Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: DropdownButtonHideUnderline(
+                      child:
+            Stack(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Icon(Icons.featured_play_list,
+                            color: pureblue,)),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: DropdownButton(
+                                  isExpanded: true ,
+                                  hint: Text( "Select Featured or Not",
+                                  style: TextStyle(
+                                      color: pureblue,
+                                      fontFamily: 'Gilroy-light'
+                                    ),),
+                                  dropdownColor:  Colors.white,
+                                  icon: Icon(Icons.arrow_drop_down,color: pureblue,),
+                                  
+                                  value: features,
+                                  items: finalres.map((item) {
+                                  return new DropdownMenuItem(
+                                    child: Text(item['namaeh'],
+                                    style: TextStyle(
+                                      
+                                      color: pureblue,
+                                      fontFamily: 'Gilroy-light'
+                                    ),
+                                    ),
+                                    value: item['id'].toString(),
+                                  );
+                                }).toList(),
+                                  onChanged: (item){
+                                    setState(() {
+                                      features = item;
+                                      print(item);
+                                    });
+                                  }
+                                  ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  
+              )
+            ),
 
               // SizedBox(height: 10.0,),
               // Container(
@@ -653,9 +744,10 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 
   @override
   void initState() {
+    callBarangay();
+    weekdays();
+    _featured();
     super.initState();
-    this.callBarangay();
-    this.weekdays();
   }
 
   @override
@@ -800,7 +892,7 @@ setState(() {
                 "openTime": opentimeString.toString(), 
                 "closingTime": closetimeString.toString(),
                 "closeOn": datesofdays.toString(),
-                "isFeatured": 1,
+                "isFeatured": features.toString(),
                 "owner": owner.text,
                 "representative" : respresent.text,
                 "imagePath": thimagelink
