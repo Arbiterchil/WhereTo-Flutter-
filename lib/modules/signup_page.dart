@@ -641,8 +641,10 @@ class _SignupPageState extends State<SignupPage> {
       return Padding(
         padding: const EdgeInsets.only(left: 20,right: 20),
         child: Container(
+          height: 120,
+          width: 120,
           decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
+            shape: BoxShape.circle,
             borderRadius: BorderRadius.all(Radius.circular(10),
           ),
           ),
