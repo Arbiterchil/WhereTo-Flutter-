@@ -62,6 +62,19 @@ class _PayOrderState extends State<PayOrder> {
                 width: MediaQuery.of(context).size.width,
                 child: BlocConsumer<OrderBloc, List<TransactionOrders>>(
                   builder: (context, snapshot) {
+                    ProgressDialog orders= ProgressDialog(context);
+                    orders.style(
+                    message: "Notifying The Riders about the Order..",
+                    borderRadius: 10.0,
+                    backgroundColor: Colors.white,
+                    progressWidget: CircularProgressIndicator(),
+                    elevation: 10.0,
+                    insetAnimCurve: Curves.easeInExpo,
+                    progressTextStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 10.0,
+                    fontWeight: FontWeight.w300,
+                    fontFamily: "Gilroy-light"));
                     return Builder(builder: (context) {
                       Map<String, dynamic> string;
                       Map<String, int> converted1 = {};
@@ -263,19 +276,7 @@ class _PayOrderState extends State<PayOrder> {
                                       width: double.infinity,
                                       child: GestureDetector(
                                         onTap: () async {
-                                          ProgressDialog orders= ProgressDialog(context);
-                                          orders.style(
-                                          message: "Notifying The Riders about the Order..",
-                                          borderRadius: 10.0,
-                                          backgroundColor: Colors.white,
-                                          progressWidget: CircularProgressIndicator(),
-                                          elevation: 10.0,
-                                          insetAnimCurve: Curves.easeInExpo,
-                                          progressTextStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 10.0,
-                                              fontWeight: FontWeight.w300,
-                                              fontFamily: "Gilroy-light"));
+                                          
                                           orders = ProgressDialog(context, type: ProgressDialogType.Normal,
                                           isDismissible: false);
                                           orders.show();
@@ -351,7 +352,7 @@ class _PayOrderState extends State<PayOrder> {
                                             print(data);
                                             print("Success");
                                             orders.hide();
-                                              DialogOrder().getDialog(context, "Order Succesfulled", "Order Success", Icons.check, Colors.black);
+                                              DialogOrder().getDialog(context, "Order Succesfully Placed", "Order Success", Icons.check, Colors.black);
                                               BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
                                               Navigator.push(context, MaterialPageRoute(builder: (context) =>HomePage()));
                                           }else{

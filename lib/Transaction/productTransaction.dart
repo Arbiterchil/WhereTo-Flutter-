@@ -374,22 +374,22 @@ class _TransactionListState extends State<TransactionList> {
                                     width: double.infinity,
                                     child: GestureDetector(
                                       onTap: () async {
-                                        // pr.show();
-                                        // var fee = await ComputationFee().getFee(widget.barangay);
-                                        // if (snapshot.length == 0) {
-                                        //   print("No Order");
-                                        //   pr.hide();
-                                        // } else {
-                                        //   pr.hide();
-                                        //   Navigator.push(
-                                        //       context,
-                                        //       MaterialPageRoute(
-                                        //           builder: (context) =>
-                                        //               PayOrder(
-                                        //                   fee: fee,
-                                        //                   restauID: widget
-                                        //                       .restauID)));
-                                        // }
+                                        pr.show();
+                                        var fee = await ComputationFee().getFee(widget.barangay);
+                                        if (snapshot.length == 0) {
+                                          print("No Order");
+                                          pr.hide();
+                                        } else {
+                                          pr.hide();
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PayOrder(
+                                                          fee: fee,
+                                                          restauID: widget
+                                                              .restauID)));
+                                        }
                                       },
                                       child: Container(
                                         height: 60,

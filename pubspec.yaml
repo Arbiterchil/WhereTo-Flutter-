@@ -79,6 +79,7 @@ dependencies:
   dropdown_banner: ^1.4.0
   platform_alert_dialog: ^1.0.0+2
   photo_view: ^0.10.2
+  flushbar: ^1.10.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

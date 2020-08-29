@@ -9,9 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ComputationFee{
   Future<double> getFee(String barangayWidget) async {
-    double restoCharge;
-    double userCharge;
-    double totalOrder;
+    double restoCharge=0;
+    double userCharge=0;
+    double totalOrder=0;
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
     var user = json.decode(userJson);
