@@ -249,7 +249,7 @@ class _SearchDepoState extends State<SearchDepo> {
                     width: 170,
                     height: 40,
                     child: Text(
-                      "Featured Food's in Restaurant's",
+                      "FEATURED FOOD IN RESTAURANTS",
                       style: TextStyle(
                           color: pureblue,
                           fontWeight: FontWeight.bold,
@@ -271,7 +271,7 @@ class _SearchDepoState extends State<SearchDepo> {
                     width: 170,
                     height: 40,
                     child: Text(
-                      "Featured Restaurant's",
+                      "FEATURED RESTAURANTS",
                       style: TextStyle(
                           color:pureblue,
                           fontWeight: FontWeight.bold,

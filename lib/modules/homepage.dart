@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
    };
  int _selectedIndex = 0;
   var userData;
-
+  String image;
   @override
   void initState() {
     _onsSignal();
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
     
     
   }
-
+  var datapasser;
   _onsSignal() async{
     await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
      await OneSignal.shared.setLocationShared(true);
@@ -108,7 +108,9 @@ void postuserId() async {
     gethis = userData['id'].toString();
     var response = await ApiCall().getCheckUser('/getUserVerification/$gethis');
    var body = json.decode(response.body);
+
    print(body['imagePath']);
+    image = body['imagePath'];
    if(body['imagePath'] == null){
      print("Fuck This");
     sendsValidId(userData['id'].toString());

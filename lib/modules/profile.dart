@@ -22,6 +22,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 // }
 
 class Profile extends StatefulWidget {
+  
+
   @override
   _Profile createState() => _Profile();
 }
@@ -39,10 +41,12 @@ class _Profile extends State<Profile> {
   TextEditingController ownpass = TextEditingController();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
    TextEditingController search = new TextEditingController();
+  String getImage;
   @override
   void initState() {
     _getUserInfo();
     super.initState();
+    
   }
 
   void _getUserInfo() async {
@@ -52,103 +56,51 @@ class _Profile extends State<Profile> {
     setState(() {
       userData = user;
     });
-  }
-//  getLocation() async{
-//     var location =Location();
-//     try{
-//       var userLocation =await location.getLocation();
-//       print("${userLocation.latitude},${userLocation.longitude}");
-//     } on Exception catch (e){
-//       print(e.toString());
-//     }
-//  }
-
-//  Future<void>getService() async{
-//    var location =Location();
-//    bool _serviceEnabled;
-//    _serviceEnabled = await location.serviceEnabled();
-//   if (!_serviceEnabled) {
-//   _serviceEnabled = await location.requestService();
-//   if (!_serviceEnabled) {
-//     return;
-//   }
-// }
-//  }
-//  Future<void>getPermission() async{
-//    var location =Location();
-//    PermissionStatus permissionStatus =await location.hasPermission();
-//    if(permissionStatus ==PermissionStatus.denied){
-//      permissionStatus =await location.requestPermission();
-//      if(permissionStatus !=PermissionStatus.granted){
-//        return;
-//      }
-//    }
-//  }
-  
-  
-  // void configSignal() async {
-  //   OneSignal.shared
-  //       .setInFocusDisplayType(OSNotificationDisplayType.notification);
-  //   OneSignal.shared
-  //       .setNotificationReceivedHandler((OSNotification notification){
-  //     setState(() {
-  //       //  constant = notification.payload.additionalData;
-  //       data = notification.payload.additionalData;
-  //       setState(() {
-  //         if(data != null){
-  //           if(data['force'].toString() == 'penalty'){
-  //               _showDone(meesages.toString());
-  //           }
-             
-  //         }
-  //       });
-        
-  //     });
-  //   });
-  //   // await OneSignal.shared.setSubscription(true);
-  //   // var tags = await OneSignal.shared.getTags();
-  //   // var sendtag = await OneSignal.shared.sendTags({'UR': 'TRUE'});
-  //   // var status = await OneSignal.shared.getPermissionSubscriptionState();
-
-  //   // String url = 'https://onesignal.com/api/v1/notifications';
-  //   // var playerId = status.subscriptionStatus.userId;
-  //   // var idChil = "1106b49d-60f0-435a-b44f-5d2f4849cb38";
-  //   // var numb = "3";
-  //   // var contents = {
-  //   //   "include_player_ids": [idChil,playerId],
-  //   //   "include_segments": ["Users Notif"],
-  //   //   "excluded_segments": [],
-  //   //   "contents": {"en": "This is a test."},
-
-  //   //   "data": {"id": numb},
-
-  //   //   "headings": {"en": "Erchil Testings"},
-  //   //   "filter": [
-  //   //     {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
-  //   //   ],
-  //   //   "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-  //   // };
-  //   // Map<String, String> headers = {
-  //   //   'Content-Type': 'application/json',
-  //   //   'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-  //   // };
-  //   // var repo =
-  //   //     await http.post(url, headers: headers, body: json.encode(contents));
-
-  //   // // await OneSignal.shared.deleteTags(["userID","2","transactionID","2"]);
-  //   // print(data.toString());
-  //   // print(tags);
-  //   // print(sendtag);
-  //   // print(playerId);
-  //   // print(repo.body);
-  
+  //     var response = await ApiCall().getCheckUser('/getUserVerification/${userData['id']}');
+  //  var body = json.decode(response.body)['imagePath'];
+  //   print(body);
     
-  // }
+    if(userData['imagePath'] != null){
+
+      setState(() {
+      getImage = userData['imagePath'];
+      });
+
+    }else{
+        print("No Image");
+    }
+  }
 
 
 
-   
+  Widget imagesget(){
 
+    if(getImage != null){
+      return  Container(
+                             height: 120,
+                             width: 120,
+                             decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               image: DecorationImage(
+                                 image: NetworkImage(getImage),
+                                 fit: BoxFit.cover),
+                             ),
+                           );
+    }else{
+      return  Container(
+                             height: 120,
+                             width: 120,
+                             decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               image: DecorationImage(
+                                 image: AssetImage('asset/img/logo.png'),
+                                 fit: BoxFit.cover),
+                             ),
+                           );
+    }
+
+  }
+  
   @override
   Widget build(BuildContext context) {
   return Scaffold(
@@ -182,16 +134,7 @@ class _Profile extends State<Profile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 textDirection: TextDirection.ltr,
                                 children: <Widget>[
-                                    Container(
-                             height: 120,
-                             width: 120,
-                             decoration: BoxDecoration(
-                               shape: BoxShape.circle,
-                               image: DecorationImage(
-                                 image: NetworkImage(userData['imagePath']),
-                                 fit: BoxFit.cover),
-                             ),
-                           ),
+                                    imagesget(),
                                 SizedBox(height: 10,),
                                 Text(userData!= null ? '${userData['name']}':  'Fail get data.',
                                                   style: TextStyle(

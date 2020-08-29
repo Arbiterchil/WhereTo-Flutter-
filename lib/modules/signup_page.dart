@@ -644,8 +644,7 @@ class _SignupPageState extends State<SignupPage> {
           height: 120,
           width: 120,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            borderRadius: BorderRadius.all(Radius.circular(10),
+            borderRadius: BorderRadius.all(Radius.circular(120),
           ),
           ),
           child: Image.file(
@@ -838,6 +837,7 @@ class _SignupPageState extends State<SignupPage> {
       _showDistictWarning("Please Select your Profile Image. ");
 
     }else {
+      
       if (formkey.currentState.validate()) {
         formkey.currentState.save();
           var viewthis = path.basename(_idPickerImage.path);
@@ -845,7 +845,7 @@ class _SignupPageState extends State<SignupPage> {
                               "822285642732717",
                               "6k0dMMg3As30mPmjeWLeFL5-qQ4",
                               "amadpogi");
-                            await client.uploadImage( _idPickerImage.path ,filename: "Valid ID/$viewthis") .then((result){
+                            await client.uploadImage( _idPickerImage.path ,filename: "Profile/$viewthis") .then((result){
                                 stringPath = result.secure_url;
                                   print(stringPath);
                                   thimagelink = stringPath;
