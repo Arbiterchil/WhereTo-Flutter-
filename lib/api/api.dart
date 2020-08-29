@@ -19,6 +19,42 @@ class ApiCall{
     );
   }
 
+  updateMenu(data ,api) async {
+    var fullurl = url+api+ await _getToken();
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+
+  makeMenuFeatured(api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
+
+  updateRestaurant(data ,api) async {
+    var fullurl = url+api+ await _getToken();
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+
+  makeRestaurantFeatured(api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
+
+  deleteRestaurant(api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
 
   unSuspendRider(api) async {
     var fullurl = url+api;
@@ -29,6 +65,13 @@ class ApiCall{
   suspendRider(api) async {
     var fullurl = url+api;
     return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
+
+   getMenu(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
     headers: _setHeaders()
     );
   }

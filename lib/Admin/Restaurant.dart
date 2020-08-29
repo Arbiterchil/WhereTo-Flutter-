@@ -2,6 +2,7 @@
 
 
 import 'package:WhereTo/Admin/blocEditRestaurant.dart';
+import 'package:WhereTo/Admin/updateAdmin/dialog_chooser.dart';
 import 'package:WhereTo/Transaction/SearchMenu/filteredMenu.dart';
 
 import 'package:WhereTo/styletext.dart';
@@ -109,6 +110,22 @@ class _EditRestaurantState extends State<EditRestaurant> {
                             return GestureDetector(
                         onTap: () async{
                                
+
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (contexr){
+
+                              return ChooseEditto
+                              (
+              menuId: snapshot.data[index].menuId ,
+              restaurantId: snapshot.data[index].restaurantId,
+                              );
+
+                            }
+                             );
+
+
                         },
                         child: Container(
                           decoration: BoxDecoration(

@@ -311,6 +311,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                     onSaved: (val) => contactNumber.text = val,
                     
                 
+
                 style: TextStyle(
                   color: pureblue,
                   fontFamily: 'Gilroy-light',
@@ -412,8 +413,6 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
                             child:
-                            
-                            
                              DropdownButton(
                                   isExpanded: true ,
                                   hint: Text( "Select Open Time",
@@ -906,7 +905,7 @@ setState(() {
             new MaterialPageRoute(
             builder: (context) => AddmenuAdmin(id: body.toString() )));
    
-    
+     
     } else{
        _showDone("Fail Data Save.");
       print('Nope');

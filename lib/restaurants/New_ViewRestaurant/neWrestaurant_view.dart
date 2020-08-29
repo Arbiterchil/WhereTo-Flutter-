@@ -32,6 +32,9 @@ class _NewRestaurantViewFeaturedState extends State<NewRestaurantViewFeatured> {
   //   super.dispose();
   //   streamRestaurantsFeatured..drainStream();
   // }
+
+
+  
   
   @override
   Widget build(BuildContext context) {
