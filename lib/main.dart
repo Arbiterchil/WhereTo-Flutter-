@@ -7,7 +7,6 @@ import 'package:WhereTo/Transaction/MyOrder/bloc.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 
 import 'package:WhereTo/splash_screen/splash_screen.dart';
-import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';

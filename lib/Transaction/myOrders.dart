@@ -8,7 +8,6 @@ import 'package:WhereTo/Transaction/x_view.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/designbuttons.dart';
 import 'package:WhereTo/main.dart';
-import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:platform_alert_dialog/platform_alert_dialog.dart';

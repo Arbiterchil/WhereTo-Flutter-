@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 
+import 'package:WhereTo/Transaction/MyOrder/DialogOrder.dart';
 import 'package:WhereTo/Transaction/getDeviceID/getDeviceID.class.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/modules/homepage.dart';
-import 'package:dropdown_banner/dropdown_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,9 +32,7 @@ class _PayOrderState extends State<PayOrder> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownBanner(
-        navigatorKey: _navigatorKey,
-        child: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         body: Stack(
           children: [
@@ -353,18 +351,12 @@ class _PayOrderState extends State<PayOrder> {
                                             print(data);
                                             print("Success");
                                             orders.hide();
-                                            DropdownBanner.showBanner(
-                                              text: "Order Succesfully Place",
-                                              color: Colors.blue,
-                                              textStyle: TextStyle(
-                                                fontFamily: "Gilroy-light",
-                                                color: Colors.white,
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.w500
-                                              )
-                                              );
+                                              DialogOrder().getDialog(context, "Order Succesfulled", "Order Success", Icons.check, Colors.black);
                                               BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
-                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>HomePage()));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) =>HomePage()));
+                                          }else{
+                                          orders.hide();
+                                           DialogOrder().getDialog(context, "Slow/No Internet Connection", "Order Failed", Icons.error, Color(0xFFFF3345));
                                           }
                                           final response = await ApiCall()
                                               .getData('/getAllPlayerId');
@@ -476,7 +468,6 @@ class _PayOrderState extends State<PayOrder> {
             ),
           ],
         ),
-      ),
     );
   }
 }
