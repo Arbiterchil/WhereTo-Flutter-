@@ -188,7 +188,7 @@ class _Profile extends State<Profile> {
                              decoration: BoxDecoration(
                                shape: BoxShape.circle,
                                image: DecorationImage(
-                                 image: AssetImage("asset/img/logo.png"),
+                                 image: NetworkImage(userData['imagePath']),
                                  fit: BoxFit.cover),
                              ),
                            ),

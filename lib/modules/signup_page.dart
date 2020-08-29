@@ -600,6 +600,77 @@ class _SignupPageState extends State<SignupPage> {
 
   }
 
+  final pick = ImagePicker();
+   File _idPickerImage;
+   String stringPath;
+   var thimagelink;
+
+    getYourIdImage( ImageSource source) async{
+
+    var imageIdValid = await pick.getImage(source: source); 
+       File crop = await ImageCropper.cropImage(
+      sourcePath: imageIdValid.path ,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'Where To Id Cropper',
+          toolbarColor: pureblue,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+      ) );
+    setState(() {
+      _idPickerImage = crop;
+      
+      // print(imageIdValid.path);
+    });
+    
+
+  }
+ Widget _getImage(){
+
+    if(_idPickerImage != null){
+
+      return Padding(
+        padding: const EdgeInsets.only(left: 20,right: 20),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.all(Radius.circular(10),
+          ),
+          ),
+          child: Image.file(
+              _idPickerImage,
+              fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }else{
+        return Container(
+          width: 80,
+        height: 80,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: pureblue
+          ),
+          child: Center(
+            child: Icon(
+              Icons.person,
+              size: 40,
+              color: Colors.white,
+            ),
+          ),
+        );
+    }
+
+  }  
 
 
   @override
@@ -624,6 +695,67 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ),
                 SizedBox(height: 20,),
+ _getImage(),
+                    SizedBox(height: 15,),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Stack(
+                      children: <Widget>
+                      [
+                         Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 70),
+                            child: GestureDetector(
+                              onTap: (){
+                                getYourIdImage(ImageSource.camera);
+                              }, 
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  color: pureblue,
+                                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                                ),
+                                child: Center(
+                                 child: Icon(Icons.camera,
+                                 size: 20,
+                                 color: Colors.white
+                                 ),
+                                ),
+                              ),
+                            ),
+                            ),
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 70),
+                            child: GestureDetector(
+                              onTap: (){
+                                getYourIdImage(ImageSource.gallery);
+                              }, 
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  color: pureblue,
+                                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                                ),
+                                child: Center(
+                                 child: Icon(Icons.picture_in_picture,
+                                 size: 20,
+                                 color: Colors.white
+                                 ),
+                                ),
+                              ),
+                            ),
+                            ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height:15,),
                 Padding(
                   padding: const EdgeInsets.only(left: 40,right: 40),
                   child: _formRegister(context),
@@ -700,9 +832,23 @@ class _SignupPageState extends State<SignupPage> {
 
     if (selectPerson == null) {
       _showDistictWarning("Select Barangay");
+    }else if(_idPickerImage == null){
+      _showDistictWarning("Please Select your Profile Image. ");
+
     }else {
       if (formkey.currentState.validate()) {
         formkey.currentState.save();
+          var viewthis = path.basename(_idPickerImage.path);
+                            CloudinaryClient client = new CloudinaryClient(
+                              "822285642732717",
+                              "6k0dMMg3As30mPmjeWLeFL5-qQ4",
+                              "amadpogi");
+                            await client.uploadImage( _idPickerImage.path ,filename: "Valid ID/$viewthis") .then((result){
+                                stringPath = result.secure_url;
+                                  print(stringPath);
+                                  thimagelink = stringPath;
+                              })
+                              .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
         var data = {
           'name': fulname.text,
           'email': email.text,
@@ -710,7 +856,7 @@ class _SignupPageState extends State<SignupPage> {
           'address': ownAddress.text,
           'password': ownpass.text,
           'barangayId': selectPerson.toString(),
-          'imagePath': "None"          
+          'imagePath': thimagelink         
         };
         var res = await ApiCall().postData(data, '/register');
         var body = json.decode(res.body);
@@ -718,6 +864,7 @@ class _SignupPageState extends State<SignupPage> {
           if (body['success']) {
             var valid = await ApiCall().getUserVerification('/submitVerification/${body['user']['id']}');
             print(valid.body);
+            
             
             SharedPreferences localStorage =
                 await SharedPreferences.getInstance();

@@ -111,7 +111,9 @@ Widget _views(NewRestaurantResponse newFeatured){
                         image: nf[index].imagePath,
                          restaurantName:nf[index].restaurantName ,
                          address: nf[index].address,
+                         
                          onTap: (){
+                           
                           //  Navigator.push(
                           //                 context,
                           //                 new MaterialPageRoute(
