@@ -1,15 +1,14 @@
 // To parse this JSON data, do
 //
-//     final filterRestaurant = filterRestaurantFromJson(jsonString);
+//     final isFeatured = isFeaturedFromJson(jsonString);
 
 import 'dart:convert';
 
-List<FilterRestaurant> filterRestaurantFromJson(String str) => List<FilterRestaurant>.from(json.decode(str).map((x) => FilterRestaurant.fromJson(x)));
+List<IsFeatured> isFeaturedFromJson(String str) => List<IsFeatured>.from(json.decode(str).map((x) => IsFeatured.fromJson(x)));
 
 
-
-class FilterRestaurant {
-    FilterRestaurant({
+class IsFeatured {
+    IsFeatured({
         this.menuId,
         this.restaurantId,
         this.restaurantName,
@@ -33,7 +32,7 @@ class FilterRestaurant {
     final String categoryName;
     final String imagePath;
 
-    factory FilterRestaurant.fromJson(Map<String, dynamic> json) => FilterRestaurant(
+    factory IsFeatured.fromJson(Map<String, dynamic> json) => IsFeatured(
         menuId: json["menuId"],
         restaurantId: json["restaurantId"],
         restaurantName: json["restaurantName"],

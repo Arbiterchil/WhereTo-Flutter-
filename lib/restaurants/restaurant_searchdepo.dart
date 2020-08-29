@@ -177,7 +177,7 @@ class _SearchDepoState extends State<SearchDepo> {
                                 btnOkText: "Comeback Later",
                                 btnOkColor: Color(0xFF0C375B),
                                 btnOkOnPress: () async {
-                                
+                                Navigator.pop(context);
                                 }).show();
                                 }
                                 

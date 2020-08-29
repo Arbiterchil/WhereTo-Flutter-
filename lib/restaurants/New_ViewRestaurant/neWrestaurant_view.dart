@@ -108,7 +108,20 @@ Widget _views(NewRestaurantResponse newFeatured){
                         image: nf[index].imagePath,
                          restaurantName:nf[index].restaurantName ,
                          address: nf[index].address,
-                         onTap: (){},
+                         onTap: (){
+                          //  Navigator.push(
+                          //                 context,
+                          //                 new MaterialPageRoute(
+                          //                     builder: (context) => ListStactic(restauID: nf[index].,
+                          //                           nameRestau: snapshot
+                          //                               .data[index]
+                          //                               .restaurantName
+                          //                               .toString(),
+                          //                               baranggay: snapshot.data[index].barangayName,
+                          //                            address:snapshot.data[index].address.toString(),
+                          //                            categID: snapshot.data[index].categoryId.toString(),  
+                          //                         )));
+                         },
                        ),
                      ],
                    );

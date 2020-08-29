@@ -28,7 +28,7 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
             image: DecorationImage(
-              image: AssetImage(widget.image),
+              image: AssetImage("asset/img/heartIcon.jpg"),
               fit: BoxFit.cover
               ),
               boxShadow: [
