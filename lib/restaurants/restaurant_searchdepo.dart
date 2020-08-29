@@ -271,7 +271,7 @@ class _SearchDepoState extends State<SearchDepo> {
                     width: 170,
                     height: 40,
                     child: Text(
-                      "Featured Fast Food",
+                      "Featured Restaurant's",
                       style: TextStyle(
                           color:pureblue,
                           fontWeight: FontWeight.bold,

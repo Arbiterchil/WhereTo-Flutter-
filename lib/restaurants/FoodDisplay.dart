@@ -47,7 +47,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                 restaurantname: snapshot.data[index].restaurantName,
                                 foodname: snapshot.data[index].menuName,
                                 description: snapshot.data[index].categoryName,
-                                image: "asset/img/heartIcon.jpg",
+                                image: snapshot.data[index].imagePath,
                                 onTap: (){
                                   Navigator.push(
                                           context,
