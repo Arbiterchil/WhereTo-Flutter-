@@ -57,6 +57,7 @@ class AnimationClip extends AnimatedWidget{
               bottom: 0,
               right: animation.value,
               child: ClipPath(
+                
                 clipper: BottomWaveClipper(),
                 child: Opacity(
                   opacity: 0.7,

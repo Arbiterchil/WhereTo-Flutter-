@@ -219,50 +219,152 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    // return Scaffold(
 
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: Stack(
-                  children: <Widget>[
-                     Align(
+    //   body: SafeArea(
+    //     child: SingleChildScrollView(
+    //       physics: AlwaysScrollableScrollPhysics(),
+    //       child: Column(
+    //         children: <Widget>[
+    //           Container(
+    //             width: MediaQuery.of(context).size.width,
+    //             height: MediaQuery.of(context).size.height,
+    //             child: Stack(
+    //               children: <Widget>[
+    //                  Align(
+    //                     alignment: Alignment.topRight,
+    //                     child: Padding(
+    //                       padding: const EdgeInsets.only(right: 30,top: 10),
+    //                       child: Container(
+    //                         height: 60,
+    //                         width:  60,
+    //                         child: Image.asset('asset/img/logo.png'),
+    //                       ),),
+    //                   ),
+    //                 Align(
+    //                   alignment: Alignment.topCenter,
+    //                   child: Padding(padding: const EdgeInsets.only(top: 90),
+    //                   child: Column(
+    //                     children: <Widget>[
+    //                       SizedBox(height: 20,),
+    //                         Text(
+    //                                     'Sign In',
+    //                                     style: TextStyle(
+    //                                       color: pureblue,
+    //                                       fontFamily: 'Gilroy-ExtraBold',
+    //                                       fontSize: 45.0,
+    //                                       fontWeight: FontWeight.bold,
+    //                                     ),
+    //                                   ),
+    //                         SizedBox(height: 20,),
+    //                         Padding(
+    //                           padding: const EdgeInsets.only(left: 40,right: 40),
+    //                           child: _formGet(context),
+    //                         ),
+    //                          SizedBox(height: 40,),
+    //                         Container(
+    //               width: MediaQuery.of(context).size.width,
+    //               child: Stack(
+    //                 children: <Widget>
+    //                 [
+    //                   Align(
+    //                     alignment: Alignment.topRight,
+    //                     child: Padding(
+    //                       padding: const EdgeInsets.only(right: 30),
+    //                       child: GestureDetector(
+    //                         onTap: _login,
+    //                         child: Container(
+    //                           height: 50,
+    //                           width: 110,
+    //                           decoration: BoxDecoration(
+    //                             color: pureblue,
+    //                             borderRadius: BorderRadius.all(Radius.circular(100)),
+    //                           ),
+    //                           child: Center(
+    //                             child: Text( isLoading ? '....' : 'Login >',
+    //                             style: TextStyle(
+    //                               fontFamily: 'Gilroy-ExtraBold',
+    //                               fontSize: 18,
+    //                               color: Colors.white
+    //                             ),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                       ),
+    //                       ),
+    //                   )
+    //                 ],
+    //               ),
+    //             ),
+    //                     ],
+    //                   )
+    //                   ),
+    //                 ),
+    //                  Align(
+    //                     alignment: Alignment.center,
+    //                     child: AnimationWaveTrial(),
+    //                   ),
+    //                   Align(
+    //                     alignment: Alignment.bottomCenter,
+    //                     child: Padding(
+    //                       padding: const EdgeInsets.only(bottom: 40),
+    //                       child: _botDownSignUp(),
+    //                     ),
+    //                   )
+    //               ],
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+
+    // );
+
+      return Scaffold(
+
+        body: SafeArea(
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 100,
+                  child: Stack(
+                    children: <Widget>
+                    [
+                      Align(
                         alignment: Alignment.topRight,
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 30,top: 10),
+                          padding: const EdgeInsets.only(right: 30),
                           child: Container(
                             height: 60,
                             width:  60,
                             child: Image.asset('asset/img/logo.png'),
                           ),),
                       ),
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Padding(padding: const EdgeInsets.only(top: 90),
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(height: 20,),
-                            Text(
-                                        'Sign In',
-                                        style: TextStyle(
-                                          color: pureblue,
-                                          fontFamily: 'Gilroy-ExtraBold',
-                                          fontSize: 45.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                            SizedBox(height: 20,),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 40,right: 40),
-                              child: _formGet(context),
+                      
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20,),
+                 Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: pureblue,
+                              fontFamily: 'Gilroy-ExtraBold',
+                              fontSize: 45.0,
+                              fontWeight: FontWeight.bold,
                             ),
-                             SizedBox(height: 40,),
-                            Container(
+                          ),
+                SizedBox(height: 20,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 40,right: 40),
+                  child: _formGet(context),
+                ),
+                SizedBox(height: 20,),
+                Container(
                   width: MediaQuery.of(context).size.width,
                   child: Stack(
                     children: <Widget>
@@ -296,11 +398,30 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                        ],
-                      )
-                      ),
-                    ),
-                     Align(
+                          // SizedBox(height: 10.0),
+                          // Text(
+                          //   'Sign in with',
+                          //   style: eLabelStyle,
+                          // ),
+                          // _buildSocialBtnRow(),
+             
+
+              ],
+            ),
+          )),
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.transparent,
+          elevation: 0,
+          child:    Container(
+                  height: 190,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>
+                    [
+                      Align(
                         alignment: Alignment.center,
                         child: AnimationWaveTrial(),
                       ),
@@ -311,125 +432,11 @@ class _LoginPageState extends State<LoginPage> {
                           child: _botDownSignUp(),
                         ),
                       )
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
         ),
-      ),
-
-    );
-
-      // return Scaffold(
-
-      //   body: SafeArea(
-      //     child: SingleChildScrollView(
-      //       physics: AlwaysScrollableScrollPhysics(),
-      //       child: Column(
-      //         children: <Widget>[
-      //           Container(
-      //             width: MediaQuery.of(context).size.width,
-      //             height: 100,
-      //             child: Stack(
-      //               children: <Widget>
-      //               [
-      //                 Align(
-      //                   alignment: Alignment.topRight,
-      //                   child: Padding(
-      //                     padding: const EdgeInsets.only(right: 30),
-      //                     child: Container(
-      //                       height: 60,
-      //                       width:  60,
-      //                       child: Image.asset('asset/img/logo.png'),
-      //                     ),),
-      //                 ),
-                      
-      //               ],
-      //             ),
-      //           ),
-      //           SizedBox(height: 20,),
-      //            Text(
-      //                       'Sign In',
-      //                       style: TextStyle(
-      //                         color: pureblue,
-      //                         fontFamily: 'Gilroy-ExtraBold',
-      //                         fontSize: 45.0,
-      //                         fontWeight: FontWeight.bold,
-      //                       ),
-      //                     ),
-      //           SizedBox(height: 20,),
-      //           Padding(
-      //             padding: const EdgeInsets.only(left: 40,right: 40),
-      //             child: _formGet(context),
-      //           ),
-      //           SizedBox(height: 20,),
-      //           Container(
-      //             width: MediaQuery.of(context).size.width,
-      //             child: Stack(
-      //               children: <Widget>
-      //               [
-      //                 Align(
-      //                   alignment: Alignment.topRight,
-      //                   child: Padding(
-      //                     padding: const EdgeInsets.only(right: 30),
-      //                     child: GestureDetector(
-      //                       onTap: _login,
-      //                       child: Container(
-      //                         height: 50,
-      //                         width: 110,
-      //                         decoration: BoxDecoration(
-      //                           color: pureblue,
-      //                           borderRadius: BorderRadius.all(Radius.circular(100)),
-      //                         ),
-      //                         child: Center(
-      //                           child: Text( isLoading ? '....' : 'Login >',
-      //                           style: TextStyle(
-      //                             fontFamily: 'Gilroy-ExtraBold',
-      //                             fontSize: 18,
-      //                             color: Colors.white
-      //                           ),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                     ),
-      //                 )
-      //               ],
-      //             ),
-      //           ),
-      //                     // SizedBox(height: 10.0),
-      //                     // Text(
-      //                     //   'Sign in with',
-      //                     //   style: eLabelStyle,
-      //                     // ),
-      //                     // _buildSocialBtnRow(),
-      //           Container(
-      //             height: 190,
-      //             width: MediaQuery.of(context).size.width,
-      //             child: Stack(
-      //               children: <Widget>
-      //               [
-      //                 Align(
-      //                   alignment: Alignment.center,
-      //                   child: AnimationWaveTrial(),
-      //                 ),
-      //                 Align(
-      //                   alignment: Alignment.bottomCenter,
-      //                   child: Padding(
-      //                     padding: const EdgeInsets.only(bottom: 40),
-      //                     child: _botDownSignUp(),
-      //                   ),
-      //                 )
-      //               ],
-      //             ),
-      //           ),
-
-      //         ],
-      //       ),
-      //     )),
-
-      // );
+      );
   }
 
 

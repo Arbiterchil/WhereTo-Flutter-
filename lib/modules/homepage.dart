@@ -104,7 +104,7 @@ void postuserId() async {
     };   
     
     var responses = await ApiCall().playerIdSave(data,'/assignPlayerId');
-    print(responses);
+    print(responses.body);
     gethis = userData['id'].toString();
     var response = await ApiCall().getCheckUser('/getUserVerification/$gethis');
    var body = json.decode(response.body);

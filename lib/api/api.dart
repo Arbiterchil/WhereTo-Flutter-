@@ -74,6 +74,13 @@ class ApiCall{
     return http.get(fullurl,
     headers: _setHeaders()
     );
+  } 
+
+   getAllPlayerId(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
+    headers: _setHeaders()
+    );
   }
 
   viewUnremittedList(api) async {
