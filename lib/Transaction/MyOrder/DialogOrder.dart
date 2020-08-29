@@ -22,7 +22,7 @@ class DialogOrder{
         size: 30.0,
         color: color
       ),
-      duration: Duration(seconds: 4),
+      duration: Duration(seconds: 8),
     )..show(context);
   }
 }
