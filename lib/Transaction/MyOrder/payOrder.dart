@@ -341,8 +341,8 @@ class _PayOrderState extends State<PayOrder> {
                                             // print(post);
                                           });
 
-                                          var res = await ApiCall()
-                                              .postData(post, '/putOrder');
+                                          try{
+                                          var res = await ApiCall().postData(post, '/putOrder');
                                           if (res.statusCode == 200) {
                                             var data = json.decode(res.body);
                                             setState(() {
@@ -429,6 +429,10 @@ class _PayOrderState extends State<PayOrder> {
                                               headers: headers,
                                               body: json.encode(contents));
                                           print(playerId);
+                                          }catch(e){
+                                           orders.hide();
+                                           DialogOrder().getDialog(context, "Slow/No Internet Connection", "Order Failed", Icons.error, Color(0xFFFF3345));
+                                          }
                                           // print(tags);
                                           // print(repo);
                                         },

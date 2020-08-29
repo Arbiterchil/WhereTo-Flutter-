@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class TransactionList extends StatefulWidget {
@@ -390,6 +391,12 @@ class _TransactionListState extends State<TransactionList> {
                                                           restauID: widget
                                                               .restauID)));
                                         }
+                                        // SharedPreferences localStorage = await SharedPreferences.getInstance();
+                                        // var userJson = localStorage.getString('user');
+                                        // var user = json.decode(userJson);
+                                        // print(fee);
+                                        // print(widget.barangay);
+                                        // print(user['barangayId']);
                                       },
                                       child: Container(
                                         height: 60,

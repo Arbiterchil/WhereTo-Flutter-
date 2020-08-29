@@ -9,9 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ComputationFee{
   Future<double> getFee(String barangayWidget) async {
-    double restoCharge=0;
-    double userCharge=0;
-    double totalOrder=0;
+    double restoCharge = 0;
+    double userCharge = 0;
+    double totalOrder = 0;
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
     var user = json.decode(userJson);
@@ -108,7 +108,7 @@ class ComputationFee{
           
             userCharge = 15;
           
-        } else if (barangayname.contains("Bingcungan")) {
+        } else if (barangayname.contains("Bincungan")) {
         
             userCharge = 20;
          
@@ -168,7 +168,7 @@ class ComputationFee{
          
             userCharge = 15;
          
-        } else if (barangayname.contains("Visayan")) {
+        } else if (barangayname.contains("Visayan Village")) {
          
             userCharge = 20;
          
@@ -178,16 +178,14 @@ class ComputationFee{
     if (barangayWidget.contains("Magugpo") &&
         barangayname.contains("Magugpo")) {
         totalOrder = 40;
-    } else if (barangayWidget.contains("Magugpo") &&
-        barangayname != "Magugpo") {
-        totalOrder = restoCharge + userCharge;
-    } else if (barangayWidget!="Magugpo" &&
-        barangayname.contains("Magugpo")) {
+    } else if (barangayWidget.contains("Magugpo") &&barangayname != "Magugpo" || barangayWidget!="Magugpo" &&barangayname.contains("Magugpo")) {
         totalOrder = restoCharge + userCharge;
     } else if (barangayWidget != "Magugpo" && barangayname != "Magugpo") {
         totalOrder = 40 + restoCharge + userCharge; 
-     
+    }else if(barangayWidget.contains(barangayname)){
+        totalOrder =40;
     }
     return totalOrder;
+    
   }
 }
