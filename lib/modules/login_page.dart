@@ -484,7 +484,7 @@ void _login() async{
         context,
         new MaterialPageRoute(
             builder: (context) => AdminHomeDash()));
-      }else{
+      }else if(body['user']['userType'] == 1){
 
            var respo = await ApiCall().addRemittanceRecord('/addRemittanceRecord/${body['user']['id']}');
           print(respo.body);
@@ -494,6 +494,8 @@ void _login() async{
           new MaterialPageRoute(
               builder: (context) => RiderProfile()));
               print("Nice");
+      }else{
+        _showDial("User Does not Exist.");
       }
       }
     }else if(body['suspended'] == true){
