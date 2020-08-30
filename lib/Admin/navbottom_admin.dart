@@ -17,7 +17,7 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
 
 
   String currentPageAdmin = "DashBoard";
-
+  var getterThis;
   List<String> _adminPages = ['DashBoard','Add_Restaurant','Add_Rider'];
   Map<String,GlobalKey<NavigatorState>> _navAdminState = 
    {
@@ -69,10 +69,11 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
   void postuserId() async {
    var status = await OneSignal.shared.getPermissionSubscriptionState();
     var playerId = status.subscriptionStatus.userId;
+    getterThis = playerId;
     var data =
     {
       "userId" : userData['id'].toString(),
-      "playerId" : playerId
+      "playerId" : getterThis
     };
     var responses = await ApiCall().playerIdSave(data,'/assignPlayerId');
     print(responses.body);

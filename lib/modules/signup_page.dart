@@ -20,6 +20,7 @@ import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 // import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../styletext.dart';
@@ -490,11 +491,22 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   void initState() {
-    
-    this.callBarangay();
+     configSignal();
+    callBarangay();
     super.initState();
     
   }
+
+  void configSignal() async {
+     await OneSignal.shared.setLocationShared(true);
+    await OneSignal.shared.promptLocationPermission();
+    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+    await OneSignal.shared.getPermissionSubscriptionState();
+    await OneSignal.shared.setSubscription(true);
+    await OneSignal.shared.getTags();
+   await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
+}
+  
 
   List dataBarangay = List();
 

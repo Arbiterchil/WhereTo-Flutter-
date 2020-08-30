@@ -9,6 +9,7 @@ import 'package:WhereTo/modules/signup_page.dart';
 import 'package:WhereTo/path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../styletext.dart';
@@ -209,6 +210,21 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  @override
+  void initState() {
+     configSignal();
+    super.initState();
+  }
+   void configSignal() async {
+     await OneSignal.shared.setLocationShared(true);
+    await OneSignal.shared.promptLocationPermission();
+    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+    await OneSignal.shared.getPermissionSubscriptionState();
+    await OneSignal.shared.setSubscription(true);
+    await OneSignal.shared.getTags();
+   await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
+}
 
   @override
   void dispose() {
