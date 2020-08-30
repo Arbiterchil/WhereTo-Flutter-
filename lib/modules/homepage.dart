@@ -43,12 +43,11 @@ class _HomePageState extends State<HomePage> {
   String image;
   @override
   void initState() {
-    _onsSignal();
+    super.initState();
+     _onsSignal();
     configSignal();
     getShared();
     postuserId();
-    super.initState();
-    
     
   }
   var datapasser;

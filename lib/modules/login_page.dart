@@ -409,7 +409,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           )),
-        bottomNavigationBar: BottomAppBar(
+        bottomNavigationBar: BottomAppBar(         
           color: Colors.transparent,
           elevation: 0,
           child:    Container(
@@ -638,7 +638,7 @@ void _showDial(String message){
                       Navigator.of(context).pop();
                       },   
                       
-                  child: Text ( "Yes", style :TextStyle(
+                  child: Text ( "Ok", style :TextStyle(
                   color: Colors.white,
                               fontWeight: FontWeight.w700,
                               fontSize: 12.0,

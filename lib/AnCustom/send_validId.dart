@@ -119,156 +119,159 @@ class _ValidIdsState extends State<ValidIds> {
 
   @override
   Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 10,sigmaY: 10),
-      child: Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        child: Container(
-          height: 700,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 10,right: 10,top: 10),
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: <Widget>[
-                     Text(
-                              'Valid Id or Student Id',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Gilroy-light',
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 10,),
-                    _getImage(),
-                    SizedBox(height: 15,),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Stack(
-                      children: <Widget>
-                      [
-                         Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 70),
-                            child: GestureDetector(
-                              onTap: (){
-                                getYourIdImage(ImageSource.camera);
-                              }, 
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  color: pureblue,
-                                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                                ),
-                                child: Center(
-                                 child: Icon(Icons.camera,
-                                 size: 20,
-                                 color: Colors.white
-                                 ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10,sigmaY: 10),
+        child: Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child: Container(
+            height: 700,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 10,right: 10,top: 10),
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: <Widget>[
+                       Text(
+                                'Valid Id or Student Id',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Gilroy-light',
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ),
-                            ),
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 70),
-                            child: GestureDetector(
-                              onTap: (){
-                                getYourIdImage(ImageSource.gallery);
-                              }, 
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  color: pureblue,
-                                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                                ),
-                                child: Center(
-                                 child: Icon(Icons.picture_in_picture,
-                                 size: 20,
-                                 color: Colors.white
-                                 ),
+                              SizedBox(height: 10,),
+                      _getImage(),
+                      SizedBox(height: 15,),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Stack(
+                        children: <Widget>
+                        [
+                           Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 70),
+                              child: GestureDetector(
+                                onTap: (){
+                                  getYourIdImage(ImageSource.camera);
+                                }, 
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    color: pureblue,
+                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  ),
+                                  child: Center(
+                                   child: Icon(Icons.camera,
+                                   size: 20,
+                                   color: Colors.white
+                                   ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            ),
-                        )
-                      ],
+                              ),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 70),
+                              child: GestureDetector(
+                                onTap: (){
+                                  getYourIdImage(ImageSource.gallery);
+                                }, 
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    color: pureblue,
+                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  ),
+                                  child: Center(
+                                   child: Icon(Icons.picture_in_picture,
+                                   size: 20,
+                                   color: Colors.white
+                                   ),
+                                  ),
+                                ),
+                              ),
+                              ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 35,),
-                  GestureDetector(
-                              onTap: () async{
-                            
-                            setState(() {
-                              lace =true;
-                            });
-
-                             if(_idPickerImage == null){
-                                _showDistictWarning("Please Select your valid id. ");
-                                setState(() {
-                                lace = false;
-                              });
-                             }else{
-
-                               var viewthis = path.basename(_idPickerImage.path);
-                            CloudinaryClient client = new CloudinaryClient(
-                              "822285642732717",
-                              "6k0dMMg3As30mPmjeWLeFL5-qQ4",
-                              "amadpogi");
-                            await client.uploadImage( _idPickerImage.path ,filename: "Valid ID/$viewthis") .then((result){
-                                stringPath = result.secure_url;
-                                  print(stringPath);
-                                  thimagelink = stringPath;
-                              })
-                              .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
-
-                              var dataAss =  {
-
-                                'userId': widget.id ,
-                                'imagePath':thimagelink
-
-                              };
-
-                              var valid = await ApiCall().updateImageValid(dataAss, '/updateVerification');
-                              print(valid.body);  
-                              Navigator.pop(context);
-                               _showDistictWarning("Send Success. We Are Checking you're ID Happy Buying.");
-                              setState(() {
-                                lace = false;
-                              });
-                             }
-                              }, 
-                              child: Container(
-                                height: 40,
-                                width: 120,
-                                decoration: BoxDecoration(
-                                  color: pureblue,
-                                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                                ),
-                                child: Center(
-                                 child: Icon(lace ? Icons.perm_identity : Icons.send,
-                                 size: 20,
-                                 color: Colors.white
-                                 ),
-                                ),
+                    SizedBox(height: 35,),
+                    GestureDetector(
+                                onTap: () async{
                               
-                            ),
-                            ),
-                  ],
+                              setState(() {
+                                lace =true;
+                              });
+
+                               if(_idPickerImage == null){
+                                  _showDistictWarning("Please Select your valid id. ");
+                                  setState(() {
+                                  lace = false;
+                                });
+                               }else{
+
+                                 var viewthis = path.basename(_idPickerImage.path);
+                              CloudinaryClient client = new CloudinaryClient(
+                                "822285642732717",
+                                "6k0dMMg3As30mPmjeWLeFL5-qQ4",
+                                "amadpogi");
+                              await client.uploadImage( _idPickerImage.path ,filename: "Valid ID/$viewthis") .then((result){
+                                  stringPath = result.secure_url;
+                                    print(stringPath);
+                                    thimagelink = stringPath;
+                                })
+                                .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
+
+                                var dataAss =  {
+
+                                  'userId': widget.id ,
+                                  'imagePath':thimagelink
+
+                                };
+
+                                var valid = await ApiCall().updateImageValid(dataAss, '/updateVerification');
+                                print(valid.body);  
+                                Navigator.pop(context);
+                                 _showDistictWarning("Send Success. We Are Checking you're ID Happy Buying.");
+                                setState(() {
+                                  lace = false;
+                                });
+                               }
+                                }, 
+                                child: Container(
+                                  height: 40,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                    color: pureblue,
+                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  ),
+                                  child: Center(
+                                   child: Icon(lace ? Icons.perm_identity : Icons.send,
+                                   size: 20,
+                                   color: Colors.white
+                                   ),
+                                  ),
+                                
+                              ),
+                              ),
+                    ],
+                  ),
                 ),
               ),
-            ),
+          ),
         ),
       ),
     );

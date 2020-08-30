@@ -29,10 +29,9 @@ var userData;
   @override
   void initState() {
     // configSignal();
+    super.initState();
     _getUserInfo();
     postRiderId();
-    super.initState();
-    
   }
 
 void postRiderId() async{
