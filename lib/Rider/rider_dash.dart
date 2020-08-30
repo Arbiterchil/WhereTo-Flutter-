@@ -28,7 +28,7 @@ var userData;
 
   @override
   void initState() {
-    // configSignal();
+    configSignal();
     super.initState();
     _getUserInfo();
     postRiderId();
@@ -43,7 +43,7 @@ void postRiderId() async{
       "playerId" : playerId
     };
     var responses = await ApiCall().playerIdSave(data,'/assignPlayerId');
-    print(responses);
+    print(responses.body);
   }
 void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -94,7 +94,7 @@ void configSignal() async {
   await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
      await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
-  
+    await OneSignal.shared.getPermissionSubscriptionState();
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();
    await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
