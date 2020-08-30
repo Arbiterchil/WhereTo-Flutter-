@@ -114,18 +114,16 @@ Widget _views(NewRestaurantResponse newFeatured){
                          
                          onTap: (){
                            
-                          //  Navigator.push(
-                          //                 context,
-                          //                 new MaterialPageRoute(
-                          //                     builder: (context) => ListStactic(restauID: nf[index].,
-                          //                           nameRestau: snapshot
-                          //                               .data[index]
-                          //                               .restaurantName
-                          //                               .toString(),
-                          //                               baranggay: snapshot.data[index].barangayName,
-                          //                            address:snapshot.data[index].address.toString(),
-                          //                            categID: snapshot.data[index].categoryId.toString(),  
-                          //                         )));
+                           Navigator.push(
+                                          context,
+                                          new MaterialPageRoute(
+                                              builder: (context) => ListStactic(
+                                                restauID:nf[index].id.toString(),
+                                                nameRestau: nf[index].restaurantName.toString(),
+                                                baranggay: nf[index].barangayId.toString(),
+                                                address:nf[index].address.toString(),
+                                                //  categID: nf[index].categoryId,  
+                                                  )));
                          },
                        ),
                      ],

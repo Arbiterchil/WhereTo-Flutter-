@@ -21,12 +21,22 @@ class NewRestaurantApi {
         var body = json.decode(response.body);
         for(var body in body){
             NeWRestaurant neWRestaurant = NeWRestaurant(
-                id: body['id'],
-                restaurantName: body['restaurantName'],
-                address: body['address'],
-                contactNumber: body['contactNumber'],
-                barangayName: body['barangayName'],
-                imagePath: body['imagePath']
+                id: body["id"],
+        restaurantName: body["restaurantName"],
+        owner: body["owner"],
+        representative: body["representative"] ,
+        address: body["address"],
+        barangayId: body["barangayId"],
+        contactNumber: body["contactNumber"],
+        openTime: body["openTime"],
+        closingTime: body["closingTime"],
+        closeOn: body["closeOn"],
+        isFeatured: body["isFeatured"],
+        status: body["status"],
+        imagePath: body["imagePath"],
+        isActive: body["isActive"],
+        createdAt: body["created_at"],
+        updatedAt: body["updated_at"],
             );
             restaurantnew.add(neWRestaurant);
         }

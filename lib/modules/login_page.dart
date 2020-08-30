@@ -457,9 +457,6 @@ void _login() async{
         'contactNumber' : contactNumber.text, 
         'password' : passwordController.text
         ,};
-    
-
-
     var res = await ApiCall().postData(data,'/login');
   
     var body = json.decode(res.body);
