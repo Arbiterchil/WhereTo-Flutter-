@@ -1,23 +1,14 @@
-import 'dart:convert';
-import 'dart:ffi';
-import 'package:WhereTo/Rider/profile_rider.dart';
+
+import 'package:WhereTo/Admin/A_RiderRet/rider_responseRet.dart';
+import 'package:WhereTo/Admin/A_RiderRet/rider_streamRets.dart';
+import 'package:WhereTo/Admin/A_RiderRet/rider_viewRets.dart';
+import 'package:WhereTo/Admin/A_Rider_Remain/rider_remainView.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_bottom.dart';
-import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/view_MenuTransac.dart';
-import 'package:WhereTo/Rider_viewTransac/DummyTesting/dummy_Card.dart';
-import 'package:WhereTo/Rider_viewTransac/DummyTesting/rider_newtrans.dart';
-import 'package:WhereTo/Rider_viewTransac/DummyTesting/rider_transResponse.dart';
-import 'package:WhereTo/Rider_viewTransac/DummyTesting/rider_transaStream.dart';
-import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_class.dart';
-import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_views.dart';
-import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
-import 'package:WhereTo/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../designbuttons.dart';
 import '../styletext.dart';
 
 
@@ -52,7 +43,7 @@ var totalAll;
     mybackUp();
      menuTrans(); 
     super.initState();
-    riderNewTransac..getViewtransOrder();
+    retriveStream..getRetieveTransac();
    
   }
  
@@ -104,7 +95,7 @@ List idsComming = [];
 @override
   void dispose() {
     super.dispose();
-    riderNewTransac..drainStream();
+    retriveStream..drainStream();
   }
 
   @override
@@ -140,9 +131,11 @@ List idsComming = [];
                           child: GestureDetector(
                             onTap: (){
                               print(getidSave);
-                          //      showDialog(context: context,
-                          // barrierDismissible: true,
-                          // builder: (context) => Riderprev(id: getidSave,));
+                               showDialog(context: context,
+                          barrierDismissible: true,
+                          builder: (context) => RaminDataIndi(
+                            id: getidSave,
+                          ));
                             },
                             child: Container(
                               height: 50,
@@ -166,9 +159,9 @@ List idsComming = [];
                   // RiderViewing()
                   Container(
                     height: 600,
-                    child: StreamBuilder<RiderNewtransaCResponse>(
-                      stream: riderNewTransac.subject.stream,
-                      builder: (context, AsyncSnapshot<RiderNewtransaCResponse> asyncSnapshot){
+                    child: StreamBuilder<RetrievResponse>(
+                      stream: retriveStream.subject.stream,
+                      builder: (context, AsyncSnapshot<RetrievResponse> asyncSnapshot){
                          if(asyncSnapshot.hasData){
                             if(asyncSnapshot.data.error !=null && asyncSnapshot.data.error.length > 0){
                             return _error(asyncSnapshot.data.error);
@@ -221,8 +214,8 @@ List idsComming = [];
             ),
           );
 }
-  Widget _views(RiderNewtransaCResponse riderNewtransaCResponse){
-    List<ViewtransacNeWRestaurant> v = riderNewtransaCResponse.viewNewRes;
+  Widget _views(RetrievResponse response){
+    List<RetieveAlltransac> v = response.feature;
 
      if(v.length == 0 ){
           return Center(
@@ -252,7 +245,7 @@ List idsComming = [];
                                 restaurantName: v[index].restaurantName,
                                 onTap: () async {
 
-                                     Navigator.push(context, MaterialPageRoute(builder: (context){
+                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                                                         return ViewMenuOnTransac(
                                                           getID:v[index].id.toString(),
                                                           deliverTo: v[index].deliveryAddress,

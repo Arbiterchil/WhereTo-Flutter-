@@ -33,7 +33,7 @@ class _RiderPendingState extends State<RiderPending> {
               children: <Widget>[
                 Text(widget.message,
                 style: TextStyle(
-                  color: pureblue,
+                  color: Colors.white,
                   fontFamily: 'Gilroy-light',
                   fontSize: 14,
                 ),

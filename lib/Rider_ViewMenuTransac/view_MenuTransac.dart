@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:WhereTo/AnCustom/Rider_havePendingtrans.dart';
 import 'package:WhereTo/AnCustom/dialog_showGlobal.dart';
+import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_headerpage.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/button_OkAssign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
@@ -570,8 +571,11 @@ var checkVal = localStorage.getBool('check');
                                               child: 
                                               GestureDetector(
                                                 onTap: (){
-                                                  Navigator.pop(context);
-                                                 
+                                                  // Navigator.pop(context);
+                                                 Navigator.pushReplacement(context, 
+                                                 new MaterialPageRoute(builder: (context) =>
+                                                 RiderTransaction())
+                                                 );
                                                 },
                                                 child: Container(
                                                    height: 60,
@@ -704,10 +708,9 @@ var checkVal = localStorage.getBool('check');
                                       localStorage.remove('menuplustrans');
                                       localStorage.remove('playerIDS');
                                        Navigator.pushReplacement(context, 
-                                        new MaterialPageRoute(builder: (context)
-                                        => RiderTransaction()
-                                        )
-                                       );
+                                                 new MaterialPageRoute(builder: (context) =>
+                                                 RiderTransaction())
+                                                 );
                                           //   setState(() {
                                           //   complete = false;                    
 

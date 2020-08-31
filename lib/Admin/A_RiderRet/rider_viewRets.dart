@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-List<ViewtransacNeWRestaurant> viewtransacNeWRestaurantFromJson(String str) => List<ViewtransacNeWRestaurant>.from(json.decode(str).map((x) => ViewtransacNeWRestaurant.fromJson(x)));
+List<RetieveAlltransac> retieveAlltransacFromJson(String str) => List<RetieveAlltransac>.from(json.decode(str).map((x) => RetieveAlltransac.fromJson(x)));
 
-String viewtransacNeWRestaurantToJson(List<ViewtransacNeWRestaurant> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String retieveAlltransacToJson(List<RetieveAlltransac> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ViewtransacNeWRestaurant {
-    ViewtransacNeWRestaurant({
+class RetieveAlltransac {
+    RetieveAlltransac({
         this.id,
         this.name,
         this.contactNumber,
@@ -33,7 +33,7 @@ class ViewtransacNeWRestaurant {
     int status;
     int deliveryCharge;
 
-    factory ViewtransacNeWRestaurant.fromJson(Map<String, dynamic> json) => ViewtransacNeWRestaurant(
+    factory RetieveAlltransac.fromJson(Map<String, dynamic> json) => RetieveAlltransac(
         id: json["id"],
         name: json["name"],
         contactNumber: json["contactNumber"],
@@ -41,7 +41,7 @@ class ViewtransacNeWRestaurant {
         restaurantName: json["restaurantName"],
         address: json["address"],
         deliveryAddress: json["deliveryAddress"],
-        createdAt:json["created_at"],
+        createdAt: json["created_at"],
         deviceId: json["deviceId"],
         riderId: json["riderId"],
         status: json["status"],
