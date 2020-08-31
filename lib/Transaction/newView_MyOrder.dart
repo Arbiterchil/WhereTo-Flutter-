@@ -286,6 +286,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
                                                   }
                                               
                                                 } else {
+                                                  _myOrder.hide();
                                                   PlatformAlertDialog(
                                                     title: Text(
                                                       "The Order already accept by the Rider",

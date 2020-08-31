@@ -119,9 +119,6 @@ class _TransactionListState extends State<TransactionList> {
                               fontSize: 10.0,
                               fontWeight: FontWeight.w300,
                               fontFamily: "Gilroy-light"));
-                      pr = ProgressDialog(context,
-                          type: ProgressDialogType.Normal,
-                          isDismissible: false);
                       return Stack(
                         children: <Widget>[
                           Padding(
@@ -375,6 +372,9 @@ class _TransactionListState extends State<TransactionList> {
                                     width: double.infinity,
                                     child: GestureDetector(
                                       onTap: () async {
+                                         pr = ProgressDialog(context,
+                                         type: ProgressDialogType.Normal,
+                                         isDismissible: false);
                                         pr.show();
                                         var fee = await ComputationFee().getFee(widget.barangay);
                                         if (snapshot.length == 0) {

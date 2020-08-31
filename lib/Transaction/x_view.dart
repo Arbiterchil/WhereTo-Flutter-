@@ -146,7 +146,7 @@ class _XviewTransacState extends State<XviewTransac> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: widget.status == "2"
-                                ? Colors.white
+                                ? Colors.greenAccent
                                 : widget.status == "3"
                                     ? Colors.orange
                                     : widget.status == "4"
