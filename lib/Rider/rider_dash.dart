@@ -403,7 +403,7 @@ void configSignal() async {
               ),
                       ),
                       TextSpan(
-                         text: ' Due to wrong amount or some Activties you commit that you made a mistake you can go to the Office to tell us the details and youcan also consult on what really happen.Also the Account you have now is on Admin Hands to decide.',
+                         text: ' Due to wrong amount or some Activities you commit that you made a mistake you can go to the Office to tell us the details and you can also consult us on what really happen.Also the Account you have now is on Admin Hands to decide.',
                       
               style: TextStyle(
                 

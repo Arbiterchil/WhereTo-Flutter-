@@ -13,7 +13,7 @@ class NewRestaurantApi {
 
   Future<NewRestaurantResponse> getFeaturedRestaurant() async {
       
-    try{
+    try{  
 
         var response = await ApiCall().getRestarant('/getFeaturedRestaurant');
         List<NeWRestaurant> restaurantnew = [];

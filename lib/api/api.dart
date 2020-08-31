@@ -69,6 +69,20 @@ class ApiCall{
     );
   }
 
+   getTransactionDetailsById(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
+    headers: _setHeaders()
+    );
+  }   
+
+   getTransactionDetails(api) async {
+    var fullurl = url+api;
+    return http.get(fullurl,
+    headers: _setHeaders()
+    );
+  }  
+
    getMenu(api) async {
     var fullurl = url+api;
     return http.get(fullurl,

@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:ffi';
-
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_bottom.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/view_MenuTransac.dart';
 import 'package:WhereTo/Rider_viewTransac/DummyTesting/dummy_Card.dart';
+import 'package:WhereTo/Rider_viewTransac/DummyTesting/rider_newtrans.dart';
+import 'package:WhereTo/Rider_viewTransac/DummyTesting/rider_transResponse.dart';
+import 'package:WhereTo/Rider_viewTransac/DummyTesting/rider_transaStream.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_class.dart';
 import 'package:WhereTo/Rider_viewTransac/rider_classView/rider_views.dart';
 import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
@@ -46,16 +48,26 @@ var totalAll;
   var getplayerOd;
   @override
   void initState() {
+    
     mybackUp();
+     menuTrans(); 
     super.initState();
+    riderNewTransac..getViewtransOrder();
+   
   }
-
+ 
   void menuTrans() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var idfromSave = localStorage.getString('menuplustrans');
-      var playerIds = localStorage.getString('playerIDS');
-      getplayerOd = playerIds;
-      getidSave  = idfromSave;
+      setState(() {
+        if(idfromSave !=null){
+          mine = true;
+          getidSave = idfromSave;
+      }else{
+        print("Good Enough");
+      }
+      });
+      
   }
 
 void mybackUp() {
@@ -74,7 +86,7 @@ void mybackUp() {
                     // print(constant['user_coordinates'].toString());
                     // print(constant['transac_id'].toString());
                     getmessage = true;
-                    getThisShitOn(finalID != null ? finalID :constant['transact_id'].toString());  
+                    // getThisShitOn(constant['transact_id'].toString());  
                     
                     playerId = constant['player_id'].toString();
                     // user_coor = constant['user_coordinates'].toString();
@@ -89,39 +101,10 @@ void mybackUp() {
 Map<String,String> alldata ={};  
 List idsComming = [];
 
-var idsComeNow;
- List inCommingtoSave = [];
-void getThisShitOn(String id) async{
-final response = await ApiCall().viewTransac('/getTransactionDetails/${getidSave !=null ? getidSave : id}');
-          List body = json.decode(response.body);
-                  for(int i = 0 ; i < body.length; i++){
-                    alldata =
-                    {
-               "id": body[i]['id'].toString(),
-              "name":  body[i]['name'].toString(),
-              "barangayName":  body[i]['barangayName'].toString(),
-              "restaurantName":  body[i]['restaurantName'].toString(),
-              "address": body[i]['address'].toString(),
-              "deliveryAddress":  body[i]['deliveryAddress'].toString(),
-              "created_at":  body[i]['created_at'].toString(),
-              "deviceId":  body[i]['deviceId'].toString(),
-              "riderId":  body[i]['riderId'].toString(),
-              "status":  body[i]['status'].toString(),
-              "deliveryCharge":  body[i]['deliveryCharge'].toString()
-                    };
-                   setState(() {
-                      inCommingtoSave.add(alldata);
-                   });
-                  }
-
-                  print(inCommingtoSave);
-              
-
-}
-
 @override
   void dispose() {
     super.dispose();
+    riderNewTransac..drainStream();
   }
 
   @override
@@ -141,8 +124,8 @@ final response = await ApiCall().viewTransac('/getTransactionDetails/${getidSave
                 child: Column(
                   children: <Widget>[
                       GestureDetector(
-                          onTap: () => Navigator.pushReplacement(
-                            context, new MaterialPageRoute(builder: (context){return RiderTransaction();})),
+                          onTap: () => 
+                          Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) =>RiderTransaction())),
                           child: Text("Refresh",
                           style: TextStyle(
                             color: pureblue,
@@ -151,9 +134,54 @@ final response = await ApiCall().viewTransac('/getTransactionDetails/${getidSave
                           ),
                           ),
                         ),
+                        SizedBox(height: 20.0,),
+                        Visibility(
+                          visible: mine,
+                          child: GestureDetector(
+                            onTap: (){
+                              print(getidSave);
+                          //      showDialog(context: context,
+                          // barrierDismissible: true,
+                          // builder: (context) => Riderprev(id: getidSave,));
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 140,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                              ),
+                              child: Center(
+                                child: Text("Go to Previous.",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Gilroy-light',
+
+                                ),),
+                              ),
+                            ),
+                          ),
+                        ),
                   SizedBox(height: 40.0,),
-                   _viewRider(),
+                  //  _viewRider(),
                   // RiderViewing()
+                  Container(
+                    height: 600,
+                    child: StreamBuilder<RiderNewtransaCResponse>(
+                      stream: riderNewTransac.subject.stream,
+                      builder: (context, AsyncSnapshot<RiderNewtransaCResponse> asyncSnapshot){
+                         if(asyncSnapshot.hasData){
+                            if(asyncSnapshot.data.error !=null && asyncSnapshot.data.error.length > 0){
+                            return _error(asyncSnapshot.data.error);
+                       }
+                       return  _views(asyncSnapshot.data);       
+                        }else if(asyncSnapshot.hasError){
+                              return _error(asyncSnapshot.error);
+                        }else{
+                              return _load();
+                        }
+                      },
+                    ),
+                  )
                   ],
                 ),
               ),
@@ -164,52 +192,140 @@ final response = await ApiCall().viewTransac('/getTransactionDetails/${getidSave
       onWillPop: () async => false),
     );
   }
-  Widget _viewRider(){
+  
 
-      return Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: inCommingtoSave.length,
-            itemBuilder: (context , index){
-
-              return Column(
-                       children: <Widget>[
-
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Customgettransac( image: "asset/img/logo.png",
-                            transacId: inCommingtoSave[index]['id'],
-                            name: inCommingtoSave[index]['name'],
-                            address: inCommingtoSave[index]['address'],
-                            deliveryAddress: inCommingtoSave[index]['deliveryAddress'],
-                            restaurantName: inCommingtoSave[index]['restaurantName'],
-                            onTap: () async {
-
-                                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                                                    return ViewMenuOnTransac(
-                                                      getID: inCommingtoSave[index]['id'],
-                                                      deliverTo: inCommingtoSave[index]['deliveryAddress'],
-                                                      restaurantName: inCommingtoSave[index]['restaurantName'],
-                                                      deviceID: inCommingtoSave[index]['deviceId'],
-                                                      riderID: inCommingtoSave[index]['riderId'],
-                                                      deliveryCharge: inCommingtoSave[index]['deliveryCharge'],
-                                                      nametran:  inCommingtoSave[index]['name'],
-                                                      playerId: getplayerOd !=null ? getplayerOd : playerId.toString(),
-                                                      user_coor : user_coor.toString());
-                                                  }));
-
-                            },),
-                        ),
-                       ],
-                     );
-
-            },
-          ),
-
-
+ Widget _load(){
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+                  height: 25.0,
+                  width: 25.0,
+                  child:  CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(pureblue),
+                    strokeWidth: 4.0,
+                  ),
+                ),
+          ],
+        ),
       );
+    }
+    Widget _error(String error){
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("Error :  $error")
+              ],
+            ),
+          );
+}
+  Widget _views(RiderNewtransaCResponse riderNewtransaCResponse){
+    List<ViewtransacNeWRestaurant> v = riderNewtransaCResponse.viewNewRes;
+
+     if(v.length == 0 ){
+          return Center(
+            child: Container(
+              child: Text('No Transaction',
+              style: TextStyle(
+                color: pureblue,
+                fontFamily: 'Gilroy-light',
+                fontSize:  16.0,
+                fontWeight: FontWeight.normal
+              ),),
+            ),
+          );
+        }else{
+          return ListView.builder(
+            itemCount: v.length,
+            itemBuilder: (context,index){
+              return Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Customgettransac( image: "asset/img/logo.png",
+                                transacId: v[index].id.toString(),
+                                name: v[index].name,
+                                address: v[index].address,
+                                deliveryAddress: v[index].deliveryAddress,
+                                restaurantName: v[index].restaurantName,
+                                onTap: () async {
+
+                                     Navigator.push(context, MaterialPageRoute(builder: (context){
+                                                        return ViewMenuOnTransac(
+                                                          getID:v[index].id.toString(),
+                                                          deliverTo: v[index].deliveryAddress,
+                                                          restaurantName: v[index].restaurantName,
+                                                          deviceID: v[index].deviceId,
+                                                          riderID: v[index].riderId,
+                                                          deliveryCharge: v[index].deliveryCharge.toString(),
+                                                          nametran:  v[index].name,
+                                                          contactNumber : v[index].contactNumber.toString(),
+                                                          playerId: v[index].deviceId,
+                                                          user_coor : user_coor.toString());
+                                                      }));
+                                },
+                    ),
+                  ),
+                ],
+              );
+            },
+            
+            );
+        }
+  }
+
+
+  // Widget _viewRider(){
+
+  //     return Container(
+  //       height: MediaQuery.of(context).size.height,
+  //       width: MediaQuery.of(context).size.width,
+  //         child: ListView.builder(
+  //           scrollDirection: Axis.vertical,
+  //           itemCount: inCommingtoSave.length,
+  //           itemBuilder: (context , index){
+
+  //             return SingleChildScrollView(
+  //                 physics: AlwaysScrollableScrollPhysics(),
+  //               child: Column(
+  //                        children: <Widget>[
+
+  //                         Padding(
+  //                           padding: const EdgeInsets.only(top: 15),
+  //                           child: Customgettransac( image: "asset/img/logo.png",
+  //                             transacId: inCommingtoSave[index]['id'],
+  //                             name: inCommingtoSave[index]['name'],
+  //                             address: inCommingtoSave[index]['address'],
+  //                             deliveryAddress: inCommingtoSave[index]['deliveryAddress'],
+  //                             restaurantName: inCommingtoSave[index]['restaurantName'],
+  //                             onTap: () async {
+
+  //                                  Navigator.push(context, MaterialPageRoute(builder: (context){
+  //                                                     return ViewMenuOnTransac(
+  //                                                       getID: inCommingtoSave[index]['id'],
+  //                                                       deliverTo: inCommingtoSave[index]['deliveryAddress'],
+  //                                                       restaurantName: inCommingtoSave[index]['restaurantName'],
+  //                                                       deviceID: inCommingtoSave[index]['deviceId'],
+  //                                                       riderID: inCommingtoSave[index]['riderId'],
+  //                                                       deliveryCharge: inCommingtoSave[index]['deliveryCharge'],
+  //                                                       nametran:  inCommingtoSave[index]['name'],
+  //                                                       playerId: inCommingtoSave[index]['deviceId'],
+  //                                                       user_coor : user_coor.toString());
+  //                                                   }));
+
+  //                             },),
+  //                         ),
+  //                        ],
+  //                      ),
+  //             );
+
+  //           },
+  //         ),
+
+
+  //     );
 
 
         // return Container(
@@ -280,6 +396,6 @@ final response = await ApiCall().viewTransac('/getTransactionDetails/${getidSave
         // );
 
 
-  }
+  // }
 
 }

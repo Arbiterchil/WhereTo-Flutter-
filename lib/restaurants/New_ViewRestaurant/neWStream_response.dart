@@ -17,6 +17,7 @@ class NewRestaurantStream {
   void drainStream(){_subject.value = null;}
   @mustCallSuper
   void dispose() async{
+    
     await _subject.drain();
     _subject.close();
   }
