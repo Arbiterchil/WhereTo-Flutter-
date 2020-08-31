@@ -431,6 +431,7 @@ var checkVal = localStorage.getBool('check');
                       child: Column(
                         
                         children: <Widget>[
+                      
                         SizedBox(height: 10,),
                         Container(
                           height: 140,

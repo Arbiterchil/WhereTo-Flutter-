@@ -16,6 +16,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../designbuttons.dart';
+import '../styletext.dart';
 
 
 
@@ -139,6 +140,17 @@ final response = await ApiCall().viewTransac('/getTransactionDetails/${getidSave
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: <Widget>[
+                      GestureDetector(
+                          onTap: () => Navigator.pushReplacement(
+                            context, new MaterialPageRoute(builder: (context){return RiderTransaction();})),
+                          child: Text("Refresh",
+                          style: TextStyle(
+                            color: pureblue,
+                            fontFamily: 'Gilroy-light',
+                            fontSize: 16,
+                          ),
+                          ),
+                        ),
                   SizedBox(height: 40.0,),
                    _viewRider(),
                   // RiderViewing()
