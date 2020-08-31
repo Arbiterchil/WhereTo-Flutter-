@@ -617,11 +617,11 @@ class _SignupPageState extends State<SignupPage> {
    String stringPath;
    var thimagelink;
 
-    getYourIdImage( ImageSource source) async{
+getYourIdImage( ImageSource source) async{
 
     var imageIdValid = await pick.getImage(source: source); 
        File crop = await ImageCropper.cropImage(
-      sourcePath: imageIdValid.path ,
+      sourcePath: imageIdValid.path == null ? "" : imageIdValid.path,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
         CropAspectRatioPreset.ratio3x2,
@@ -647,9 +647,7 @@ class _SignupPageState extends State<SignupPage> {
 
   }
  Widget _getImage(){
-
     if(_idPickerImage != null){
-
       return Padding(
         padding: const EdgeInsets.only(left: 20,right: 20),
         child: Container(
