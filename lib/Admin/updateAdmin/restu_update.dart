@@ -71,6 +71,9 @@ class _RestaurantUpdateNewTwoState extends State<RestaurantUpdateNewTwo> {
     super.initState();
     getRestaubyIds..getrestubyId(restaurantId);
   }
+
+  
+
    String src;
   TextEditingController retaurantname  = TextEditingController();
     TextEditingController owner = TextEditingController(); 
@@ -366,6 +369,12 @@ class _RestaurantUpdateNewTwoState extends State<RestaurantUpdateNewTwo> {
       _showDial("InActive Restaurant Success.");
   }
 
+  @override
+  void dispose() {
+    
+    super.dispose();
+    getRestaubyIds..drainStream();
+  }
 
   @override
   Widget build(BuildContext context) {

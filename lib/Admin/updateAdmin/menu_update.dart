@@ -152,7 +152,12 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
   }
 
 
+  @override
+  void dispose() {
 
+    super.dispose();
+    getMenubyIds..drainStream();
+  }
 
 
   @override
@@ -207,29 +212,7 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                     ),
                   ),
                   SizedBox(height: 20,),
-                    _getImage(),
-                    SizedBox(height: 20,),
-                     GestureDetector(
-                                onTap: (){
-                                  getYourIdImage(ImageSource.gallery);
-
-                                }, 
-                                child: Container(
-                                  height: 40,
-                                  width: 110,
-                                  decoration: BoxDecoration(
-                                    color: pureblue,
-                                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                                  ),
-                                  child: Center(
-                                   child: Icon(Icons.picture_in_picture,
-                                   size: 20,
-                                   color: Colors.white
-                                   ),
-                                  ),
-                                ),
-                              ),
-                    SizedBox(height: 30,),
+                  
                     Container(
                       width: MediaQuery.of(context).size.width,
                       child: StreamBuilder<MenuGetResponse>(
@@ -424,7 +407,29 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
               
               child: Column(
                       children: <Widget>[
+                          _getImage(),
+                    SizedBox(height: 20,),
+                     GestureDetector(
+                                onTap: (){
+                                  getYourIdImage(ImageSource.gallery);
 
+                                }, 
+                                child: Container(
+                                  height: 40,
+                                  width: 110,
+                                  decoration: BoxDecoration(
+                                    color: pureblue,
+                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  ),
+                                  child: Center(
+                                   child: Icon(Icons.picture_in_picture,
+                                   size: 20,
+                                   color: Colors.white
+                                   ),
+                                  ),
+                                ),
+                              ),
+                    SizedBox(height: 30,),
                         TextEditGetter(
                           iconic: Icons.menu,
                           validate: (val) => val.isEmpty ? ' Please Put The Menu Name' : null,

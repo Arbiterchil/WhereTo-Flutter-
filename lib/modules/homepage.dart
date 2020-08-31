@@ -82,7 +82,7 @@ void configSignal() async {
       setState(() {
         setState(() {
           if(data != null){
-            if(data["force"] == "penalty"){
+            if(data['force'] == 'penalty'){
               print(data['force'].toString());
                 _showDone(meesages.toString());
             }

@@ -46,7 +46,6 @@ var totalAll;
   @override
   void initState() {
     mybackUp();
-   
     super.initState();
   }
 
@@ -58,21 +57,22 @@ var totalAll;
       getidSave  = idfromSave;
   }
 
-mybackUp() {
+void mybackUp() {
     OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
     OneSignal.shared
         .setNotificationReceivedHandler((OSNotification notification) {
-                constant =notification.payload.additionalData; 
+          constant =notification.payload.additionalData; 
                 setState(()  {
+                   constant =notification.payload.additionalData; 
                   if(constant != null){
-                     getThisShitOn(constant['transact_id']);  
-                    print(constant['id'].toString());
-                    print(constant['transact_id'].toString());
-                    print(constant['player_id'].toString());
-                    print(constant['user_coordinates'].toString());
-                    print(constant['transac_id'].toString());
+                    // print(constant['id'].toString());
+                    // print(constant['transact_id'].toString());
+                    // print(constant['player_id'].toString());
+                    // print(constant['user_coordinates'].toString());
+                    // print(constant['transac_id'].toString());
                     getmessage = true;
+                    getThisShitOn(constant['transact_id'].toString());  
                     finalID = constant['transact_id'];
                     playerId = constant['player_id'].toString();
                     // user_coor = constant['user_coordinates'].toString();
@@ -116,6 +116,11 @@ final response = await ApiCall().viewTransac('/getTransactionDetails/${getidSave
               
 
 }
+
+@override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

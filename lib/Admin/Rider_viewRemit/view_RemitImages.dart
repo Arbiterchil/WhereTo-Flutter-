@@ -24,12 +24,21 @@ class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
  
   @override
   void initState() {
-    remittanceStream..getViewRemits();
+    
     super.initState();
+    remittanceStream..getViewRemits();
   }
+  
 
+
+    
 bool lace =false;
 
+  @override
+  void dispose() {
+    super.dispose();
+    remittanceStream..drainStream();
+  }
 
   @override
   Widget build(BuildContext context) {

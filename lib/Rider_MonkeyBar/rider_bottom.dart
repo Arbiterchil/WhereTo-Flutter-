@@ -39,8 +39,8 @@ class _CustomgettransacState extends State<Customgettransac> {
                    child: Padding(
                      padding: const EdgeInsets.only(left: 20),
                      child: Container(
-                       height: 100,
-                       width: 100,
+                       height: 50,
+                       width: 50,
                        decoration: BoxDecoration(
                          shape: BoxShape.circle,
                          image: DecorationImage(

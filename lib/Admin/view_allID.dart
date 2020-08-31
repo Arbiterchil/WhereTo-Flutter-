@@ -46,8 +46,15 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
   
   @override
   void initState() {
-      userVerifying..getViewUnverified();
+      
     super.initState();
+    userVerifying..getViewUnverified();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    userVerifying..drainStream();
   }
 
   var constant;
@@ -270,7 +277,7 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
     print(body[0]['deviceId']);
     String url = 'https://onesignal.com/api/v1/notifications';
     var contents = {
-      "include_player_ids": [body[0]['deviceId']],
+      "include_player_ids": [body[0]['deviceId'].toString()],
       "include_segments": ["Users Notif"],
       "excluded_segments": [],
       "contents": {"en": "This is a a Fucking test"},

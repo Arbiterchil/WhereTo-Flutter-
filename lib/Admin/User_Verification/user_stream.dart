@@ -13,6 +13,13 @@ class UserStream {
  UserVerified userVerified= await _userapi.getUserUnVerified();
   _behaviorSubjectuser.sink.add(userVerified);
   }
+
+  void drainStream() {_behaviorSubjectuser.value = null;}
+@mustCallSuper
+  void disopse() async{
+    await _behaviorSubjectuser.drain();
+    _behaviorSubjectuser.close();
+  } 
   
   BehaviorSubject<UserVerified> get subject => _behaviorSubjectuser;
 }

@@ -24,8 +24,15 @@ class _UnRemitedViewState extends State<UnRemitedView> {
 
   @override
   void initState() {
-    unremitStream..getUnViewRemit();
+   
     super.initState();
+     unremitStream..getUnViewRemit();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    unremitStream..drainStream();
   }
 
   @override
