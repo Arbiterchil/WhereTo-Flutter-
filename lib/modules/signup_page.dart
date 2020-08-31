@@ -621,7 +621,7 @@ getYourIdImage( ImageSource source) async{
 
     var imageIdValid = await pick.getImage(source: source); 
        File crop = await ImageCropper.cropImage(
-      sourcePath: imageIdValid.path == null ? "" : imageIdValid.path,
+      sourcePath: imageIdValid != null ? imageIdValid.path : null,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
         CropAspectRatioPreset.ratio3x2,

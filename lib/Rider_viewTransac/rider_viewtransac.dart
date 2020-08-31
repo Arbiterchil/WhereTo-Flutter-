@@ -41,74 +41,22 @@ var totalAll;
   var user_coor;
   var userRN;
   var idgetter;
- 
+  var getidSave;
+  var getplayerOd;
   @override
   void initState() {
     mybackUp();
    
     super.initState();
   }
-// void notifmeNow() async{
- 
-//   var status = await OneSignal.shared.getPermissionSubscriptionState();
-//          String url = 'https://onesignal.com/api/v1/notifications';
-//     var playerId = status.subscriptionStatus.userId;
 
-//     var numb = "3";
-//     var contents = {
-//       "include_player_ids": [playerId],
-//       "include_segments": ["Users Notif"],
-//       "excluded_segments": [],
-//       "contents": {"en": "This is a a Fucking test"},
-//       "data": {"id": numb},
-//       "headings": {"en": "Erchil Testings"},
-//       "filter": [
-//         {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
-//       ],
-//       "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
-//     };
-//     Map<String, String> headers = {
-//       'Content-Type': 'application/json',
-//       'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
-//     };
-//     // var repo =
-//         await http.post(url, headers: headers, body: json.encode(contents));
-//       // print(repo.body);    
-//      }
-
-
-
-// Future<List<RiderViewClass>> getTransac() async {
-//   // print(idsComming);
-//   //       for(int i = 0; i < idsComming.length; i++){
-//   //         idsComeNow =idsComming[i];
-          
-//   //       }
-
-//         final response = await ApiCall().viewTransac('/getTransactionDetails/$finalID');
-//         // final response = await ApiCall().viewTransac('/getTransactionDetails/3');
-//         List<RiderViewClass> riderme = [];
-//         var body = json.decode(response.body);
-//         for (var body in body){
-//             RiderViewClass riderViewClass = RiderViewClass
-//           (
-//             id: body["id"],
-//             name: body["name"],
-//             restaurantName: body["restaurantName"],
-//             address: body["address"],
-//             deviceId: body["deviceId"],
-//             riderId: body["riderId"],
-//             deliveryAddress: body["deliveryAddress"],
-//             status: body["status"],
-//             deliveryCharge: body["deliveryCharge"]
-//             );
-
-//             riderme.add(riderViewClass);
-//         }
-
-//         return riderme;
-        
-//   }
+  void menuTrans() async {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var idfromSave = localStorage.getString('menuplustrans');
+      var playerIds = localStorage.getString('playerIDS');
+      getplayerOd = playerIds;
+      getidSave  = idfromSave;
+  }
 
 mybackUp() {
     OneSignal.shared
@@ -142,7 +90,7 @@ List idsComming = [];
 var idsComeNow;
  List inCommingtoSave = [];
 void getThisShitOn(String id) async{
-final response = await ApiCall().viewTransac('/getTransactionDetails/$id');
+final response = await ApiCall().viewTransac('/getTransactionDetails/${getidSave !=null ? getidSave : id}');
           List body = json.decode(response.body);
                   for(int i = 0 ; i < body.length; i++){
                     alldata =
@@ -220,7 +168,7 @@ final response = await ApiCall().viewTransac('/getTransactionDetails/$id');
                             deliveryAddress: inCommingtoSave[index]['deliveryAddress'],
                             restaurantName: inCommingtoSave[index]['restaurantName'],
                             onTap: () async {
-                               
+
                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                                                     return ViewMenuOnTransac(
                                                       getID: inCommingtoSave[index]['id'],
@@ -230,7 +178,7 @@ final response = await ApiCall().viewTransac('/getTransactionDetails/$id');
                                                       riderID: inCommingtoSave[index]['riderId'],
                                                       deliveryCharge: inCommingtoSave[index]['deliveryCharge'],
                                                       nametran:  inCommingtoSave[index]['name'],
-                                                      playerId: playerId.toString(),
+                                                      playerId: getplayerOd !=null ? getplayerOd : playerId.toString(),
                                                       user_coor : user_coor.toString());
                                                   }));
 
