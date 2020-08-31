@@ -121,21 +121,21 @@ void onTabTapped(int index) {
       //     { return await Dialog_Helper.exit(context);},
       onWillPop: () async {
         
-        // final isFirstRouteInCurrentTab =
-        //     !await _navigatorKeys[_currentPage].currentState.maybePop();
+        final isFirstRouteInCurrentTab =
+            !await _navigatorKeys[_currentPage].currentState.maybePop();
             
-        // if (isFirstRouteInCurrentTab) {
-        //   if (_currentPage != "Profile") {
-        //     _selectTab("Profile", 1);
+        if (isFirstRouteInCurrentTab) {
+          if (_currentPage != "Profile") {
+            _selectTab("Profile", 1);
             
-        //     return false;
+            return false;
             
-        //   }
+          }
           
-        // }
-        // // let system handle back button if we're on the first route
+        }
+        // let system handle back button if we're on the first route
         
-        // return isFirstRouteInCurrentTab ? Dialog_Helper.exit(context) : false ;
+        return isFirstRouteInCurrentTab ? Dialog_Helper.exit(context) : false ;
         // return isFirstRouteInCurrentTab ? false : false; 
       },
           child: Stack(
