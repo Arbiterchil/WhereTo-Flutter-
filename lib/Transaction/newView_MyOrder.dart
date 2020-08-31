@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/Transaction/MyOrder/DialogOrder.dart';
 import 'package:WhereTo/Transaction/x_view.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/styletext.dart';
@@ -287,46 +288,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
                                               
                                                 } else {
                                                   _myOrder.hide();
-                                                  PlatformAlertDialog(
-                                                    title: Text(
-                                                      "The Order already accept by the Rider",
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.black,
-                                                          fontFamily:
-                                                              'Gilroy-light'),
-                                                    ),
-                                                    actions: [
-                                                      PlatformDialogAction(
-                                                          actionType: ActionType
-                                                              .Default,
-                                                          child: Text(
-                                                            "Okay",
-                                                            style: TextStyle(
-                                                                decoration:
-                                                                    TextDecoration
-                                                                        .none,
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'Gilroy-light'),
-                                                          ),
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          }),
-                                                    ],
-                                                  );
+                                                    DialogOrder().getDialog(context, "This Order is already Under Process", "Order Delayed", Icons.warning, Colors.red);
                                                 }
                                                
                                                 

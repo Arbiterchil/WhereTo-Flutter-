@@ -359,10 +359,8 @@ class _PayOrderState extends State<PayOrder> {
                                           orders.hide();
                                            DialogOrder().getDialog(context, "Slow/No Internet Connection", "Order Failed", Icons.error, Color(0xFFFF3345));
                                           }
-                                          final response = await ApiCall()
-                                              .getData('/getAllPlayerId');
-                                          List<GetPlayerId> search =
-                                              getPlayerIdFromJson(response.body);
+                                          final response = await ApiCall().getData('/getAllPlayerId');
+                                          List<GetPlayerId> search =getPlayerIdFromJson(response.body);
                                           List<dynamic> player = [];
                                           search.forEach((element) {
                                             player.add(element.deviceId);
