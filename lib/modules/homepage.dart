@@ -42,11 +42,12 @@ class _HomePageState extends State<HomePage> {
   var userData;
   String image;
   @override
+  
   void initState() {
+     getShared();
+    configSignal();
     super.initState();
      _onsSignal();
-    configSignal();
-    getShared();
     postuserId();
     
   }
@@ -79,18 +80,16 @@ void configSignal() async {
     OneSignal.shared
         .setNotificationReceivedHandler((OSNotification notification){
       data = notification.payload.additionalData;
-      setState(() {
         setState(() {
+           data = notification.payload.additionalData;
           if(data != null){
             if(data['force'] == 'penalty'){
               print(data['force'].toString());
                 _showDone(meesages.toString());
             }
-             
           }
         });
         
-      });
     });                            
 }
 void postuserId() async {

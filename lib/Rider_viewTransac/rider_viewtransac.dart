@@ -66,14 +66,15 @@ void mybackUp() {
                 setState(()  {
                    constant =notification.payload.additionalData; 
                   if(constant != null){
+                    finalID = constant['transact_id'];
                     // print(constant['id'].toString());
                     // print(constant['transact_id'].toString());
                     // print(constant['player_id'].toString());
                     // print(constant['user_coordinates'].toString());
                     // print(constant['transac_id'].toString());
                     getmessage = true;
-                    getThisShitOn(constant['transact_id'].toString());  
-                    finalID = constant['transact_id'];
+                    getThisShitOn(finalID != null ? finalID :constant['transact_id'].toString());  
+                    
                     playerId = constant['player_id'].toString();
                     // user_coor = constant['user_coordinates'].toString();
                     // idsComming.add(finalID);
