@@ -537,9 +537,8 @@ var checkVal = localStorage.getBool('check');
                                               child: 
                                               GestureDetector(
                                                 onTap: (){
-                                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                                    return RiderTransaction();
-                                                  }));
+                                                  Navigator.pop(context);
+                                                 
                                                 },
                                                 child: Container(
                                                    height: 60,
@@ -671,9 +670,7 @@ var checkVal = localStorage.getBool('check');
                                       SharedPreferences localStorage = await SharedPreferences.getInstance();
                                       localStorage.remove('menuplustrans');
                                       localStorage.remove('playerIDS');
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                                    return RiderTransaction();
-                                                  }));
+                                        Navigator.pop(context);
                                           //   setState(() {
                                           //   complete = false;                    
 

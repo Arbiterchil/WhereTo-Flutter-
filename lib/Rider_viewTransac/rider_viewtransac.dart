@@ -174,7 +174,7 @@ final response = await ApiCall().viewTransac('/getTransactionDetails/${getidSave
                             restaurantName: inCommingtoSave[index]['restaurantName'],
                             onTap: () async {
 
-                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                 Navigator.push(context, MaterialPageRoute(builder: (context){
                                                     return ViewMenuOnTransac(
                                                       getID: inCommingtoSave[index]['id'],
                                                       deliverTo: inCommingtoSave[index]['deliveryAddress'],

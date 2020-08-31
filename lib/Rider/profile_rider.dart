@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:WhereTo/Rider/Tab_navi.dart';
 import 'package:WhereTo/Rider/rider_dash.dart';
+import 'package:WhereTo/Rider/rider_inbox.dart';
 import 'package:WhereTo/Rider_viewTransac/view_Transac.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -27,25 +28,33 @@ class _RiderProfileState extends State<RiderProfile> {
 
 
     String _currentPage = "Profile";
-  
-   List<String> pageKeys = ["Profile","Transaction","Inbox"];
-   Map<String,GlobalKey<NavigatorState>> _navigatorKeys =
-    {
-     "Profile":GlobalKey<NavigatorState>(),
-     "Transaction":GlobalKey<NavigatorState>(),
-     "Inbox":GlobalKey<NavigatorState>()
-   };
- int _selectedIndex = 0;
-  void _selectTab(String tabItem, int index) {
-    if(tabItem == _currentPage ){
-      _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
-    } else {
-      setState(() {
-        _currentPage = pageKeys[index];
-        _selectedIndex = index;
-      });
-    }
-  }
+
+
+     final List<Widget> _child = 
+  [
+     RiderDash(),
+    RiderTransaction(),
+    InboxRider(),
+  ];
+
+  //  List<String> pageKeys = ["Profile","Transaction","Inbox"];
+  //  Map<String,GlobalKey<NavigatorState>> _navigatorKeys =
+  //   {
+  //    "Profile":GlobalKey<NavigatorState>(),
+  //    "Transaction":GlobalKey<NavigatorState>(),
+  //    "Inbox":GlobalKey<NavigatorState>()
+  //  };
+//  int _selectedIndex = 0;
+//   void _selectTab(String tabItem, int index) {
+//     if(tabItem == _currentPage ){
+//       _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
+//     } else {
+//       setState(() {
+//         _currentPage = pageKeys[index];
+//         _selectedIndex = index;
+//       });
+//     }
+//   }
 
   @override
   void initState() {
@@ -55,7 +64,7 @@ class _RiderProfileState extends State<RiderProfile> {
   }
 
 
-
+int _selectedIndex = 0;
 void configSignal() async {
      await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
@@ -65,96 +74,135 @@ void configSignal() async {
     await OneSignal.shared.getTags();
    await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
 }
-
+void onTabTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: WillPopScope(
-      // onWillPop: () async
-      //     { return await Dialog_Helper.exit(context);},
-      onWillPop: () async {
-        
-        final isFirstRouteInCurrentTab =
-            !await _navigatorKeys[_currentPage].currentState.maybePop();
-            
-        if (isFirstRouteInCurrentTab) {
-          if (_currentPage != "Profile") {
-            _selectTab("Profile", 1);
-            
-            return false;
-            
-          }
-          
-        }
-        // let system handle back button if we're on the first route
-        
-        return isFirstRouteInCurrentTab ? Dialog_Helper.exit(context) : false ;
-        // return isFirstRouteInCurrentTab ? false : false; 
-      },
-          child: Stack(
-          children: <Widget>[
-            _buildOffstageNavigator("Profile"),
-            _buildOffstageNavigator("Transaction"),
-            _buildOffstageNavigator("Inbox"),
-          ],
-        ),
-        
+        onWillPop: () async => Dialog_Helper.exit(context),
+        child: _child[_selectedIndex],    
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: 
-        // Color(0xFF398AE5),
-        // Colors.white,
         pureblue,
-        // unselectedItemColor: Colors.grey,
         backgroundColor:
         Colors.white, 
-        // Color(0xFFF2F2F2)
-        //  Color(0xFF398AE5),
         unselectedItemColor: 
         Color(0xFF0C375B),
+
         currentIndex: _selectedIndex,
-        onTap: (int index) { _selectTab(pageKeys[index], index); },
+        onTap: onTabTapped,
         items: [
-       
-           BottomNavigationBarItem(
-              icon: new Icon(Icons.dashboard),
-              title: new Text('DashBoard'),
-            ),
-            BottomNavigationBarItem(
+              BottomNavigationBarItem(
               icon: new Icon(Icons.view_list),
+              title: new Text('DashBoard'),
+            ), 
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.list),
               title: new Text('Transactions'),
             ),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.inbox),
+              icon: new Icon(Icons.home),
               title: new Text('Inbox'),
             ),
-            // BottomNavigationBarItem(
-            //   icon: new Icon(Icons.person),
-            //   title: new Text('Edit'),
-            // ),
-            //  BottomNavigationBarItem(
-            //   icon: new Icon(Icons.directions_railway),
-            //   title: new Text('Trasport'),
-            // ),
-            //  BottomNavigationBarItem(
-            //   icon: new Icon(Icons.swap_horizontal_circle),
-            //   title: new Text('Orders'),
-            // ),
-
         ],
         type: BottomNavigationBarType.fixed,
         ),   
 
     );
-  }
-    Widget _buildOffstageNavigator(String tabItem) {
-    return Offstage(
-      offstage: _currentPage != tabItem,
-      child: TabNavigator(
-        navigatorKey: _navigatorKeys[tabItem],
-        tabItem: tabItem,
-      ),
-    );
+  //   return Scaffold(
+  //     body: WillPopScope(
+  //     // onWillPop: () async
+  //     //     { return await Dialog_Helper.exit(context);},
+  //     onWillPop: () async {
+        
+  //       // final isFirstRouteInCurrentTab =
+  //       //     !await _navigatorKeys[_currentPage].currentState.maybePop();
+            
+  //       // if (isFirstRouteInCurrentTab) {
+  //       //   if (_currentPage != "Profile") {
+  //       //     _selectTab("Profile", 1);
+            
+  //       //     return false;
+            
+  //       //   }
+          
+  //       // }
+  //       // // let system handle back button if we're on the first route
+        
+  //       // return isFirstRouteInCurrentTab ? Dialog_Helper.exit(context) : false ;
+  //       // return isFirstRouteInCurrentTab ? false : false; 
+  //     },
+  //         child: Stack(
+  //         children: <Widget>[
+  //           // _buildOffstageNavigator("Profile"),
+  //           // _buildOffstageNavigator("Transaction"),
+  //           // _buildOffstageNavigator("Inbox"),
+  //         ],
+  //       ),
+        
+  //     ),
+  //     bottomNavigationBar: BottomNavigationBar(
+  //       selectedItemColor: 
+  //       // Color(0xFF398AE5),
+  //       // Colors.white,
+  //       pureblue,
+  //       // unselectedItemColor: Colors.grey,
+  //       backgroundColor:
+  //       Colors.white, 
+  //       // Color(0xFFF2F2F2)
+  //       //  Color(0xFF398AE5),
+  //       unselectedItemColor: 
+  //       Color(0xFF0C375B),
+  //       currentIndex: _selectedIndex,
+  //       onTap: (int index) { _selectTab(pageKeys[index], index); },
+  //       items: [
+       
+  //          BottomNavigationBarItem(
+  //             icon: new Icon(Icons.dashboard),
+  //             title: new Text('DashBoard'),
+  //           ),
+  //           BottomNavigationBarItem(
+  //             icon: new Icon(Icons.view_list),
+  //             title: new Text('Transactions'),
+  //           ),
+  //           BottomNavigationBarItem(
+  //             icon: new Icon(Icons.inbox),
+  //             title: new Text('Inbox'),
+  //           ),
+  //           // BottomNavigationBarItem(
+  //           //   icon: new Icon(Icons.person),
+  //           //   title: new Text('Edit'),
+  //           // ),
+  //           //  BottomNavigationBarItem(
+  //           //   icon: new Icon(Icons.directions_railway),
+  //           //   title: new Text('Trasport'),
+  //           // ),
+  //           //  BottomNavigationBarItem(
+  //           //   icon: new Icon(Icons.swap_horizontal_circle),
+  //           //   title: new Text('Orders'),
+  //           // ),
+
+  //       ],
+  //       type: BottomNavigationBarType.fixed,
+  //       ),   
+
+  //   );
+  // }
+  //   Widget _buildOffstageNavigator(String tabItem) {
+  //   return Offstage(
+  //     offstage: _currentPage != tabItem,
+  //     child: TabNavigator(
+  //       navigatorKey: _navigatorKeys[tabItem],
+  //       tabItem: tabItem,
+  //     ),
+  //   );
+  // }
   }
 }
 
