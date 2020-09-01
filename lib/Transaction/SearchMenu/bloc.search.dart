@@ -26,9 +26,9 @@ sinkApi.add(filter);
 Future<void> getmenu(String query) async {
 final response = await ApiCall().getRestarant('/getAllMenu');
 List<FilterRestaurant> search = filterRestaurantFromJson(response.body);
-var filter =search.where((element) =>  element.menuName.contains(query) || element.menuName.toLowerCase().contains(query) ||
- element.restaurantName.contains(query) || element.restaurantName.toLowerCase().contains(query)  
-|| element.categoryName.contains(query) || element.categoryName.contains(query)).toList();
+var filter =search.where((element) =>  element.menuName.contains(query) || element.menuName.toLowerCase().contains(query) || element.menuName.toUpperCase().contains(query) ||
+ element.restaurantName.contains(query) || element.restaurantName.toLowerCase().contains(query) || element.restaurantName.toUpperCase().contains(query) 
+|| element.categoryName.contains(query) || element.categoryName.toLowerCase().contains(query) || element.categoryName.toUpperCase().contains(query)).toList();
 sinkMenu.add(filter);
 }
 
