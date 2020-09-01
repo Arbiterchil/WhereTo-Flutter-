@@ -4,6 +4,7 @@ import 'package:WhereTo/Admin/navbottom_admin.dart';
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/Rider/rider_sendRem.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/A_RiderLog/rider_logPen.dart';
 import 'package:WhereTo/modules/homepage.dart';
 import 'package:WhereTo/modules/signup_page.dart';
 import 'package:WhereTo/path.dart';
@@ -519,6 +520,7 @@ void _login() async{
                _showDial("You've Been Suspended go ot the Office Now.");
     }else if(body['remitPending'] == true){
             print("Bearly Good");
+
              print(body['user']['id']);
              _showRemit("You still have A Pending Remit",body['user']['id']);
             
@@ -746,8 +748,8 @@ void _showRemit(String message, int id){
                 RaisedButton(
                   color:Color(0xFF0C375B),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: () => Navigator.pushReplacement(context,
-                new MaterialPageRoute(builder: (context) => RiderRemit(idFromLog :id.toString()))),   
+                  onPressed: () => Navigator.push(context,
+                new MaterialPageRoute(builder: (context) => RemitPendingUser(id :id))),   
                       
                   child: Text ( "Ok", style :TextStyle(
                   color: Colors.white,
