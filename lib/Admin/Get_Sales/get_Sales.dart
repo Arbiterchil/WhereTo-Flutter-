@@ -163,6 +163,8 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
                            restaurandId.toString());
                           setState(() {
                             pressed = true;
+                            dateTo = DateFormat('yyyy-MM-dd').format(endDate).toString();
+                            dateFrom =DateFormat('yyyy-MM-dd').format(startDate).toString();
                           });
                         },
                         child: Container(
@@ -187,8 +189,8 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
                 SizedBox(height: 40,),
                 pressed ? ShowtheResults(
                   id: restaurandId,
-                  dateFrom:  DateFormat("yyyy-MM-dd").format(startDate).toString(),
-                  dateTo: DateFormat("yyyy-MM-dd").format(endDate).toString(),
+                  dateFrom: dateFrom,
+                  dateTo: dateTo,
                 ) : Text("Nothing to Show"),
               ],
             ),
