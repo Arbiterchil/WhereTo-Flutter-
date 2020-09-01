@@ -19,23 +19,23 @@ class GetSalesRepotgenerate extends StatefulWidget {
   const GetSalesRepotgenerate({Key key, @required this.restaurandId}) : super(key: key);
 
   @override
-  _GetSalesRepotgenerateState createState() => _GetSalesRepotgenerateState(restaurandId);
+  _GetSalesRepotgenerateState createState() => _GetSalesRepotgenerateState();
 }
 
 
 class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
 
-  final int restaurandId;
-  _GetSalesRepotgenerateState(this.restaurandId);
+  
 
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(Duration(days: 7));
   bool pressed = false;
   String dateFrom;
   String dateTo;
+  String start;
+  String end;
   @override
   void initState() {
- 
     super.initState();
   }
   
@@ -104,15 +104,26 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
                         lastDate: new DateTime(DateTime.now().year +50));
                         if(pick !=null && pick.length ==2){
                         
-                          setState(() {
+                          setState((){
                           print(pick);
                           startDate = pick[0];
                           endDate = pick[1];
-                          print(startDate);
-                          print(endDate);
-                          });
+                          start =DateFormat('yyyy-MM-dd').format(pick[0]).toString();
+                          end =DateFormat('yyyy-MM-dd').format(pick[1]).toString();
+                        });
+                        var data = 
+                        {
+                            "restaurantId": widget.restaurandId,
+                            "dateFrom": start,
+                            "dateTo": end
+                        };
+                        var restotal = await ApiCall().getTotalRestaurantSalesReport(data,'/getTotalRestaurantSalesReport');
+                        var body = json.decode(restotal.body);
+                        print(body);
+                        }
                         
-                        }},
+
+                        },
                         hoverColor: Colors.amber,
                         splashColor: pureblue,
                         child: Icon(
@@ -156,11 +167,6 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
                    hoverColor: Colors.amber,
                         splashColor: pureblue,
                         onTap: (){
-                          print( DateFormat('yyyy-MM-dd').format(startDate).toString()
-                           +"-"+
-                           DateFormat('yyyy-MM-dd').format(endDate).toString()
-                           +"-"+
-                           restaurandId.toString());
                           setState(() {
                             pressed = true;
                             dateTo = DateFormat('yyyy-MM-dd').format(endDate).toString();
@@ -188,9 +194,9 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
                 ),
                 SizedBox(height: 40,),
                 pressed ? ShowtheResults(
-                  id: restaurandId,
-                  dateFrom: dateFrom,
-                  dateTo: dateTo,
+                  id: widget.restaurandId,
+                  dateFrom: start,
+                  dateTo: end,
                 ) : Text("Nothing to Show"),
               ],
             ),
