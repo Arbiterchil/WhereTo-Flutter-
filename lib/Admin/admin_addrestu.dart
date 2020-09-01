@@ -144,7 +144,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 
     ];
 
-    callBarangay() async{
+   void callBarangay() async{
 
     var respon = await ApiCall().getBararang('/getBarangayList');
     var bararang = json.decode(respon.body);
@@ -152,7 +152,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
     setState(() {
       dataBarangay = bararang;
     });
-    print(bararang);
+    // print(bararang);
 
   }
     phoneValidate(String val){

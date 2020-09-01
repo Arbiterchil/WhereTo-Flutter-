@@ -8,6 +8,7 @@ class MenuGetResponse {
   final MenuGet menuget;
   final String error;
 
+
   MenuGetResponse(this.menuget, this.error);
 
  MenuGetResponse.fromJson(json)

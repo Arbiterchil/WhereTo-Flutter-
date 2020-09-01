@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:WhereTo/AnCustom/Rider_havePendingtrans.dart';
 import 'package:WhereTo/AnCustom/dialog_showGlobal.dart';
+import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_headerpage.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/button_OkAssign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
@@ -26,8 +28,10 @@ class ViewMenuOnTransac extends StatefulWidget {
   final String playerId;
   final String transacIDs;
   final String user_coor;
+  final String contactNumber;
 
-  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor}) : super(key: key);
+  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor, this.contactNumber}) : super(key: key);
+
  
   @override
   _ViewMenuOnTransacState createState() => _ViewMenuOnTransacState();
@@ -63,14 +67,44 @@ bool stepTf = true;
 bool menuHide = true;
 bool backTF =true;
 var idgetter;
+var iderntify;
 @override
   void initState() {
-    this.getTotalPrice();
-    this._getUserInfo();
-    this.riderCheck();
+    getTotalPrice();
+    _getUserInfo();
+    identify();
+    riderCheck();
     super.initState();
     
   }
+
+
+  void identify() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var userRider = localStorage.getString('menuplustrans');
+
+      if(userRider != null){
+
+         if(userData['id'] != widget.riderID){
+               showDialog(context: context,
+        barrierDismissible: false,
+        builder: (context) => RiderPending(
+          message: "You have Still a Pending Transaction.",
+          function: () => Navigator.pushReplacement(context,
+          new MaterialPageRoute(builder: (context) => RiderTransaction())),)
+        );
+         }else{
+           print("Can Continue");
+          
+         } 
+
+        
+      }else{
+        print("can get This transac.");
+      }
+  }
+
+
 
   notif2() async {
        String url = 'https://onesignal.com/api/v1/notifications';
@@ -483,7 +517,14 @@ var checkVal = localStorage.getBool('check');
                                                     ),
                                                       ),
                                                       SizedBox(height: 2,),
-                                                    
+                                                      Text("${widget.contactNumber}",
+                                                      style: TextStyle(
+                                                      color:pureblue,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16.0,
+                                                      fontFamily: 'OpenSans'
+                                                    ),
+                                                      ),
                                                       SizedBox(height: 5,),
                                                       Text("${widget.deliveryCharge}",
                                                       style: TextStyle(
@@ -538,8 +579,11 @@ var checkVal = localStorage.getBool('check');
                                               child: 
                                               GestureDetector(
                                                 onTap: (){
-                                                  Navigator.pop(context);
-                                                 
+                                                  // Navigator.pop(context);
+                                                 Navigator.pushReplacement(context, 
+                                                 new MaterialPageRoute(builder: (context) =>
+                                                 RiderTransaction())
+                                                 );
                                                 },
                                                 child: Container(
                                                    height: 60,
@@ -671,7 +715,10 @@ var checkVal = localStorage.getBool('check');
                                       SharedPreferences localStorage = await SharedPreferences.getInstance();
                                       localStorage.remove('menuplustrans');
                                       localStorage.remove('playerIDS');
-                                        Navigator.pop(context);
+                                       Navigator.pushReplacement(context, 
+                                                 new MaterialPageRoute(builder: (context) =>
+                                                 RiderTransaction())
+                                                 );
                                           //   setState(() {
                                           //   complete = false;                    
 
@@ -918,7 +965,6 @@ var checkVal = localStorage.getBool('check');
           ),
         ),
       );
-
 
     }
 }

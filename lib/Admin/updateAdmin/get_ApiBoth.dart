@@ -28,6 +28,4 @@ Future<RestaurantGetResponse> getRestaurantusedID(int id) async {
   }
 }
 
-
-
 }

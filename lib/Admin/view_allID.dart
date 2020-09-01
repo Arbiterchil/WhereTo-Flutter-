@@ -273,6 +273,7 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
   void sendNotiftoUserScammer(String id) async{
 
     var bods = await ApiCall().getDeviceUserScammer('/getUserDeviceId/${id.toString()}');
+     await ApiCall().susVerify('/suspendAccount/${id.toString()}');
     var body = json.decode(bods.body);
     print(body[0]['deviceId']);
     String url = 'https://onesignal.com/api/v1/notifications';
@@ -295,15 +296,16 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
       'Content-Type': 'application/json',
       'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
     };
-    // var repo =
+    var repo =
     await http.post(url, headers: headers, body: json.encode(contents));
-     OneSignal.shared
-        .setInFocusDisplayType(OSNotificationDisplayType.notification);
-    OneSignal.shared
-        .setNotificationReceivedHandler((OSNotification notification) {
-                constant =notification.payload.additionalData; 
-                print(constant['force']);
-    });
+    print(repo.body);
+    //  OneSignal.shared
+    //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    // OneSignal.shared
+    //     .setNotificationReceivedHandler((OSNotification notification) {
+    //             constant =notification.payload.additionalData; 
+    //             print(constant['force']);
+    // });
     
   }
 
@@ -455,12 +457,13 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                                   
                                   
                                      sendNotiftoUserScammer(id.toString());
-                                        ApiCall().susVerify('/suspendAccount/${id.toString()}');
+                                        
                                       print(id.toString());
-                                   Navigator.pushReplacement(
-                                  context,
-                                  new MaterialPageRoute(
-                                      builder: (context) => AdminHomeDash()));
+                                      Navigator.pop(context);
+                                  //  Navigator.pushReplacement(
+                                  // context,
+                                  // new MaterialPageRoute(
+                                  //     builder: (context) => AdminHomeDash()));
                                 },
                                 child: Container(
                                   height: 50,

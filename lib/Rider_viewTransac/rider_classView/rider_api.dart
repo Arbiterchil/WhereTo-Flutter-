@@ -95,9 +95,10 @@ class RiderApi {
     try{
 
       var response = await ApiCall().getComment('/getRiderComments/${userData['id']}');
-      print(response);
+      
       var body = json.decode(response.body);
       List<RiderComments> comment = [];
+      print(response.body);
       for(var body in body){
           RiderComments riderComments = RiderComments(
             comment: body['comment']

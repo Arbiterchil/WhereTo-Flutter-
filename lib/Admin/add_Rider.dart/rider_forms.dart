@@ -26,10 +26,10 @@ class _RiderFormsState extends State<RiderForms> {
   @override
   void initState() {
     super.initState();
-    this.callBarangay();
+    callBarangay();
   }
   List dataBarangay = List();
-  callBarangay() async{
+  void callBarangay() async{
 
     var respon = await ApiCall().getBararang('/getBarangayList');
     var bararang = json.decode(respon.body);
@@ -37,7 +37,7 @@ class _RiderFormsState extends State<RiderForms> {
     setState(() {
       dataBarangay = bararang;
     });
-    print(bararang);
+    // print(bararang);
   }
   phoneValidate(String val){
           Pattern pattern = r'^([+0]9)?[0-9]{10,11}$';
