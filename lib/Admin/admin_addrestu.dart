@@ -743,10 +743,11 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 
   @override
   void initState() {
+    
+    super.initState();
     callBarangay();
     weekdays();
     _featured();
-    super.initState();
   }
 
   @override

@@ -26,7 +26,7 @@ class _RiderFormsState extends State<RiderForms> {
   @override
   void initState() {
     super.initState();
-    callBarangay();
+    this.callBarangay();
   }
   List dataBarangay = List();
   void callBarangay() async{

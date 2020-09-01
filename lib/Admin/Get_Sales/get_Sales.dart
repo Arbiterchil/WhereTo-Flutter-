@@ -34,6 +34,7 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
   String dateTo;
   String start;
   String end;
+  var long;
   @override
   void initState() {
     super.initState();
@@ -51,7 +52,7 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -120,6 +121,9 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
                         var restotal = await ApiCall().getTotalRestaurantSalesReport(data,'/getTotalRestaurantSalesReport');
                         var body = json.decode(restotal.body);
                         print(body);
+                        setState(() {
+                          long = body[0]['totalAmount'].toString();
+                        });
                         }
                         
 
@@ -197,6 +201,7 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
                   id: widget.restaurandId,
                   dateFrom: start,
                   dateTo: end,
+                  result : long
                 ) : Text("Nothing to Show"),
               ],
             ),

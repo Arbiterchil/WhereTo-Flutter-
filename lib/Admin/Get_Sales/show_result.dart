@@ -15,11 +15,13 @@ class ShowtheResults extends StatefulWidget {
   final String dateTo;
   final String dateFrom;
   final int id;
+  final String result;
 
-  const ShowtheResults({Key key, @required this.dateTo,  @required this.dateFrom,  @required this.id}) : super(key: key);
+  
+  
 
-  @override
-  _ShowtheResultsState createState() => _ShowtheResultsState(dateFrom,dateTo,id);
+  const ShowtheResults({Key key, this.dateTo, this.dateFrom, this.id, this.result}) : super(key: key);@override
+  _ShowtheResultsState createState() => _ShowtheResultsState(dateFrom,dateTo,id,result);
 }
 
 class _ShowtheResultsState extends State<ShowtheResults> {
@@ -27,34 +29,23 @@ class _ShowtheResultsState extends State<ShowtheResults> {
   final String dateTo;
   final String dateFrom;
   final int id;
+  final String result;
 
-  _ShowtheResultsState( this.dateTo, this.dateFrom, this.id);
+
 
   var dataTotal;
 
+  _ShowtheResultsState(this.dateTo, this.dateFrom, this.id, this.result);
+
   @override
   void initState() {
-    getTotal();
+
     print(dateFrom+"_"+dateTo+"_"+id.toString());
     super.initState();
     getSaleStream..getSalesReport(dateFrom, dateTo, id);
 
   }
 
-  void getTotal() async{
-       var data = 
-      {
-        "restaurantId": id,
-        "dateFrom": dateFrom,
-        "dateTo": dateTo
-      };
-    var restotal = await ApiCall().getTotalRestaurantSalesReport(data,'/getTotalRestaurantSalesReport');
-    var body = json.decode(restotal.body);
-    print(body);
-    setState(() {
-       dataTotal = body[0]['totalAmount'];
-    });  
-  }
 
   @override
   void dispose() {
@@ -86,7 +77,28 @@ class _ShowtheResultsState extends State<ShowtheResults> {
               },
             ),
             SizedBox(height: 20,),
-                  Text(dataTotal != null ? dataTotal : "No Total Shown"),  
+              RichText(text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Total Amount: ",
+                    style: TextStyle(
+                    color: pureblue,
+                    fontFamily: 'Gilroy-ExtraBold',
+                    fontSize: 25
+                  ), 
+                  ),
+                  TextSpan(
+                    text: widget.result != null ? widget.result  : "No Total Shown",
+                    style: TextStyle(
+                    color: pureblue,
+                    fontFamily: 'Gilroy-ExtraBold',
+                     fontSize: 25
+                  ), 
+                  ),
+
+                ]
+              )),  
+               SizedBox(height: 40,),
           ],
         ),
     );
@@ -143,69 +155,78 @@ class _ShowtheResultsState extends State<ShowtheResults> {
             physics: AlwaysScrollableScrollPhysics(),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+              height: 400,
               child: ListView.builder(
                 itemCount: getale.length,
                 itemBuilder: (context,index){
-                  return Container(
-                    height: 220,
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Text(getale[index].deliveryAddress,
-                          style: TextStyle(
-                            color: pureblue,
-                            fontFamily: 'Gilory-light',
-                          ),
-                          ),
-                        ),
-                        SizedBox(height: 10,),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Flexible(
-                                child: Text(getale[index].menuName,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: pureblue,
-                                  fontFamily: 'Gilroy-ExtraBold'
-                                ),
-                                ),
-                              ),
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 30,right: 30,top: 10),
+                    child: Container(
+                      height: 130,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        // border: Border.all(
+                        //   width: 1,
+                        //   color: pureblue
+                        // ),
+                        // borderRadius: BorderRadius.all(Radius.circular(20)),
 
-                              Text(getale[index].price.toString(),
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: pureblue,
-                                  fontFamily: 'Gilroy-light'
-                                ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(getale[index].deliveryAddress,
+                            style: TextStyle(
+                              color: pureblue,
+                              fontFamily: 'Gilory-light',
+                            ),
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Flexible(
+                                  child: Text(getale[index].menuName,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: pureblue,
+                                    fontFamily: 'Gilroy-ExtraBold'
+                                  ),
+                                  ),
                                 ),
 
-                              Text(getale[index].quantity.toString(),
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: pureblue,
-                                  fontFamily: 'Gilroy-light'
-                                ),
-                                ),
-                            ],
+                                Text(getale[index].price.toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: pureblue,
+                                    fontFamily: 'Gilroy-light'
+                                  ),
+                                  ),
+
+                                Text(getale[index].quantity.toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: pureblue,
+                                    fontFamily: 'Gilroy-light'
+                                  ),
+                                  ),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 20,),
-                        Text(getale[index].total.toString(),
-                          style: TextStyle(
-                            color: pureblue,
-                            fontFamily: 'Gilory-ExtraBold',
-                          ),
-                          ),
-                        SizedBox(height: 20,),
+                          SizedBox(height: 20,),
+                          Text(getale[index].total.toString(),
+                            style: TextStyle(
+                              color: pureblue,
+                              fontFamily: 'Gilroy-ExtraBold',
+                            ),
+                            ),
+                          SizedBox(height: 5,),
                         Divider(
                   height: 6.0,
                   thickness: 2,
@@ -213,7 +234,8 @@ class _ShowtheResultsState extends State<ShowtheResults> {
                   indent: 10.0,
                   endIndent: 10.0,
                 ),  
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 }),
