@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:WhereTo/AnCustom/LocationSet.dart';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/Services/connectivity_status.dart';
+import 'package:WhereTo/Transaction/SearchMenu/newSearch.dart';
 import 'package:WhereTo/Transaction/SearchMenu/search.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
@@ -160,12 +161,12 @@ class _SearchDepoState extends State<SearchDepo> {
                                 hintText: "Search",
                               ),
                               onTap: () {
-                                // showSearch(context: context, delegate: CustomSearch());
                                 if(userData['address'].toString().contains("Tagum")){
-                                  Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return SearchResto();
-                                }));
+                                //   Navigator.push(context,
+                                //     MaterialPageRoute(builder: (context) {
+                                //   return SearchResto();
+                                // }));
+                                showSearch(context: context, delegate: CustomSearch());
                                 }else{
                                 AwesomeDialog(
                                 context: context,

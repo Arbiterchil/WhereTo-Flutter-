@@ -88,21 +88,23 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
                     children: <Widget>[
                       InkWell(
                         onTap: ()async {
-                          final List<DateTime> pick = await DateRagePicker.showDatePicker(
-      context: context,
-      initialFirstDate:  startDate,
-      initialLastDate: endDate,
-      firstDate: new DateTime(DateTime.now().year -50),
-      lastDate: new DateTime(DateTime.now().year +50));
-      if(pick !=null && pick.length ==2){
-      
-        setState(() {
-            print(pick);
-              startDate = pick[0];
-        endDate = pick[1];
-        });
-      
-      }},
+                        final List<DateTime> pick = await DateRagePicker.showDatePicker(
+                        context: context,
+                        initialFirstDate:  startDate,
+                        initialLastDate: endDate,
+                        firstDate: new DateTime(DateTime.now().year -50),
+                        lastDate: new DateTime(DateTime.now().year +50));
+                        if(pick !=null && pick.length ==2){
+                        
+                          setState(() {
+                          print(pick);
+                          startDate = pick[0];
+                          endDate = pick[1];
+                          print(startDate);
+                          print(endDate);
+                          });
+                        
+                        }},
                         hoverColor: Colors.amber,
                         splashColor: pureblue,
                         child: Icon(
