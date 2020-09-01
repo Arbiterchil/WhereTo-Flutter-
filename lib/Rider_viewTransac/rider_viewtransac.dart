@@ -66,7 +66,7 @@ void mybackUp() {
           constant =notification.payload.additionalData; 
                 setState(()  {
                    constant =notification.payload.additionalData; 
-                  if(constant != null){
+                  // if(constant != null){
                     finalID = constant['transact_id'];
                     // print(constant['id'].toString());
                     // print(constant['transact_id'].toString());
@@ -80,9 +80,9 @@ void mybackUp() {
                     // user_coor = constant['user_coordinates'].toString();
                     // idsComming.add(finalID);
                                   
-                  }else{
-                    print("No Data");
-                  }
+                  // }else{
+                  //   print("No Data");
+                  // }
                 });          
     });
  }   

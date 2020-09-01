@@ -191,7 +191,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
                                 snapshot.data[index].deliveryAddress,
                             address: snapshot.data[index].address,
                             restaurantName: snapshot.data[index].restaurantName,
-                            status: sunkist == 0
+                            status: sunkist == null
                                 ? snapshot.data[index].status.toString()
                                 : sunkist.toString(),
                             onTapCancel: () {
