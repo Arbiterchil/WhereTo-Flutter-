@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 // import 'package:syncfusion_flutter_core/core.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'dart:async';
+
+import '../../styletext.dart';
 class GetSalesRepotgenerate extends StatefulWidget {
 
   final int restaurandId;
@@ -39,7 +41,7 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -73,61 +75,19 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
                     ],
                   ),
                 ),
-                SizedBox(height: 40,),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Starting Date: ",
-                        style: TextStyle(
-                          color: pureblue,
-                          fontSize: 18,
-                          fontFamily: 'Gilroy-ExtraBold'
-                        )
-                      ),
-                      TextSpan(
-                         text: 
-                         DateFormat('yyyy-MM-dd').format(startDate).toString() == null ?
-                          "NONE" : 
-                          DateFormat('yyyy-MM-dd').format(startDate).toString(),
-                        style: TextStyle(
-                          color: pureblue,
-                          fontSize: 18,
-                          fontFamily: 'Gilroy-light'
-                        )
-                      ),
-                    ]
-                  )),
-                   SizedBox(height: 15,),
-                   RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Ending Date: ",
-                        style: TextStyle(
-                          color: pureblue,
-                          fontSize: 18,
-                          fontFamily: 'Gilroy-ExtraBold'
-                        )
-                      ),
-                      TextSpan(
-                         text: 
-                          DateFormat('yyyy-MM-dd').format(endDate).toString() == null ?
-                           "NONE" :
-                             DateFormat('yyyy-MM-dd').format(endDate).toString(),
-                        style: TextStyle(
-                          color: pureblue,
-                          fontSize: 18,
-                          fontFamily: 'Gilroy-light'
-                        )
-                      ),
-                    ]
-                  )),
-                  SizedBox(height: 25,),
-                  RaisedButton(
-                    color:Color(0xFF0C375B),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    onPressed: () async {
+                SizedBox(height: 30,),
+                Container(
+                  height: 80,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                  border: Border.all(width: 1,color: pureblue),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      InkWell(
+                        onTap: ()async {
                           final List<DateTime> pick = await DateRagePicker.showDatePicker(
       context: context,
       initialFirstDate:  startDate,
@@ -142,15 +102,121 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
         endDate = pick[1];
         });
       
-      }
-                    },
-                    child: Text ( "Select Date", style :TextStyle(
-                  color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12.0,
-                              fontFamily: 'OpenSans'
-                ),),
-                    ),
+      }},
+                        hoverColor: Colors.amber,
+                        splashColor: pureblue,
+                        child: Icon(
+                          Icons.calendar_today,
+                          color: pureblue,
+                          size: 20,
+                        ),
+                      ),
+
+                      Text(DateFormat('yyyy-MM-dd').format(startDate).toString() == null ?
+                          "Starting Date" : 
+                          DateFormat('yyyy-MM-dd').format(startDate).toString(),
+                           style: TextStyle(
+                          color: pureblue,
+                          fontSize: 18,
+                          fontFamily: 'Gilroy-light'
+                        )
+                          ),
+
+                          Icon(
+                          Icons.arrow_right,
+                          color: pureblue,
+                          size: 40,
+                        ),
+                        
+                         Text( DateFormat('yyyy-MM-dd').format(endDate).toString() == null ?
+                           "Ending Date" :
+                             DateFormat('yyyy-MM-dd').format(endDate).toString(),
+                           style: TextStyle(
+                          color: pureblue,
+                          fontSize: 18,
+                          fontFamily: 'Gilroy-light'
+                        )
+                          ),
+                    ],
+                  ),
+                ),
+                // RichText(
+                //   text: TextSpan(
+                //     children: [
+                //       TextSpan(
+                //         text: "Starting Date: ",
+                //         style: TextStyle(
+                //           color: pureblue,
+                //           fontSize: 18,
+                //           fontFamily: 'Gilroy-ExtraBold'
+                //         )
+                //       ),
+                //       TextSpan(
+                //          text: 
+                //          DateFormat('yyyy-MM-dd').format(startDate).toString() == null ?
+                //           "NONE" : 
+                //           DateFormat('yyyy-MM-dd').format(startDate).toString(),
+                //         style: TextStyle(
+                //           color: pureblue,
+                //           fontSize: 18,
+                //           fontFamily: 'Gilroy-light'
+                //         )
+                //       ),
+                //     ]
+                //   )),
+                //    SizedBox(height: 15,),
+                //    RichText(
+                //   text: TextSpan(
+                //     children: [
+                //       TextSpan(
+                //         text: "Ending Date: ",
+                //         style: TextStyle(
+                //           color: pureblue,
+                //           fontSize: 18,
+                //           fontFamily: 'Gilroy-ExtraBold'
+                //         )
+                //       ),
+                //       TextSpan(
+                //          text: 
+                //           DateFormat('yyyy-MM-dd').format(endDate).toString() == null ?
+                //            "NONE" :
+                //              DateFormat('yyyy-MM-dd').format(endDate).toString(),
+                //         style: TextStyle(
+                //           color: pureblue,
+                //           fontSize: 18,
+                //           fontFamily: 'Gilroy-light'
+                //         )
+                //       ),
+                //     ]
+                //   )),
+                //   SizedBox(height: 25,),
+      //             RaisedButton(
+      //               color:Color(0xFF0C375B),
+      //             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      //               onPressed: () async {
+      //                     final List<DateTime> pick = await DateRagePicker.showDatePicker(
+      // context: context,
+      // initialFirstDate:  startDate,
+      // initialLastDate: endDate,
+      // firstDate: new DateTime(DateTime.now().year -50),
+      // lastDate: new DateTime(DateTime.now().year +50));
+      // if(pick !=null && pick.length ==2){
+      
+      //   setState(() {
+      //       print(pick);
+      //         startDate = pick[0];
+      //   endDate = pick[1];
+      //   });
+      
+      // }
+      //               },
+      //               child: Text ( "Select Date", style :TextStyle(
+      //             color: Colors.white,
+      //                         fontWeight: FontWeight.w700,
+      //                         fontSize: 12.0,
+      //                         fontFamily: 'OpenSans'
+      //           ),),
+      //               ),
                 // dateWidget(),
 
                 
