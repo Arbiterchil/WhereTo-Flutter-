@@ -11,6 +11,24 @@ class ApiCall{
     
 
 
+
+   getRestaurantSalesReport(data,api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  } 
+
+  getTotalRestaurantSalesReport(data,api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }  
+
+
   changepasssword(data ,api) async {
     var fullurl = url+api+ await _getToken();
     return http.post(fullurl,

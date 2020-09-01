@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:WhereTo/Admin/Get_Sales/get_salesStream.dart';
+import 'package:WhereTo/Admin/Get_Sales/show_result.dart';
+import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,13 +30,16 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
 
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(Duration(days: 7));
-
+  bool pressed = false;
+  String dateFrom;
+  String dateTo;
   @override
   void initState() {
-
+ 
     super.initState();
   }
   
+
   
 
   @override
@@ -142,86 +150,46 @@ class _GetSalesRepotgenerateState extends State<GetSalesRepotgenerate> {
                     ],
                   ),
                 ),
-                // RichText(
-                //   text: TextSpan(
-                //     children: [
-                //       TextSpan(
-                //         text: "Starting Date: ",
-                //         style: TextStyle(
-                //           color: pureblue,
-                //           fontSize: 18,
-                //           fontFamily: 'Gilroy-ExtraBold'
-                //         )
-                //       ),
-                //       TextSpan(
-                //          text: 
-                //          DateFormat('yyyy-MM-dd').format(startDate).toString() == null ?
-                //           "NONE" : 
-                //           DateFormat('yyyy-MM-dd').format(startDate).toString(),
-                //         style: TextStyle(
-                //           color: pureblue,
-                //           fontSize: 18,
-                //           fontFamily: 'Gilroy-light'
-                //         )
-                //       ),
-                //     ]
-                //   )),
-                //    SizedBox(height: 15,),
-                //    RichText(
-                //   text: TextSpan(
-                //     children: [
-                //       TextSpan(
-                //         text: "Ending Date: ",
-                //         style: TextStyle(
-                //           color: pureblue,
-                //           fontSize: 18,
-                //           fontFamily: 'Gilroy-ExtraBold'
-                //         )
-                //       ),
-                //       TextSpan(
-                //          text: 
-                //           DateFormat('yyyy-MM-dd').format(endDate).toString() == null ?
-                //            "NONE" :
-                //              DateFormat('yyyy-MM-dd').format(endDate).toString(),
-                //         style: TextStyle(
-                //           color: pureblue,
-                //           fontSize: 18,
-                //           fontFamily: 'Gilroy-light'
-                //         )
-                //       ),
-                //     ]
-                //   )),
-                //   SizedBox(height: 25,),
-      //             RaisedButton(
-      //               color:Color(0xFF0C375B),
-      //             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      //               onPressed: () async {
-      //                     final List<DateTime> pick = await DateRagePicker.showDatePicker(
-      // context: context,
-      // initialFirstDate:  startDate,
-      // initialLastDate: endDate,
-      // firstDate: new DateTime(DateTime.now().year -50),
-      // lastDate: new DateTime(DateTime.now().year +50));
-      // if(pick !=null && pick.length ==2){
-      
-      //   setState(() {
-      //       print(pick);
-      //         startDate = pick[0];
-      //   endDate = pick[1];
-      //   });
-      
-      // }
-      //               },
-      //               child: Text ( "Select Date", style :TextStyle(
-      //             color: Colors.white,
-      //                         fontWeight: FontWeight.w700,
-      //                         fontSize: 12.0,
-      //                         fontFamily: 'OpenSans'
-      //           ),),
-      //               ),
-                // dateWidget(),
 
-                
+                SizedBox(height: 40,),
+                InkWell(
+                   hoverColor: Colors.amber,
+                        splashColor: pureblue,
+                        onTap: (){
+                          print( DateFormat('yyyy-MM-dd').format(startDate).toString()
+                           +"-"+
+                           DateFormat('yyyy-MM-dd').format(endDate).toString()
+                           +"-"+
+                           restaurandId.toString());
+                          setState(() {
+                            pressed = true;
+                          });
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: pureblue
+                            ),
+                          ),
+                          child: Center(
+                            child: Text("Show Result",
+                            style: TextStyle(
+                              color: pureblue,
+                              fontFamily: 'Gilroy-light'
+                            ),
+                            ),
+                          ),
+                        ),
+                ),
+                SizedBox(height: 40,),
+                pressed ? ShowtheResults(
+                  id: restaurandId,
+                  dateFrom:  DateFormat("yyyy-MM-dd").format(startDate).toString(),
+                  dateTo: DateFormat("yyyy-MM-dd").format(endDate).toString(),
+                ) : Text("Nothing to Show"),
               ],
             ),
           ),
