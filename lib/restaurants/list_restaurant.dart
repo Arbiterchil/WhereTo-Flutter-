@@ -43,12 +43,11 @@ class _ListStacticState extends State<ListStactic>
   Future<void> getCateg() async{
     await menuBloc.getCateg();
   }
-  TabController _tabController;
+  TabController tabController;
+  int _index =0;
   @override
   void initState() {
-   
     super.initState();
-    
   }
 
   @override
@@ -153,26 +152,21 @@ class _ListStacticState extends State<ListStactic>
               child: StreamBuilder<List<Category>>(
                 stream: menuBloc.streamCateg,
                 builder: (context, datasnapshot) {
-                  if (datasnapshot.data == null) {
-                    return Center(
-                      child: Container(
-                        width: 40.0,
-                        height: 40.0,
-                        child: CircularProgressIndicator(
-                          backgroundColor: Colors.white,
-                          strokeWidth: 3.0,
-                        ),
-                      ),
-                    );
-                  } else {
+                  if(datasnapshot.hasData){
+                    if(datasnapshot.data.length >0){
+                       tabController = new TabController(vsync: this, length: datasnapshot.data.length, initialIndex: int.parse(widget.categID)-1 ==null || int.parse(widget.categID)-1 ==0 ? 0 :int.parse(widget.categID)-1);
                     return DefaultTabController(
                       length: datasnapshot.data.length, 
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child:TabBar(
-                            // physics: AlwaysScrollableScrollPhysics(),
+                      child: Scaffold(
+                        backgroundColor: Color(0xFF0C375B),
+                        appBar: AppBar(
+                          elevation: 0,
+                          excludeHeaderSemantics: true,
+                          toolbarHeight: 50.5,
+                          automaticallyImplyLeading: false,
+                          backgroundColor: Color(0xFF0C375B),
+                          bottom: TabBar(
+                            controller: tabController,
                             indicatorSize: TabBarIndicatorSize.label,
                             labelColor: Colors.white,
                             unselectedLabelColor:Colors.transparent,
@@ -182,7 +176,6 @@ class _ListStacticState extends State<ListStactic>
                               indicatorSize:MD2IndicatorSize.normal),
                             isScrollable: true,
                             tabs: datasnapshot.data.map<Widget>((Category category){
-                              // _tabController = new TabController(length: category.id, vsync: this);
                               return Container(
                                 width: 100,
                                 child: Tab(
@@ -197,9 +190,10 @@ class _ListStacticState extends State<ListStactic>
                             }).toList(),
                           ),
                           ),
-                          TabBarView(
+                          body: TabBarView(
+                            controller: tabController,
                             children: datasnapshot.data.map<Widget>((Category category){
-                            return Padding(padding: EdgeInsets.only(top: 50),
+                            return Padding(padding: EdgeInsets.only(top: 10),
                             child: Container(
                             child: FutureBuilder(
                               future: MenuBloc().getRest(widget.nameRestau, category.id.toString()),
@@ -236,12 +230,7 @@ class _ListStacticState extends State<ListStactic>
                                 }else{
                                   return Center(
                                   child: Container(
-                                    width: 40.0,
-                                    height: 40.0,
-                                    child: CircularProgressIndicator(
-                                      backgroundColor: Colors.white,
-                                      strokeWidth: 3.0,
-                                    ),
+                                    child: CircularProgressIndicator(),
                                   ),
                                 );
                                 }
@@ -251,10 +240,23 @@ class _ListStacticState extends State<ListStactic>
                           ); 
                             }).toList()
                             ),
-                        ],
-                      ),
+                      ), 
+                      
                       );
+                    }
+                  }else{
+                    return Center(
+                      child: Container(
+                      width: 40.0,
+                      height: 40.0,
+                      child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                      strokeWidth: 3.0,
+                      ),
+                      ),
+                    );
                   }
+                  return Container();
                 },
               ),
             );
