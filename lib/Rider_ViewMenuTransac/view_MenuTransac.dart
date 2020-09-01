@@ -70,9 +70,9 @@ var idgetter;
 var iderntify;
 @override
   void initState() {
-     identify();
     getTotalPrice();
     _getUserInfo();
+    identify();
     riderCheck();
     super.initState();
     
@@ -84,13 +84,21 @@ var iderntify;
       var userRider = localStorage.getString('menuplustrans');
 
       if(userRider != null){
-        showDialog(context: context,
+
+         if(userData['id'] != widget.riderID){
+               showDialog(context: context,
         barrierDismissible: false,
         builder: (context) => RiderPending(
           message: "You have Still a Pending Transaction.",
           function: () => Navigator.pushReplacement(context,
           new MaterialPageRoute(builder: (context) => RiderTransaction())),)
         );
+         }else{
+           print("Can Continue");
+          
+         } 
+
+        
       }else{
         print("can get This transac.");
       }
