@@ -14,7 +14,7 @@ class RetrievStream {
   }
 
   void drainStream(){_subject.value = null;}
-  @mustCallSuper
+@mustCallSuper
   void dispose() async{
     
     await _subject.drain();

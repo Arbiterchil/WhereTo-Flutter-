@@ -16,20 +16,20 @@ class RetriveTransacApi {
         List<RetieveAlltransac> res = [];
 
         var body = json.decode(response.body);
-        for(var json in body){
+        for(var body in body){
             RetieveAlltransac retieveAlltransac = RetieveAlltransac(
-        id: json["id"],
-        name: json["name"],
-        contactNumber: json["contactNumber"],
-        barangayName: json["barangayName"],
-        restaurantName: json["restaurantName"],
-        address: json["address"],
-        deliveryAddress: json["deliveryAddress"],
-        createdAt: json["created_at"],
-        deviceId: json["deviceId"],
-        riderId: json["riderId"],
-        status: json["status"],
-        deliveryCharge: json["deliveryCharge"],
+        id: body['id'],
+        name: body['name'],
+        contactNumber: body['contactNumber'],
+        barangayName: body['barangayName'],
+        restaurantName: body['restaurantName'],
+        address: body['address'],
+        deliveryAddress: body['deliveryAddress'],
+        createdAt: body['created_at'],
+        deviceId: body['deviceId'],
+        riderId: body['riderId'],
+        status: body['status'],
+        deliveryCharge: body['deliveryCharge'],
             );
             res.add(retieveAlltransac);
         }

@@ -517,7 +517,7 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
     setState(() {
       loading  = true;
     });
-    var feature = await ApiCall().makeMenuFeatured('makeMenuFeatured/${widget.menuId}');
+    var feature = await ApiCall().makeMenuFeatured('/makeMenuFeatured/${widget.menuId}');
     print(feature.body);
      _showDial("The Menu is Featured Now.");
     setState(() {

@@ -245,7 +245,7 @@ List idsComming = [];
                                 restaurantName: v[index].restaurantName,
                                 onTap: () async {
 
-                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                     Navigator.push(context, MaterialPageRoute(builder: (context){
                                                         return ViewMenuOnTransac(
                                                           getID:v[index].id.toString(),
                                                           deliverTo: v[index].deliveryAddress,

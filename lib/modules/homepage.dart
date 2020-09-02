@@ -81,7 +81,6 @@ void configSignal() async {
         .setNotificationReceivedHandler((OSNotification notification){
       data = notification.payload.additionalData;
         setState(() {
-           data = notification.payload.additionalData;
           if(data != null){
             if(data['force'] == 'penalty'){
               print(data['force'].toString());

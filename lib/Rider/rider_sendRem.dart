@@ -396,23 +396,23 @@ void sendToAdmin() async{
                         end: Alignment.bottomLeft),
                   ),
                 ),
-                Positioned(
-                  top: 50.0,
-                  left: 94.0,
-                  child: Container(
-                    height: 90,
-                    width: 90,
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(45),
-                      image: DecorationImage(
-                        image: AssetImage("asset/img/logo.png"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   top: 50.0,
+                //   left: 94.0,
+                //   child: Container(
+                //     height: 90,
+                //     width: 90,
+                //     padding: EdgeInsets.all(10.0),
+                //     decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.circular(45),
+                //       image: DecorationImage(
+                //         image: AssetImage("asset/img/logo.png"),
+                //         fit: BoxFit.cover,
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             Padding(
@@ -441,7 +441,7 @@ void sendToAdmin() async{
                   //          new MaterialPageRoute(builder: (context) => RiderProfile())),
                   onPressed: () => Navigator.pop(context),
                   child: Text(
-                    "Yes",
+                    "Ok",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
