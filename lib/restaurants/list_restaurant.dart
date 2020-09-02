@@ -209,11 +209,10 @@ class _ListStacticState extends State<ListStactic>
                                        if(snapshot.data.length >0){
                                          return Padding(padding: EdgeInsets.all(15),
                                           child: MenuBoxRestaurant(
-                                            image: snapshot.data[index].imagePath,
+                                          image: snapshot.data[index].imagePath,
                                           menuName: snapshot.data[index].menuName,
                                           menuDescription: snapshot.data[index].description,
                                           fixprice: snapshot.data[index].price.toString(),
-                                          image: snapshot.data[index].imagePath,
                                           onTap: (){
                                             BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(
                                               name: snapshot.data[index].menuName,

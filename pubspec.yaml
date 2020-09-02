@@ -82,7 +82,7 @@ dependencies:
   flushbar: ^1.10.4
   date_range_picker: ^1.0.6
   extended_image: ^1.1.1
-
+  animations: ^1.1.2
   # syncfusion_flutter_datepicker: ^18.2.55-beta
 dev_dependencies:
   flutter_test:
