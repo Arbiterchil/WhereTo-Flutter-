@@ -15,31 +15,31 @@ class _NewCarouselState extends State<NewCarousel> {
 
     [
       // 'asset/img/carousel1.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/Restaurant/KFC.jpg',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599046303/imag2-02_w5ueli.png',
       'KFC',
       'Located at GMALL of TAGUM'
     ],
     [
       // 'asset/img/carousel2.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/Restaurant/Jollibee.jpg',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599046303/imag3-02_nky2e6.png',
       'Jollibee',
       'Located at National HighWay'
     ],
     [
       // 'asset/img/carousel3.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/Restaurant/McDonalds.jpg',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599046303/imag4-02_lwgrlu.png',
       'McDonalds',
       'Located at Rizal Street'
     ],
     [
       // 'asset/img/carousel4.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/Restaurant/Chowking.jpg',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599046321/imag4-02_r3qixq.png',
       'Chowking',
       'Located at National HighWay'
     ],
     [
       // 'asset/img/carousel5.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/Restaurant/Penongs.jpg',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599046303/imag1-02_dgbbxo.png',
       'Penongs',
       'Located at Lapu-Lapu Street'
     ],
@@ -87,12 +87,12 @@ class _NewCarouselState extends State<NewCarousel> {
               }
             } ,
               child: Container(
-              height: 400,
+              height: 290,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(restau[currentIndex][0]),
-                  fit:  BoxFit.cover),
+                  fit:  BoxFit.fitWidth),
                   
               ),
               child: Container(

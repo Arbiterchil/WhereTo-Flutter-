@@ -81,7 +81,7 @@ var userData;
                             fontFamily: 'OpenSans'
               ),),
                SizedBox(height:16.0 ,),
-              Text("Please Check Your Items Before Leaving",
+              Text("Please Check Your Items Before Leaving and Thank You for Using WhereTo Mobile App.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
