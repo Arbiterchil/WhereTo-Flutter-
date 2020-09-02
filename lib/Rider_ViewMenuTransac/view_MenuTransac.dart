@@ -90,7 +90,9 @@ var iderntify;
         barrierDismissible: false,
         builder: (context) => RiderPending(
           message: "You have Still a Pending Transaction.",
-          function: () => Navigator.pop(context),)
+          function: () => Navigator.pushReplacement(context,
+           new MaterialPageRoute(builder: (context)
+           => RiderProfile()),)),
         );
          }else{
            print("Can Continue");
