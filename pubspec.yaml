@@ -103,25 +103,6 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-  - asset/img/app.jpg
-  - asset/img/nc.png
-  - asset/img/61338547_p0.png
-  - asset/img/62512004_p0.png
-  - asset/img/76134055_p0.png
-  - asset/img/fbmYkDz.jpg
-  - asset/img/mWWsAhL.jpg
-  - asset/img/image.jpg
-  - asset/img/McDonalds.png
-  - asset/img/McDonalds.jpg
-  - asset/img/image1.png
-  - asset/img/KFC.png
-  - asset/img/Penongs.png
-  - asset/img/bgback.png
-  - asset/img/Chowking.png
-  - asset/img/Chowking.jpg
-  - asset/img/logo.png
-  - asset/img/fb.png
-  - asset/img/gmail.png
   - asset/img/deliveryProcess.png
   - asset/img/doneprocess.png
   - asset/img/emptycart.png
@@ -129,23 +110,10 @@ flutter:
   - asset/img/notifempty.png
   - asset/img/ongoing.png
   - asset/img/penalty.png
-  - asset/img/topsearchbg.jpg
-
-  - asset/img/Penongs.jpg
-  - asset/img/KFC.jpg
-
   - asset/img/heartIcon.jpg
-  - asset/img/fryandpota.jpg
-  - asset/img/burgers.jpg
-  - asset/img/noodles.jpg
-  - asset/img/snapwire.jpg
-  - asset/img/gulays.jpg
+  - asset/img/logo.png
+  - asset/img/menuBuyinu.png
 
-  - asset/img/carousel1.jpg
-  - asset/img/carousel2.jpg
-  - asset/img/carousel3.jpg
-  - asset/img/carousel4.jpg
-  - asset/img/carousel5.jpg
 
 
   #   - images/a_dot_ham.jpeg
