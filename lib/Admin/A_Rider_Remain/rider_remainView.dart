@@ -25,14 +25,13 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
   _RaminDataIndiState(this.id);
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     remainStream..getRemianData(id);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     remainStream.drainStream();
   }

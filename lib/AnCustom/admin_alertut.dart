@@ -80,7 +80,7 @@ class _AdminOutStageState extends State<AdminOutStage> {
                             fontFamily: 'OpenSans'
               ),),
                SizedBox(height:16.0 ,),
-              Text("Are You Sure Want to Log Out? Sure Choi ba muhawa naka unya na.",
+              Text("Are You Sure Want to Log Out?",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,

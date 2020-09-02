@@ -194,38 +194,49 @@ void _showDone(String message){
           physics: AlwaysScrollableScrollPhysics(),
           child: Column(
               children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Container(
-                      height: 150.0,
-                    ),
-                    Container(
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                        color: pureblue,
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
-                         ),
-
-                    ),
-                    Positioned(
-                      top: 50.0,
-                      left: 94.0,
-                      child: Container(
-                        height: 90,
-                        width: 90,
-                        padding: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(45),
-                          image: DecorationImage(
-                            image: AssetImage("asset/img/logo.png"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                SizedBox(height: 20,),
+                Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('asset/img/penalty.png'),
+                  ),
                 ),
+                ),
+                SizedBox(height: 10,),
+                // Stack(
+                //   children: <Widget>[
+                //     Container(
+                //       height: 150.0,
+                //     ),
+                //     Container(
+                //       height: 100.0,
+                //       decoration: BoxDecoration(
+                //         color: pureblue,
+                //         borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
+                //          ),
+
+                //     ),
+                //     Positioned(
+                //       top: 50.0,
+                //       left: 94.0,
+                //       child: Container(
+                //         height: 90,
+                //         width: 90,
+                //         padding: EdgeInsets.all(10.0),
+                //         decoration: BoxDecoration(
+                //           color: Colors.white,
+                //           borderRadius: BorderRadius.circular(45),
+                //           image: DecorationImage(
+                //             image: AssetImage("asset/img/logo.png"),
+                //             fit: BoxFit.cover,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 
                 Padding(
                   padding: const EdgeInsets.all(15.0),

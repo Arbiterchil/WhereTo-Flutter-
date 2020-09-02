@@ -367,7 +367,7 @@ class _ValidIdsState extends State<ValidIds> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    "Yes",
+                    "Ok",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,

@@ -159,37 +159,40 @@ class _ListStacticState extends State<ListStactic>
                       length: datasnapshot.data.length, 
                       child: Scaffold(
                         backgroundColor: Color(0xFF0C375B),
-                        appBar: AppBar(
-                          elevation: 0,
-                          excludeHeaderSemantics: true,
-                          toolbarHeight: 50.5,
-                          automaticallyImplyLeading: false,
-                          backgroundColor: Color(0xFF0C375B),
-                          bottom: TabBar(
-                            controller: tabController,
-                            indicatorSize: TabBarIndicatorSize.label,
-                            labelColor: Colors.white,
-                            unselectedLabelColor:Colors.transparent,
-                            indicator: MD2Indicator(
-                              indicatorHeight: 5, 
-                              indicatorColor: Colors.blue, 
-                              indicatorSize:MD2IndicatorSize.normal),
-                            isScrollable: true,
-                            tabs: datasnapshot.data.map<Widget>((Category category){
-                              return Container(
-                                width: 100,
-                                child: Tab(
-                                  child: Text(category.categoryName, style: TextStyle(
-                                  letterSpacing: 2.0,
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Gilroy-light'),),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                          ),
+                        appBar: PreferredSize(
+                          preferredSize: Size.fromHeight(50.5),
+                          child: AppBar(
+                            elevation: 0,
+                            excludeHeaderSemantics: true,
+                            // toolbarHeight: 50.5,
+                            automaticallyImplyLeading: false,
+                            backgroundColor: Color(0xFF0C375B),
+                            bottom: TabBar(
+                              controller: tabController,
+                              indicatorSize: TabBarIndicatorSize.label,
+                              labelColor: Colors.white,
+                              unselectedLabelColor:Colors.transparent,
+                              indicator: MD2Indicator(
+                                indicatorHeight: 5, 
+                                indicatorColor: Colors.blue, 
+                                indicatorSize:MD2IndicatorSize.normal),
+                              isScrollable: true,
+                              tabs: datasnapshot.data.map<Widget>((Category category){
+                                return Container(
+                                  width: 100,
+                                  child: Tab(
+                                    child: Text(category.categoryName, style: TextStyle(
+                                    letterSpacing: 2.0,
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Gilroy-light'),),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                            ),
+                        ),
                           body: TabBarView(
                             controller: tabController,
                             children: datasnapshot.data.map<Widget>((Category category){
@@ -206,6 +209,7 @@ class _ListStacticState extends State<ListStactic>
                                        if(snapshot.data.length >0){
                                          return Padding(padding: EdgeInsets.all(15),
                                           child: MenuBoxRestaurant(
+                                            image: snapshot.data[index].imagePath,
                                           menuName: snapshot.data[index].menuName,
                                           menuDescription: snapshot.data[index].description,
                                           fixprice: snapshot.data[index].price.toString(),

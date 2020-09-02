@@ -86,7 +86,7 @@ var userData;
                             fontFamily: 'OpenSans'
               ),),
                SizedBox(height:16.0 ,),
-              Text("Please Check Your other Unfisnihed Items in order for not to do some Complicated things.",
+              Text("Are You Sure Want To Log Out? Please Check your Items before Leaving.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 

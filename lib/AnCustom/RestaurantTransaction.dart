@@ -81,7 +81,7 @@ var userData;
                             fontFamily: 'OpenSans'
               ),),
                SizedBox(height:16.0 ,),
-              Text("You have a Pending Transaction on this Restaurant!",
+              Text("You have a Pending Transaction.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
