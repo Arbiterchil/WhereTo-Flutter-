@@ -6,10 +6,10 @@ class MenuBoxRestaurant extends StatefulWidget {
   final String menuName;
   final String menuDescription;
   final String fixprice;
-  // final String image;
+  final String image;
   final String hugs;
 
-  const MenuBoxRestaurant({Key key, this.onTap, this.menuName, this.menuDescription, this.fixprice, this.hugs}) : super(key: key);
+  const MenuBoxRestaurant({Key key, this.onTap, this.menuName, this.menuDescription, this.fixprice, this.image, this.hugs}) : super(key: key);
 
  
   @override
@@ -124,7 +124,7 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
                       topRight: Radius.circular(20)
                     ),
                     image: DecorationImage(
-                      image: AssetImage("asset/img/noodles.jpg"),
+                      image:NetworkImage(widget.image),
                       fit: BoxFit.cover)
                   ),
                 ),

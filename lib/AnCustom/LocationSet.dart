@@ -51,7 +51,7 @@ class LocationSet extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30.0)),
               onPressed: () async {},
               child: Text(
-                "You have a pending transaction on this Restaurant",
+                "You have a Pending Transaction.",
                 style: TextStyle(
                     color: Color(0xFF398AE5),
                     fontWeight: FontWeight.w700,
