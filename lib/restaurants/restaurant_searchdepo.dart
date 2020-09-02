@@ -275,7 +275,7 @@ class _SearchDepoState extends State<SearchDepo> {
                                     Icons.search,
                                     color:  Colors.white,
                                   ),
-                                  hintText: "Search",
+                                  hintText: "Search for Food",
                                   hintStyle: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
