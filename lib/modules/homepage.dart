@@ -74,7 +74,9 @@ class _HomePageState extends State<HomePage> {
   
 
  }
-void configSignal() async {
+ 
+ configSignal() {
+
     OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
     OneSignal.shared
@@ -82,15 +84,17 @@ void configSignal() async {
       data = notification.payload.additionalData;
         setState(() {
           if(data != null){
-            if(data['force'] == 'penalty'){
-              print(data['force'].toString());
-                _showDone(meesages.toString());
+            if(data["force"] == "penalty"){
+               _showDone(meesages.toString());
+            }else{
+              print("None");
             }
           }
         });
         
     });                            
 }
+
 void postuserId() async {
    var status = await OneSignal.shared.getPermissionSubscriptionState();
     var playerId = status.subscriptionStatus.userId;
