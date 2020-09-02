@@ -6,6 +6,7 @@ import 'package:WhereTo/Transaction/MyOrder/payOrder.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -206,21 +207,15 @@ class _TransactionListState extends State<TransactionList> {
                                                         MediaQuery.of(context)
                                                             .size
                                                             .width,
-                                                    child: Container(
-                                                        decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.only(
-                                                                bottomRight:
-                                                                    Radius
-                                                                        .circular(
-                                                                            20),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        20)),
-                                                            image: DecorationImage(
-                                                                image: AssetImage(
-                                                                    "asset/img/noodles.jpg"),
-                                                                fit: BoxFit
-                                                                    .cover))),
+                                                    child: ExtendedImage.network(snapshot[index].image,
+                                                    height: MediaQuery.of(context).size.height,
+                                                    width: 120,
+                                                    fit: BoxFit.fill,
+                                                    cache: true,
+                                                    border: Border.all(color: Colors.white, width: 1.1),
+                                                    shape: BoxShape.circle,
+                                                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                                  )
                                                   ),
                                                 ),
                                                 Column(
@@ -297,8 +292,7 @@ class _TransactionListState extends State<TransactionList> {
                                                                     child: Icon(
                                                                       Icons
                                                                           .remove,
-                                                                      color: Colors
-                                                                          .white,
+                                                                      color:  Color(0xFF0C375B),
                                                                       size: 25,
                                                                     ),
                                                                   ),
@@ -315,8 +309,7 @@ class _TransactionListState extends State<TransactionList> {
                                                                     style: TextStyle(
                                                                         fontSize:
                                                                             15,
-                                                                        color: Colors
-                                                                            .white),
+                                                                        color:  Color(0xFF0C375B)),
                                                                   )),
                                                                 ),
                                                                 InkWell(
@@ -340,8 +333,7 @@ class _TransactionListState extends State<TransactionList> {
                                                                     width: 30,
                                                                     child: Icon(
                                                                       Icons.add,
-                                                                      color: Colors
-                                                                          .white,
+                                                                      color:  Color(0xFF0C375B),
                                                                       size: 25,
                                                                     ),
                                                                   ),

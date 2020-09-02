@@ -186,9 +186,9 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
                       child: Column(
                         children: [
                           XviewTransac(
-                            image: "asset/img/app.jpg",
+                            image: "asset/img/doneprocess.png",
                             deliveryAddress:
-                                snapshot.data[index].deliveryAddress,
+                            snapshot.data[index].deliveryAddress,
                             address: snapshot.data[index].address,
                             restaurantName: snapshot.data[index].restaurantName,
                             status: sunkist == null

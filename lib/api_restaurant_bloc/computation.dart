@@ -53,7 +53,8 @@ class TransactionOrders{
   int quantity;
   int total;
   int id;
-  TransactionOrders({this.name, this.description, this.price, this.quantity, this.total, this.id});
+  String image;
+  TransactionOrders({this.name, this.description, this.price, this.quantity, this.total, this.id, this.image});
 }
 class UserID{
   String userID;

@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class MenuBoxRestaurant extends StatefulWidget {
@@ -6,10 +7,10 @@ class MenuBoxRestaurant extends StatefulWidget {
   final String menuName;
   final String menuDescription;
   final String fixprice;
-  // final String image;
+  final String image;
   final String hugs;
 
-  const MenuBoxRestaurant({Key key, this.onTap, this.menuName, this.menuDescription, this.fixprice, this.hugs}) : super(key: key);
+  const MenuBoxRestaurant({Key key, this.onTap, this.menuName, this.menuDescription, this.fixprice, this.hugs, this.image}) : super(key: key);
 
  
   @override
@@ -113,21 +114,15 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
               alignment: Alignment.centerRight,
               // child: Padding(
               //   padding: const EdgeInsets.only(top: 5,right: 20),
-                child: Container(
-                  // height: 90,
+                child: ExtendedImage.network(widget.image,
                   height: MediaQuery.of(context).size.height,
                   width: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(20)
-                      ,
-                      topRight: Radius.circular(20)
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage("asset/img/noodles.jpg"),
-                      fit: BoxFit.cover)
-                  ),
-                ),
+                  fit: BoxFit.fill,
+                  cache: true,
+                  border: Border.all(color: Colors.white, width: 1.1),
+                  shape: BoxShape.circle,
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                )
                 // ),
             ),
             Align(
