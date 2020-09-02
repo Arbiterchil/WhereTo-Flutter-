@@ -15,7 +15,7 @@ Stream<List<IsFeatured>> get stream =>streamApi.stream;
 Future<void>getIsFeatured() async{
   final response = await ApiCall().getData('/getAllMenu');
   final List<IsFeatured> transaction = isFeaturedFromJson(response.body);
-  List<IsFeatured> filter =transaction.where((element) => element.isFeatured.toStringAsExponential().contains("1")).toList();
+  List<IsFeatured> filter =transaction.where((element) => element.isFeatured.toString().contains("1")).toList();
   sinkApi.add(filter);
 }
 
