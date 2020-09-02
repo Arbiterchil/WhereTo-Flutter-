@@ -78,7 +78,7 @@ var userData;
                   child: Image.asset('asset/img/logo.png',height: 100,width: 100,),
                 )),
               SizedBox(height:24.0 ,),
-              Text("Do you want To exit?",
+              Text("Do you want To Log Out?",
               style: TextStyle(
                 color: Colors.white,
                             fontWeight: FontWeight.w700,
@@ -86,7 +86,7 @@ var userData;
                             fontFamily: 'OpenSans'
               ),),
                SizedBox(height:16.0 ,),
-              Text("Are You Sure Want To Log Out? Please Check your Items before Leaving.",
+              Text("Before Leaving Please Remit First. And Have A Good Day ",
               textAlign: TextAlign.center,
               style: TextStyle(
                 
@@ -138,7 +138,7 @@ var userData;
                             
                 },
                 
-                child: Text ( "Yes", style :TextStyle(
+                child: Text ( "OK", style :TextStyle(
                 color: Color(0xFF398AE5),
                             fontWeight: FontWeight.w700,
                             fontSize: 12.0,

@@ -187,7 +187,7 @@ void sendToAdmin() async{
       "include_player_ids": allresult,
       "include_segments": ["Users Notif"],
       "excluded_segments": [],
-      "contents": {"en": "For theFucking Admins."},
+      "contents": {"en": "A Rider Made a remit Please Check for the Amount."},
       "data": 
         {
         "force": "penalty"

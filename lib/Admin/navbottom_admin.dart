@@ -53,7 +53,12 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
     await OneSignal.shared.getPermissionSubscriptionState();
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();
-   await OneSignal.shared.sendTags({'UR': 'TRUE'});                            
+   await OneSignal.shared.sendTags({'UR': 'TRUE'});      
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared
+        .setNotificationReceivedHandler((OSNotification notification){
+    });                           
 }
   void getShared() async {
 

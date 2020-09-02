@@ -185,8 +185,7 @@ void _showDone(String message){
     barrierDismissible: false,
     builder: (BuildContext context){
       return Dialog(
-             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
-      ),
+       
       elevation: 0,
       backgroundColor: Colors.transparent,
       child:Container(

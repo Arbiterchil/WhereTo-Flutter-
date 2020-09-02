@@ -281,7 +281,7 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
       "include_player_ids": [body[0]['deviceId'].toString()],
       "include_segments": ["Users Notif"],
       "excluded_segments": [],
-      "contents": {"en": "This is a a Fucking test"},
+      "contents": {"en": "You Are Violating our T&C so this Account Will be Terminate. "},
       "data": 
         {
         "force": "penalty"

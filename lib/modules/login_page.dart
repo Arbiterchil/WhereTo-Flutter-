@@ -517,7 +517,7 @@ void _login() async{
       }
     }else if(body['suspended'] == true){
          print("Nigga Thats Hurt");
-               _showDial("You've Been Suspended go ot the Office Now.");
+               _showDial("You've Been Suspended Go To the Office Immediately.");
     }else if(body['remitPending'] == true){
             print("Bearly Good");
 

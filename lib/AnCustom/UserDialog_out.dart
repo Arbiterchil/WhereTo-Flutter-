@@ -73,7 +73,7 @@ var userData;
                   child: Image.asset('asset/img/logo.png',height: 100,width: 100,),
                 )),
               SizedBox(height:24.0 ,),
-              Text("Do you want To Logout?",
+              Text("Do you want To Log Out?",
               style: TextStyle(
                 color: Colors.white,
                             fontWeight: FontWeight.w700,

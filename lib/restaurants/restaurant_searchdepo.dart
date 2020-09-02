@@ -130,62 +130,67 @@ class _SearchDepoState extends State<SearchDepo> {
                 Stack(
                   children: <Widget>[
                     NewCarousel(),
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            right: 20, top: 100, left: 20),
-                        child: Container(
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.80),
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            alignment: Alignment.centerLeft,
-                            child: TextField(
-                              readOnly: true,
-                              showCursor: false,
-                              style: TextStyle(
-                                  color: Color(0xFF0C375B),
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Gilroy-light'),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding: const EdgeInsets.only(
-                                  top: 7.0,
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: Color(0xFF0C375B),
-                                ),
-                                hintText: "Search",
-                              ),
-                              onTap: () {
-                                if(userData['address'].toString().contains("Tagum")){
-                                //   Navigator.push(context,
-                                //     MaterialPageRoute(builder: (context) {
-                                //   return SearchResto();
-                                // }));
-                                showSearch(context: context, delegate: CustomSearch());
-                                }else{
-                                AwesomeDialog(
-                                context: context,
-                                headerAnimationLoop: false,
-                                animType: AnimType.SCALE,
-                                dialogType: DialogType.INFO,
-                                title: "Location Not Available",
-                                desc: "This app is only available in Tagum City for the mean time",
-                                btnOkText: "Comeback Later",
-                                btnOkColor: Color(0xFF0C375B),
-                                btnOkOnPress: () async {
-                                Navigator.pop(context);
-                                }).show();
-                                }
+                    // Align(
+                    //   alignment: Alignment.topCenter,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(
+                    //         right: 20, top: 100, left: 20),
+                    //     child: Container(
+                    //         height: 40.0,
+                    //         decoration: BoxDecoration(
+                    //           color: pureblue,
+                    //           // Colors.white.withOpacity(0.80),
+                    //           borderRadius: BorderRadius.circular(30.0),
+                    //         ),
+                    //         alignment: Alignment.centerLeft,
+                    //         child: TextField(
+                    //           readOnly: true,
+                    //           showCursor: false,
+                    //           style: TextStyle(
+                    //               color: Colors.white,
+                    //               fontWeight: FontWeight.bold,
+                    //               fontFamily: 'Gilroy-light'),
+                    //           decoration: InputDecoration(
+                    //             border: InputBorder.none,
+                    //             contentPadding: const EdgeInsets.only(
+                    //               top: 7.0,
+                    //             ),
+                    //             prefixIcon: Icon(
+                    //               Icons.search,
+                    //               color:  Colors.white,
+                    //             ),
+                    //             hintText: "Search",
+                    //             hintStyle: TextStyle(
+                    //               color: Colors.white,
+                    //               fontWeight: FontWeight.bold,
+                    //               fontFamily: 'Gilroy-light'),
+                    //           ),
+                    //           onTap: () {
+                    //             if(userData['address'].toString().contains("Tagum")){
+                    //             //   Navigator.push(context,
+                    //             //     MaterialPageRoute(builder: (context) {
+                    //             //   return SearchResto();
+                    //             // }));
+                    //             showSearch(context: context, delegate: CustomSearch());
+                    //             }else{
+                    //             AwesomeDialog(
+                    //             context: context,
+                    //             headerAnimationLoop: false,
+                    //             animType: AnimType.SCALE,
+                    //             dialogType: DialogType.INFO,
+                    //             title: "Location Not Available",
+                    //             desc: "This app is only available in Tagum City for the mean time",
+                    //             btnOkText: "Comeback Later",
+                    //             btnOkColor: Color(0xFF0C375B),
+                    //             btnOkOnPress: () async {
+                    //             Navigator.pop(context);
+                    //             }).show();
+                    //             }
                                 
-                              },
-                            )),
-                      ),
-                    ),
+                    //           },
+                    //         )),
+                    //   ),
+                    // ),
                     // Align(
                     //   alignment: Alignment.topLeft,
                     //   child: Padding(
@@ -210,51 +215,109 @@ class _SearchDepoState extends State<SearchDepo> {
                     //     ),
                     //   ),
                     // ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 20, top: 170),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              "Satisfy Your Own",
-                              style: TextStyle(
-                                  color: wheretoDark,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 35.0,
-                                  fontFamily: 'Gilroy-ExtraBold'),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "CRAVINGS",
-                              style: TextStyle(
-                                  color: Colors.amber,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30.0,
-                                  fontFamily: 'Gilroy-ExtraBold'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.topRight,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(right: 20, top: 170),
+                    //     child: Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.end,
+                    //       children: <Widget>[
+                    //         Text(
+                    //           "Satisfy Your Own",
+                    //           style: TextStyle(
+                    //               color: wheretoDark,
+                    //               fontWeight: FontWeight.normal,
+                    //               fontSize: 35.0,
+                    //               fontFamily: 'Gilroy-ExtraBold'),
+                    //         ),
+                    //         SizedBox(
+                    //           height: 5,
+                    //         ),
+                    //         Text(
+                    //           "CRAVINGS",
+                    //           style: TextStyle(
+                    //               color: Colors.amber,
+                    //               fontWeight: FontWeight.bold,
+                    //               fontSize: 30.0,
+                    //               fontFamily: 'Gilroy-ExtraBold'),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 // SharedPrefCallnameData(),
-                
+                SizedBox(height: 20,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 40,right: 40),
+                  child: Container(
+                              height: 50.0,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                // Colors.white.withOpacity(0.80),
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              alignment: Alignment.centerLeft,
+                              child: TextField(
+                                readOnly: true,
+                                showCursor: false,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Gilroy-light'),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: const EdgeInsets.only(
+                                    top: 15.0,
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color:  Colors.white,
+                                  ),
+                                  hintText: "Search",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Gilroy-light'),
+                                ),
+                                onTap: () {
+                                  if(userData['address'].toString().contains("Tagum")){
+                                  //   Navigator.push(context,
+                                  //     MaterialPageRoute(builder: (context) {
+                                  //   return SearchResto();
+                                  // }));
+                                  showSearch(context: context, delegate: CustomSearch());
+                                  }else{
+                                  AwesomeDialog(
+                                  context: context,
+                                  headerAnimationLoop: false,
+                                  animType: AnimType.SCALE,
+                                  dialogType: DialogType.INFO,
+                                  title: "Location Not Available",
+                                  desc: "This app is only available in Tagum City for the mean time",
+                                  btnOkText: "Comeback Later",
+                                  btnOkColor: Color(0xFF0C375B),
+                                  btnOkOnPress: () async {
+                                  Navigator.pop(context);
+                                  }).show();
+                                  }
+                                  
+                                },
+                              )),
+                ),
+                SizedBox(height: 40,),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Container(
-                    width: 170,
+                    width: 200,
                     height: 40,
                     child: Text(
-                      "FEATURED FOOD IN RESTAURANTS",
+                      "Featured Food in Restaurants",
                       style: TextStyle(
                           color: pureblue,
                           fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                           fontFamily: 'Gilroy-light'),
                     ),
                   ),
@@ -264,19 +327,19 @@ class _SearchDepoState extends State<SearchDepo> {
                 ),
                 FoodDisplay(),
                 SizedBox(
-                  height: 10,
+                  height: 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Container(
-                    width: 170,
+                    width: 200,
                     height: 40,
                     child: Text(
-                      "FEATURED RESTAURANTS",
+                      "Featured Restaurants",
                       style: TextStyle(
                           color:pureblue,
                           fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                           fontFamily: 'Gilroy-light'),
                     ),
                   ),

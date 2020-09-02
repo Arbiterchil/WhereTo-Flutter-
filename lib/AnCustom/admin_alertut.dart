@@ -72,7 +72,7 @@ class _AdminOutStageState extends State<AdminOutStage> {
                   child: Image.asset('asset/img/logo.png',height: 100,width: 100,),
                 )),
               SizedBox(height:24.0 ,),
-              Text("Do you want To Log Out?",
+              Text("Logging Out Already?",
               style: TextStyle(
                 color: Colors.white,
                             fontWeight: FontWeight.w700,

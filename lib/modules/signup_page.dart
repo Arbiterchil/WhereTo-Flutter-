@@ -887,8 +887,9 @@ getYourIdImage( ImageSource source) async{
             Navigator.pushReplacement(context,
                 new MaterialPageRoute(builder: (context) => HomePage()));
           } else {
-           
+            _showDial("Failed to Save");
             throw Exception('Failed to Save');
+           
           }
         }else{
            _showDial(body);
@@ -985,7 +986,7 @@ getYourIdImage( ImageSource source) async{
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    "Yes",
+                    "Ok",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,

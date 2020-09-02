@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Navigator.pushReplacement(context, MaterialPageRoute(
       builder: (context) => PathWay( 
-        getStringthis: userData== null ? "1" : hens = userData['userType'].toString(),)));
+        getStringthis: userData!= null ? hens = userData['userType'].toString():"1"  ,)));
   }
   @override
   Widget build(BuildContext context) {

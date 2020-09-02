@@ -100,7 +100,7 @@ class _NewCarouselState extends State<NewCarousel> {
                 //   gradient: LinearGradient(
                 //     begin: Alignment.bottomRight,
                 //     colors: [
-                //       pureblue.withOpacity(.9),
+                //       Colors.white.withOpacity(.9),
                 //       Colors.grey.withOpacity(.0)
                 //     ])
                 // ),
@@ -120,95 +120,94 @@ class _NewCarouselState extends State<NewCarousel> {
           ),
             
           ),
-           Padding(
-             padding: const EdgeInsets.only(right: 80),
-             child: Transform.translate(
-                offset: Offset(0, -40),
-                  child: Container(
-                    height: 150,
-                    decoration: BoxDecoration(
-                      // color: Color(0xFFF2F2F2),
-                      color: pureblue,
-                      borderRadius: BorderRadius.only(
+          //  Padding(
+          //    padding: const EdgeInsets.only(right: 80),
+          //    child: Transform.translate(
+          //       offset: Offset(0, -40),
+          //         child: Container(
+          //           height: 150,
+          //           decoration: BoxDecoration(
+          //             // color: Color(0xFFF2F2F2),
+          //             color: pureblue,
+          //             borderRadius: BorderRadius.only(
                         
-                        topRight: Radius.circular(240),
-                        bottomRight: Radius.circular(240),
+          //               topRight: Radius.circular(240),
+          //               bottomRight: Radius.circular(240),
                         
-                      )
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10 ,right: 10,top: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                        Text(restau[currentIndex][1],
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Gilroy-ExtraBold',
-                              letterSpacing: 1,
-                            ),
-                            ),
+          //             )
+          //           ),
+                    // child: Padding(
+                    //   padding: const EdgeInsets.only(left: 10 ,right: 10,top: 15),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //      mainAxisAlignment: MainAxisAlignment.start,
+                    //     children: <Widget>[
+                    //     Text(restau[currentIndex][1],
+                    //         style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 40,
+                    //           fontWeight: FontWeight.bold,
+                    //           fontFamily: 'Gilroy-ExtraBold',
+                    //           letterSpacing: 1,
+                    //         ),
+                    //         ),
                           
-                          SizedBox(height: 5,),
-                          Row(
-                            children: <Widget>[
-                               Icon(Icons.add_location,color: Colors.white,size: 15.0,),
-                              SizedBox(width: 7.0,),
-                              Flexible(
-                                child: Text(restau[currentIndex][2],
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Gilroy-light',
-                            letterSpacing: 1,
-                          ),
-                          ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10,),
-                          Row(
-                            children: <Widget>[
-                              Flexible(
-                                child: Text("Reviews",
-                                 style: TextStyle(
-                                   color: Colors.white,
-                                   fontSize: 10,
-                                   fontFamily: 'Gilroy-light'
-                                 ),),
-                              ),
-                               SizedBox(width:5,),
-                              Icon(Icons.star, size: 18, color: Colors.yellow[700],),
+                    //       SizedBox(height: 5,),
+                    //       Row(
+                    //         children: <Widget>[
+                    //            Icon(Icons.add_location,color: Colors.white,size: 15.0,),
+                    //           SizedBox(width: 7.0,),
+                    //           Flexible(
+                    //             child: Text(restau[currentIndex][2],
+                    //       style: TextStyle(
+                    //         color: Colors.white,
+                    //         fontSize: 12,
+                    //         fontWeight: FontWeight.bold,
+                    //         fontFamily: 'Gilroy-light',
+                    //         letterSpacing: 1,
+                    //       ),
+                    //       ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       SizedBox(height: 10,),
+                    //       Row(
+                    //         children: <Widget>[
+                    //           Flexible(
+                    //             child: Text("Reviews",
+                    //              style: TextStyle(
+                    //                color: Colors.white,
+                    //                fontSize: 10,
+                    //                fontFamily: 'Gilroy-light'
+                    //              ),),
+                    //           ),
+                    //            SizedBox(width:5,),
+                    //           Icon(Icons.star, size: 18, color: Colors.yellow[700],),
 
-                              Icon(Icons.star, size: 18, color: Colors.yellow[700],),
+                    //           Icon(Icons.star, size: 18, color: Colors.yellow[700],),
                               
-                              Icon(Icons.star, size: 18, color: Colors.yellow[700],),
+                    //           Icon(Icons.star, size: 18, color: Colors.yellow[700],),
                               
-                              Icon(Icons.star, size: 18, color: Colors.yellow[700],),
+                    //           Icon(Icons.star, size: 18, color: Colors.yellow[700],),
                               
-                              Icon(Icons.star_half, size: 18, color: Colors.yellow[700],),
-                               SizedBox(width:5,),
-                               Flexible(
-                                 child: Text("4.5/5",
-                                 style: TextStyle(
-                                   color: Colors.white,
-                                   fontSize: 10,
-                                   fontFamily: 'Gilroy-light'
-                                 ),),
-                               )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                
-                ),
-           )
+                    //           Icon(Icons.star_half, size: 18, color: Colors.yellow[700],),
+                    //            SizedBox(width:5,),
+                    //            Flexible(
+                    //              child: Text("4.5/5",
+                    //              style: TextStyle(
+                    //                color: Colors.white,
+                    //                fontSize: 10,
+                    //                fontFamily: 'Gilroy-light'
+                    //              ),),
+                    //            )
+                    //         ],
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                  // ),
+          //       ),
+          //  )
           
 
         ],
@@ -224,7 +223,7 @@ class _NewCarouselState extends State<NewCarousel> {
         margin: EdgeInsets.only(right: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
-          color: isture ?  Colors.amber: Colors.white
+          color: isture ?  pureblue: Colors.amberAccent
         ),
       ),
     );
