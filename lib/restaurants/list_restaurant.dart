@@ -162,7 +162,7 @@ class _ListStacticState extends State<ListStactic>
                         appBar: AppBar(
                           elevation: 0,
                           excludeHeaderSemantics: true,
-                          // toolbarHeight: 50.5,
+                          toolbarHeight: 50.5,
                           automaticallyImplyLeading: false,
                           backgroundColor: Color(0xFF0C375B),
                           bottom: TabBar(

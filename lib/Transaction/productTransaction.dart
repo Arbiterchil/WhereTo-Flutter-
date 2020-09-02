@@ -376,6 +376,8 @@ class _TransactionListState extends State<TransactionList> {
                                          type: ProgressDialogType.Normal,
                                          isDismissible: false);
                                         pr.show();
+                                       
+                                        
                                         var fee = await ComputationFee().getFee(widget.barangay);
                                         if (snapshot.length == 0) {
                                           print("No Order");
