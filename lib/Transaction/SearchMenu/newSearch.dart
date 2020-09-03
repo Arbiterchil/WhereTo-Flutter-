@@ -133,7 +133,7 @@ BlocSearch blocSearch;
                                   // } else {
                                   //   if (int.parse(formatNow.split(":")[0]) >=
                                   //       int.parse(formatOpen.split(":")[0])) {
-                                    
+                                   
                                       Navigator.pushReplacement(
                                           context,
                                           new MaterialPageRoute(
@@ -385,7 +385,9 @@ BlocSearch blocSearch;
 
   @override
   Widget buildSuggestions(BuildContext context) {
-  return Container(); 
+    return Center(
+    child: Image.asset("asset/img/nosearch.png")
+    );
 
     
      
