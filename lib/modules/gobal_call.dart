@@ -15,7 +15,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
   bool casting;
   String getRestaurant;
   String searchit;
-
+  String getImage;
 @override
   void initState() {
     // TODO: implement initState
@@ -31,8 +31,44 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
     setState(() {
       userData = user;
     });
+    if(userData['imagePath'] != null){
+
+      setState(() {
+      getImage = userData['imagePath'];
+      });
+
+    }else{
+        print("No Image");
+    }
   }
-  
+
+     Widget imagesget(){
+
+    if(getImage != null){
+      return  Container(
+                             height: 80,
+                             width: 80,
+                             decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               image: DecorationImage(
+                                 image: NetworkImage(getImage),
+                                 fit: BoxFit.cover),
+                             ),
+                           );
+    }else{
+      return  Container(
+                             height: 80,
+                             width: 80,
+                             decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               image: DecorationImage(
+                                 image: AssetImage('asset/img/logo.png'),
+                                 fit: BoxFit.cover),
+                             ),
+                           );
+    }
+
+  }
   
   
   @override
@@ -45,20 +81,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       
                       children: <Widget>[
-                         Container(
-                           height: 80,
-                           width: 80,
-                           decoration: BoxDecoration(
-                            //  border: Border.all(
-                            //    width: 1,
-                            //    color: pureblue
-                            //  ),
-                             shape: BoxShape.circle,
-                             image: DecorationImage(
-                               image: AssetImage("asset/img/logo.png"),
-                               fit: BoxFit.cover),
-                           ),
-                         ),
+                         imagesget(),
                          SizedBox(width: 10,),
                         Flexible(
                           child: Container(

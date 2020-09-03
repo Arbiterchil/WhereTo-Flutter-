@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:WhereTo/api/api.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -116,7 +117,21 @@ class _ValidIdsState extends State<ValidIds> {
 
   }  
 
+Widget loadingSpring() {
 
+   return Container(
+     height: MediaQuery.of(context).size.height,
+     width: MediaQuery.of(context).size.width,
+     child: Center(
+        child: SpinKitCubeGrid(
+          color: Colors.white,
+          size: 80.0,
+        )
+     ),
+   );
+
+
+ }  
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -136,18 +151,12 @@ class _ValidIdsState extends State<ValidIds> {
                 left: 10,right: 10,top: 10),
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
-                  child: Column(
+                  child: 
+                  lace ? loadingSpring() :
+                  Column(
+                   
                     children: <Widget>[
-                       Text(
-                                'Valid Id or Student Id',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Gilroy-light',
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: 10,),
+                       
                       _getImage(),
                       SizedBox(height: 15,),
                     Container(
@@ -245,7 +254,7 @@ class _ValidIdsState extends State<ValidIds> {
                                 var valid = await ApiCall().updateImageValid(dataAss, '/updateVerification');
                                 print(valid.body);  
                                 Navigator.pop(context);
-                                 _showDistictWarning("Send Success. We Are Checking you're ID Happy Buying.");
+                                 _showDistictWarning("ID verification sent. This process takes several hours. In the meantime, you may browse on our services.");
                                 setState(() {
                                   lace = false;
                                 });
@@ -259,14 +268,55 @@ class _ValidIdsState extends State<ValidIds> {
                                     borderRadius: BorderRadius.all(Radius.circular(100)),
                                   ),
                                   child: Center(
-                                   child: Icon(lace ? Icons.perm_identity : Icons.send,
-                                   size: 20,
-                                   color: Colors.white
+                                   child: Text("Send",
+                                   style: TextStyle(
+                                     color: Colors.white,
+                                     fontFamily: 'Gilroy-light'
                                    ),
+                                   )
                                   ),
                                 
                               ),
                               ),
+                    SizedBox(height: 20,),
+                    Container(
+                      height: 250,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20,right: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Please Read :",
+                                      textAlign: TextAlign.justify,
+                                      maxLines: 20,
+                                      style: TextStyle(
+                                        color: pureblue,
+                                        fontFamily: 'Gilroy-ExtraBold',
+                                        fontSize: 22.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 20,),
+                              Text('We highly encourage our users to get the Accounts Verified by submitting a Valid Id to fully enjoy our services. This is to avoid dummy accounts from flooding our system and avoid losses on scam orders. Upload a photo of your chosen valid ID. Verification takes several hours to process. You can still enjoy using our application  while waiting for the  verification. ',
+                                      textAlign: TextAlign.justify,
+                                      maxLines: 20,
+                                      style: TextStyle(
+                                        color: pureblue,
+                                        fontFamily: 'Gilroy-light',
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                            ],
+                          ),
+                        ),
+                      
+                    ),
                     ],
                   ),
                 ),
@@ -296,6 +346,7 @@ class _ValidIdsState extends State<ValidIds> {
       child: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         child: Column(
+           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Stack(
               children: <Widget>[
@@ -303,7 +354,7 @@ class _ValidIdsState extends State<ValidIds> {
                   height: 150.0,
                 ),
                 Container(
-                  height: 100.0,
+                  height: 150.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
@@ -316,35 +367,38 @@ class _ValidIdsState extends State<ValidIds> {
                         end: Alignment.bottomLeft),
                   ),
                 ),
-                Positioned(
-                  top: 50.0,
-                  left: 94.0,
-                  child: Container(
-                    height: 90,
-                    width: 90,
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(45),
-
-                      // border: Border.all(
-                      //   color: Colors.white,
-                      //   style: BorderStyle.solid,
-                      //   width: 2.0,
-                      // ),
-                      image: DecorationImage(
-                        image: AssetImage("asset/img/logo.png"),
-                        fit: BoxFit.cover,
+                Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: Container(
+                          height: 90,
+                          width: 90,
+                          padding: EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(45),
+                            
+                            // border: Border.all(
+                            //   color: Colors.white,
+                            //   style: BorderStyle.solid,
+                            //   width: 2.0,
+                            // ),
+                            image: DecorationImage(
+                              image: AssetImage("asset/img/logo.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
               ],
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
                 meesage,
+                maxLines: 4,
                 style: TextStyle(
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,

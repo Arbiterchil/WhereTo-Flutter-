@@ -15,31 +15,31 @@ class _NewCarouselState extends State<NewCarousel> {
 
     [
       // 'asset/img/carousel1.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599046303/imag2-02_w5ueli.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599107073/cover_1_qlkiqy.png',
       'KFC',
       'Located at GMALL of TAGUM'
     ],
     [
       // 'asset/img/carousel2.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599046303/imag3-02_nky2e6.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599107072/cover_2_o33gbt.png',
       'Jollibee',
       'Located at National HighWay'
     ],
     [
       // 'asset/img/carousel3.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599046303/imag4-02_lwgrlu.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599107072/cover_3_g4e48j.png',
       'McDonalds',
       'Located at Rizal Street'
     ],
     [
       // 'asset/img/carousel4.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599046321/imag4-02_r3qixq.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599107072/cover_4_hd79yn.png',
       'Chowking',
       'Located at National HighWay'
     ],
     [
       // 'asset/img/carousel5.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599046303/imag1-02_dgbbxo.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599107072/cover_5_cgj81a.png',
       'Penongs',
       'Located at Lapu-Lapu Street'
     ],
@@ -87,13 +87,13 @@ class _NewCarouselState extends State<NewCarousel> {
               }
             } ,
               child: Container(
-              height: 290,
+              height: 170,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(restau[currentIndex][0]),
-                  fit:  BoxFit.fitWidth),
-                  
+                  fit:  BoxFit.fitWidth,
+                  ),
               ),
               child: Container(
                 // decoration: BoxDecoration(
@@ -109,7 +109,7 @@ class _NewCarouselState extends State<NewCarousel> {
                   children: <Widget>[
                     Container(
                       width: 90,
-                      margin: EdgeInsets.only(bottom: 60),
+                      margin: EdgeInsets.only(bottom: 30),
                       child: Row(
                         children: buildindicators(),
                       ),
@@ -223,11 +223,10 @@ class _NewCarouselState extends State<NewCarousel> {
         margin: EdgeInsets.only(right: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
-          color: isture ?  pureblue: Colors.amberAccent
+          color: isture ?  Colors.amberAccent: Colors.white
         ),
       ),
     );
-
   }
 
   List<Widget> buildindicators(){
