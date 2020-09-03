@@ -10,7 +10,12 @@ class ApiCall{
     final String url = 'https://wheretoapplication.azurewebsites.net/api';
     
 
-
+  cancelOrder(api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    headers: _setHeaders()
+    );
+  }
 
    getRestaurantSalesReport(data,api) async {
     var fullurl = url+api;

@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'modules/Awalkthrough/walk_t.dart';
 import 'modules/homepage.dart';
 
 class PathWay extends StatefulWidget {
@@ -23,6 +24,7 @@ class PathWay extends StatefulWidget {
 
 class _PathWayState extends State<PathWay> {
   bool _isLoggedIn = false;
+  bool _boobs = false;
   var userData;
    @override
   void initState() {
@@ -33,24 +35,37 @@ class _PathWayState extends State<PathWay> {
       
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var token = localStorage.getString('token');
+      var totoyBibo = localStorage.getString('trial');
       if( token!= null){
          setState(() {
             _isLoggedIn = true;
+           
          });  
+      }else if(totoyBibo!= null){
+        setState(() {
+            _boobs = true;
+        });
       }
    }
    timeStamp(){
       String  customer = "0";
+      String  rider = "1";
       String  admin = "2";
+      String show = "trialShow";
       String  value = widget.getStringthis.toString();
-       if(customer.contains(value)){
-        return  _isLoggedIn  ? HomePage() :  LoginPage();
-      }else if(admin.contains(value)){
-        return  _isLoggedIn  ? AdminHomeDash() :  LoginPage();
-      }else{
-        return _isLoggedIn  ? RiderProfile() :  LoginPage();
-      }
 
+             if(customer.contains(value)){
+                return  _isLoggedIn  ? HomePage() :  LoginPage();
+              }else if(admin.contains(value)){
+                return  _isLoggedIn  ? AdminHomeDash() :  LoginPage();
+              }else if(rider.contains(value)){
+                return _isLoggedIn  ? RiderProfile() :  LoginPage();
+              }else{
+                return _boobs ?  LoginPage() : WalkThroughPage();
+              }
+      //    Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context)
+      // => WalkThroughPage()
+      // ));  
    }
 
 

@@ -136,7 +136,7 @@ void sendRemitImage() async{
      loading = true;
    });
    if(_idPickerImage == null){
-      _showDial("Put your Screen Shot Image of Gcash.");
+      _showDialogError("Put your Screen Shot Image of Gcash or Union Bank .");
 
       setState(() {
      loading = false;
@@ -180,9 +180,6 @@ var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.
                               new MaterialPageRoute(
                                   builder: (context) => LoginPage()),ModalRoute.withName('/'));
   _showDial("Send Done to the Admins.");
-   setState(() {
-     loading =false;
-   });
    }  
 }
 List allresult = [];
@@ -201,7 +198,7 @@ void sendToAdmin() async{
       "include_player_ids": allresult,
       "include_segments": ["Users Notif"],
       "excluded_segments": [],
-      "contents": {"en": "For theFucking Admins."},
+      "contents": {"en": "A Rider Made a remit Please Check for the Amount."},
       "data": 
         {
         "force": "penalty"
@@ -380,6 +377,91 @@ Widget loadingSpring() {
     );
   }
   void _showDial(String message) {
+    showDialog(
+    context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child:Container(
+      height: 300.0,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20), color: Colors.white),
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Container(
+                  height: 150.0,
+                ),
+                Container(
+                  height: 100.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    gradient: LinearGradient(
+                        stops: [0.2, 4],
+                        colors: [Color(0xFF0C375B), Color(0xFF176DB5)],
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+               message,
+                style: TextStyle(
+                    color: Color(0xFF0C375B),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 11.0,
+                    fontFamily: 'Gilroy-light'),
+              ),
+            ),
+            SizedBox(
+              height: 25.0,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  color: Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  // onPressed: () => Navigator.pushReplacement(context,
+                  //          new MaterialPageRoute(builder: (context) => RiderProfile())),
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    "OK",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.0,
+                        fontFamily: 'OpenSans'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+        );
+      },
+    );
+  }
+  void _showDialogError(String message) {
     showDialog(
     context: context,
       barrierDismissible: true,

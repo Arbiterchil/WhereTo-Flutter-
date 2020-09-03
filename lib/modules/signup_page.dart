@@ -896,6 +896,7 @@ getYourIdImage( ImageSource source) async{
                 await SharedPreferences.getInstance();
             localStorage.setBool('check', value);
             localStorage.setString('token', body['token']);
+            localStorage.setString('trial','trialShow');
             localStorage.setString('user', json.encode(body['user']));
             
             Navigator.pushReplacement(context,
@@ -1125,7 +1126,7 @@ getYourIdImage( ImageSource source) async{
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    "Yes",
+                    "Ok",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,

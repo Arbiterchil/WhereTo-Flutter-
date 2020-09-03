@@ -255,9 +255,9 @@ Widget loadingSpring() {
                                 print(valid.body);  
                                 Navigator.pop(context);
                                  _showDistictWarning("ID verification sent. This process takes several hours. In the meantime, you may browse on our services.");
-                                setState(() {
-                                  lace = false;
-                                });
+                                // setState(() {
+                                //   lace = false;
+                                // });
                                }
                                 }, 
                                 child: Container(
@@ -421,7 +421,7 @@ Widget loadingSpring() {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    "Ok",
+                    "OK",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,

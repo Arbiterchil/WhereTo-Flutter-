@@ -58,6 +58,7 @@ bool complete = false;
 bool stepTf = true;
 bool menuHide = true;
 bool backTF =true;
+bool cancelOrder = false;
 var idgetter;
 var iderntify;
 
@@ -459,7 +460,11 @@ var checkVal = localStorage.getBool('check');
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(height: 15,),
-                           Visibility(
+                            Stack(
+                              children: <Widget>[
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Visibility(
                                                 visible: backTF,
                                                 child: 
                                                 GestureDetector(
@@ -491,7 +496,76 @@ var checkVal = localStorage.getBool('check');
                                                   ),
                                                 )
                                               ),
+                                ),
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: Visibility(
+                                    visible: cancelOrder,
+                                    child: GestureDetector(
+                                                    onTap: (){
+                                                      cancelOrderS(widget.getID,widget.playerId);
+                                                    },
+                                                    child: Container(
+                                                       height: 60,
+                                                  width: 120,
+                                                  decoration: BoxDecoration(
+                                                    color: pureblue,
+                                                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                    // border: Border.all(
+                                                    //   width: 1,
+                                                    //   color: pureblue
+                                                    // ),
+                                                    
+                                                  ),
+                                                  child: Center(
+                                                    child: Text("CANCEL ORDER",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontFamily: 'Gilroy-ligh',
+                                                      fontSize: 12
+                                                    ),)
+                                                  ),
+                                                    ),
+                                                  ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                           
                           SizedBox(height: 20,),
+                          //  Visibility(
+                          //                       visible: backTF,
+                          //                       child: 
+                          //                       GestureDetector(
+                          //                         onTap: (){
+                          //                           // Navigator.pop(context);
+                          //                          Navigator.pushReplacement(context, 
+                          //                          new MaterialPageRoute(builder: (context) =>
+                          //                          RiderProfile())
+                          //                          );
+                          //                         },
+                          //                         child: Container(
+                          //                            height: 60,
+                          //                       width: 60,
+                          //                       decoration: BoxDecoration(
+                          //                         color: pureblue,
+                          //                         // border: Border.all(
+                          //                         //   width: 1,
+                          //                         //   color: pureblue
+                          //                         // ),
+                          //                         shape: BoxShape.circle,
+                          //                       ),
+                          //                       child: Center(
+                          //                         child: Icon(
+                          //                           Icons.backspace,
+                          //                           size: 30,
+                          //                           color: Colors.white
+                          //                         ),
+                          //                       ),
+                          //                         ),
+                          //                       )
+                          //                     ),
+                          // SizedBox(height: 20,),
                            Container(
                                     width: MediaQuery.of(context).size.width,
                                     child: Column(
@@ -797,6 +871,166 @@ var checkVal = localStorage.getBool('check');
 
 
   }
+  void cancelOrderS(String gettheID,String idNotif) async {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child:Container(
+      height: 300.0,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20), color: Colors.white),
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Container(
+                  height: 150.0,
+                ),
+                Container(
+                  height: 150.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    gradient: LinearGradient(
+                        stops: [0.2, 4],
+                        colors: [Color(0xFF0C375B), Color(0xFF176DB5)],
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft),
+                  ),
+                ),
+                Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: Container(
+                          height: 90,
+                          width: 90,
+                          padding: EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(45),
+                            
+                            // border: Border.all(
+                            //   color: Colors.white,
+                            //   style: BorderStyle.solid,
+                            //   width: 2.0,
+                            // ),
+                            image: DecorationImage(
+                              image: AssetImage("asset/img/logo.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+               "Do You want to Cancel This Order?",
+                style: TextStyle(
+                    color: Color(0xFF0C375B),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20.0,
+                    fontFamily: 'Gilroy-light'),
+              ),
+            ),
+            SizedBox(
+              height: 25.0,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                      onPressed: (){
+                        Navigator.of(context).pop();
+                      },
+                      child: Text ( "No", style :TextStyle(
+                  color: Color(0xFF0C375B),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+                SizedBox(width: 20.0,),
+                RaisedButton(
+                  color:Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () async{
+                     String url = 'https://onesignal.com/api/v1/notifications';
+
+    var contents = {
+      "include_player_ids": [idNotif],
+      "include_segments": ["Users Notif"],
+      "excluded_segments": [],
+      "contents": {"en": "Your Order was Cancelled. The Restaurant is Already Close. Thnak You"},
+      "data": {
+        "status":"fucker"
+      },
+      "headings": {"en": "WhereTo Rider"},
+      "filter": [
+        {"field": "tag", "key": "UR", "relation": "=", "value": "TRUE"},
+      ],
+      "app_id": "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+    };
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'authorization': 'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+    };
+    var repo =
+        await http.post(url, headers: headers, body: json.encode(contents));
+        print(repo.body);
+                    print("Order Cancel");
+                    var reponse = await ApiCall().cancelOrder('/cancelOrder/$gettheID');
+                  var body = json.decode(reponse.body);
+                  print(body);
+                   SharedPreferences localStorage = await SharedPreferences.getInstance();
+                                        localStorage.remove('menuplustrans');
+                                        localStorage.remove('playerIDS');
+                  //  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context, 
+                  new MaterialPageRoute(builder: (context)
+                  => RiderProfile()
+                  ));
+                  _showDistictWarning("The Order is Cancelled and Already Notify the Customer.");
+
+                      },   
+                      
+                  child: Text ( "Yes", style :TextStyle(
+                  color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+        );
+      },
+    );
+  
+
+
+
+    
+  }
 
   void assign() async { 
 
@@ -819,6 +1053,116 @@ var checkVal = localStorage.getBool('check');
       }
 
 
+  }
+  void _showDistictWarning(String meesage) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child:Container(
+      height: 300.0,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20), color: Colors.white),
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Container(
+                  height: 150.0,
+                ),
+                Container(
+                  height: 150.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    gradient: LinearGradient(
+                        stops: [0.2, 4],
+                        colors: [Color(0xFF0C375B), Color(0xFF176DB5)],
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft),
+                  ),
+                ),
+                Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: Container(
+                          height: 90,
+                          width: 90,
+                          padding: EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(45),
+                            
+                            // border: Border.all(
+                            //   color: Colors.white,
+                            //   style: BorderStyle.solid,
+                            //   width: 2.0,
+                            // ),
+                            image: DecorationImage(
+                              image: AssetImage("asset/img/logo.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+                meesage,
+                style: TextStyle(
+                    color: Color(0xFF0C375B),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20.0,
+                    fontFamily: 'Gilroy-light'),
+              ),
+            ),
+            SizedBox(
+              height: 25.0,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  color: Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "Ok",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.0,
+                        fontFamily: 'OpenSans'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+        );
+      },
+    );
   }
   void xDilogAhow(context){
       showDialog(context: context,
@@ -952,6 +1296,7 @@ var checkVal = localStorage.getBool('check');
       available = !available;
       menuHide = !menuHide;
       backTF = !backTF;
+      cancelOrder = true;
       riderCheck();
       });
                    Navigator.of(context).pop();

@@ -10,6 +10,7 @@ import 'package:WhereTo/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 import 'api_restaurant_bloc/orderblocdelegate.dart';
@@ -24,25 +25,11 @@ class MyApp extends StatefulWidget {
 }
 final navigatorKey = GlobalKey<NavigatorState>();
 class _MyAppState extends State<MyApp> {
-  // bool _isLoggedIn = false;
 
   @override
   void initState() {
-    // _checkIfLoggedIn();
     super.initState();
   }
-
-  // void _checkIfLoggedIn() async{
-  //     // check if token is there
-  //     SharedPreferences localStorage = await SharedPreferences.getInstance();
-  //     var token = localStorage.getString('token');
-  //     if(token!= null){
-  //        setState(() {
-  //           _isLoggedIn = true;
-  //        });
-  //     }
-  // }
-
   @override
   Widget build(BuildContext context) {
     

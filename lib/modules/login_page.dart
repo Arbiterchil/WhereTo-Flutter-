@@ -487,6 +487,7 @@ void _login() async{
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
+      localStorage.setString('trial','trialShow');
       localStorage.setString('user', json.encode(body['user']));
       print(body);
           if(body['user']['userType'] == 0){

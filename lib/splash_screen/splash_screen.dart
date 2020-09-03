@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:WhereTo/modules/Awalkthrough/walk_t.dart';
 import 'package:WhereTo/path.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,13 +15,17 @@ class SplashScreen extends StatefulWidget {
 }
 class _SplashScreenState extends State<SplashScreen> {
   var userData;
+  String checks;
   String hens;
     @override
   void initState() {
+    _getUserInfo();
     super.initState();
     startTime();
-    _getUserInfo();
+    
   }
+
+  
 
   void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -33,32 +38,26 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
 
-  startTime() async{
-    var duration = Duration(seconds: 4);
+  startTime(){
+    var duration = Duration(seconds: 5);
     return Timer(duration,route);
   }
   route(){
-     
+   
 
-    Navigator.pushReplacement(context, MaterialPageRoute(
+   
+      Navigator.pushReplacement(context, MaterialPageRoute(
       builder: (context) => PathWay( 
-        getStringthis: userData!= null ? hens = userData['userType'].toString():"1"  ,)));
+        getStringthis: userData != null ? userData['userType'].toString() : "trialShow"  ,)));
+
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          //  gradient: LinearGradient(
-          //                     stops: [0.2,4],
-          //                     colors: 
-          //                     [
-          //                       Color(0xFF0C375B),
-          //                       Color(0xFF176DB5)
-          //                     ],
-          //                     begin: Alignment.bottomCenter,
-          //                     end: Alignment.topCenter),
         ),
         child:  Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -70,24 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     width: 200.0,
                     height: 200.0,
                     padding: EdgeInsets.all(20.0),
-                    // decoration: eCBoxDark,
                     decoration: BoxDecoration(
-                      // shape: BoxShape.circle,
-                      // color: Color(0xFF0C375B),
-                      //  borderRadius: BorderRadius.circular(110),
-                      //   boxShadow: [
-                      //   BoxShadow(
-                      //     color: Color(0xFF176DB5),
-                      //     offset: Offset(10, 10),
-                      //     blurRadius: 10
-                      //   ),
-                      //   BoxShadow(
-                      //     color:  Color(0xFF176DB5),
-                      //     offset: Offset(-10, -10),
-                      //     blurRadius: 10
-                      //   )
-                      // ],
-
                     ),
                     child: Container(
                     child: Image.asset("asset/img/logo.png"),
