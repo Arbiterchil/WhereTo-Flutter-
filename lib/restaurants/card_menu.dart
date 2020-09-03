@@ -6,7 +6,7 @@ class MenuBoxRestaurant extends StatefulWidget {
   final Function onTap;
   final String menuName;
   final String menuDescription;
-  final String fixprice;
+  final double fixprice;
   final String image;
   final String hugs;
 
@@ -95,7 +95,7 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
                         borderRadius: BorderRadius.all(Radius.circular(30))
                       ),
                       child: Center(
-                        child: Text(widget.fixprice,
+                        child: Text(widget.fixprice.toStringAsFixed(2),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15.0,

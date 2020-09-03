@@ -37,7 +37,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
     bloc.dispose();
   }
 
-  final _navigatorKey = GlobalKey<NavigatorState>();
+
   var userData;
   var userID;
   bool isTrue = false;
@@ -331,7 +331,9 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
               ),
             );
           } else {
-            return Container();
+            return Center(
+              child: Image.asset("asset/img/emptycart.png")
+            );
           }
         } else {
           return _load();

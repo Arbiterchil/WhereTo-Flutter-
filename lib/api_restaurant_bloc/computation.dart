@@ -51,7 +51,7 @@ class TransactionOrders{
   String description;
   double price;
   int quantity;
-  int total;
+  double total;
   int id;
   String image;
   TransactionOrders({this.name, this.description, this.price, this.quantity, this.total, this.id, this.image});

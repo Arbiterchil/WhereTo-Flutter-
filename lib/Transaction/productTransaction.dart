@@ -107,7 +107,20 @@ class _TransactionListState extends State<TransactionList> {
                       return false;
                     },
                     builder: (context, snapshot) {
-                      ProgressDialog pr = ProgressDialog(context);
+                      if(snapshot.length ==0){
+                        return Center(
+                          child: Padding(padding: EdgeInsets.only(top: 50)
+                           ,
+                           child: Column(
+                            children: [
+                              
+                              Image.asset("asset/img/emptycart.png"),
+                            ],
+                          ), 
+                          )
+                        );
+                      }else{
+                        ProgressDialog pr = ProgressDialog(context);
                       pr.style(
                           message: "Calculating Please Wait a Moment..",
                           borderRadius: 10.0,
@@ -185,7 +198,7 @@ class _TransactionListState extends State<TransactionList> {
                                                           "₱ " +
                                                               snapshot[index]
                                                                   .price
-                                                                  .toString(),
+                                                                  .toStringAsFixed(2),
                                                           style: GoogleFonts
                                                               .roboto(
                                                             color: Colors.white,
@@ -433,6 +446,8 @@ class _TransactionListState extends State<TransactionList> {
                           ),
                         ],
                       );
+                      }
+                      
                     },
                     listener: (BuildContext context, orderList) {}),
               ),

@@ -30,7 +30,6 @@ class _MyOrderState extends State<MyOrder> {
   String sunkist;
   bool isExist = false;
   BlocAll bloc;
-final _navigatorKey = GlobalKey<NavigatorState>();
   String sec;
   Future<void> getBloc(var id) async {
     await bloc.getMenuTransaction(id);
@@ -282,7 +281,9 @@ final _navigatorKey = GlobalKey<NavigatorState>();
               ),
             );
           } else {
-            return Container();
+             return Center(
+              child: Image.asset("asset/img/emptycart.png")
+            );
           }
         } else {
           return _load();
