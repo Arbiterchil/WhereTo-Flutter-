@@ -1,24 +1,19 @@
 import 'dart:convert';
+
 import 'package:WhereTo/AnCustom/Rider_havePendingtrans.dart';
-import 'package:WhereTo/AnCustom/dialog_showGlobal.dart';
 import 'package:WhereTo/Rider/profile_rider.dart';
-import 'package:WhereTo/Rider/rider_dash.dart';
-import 'package:WhereTo/Rider_MonkeyBar/rider_headerpage.dart';
-import 'package:WhereTo/Rider_ViewMenuTransac/button_OkAssign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
-import 'package:http/http.dart' as http;
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/ridershowStep_Menu.dart';
-import 'package:WhereTo/Rider_viewTransac/rider_viewtransac.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/designbuttons.dart';
-import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
-class ViewMenuOnTransac extends StatefulWidget {
-  
-  final String getID;
+import '../styletext.dart';
+class Riderprevious extends StatefulWidget {
+
+   final String getID;
   final String gotTotal;
   final String deliverTo;
   final String restaurantName;
@@ -31,19 +26,15 @@ class ViewMenuOnTransac extends StatefulWidget {
   final String user_coor;
   final String contactNumber;
 
-  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor, this.contactNumber}) : super(key: key);
+  const Riderprevious({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor, this.contactNumber}) : super(key: key);
 
- 
   @override
-  _ViewMenuOnTransacState createState() => _ViewMenuOnTransacState();
+  _RiderpreviousState createState() => _RiderpreviousState();
 }
 
+class _RiderpreviousState extends State<Riderprevious> {
 
-
-class _ViewMenuOnTransacState extends State<ViewMenuOnTransac> {
-
-
-StepperType stepperType = StepperType.horizontal;
+  StepperType stepperType = StepperType.horizontal;
 
 switchThis(){
 
@@ -69,6 +60,7 @@ bool menuHide = true;
 bool backTF =true;
 var idgetter;
 var iderntify;
+
 @override
   void initState() {
     getTotalPrice();
@@ -76,11 +68,10 @@ var iderntify;
     identify();
     riderCheck();
     super.initState();
-    
   }
 
 
-  void identify() async {
+ void identify() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
       var userRider = localStorage.getString('menuplustrans');
 
@@ -180,6 +171,8 @@ var iderntify;
             child: FutureBuilder(
               future: getMenuTransac(),
               builder: (BuildContext context, AsyncSnapshot snapshot){
+
+
                 if(snapshot.data == null){
                   return Container(
                         child: Center(
@@ -200,8 +193,9 @@ var iderntify;
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context,index){
+
                               return Padding(
-                                padding: const EdgeInsets.all(0.0),
+                                padding: const EdgeInsets.all(15.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   
@@ -447,11 +441,9 @@ var checkVal = localStorage.getBool('check');
         
 
     }
-
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+  return Scaffold(
         backgroundColor:Color(0xFFF2F2F2),
         body: WillPopScope(
           onWillPop: () async => false,
@@ -475,7 +467,7 @@ var checkVal = localStorage.getBool('check');
                                                     // Navigator.pop(context);
                                                    Navigator.pushReplacement(context, 
                                                    new MaterialPageRoute(builder: (context) =>
-                                                   RiderTransaction())
+                                                   RiderProfile())
                                                    );
                                                   },
                                                   child: Container(
@@ -714,7 +706,7 @@ var checkVal = localStorage.getBool('check');
                                         localStorage.remove('playerIDS');
                                          Navigator.pushReplacement(context, 
                                                    new MaterialPageRoute(builder: (context) =>
-                                                   RiderTransaction())
+                                                   RiderProfile())
                                                    );
                                             //   setState(() {
                                             //   complete = false;                    

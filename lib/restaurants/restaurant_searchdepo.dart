@@ -130,124 +130,8 @@ class _SearchDepoState extends State<SearchDepo> {
                 Stack(
                   children: <Widget>[
                     NewCarousel(),
-                    // Align(
-                    //   alignment: Alignment.topCenter,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(
-                    //         right: 20, top: 100, left: 20),
-                    //     child: Container(
-                    //         height: 40.0,
-                    //         decoration: BoxDecoration(
-                    //           color: pureblue,
-                    //           // Colors.white.withOpacity(0.80),
-                    //           borderRadius: BorderRadius.circular(30.0),
-                    //         ),
-                    //         alignment: Alignment.centerLeft,
-                    //         child: TextField(
-                    //           readOnly: true,
-                    //           showCursor: false,
-                    //           style: TextStyle(
-                    //               color: Colors.white,
-                    //               fontWeight: FontWeight.bold,
-                    //               fontFamily: 'Gilroy-light'),
-                    //           decoration: InputDecoration(
-                    //             border: InputBorder.none,
-                    //             contentPadding: const EdgeInsets.only(
-                    //               top: 7.0,
-                    //             ),
-                    //             prefixIcon: Icon(
-                    //               Icons.search,
-                    //               color:  Colors.white,
-                    //             ),
-                    //             hintText: "Search",
-                    //             hintStyle: TextStyle(
-                    //               color: Colors.white,
-                    //               fontWeight: FontWeight.bold,
-                    //               fontFamily: 'Gilroy-light'),
-                    //           ),
-                    //           onTap: () {
-                    //             if(userData['address'].toString().contains("Tagum")){
-                    //             //   Navigator.push(context,
-                    //             //     MaterialPageRoute(builder: (context) {
-                    //             //   return SearchResto();
-                    //             // }));
-                    //             showSearch(context: context, delegate: CustomSearch());
-                    //             }else{
-                    //             AwesomeDialog(
-                    //             context: context,
-                    //             headerAnimationLoop: false,
-                    //             animType: AnimType.SCALE,
-                    //             dialogType: DialogType.INFO,
-                    //             title: "Location Not Available",
-                    //             desc: "This app is only available in Tagum City for the mean time",
-                    //             btnOkText: "Comeback Later",
-                    //             btnOkColor: Color(0xFF0C375B),
-                    //             btnOkOnPress: () async {
-                    //             Navigator.pop(context);
-                    //             }).show();
-                    //             }
-                                
-                    //           },
-                    //         )),
-                    //   ),
-                    // ),
-                    // Align(
-                    //   alignment: Alignment.topLeft,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(left: 20, top: 10),
-                    //     child: GestureDetector(
-                    //       onTap: () => UserDialog_Help.exit(context),
-                    //       child: Container(
-                    //         height: 50,
-                    //         width: 50,
-                    //         decoration: BoxDecoration(
-                    //           shape: BoxShape.circle,
-                    //           color: Colors.white,
-                    //         ),
-                    //         child: Center(
-                    //           child: Icon(
-                    //             Icons.exit_to_app,
-                    //             color: Color(0xFF0C375B),
-                    //             size: 30,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Align(
-                    //   alignment: Alignment.topRight,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(right: 20, top: 170),
-                    //     child: Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.end,
-                    //       children: <Widget>[
-                    //         Text(
-                    //           "Satisfy Your Own",
-                    //           style: TextStyle(
-                    //               color: wheretoDark,
-                    //               fontWeight: FontWeight.normal,
-                    //               fontSize: 35.0,
-                    //               fontFamily: 'Gilroy-ExtraBold'),
-                    //         ),
-                    //         SizedBox(
-                    //           height: 5,
-                    //         ),
-                    //         Text(
-                    //           "CRAVINGS",
-                    //           style: TextStyle(
-                    //               color: Colors.amber,
-                    //               fontWeight: FontWeight.bold,
-                    //               fontSize: 30.0,
-                    //               fontFamily: 'Gilroy-ExtraBold'),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
-                // SharedPrefCallnameData(),
                 SizedBox(height: 20,),
                 Padding(
                   padding: const EdgeInsets.only(left: 40,right: 40),
@@ -306,6 +190,12 @@ class _SearchDepoState extends State<SearchDepo> {
                                 },
                               )),
                 ),
+                SizedBox(height: 20,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10,right: 10,),
+                  child: SharedPrefCallnameData(),
+                ),
+                
                 SizedBox(height: 40,),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),

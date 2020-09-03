@@ -441,6 +441,24 @@ void configSignal() async {
                       ),
                     ]
                   ) ),
+
+                  SizedBox(height: 20,),
+
+                RaisedButton(
+                  splashColor: Colors.amberAccent,
+                 color: Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () =>Dialog_Helper.exit(context),
+                  child: Text(
+                    "Log Out",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.0,
+                        fontFamily: 'OpenSans'),
+                  ),
+                  )
               ],
             ),
           ),

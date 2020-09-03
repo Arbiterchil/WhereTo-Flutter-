@@ -6,6 +6,7 @@ import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -206,6 +207,22 @@ void sendToAdmin() async{
     await http.post(url, headers: headers, body: json.encode(contents));
     print(repo);
 }
+
+Widget loadingSpring() {
+
+   return Container(
+     height: MediaQuery.of(context).size.height,
+     width: MediaQuery.of(context).size.width,
+     child: Center(
+        child: SpinKitCubeGrid(
+          color: pureblue,
+          size: 80.0,
+        )
+     ),
+   );
+
+
+ }  
   @override
   Widget build(BuildContext context) {
   return Scaffold(
@@ -215,7 +232,10 @@ void sendToAdmin() async{
             physics: AlwaysScrollableScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.only(left: 20,right: 20 ,top: 10),
-              child: Column(
+              child: 
+              loading ? 
+              loadingSpring()
+              :Column(
                 children: <Widget>[
                     Container(
                     width: MediaQuery.of(context).size.width,

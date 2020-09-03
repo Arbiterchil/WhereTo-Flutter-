@@ -59,6 +59,7 @@ class _Profile extends State<Profile> {
   //     var response = await ApiCall().getCheckUser('/getUserVerification/${userData['id']}');
   //  var body = json.decode(response.body)['imagePath'];
   //   print(body);
+  
     
     if(userData['imagePath'] != null){
 

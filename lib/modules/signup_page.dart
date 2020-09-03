@@ -15,6 +15,7 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoder/geocoder.dart';
 // import 'package:geolocation/geolocation.dart';
 import 'package:geolocator/geolocator.dart';
@@ -84,9 +85,70 @@ class _SignupPageState extends State<SignupPage> {
       child: Container(
         width: MediaQuery.of(context).size.width,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          textDirection: TextDirection.ltr,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          // textDirection: TextDirection.ltr,
           children: <Widget>[
+            _getImage(),
+                    SizedBox(height: 15,),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Stack(
+                      children: <Widget>
+                      [
+                         Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 70),
+                            child: GestureDetector(
+                              onTap: (){
+                                getYourIdImage(ImageSource.camera);
+                              }, 
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  color: pureblue,
+                                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                                ),
+                                child: Center(
+                                 child: Icon(Icons.camera,
+                                 size: 20,
+                                 color: Colors.white
+                                 ),
+                                ),
+                              ),
+                            ),
+                            ),
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 70),
+                            child: GestureDetector(
+                              onTap: (){
+                                getYourIdImage(ImageSource.gallery);
+                              }, 
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  color: pureblue,
+                                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                                ),
+                                child: Center(
+                                 child: Icon(Icons.picture_in_picture,
+                                 size: 20,
+                                 color: Colors.white
+                                 ),
+                                ),
+                              ),
+                            ),
+                            ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height:15,),
             // Text(
             //   'Full Name',
             //   style: eLabelStyle,
@@ -336,7 +398,7 @@ class _SignupPageState extends State<SignupPage> {
                     Icons.lock,
                     color: pureblue,
                   ),
-                  hintText: '********',
+                  hintText: 'Password',
                   hintStyle: eHintStyle,
                 ),
               ),
@@ -380,7 +442,7 @@ class _SignupPageState extends State<SignupPage> {
                     Icons.lock,
                     color: pureblue,
                   ),
-                  hintText: '********',
+                  hintText: 'Confirm Paswword',
                   hintStyle: eHintStyle,
                 ),
               ),
@@ -417,7 +479,7 @@ class _SignupPageState extends State<SignupPage> {
                     Icons.phone_android,
                     color: pureblue,
                   ),
-                  hintText: '09**********',
+                  hintText: 'Contact Number',
                   hintStyle: eHintStyle,
                 ),
               ),
@@ -450,6 +512,54 @@ class _SignupPageState extends State<SignupPage> {
             //     ),
             //   ),
             // ),
+            SizedBox(height: 20,),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>
+                    [
+                      Align(
+                        alignment: Alignment.topLeft,
+                          child: GestureDetector(
+                   onTap: () => TermsAndConditions.show(context),
+                   child: Text("Terms And Conditions.",
+                   style: TextStyle(
+                     decoration: TextDecoration.underline,
+                     color: pureblue,
+                     fontSize: 12,
+                     fontFamily: 'Gilroy-light'
+                   ),
+                   ),
+                 ),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                          child: GestureDetector(
+                            onTap:
+                            _signingIn,
+                            child: Container(
+                              height: 50,
+                              width: 110,
+                              decoration: BoxDecoration(
+                                color: pureblue,
+                                borderRadius: BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: Center(
+                                child: Text( loading ? '....' : 'Register <',
+                                style: TextStyle(
+                                  fontFamily: 'Gilroy-ExtraBold',
+                                  fontSize: 18,
+                                  color: Colors.white
+                                ),
+                                ),
+                              ),
+                            ),
+                          
+                          ),
+                      )
+                    ],
+                  ),
+                ),
           ],
         ),
       ),
@@ -683,6 +793,21 @@ getYourIdImage( ImageSource source) async{
 
   }  
 
+ Widget loadingSpring() {
+
+   return Container(
+     height: MediaQuery.of(context).size.height,
+     width: MediaQuery.of(context).size.width,
+     child: Center(
+        child: SpinKitCubeGrid(
+          color: pureblue,
+          size: 80.0,
+        )
+     ),
+   );
+
+
+ }  
 
   @override
   Widget build(BuildContext context) {
@@ -692,7 +817,9 @@ getYourIdImage( ImageSource source) async{
       body: WillPopScope(child: SafeArea(
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
+          child: 
+          loading ?  loadingSpring() :
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: 10,),
@@ -706,124 +833,11 @@ getYourIdImage( ImageSource source) async{
                             ),
                           ),
                 SizedBox(height: 20,),
- _getImage(),
-                    SizedBox(height: 15,),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Stack(
-                      children: <Widget>
-                      [
-                         Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 70),
-                            child: GestureDetector(
-                              onTap: (){
-                                getYourIdImage(ImageSource.camera);
-                              }, 
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  color: pureblue,
-                                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                                ),
-                                child: Center(
-                                 child: Icon(Icons.camera,
-                                 size: 20,
-                                 color: Colors.white
-                                 ),
-                                ),
-                              ),
-                            ),
-                            ),
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 70),
-                            child: GestureDetector(
-                              onTap: (){
-                                getYourIdImage(ImageSource.gallery);
-                              }, 
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  color: pureblue,
-                                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                                ),
-                                child: Center(
-                                 child: Icon(Icons.picture_in_picture,
-                                 size: 20,
-                                 color: Colors.white
-                                 ),
-                                ),
-                              ),
-                            ),
-                            ),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(height:15,),
                 Padding(
                   padding: const EdgeInsets.only(left: 40,right: 40),
                   child: _formRegister(context),
                 ),
-                SizedBox(height: 20,),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Stack(
-                    children: <Widget>
-                    [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 50),
-                          child: GestureDetector(
-                   onTap: () => TermsAndConditions.show(context),
-                   child: Text("Terms And Conditions.",
-                   style: TextStyle(
-                     decoration: TextDecoration.underline,
-                     color: pureblue,
-                     fontSize: 12,
-                     fontFamily: 'Gilroy-light'
-                   ),
-                   ),
-                 ),
-                          ),
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 40),
-                          child: GestureDetector(
-                            onTap:
-                            _signingIn,
-                            child: Container(
-                              height: 50,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                color: pureblue,
-                                borderRadius: BorderRadius.all(Radius.circular(100)),
-                              ),
-                              child: Center(
-                                child: Text( loading ? '....' : 'Register <',
-                                style: TextStyle(
-                                  fontFamily: 'Gilroy-ExtraBold',
-                                  fontSize: 18,
-                                  color: Colors.white
-                                ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          ),
-                      )
-                    ],
-                  ),
-                ),
+                
                 SizedBox(height: 60,),
                  _botDownSignIn(),
                  SizedBox(height: 30,),
@@ -847,14 +861,14 @@ getYourIdImage( ImageSource source) async{
       _showDistictWarning("Please Select your Profile Image. ");
 
     }else {
-      
-      if (formkey.currentState.validate()) {
-        formkey.currentState.save();
-          var viewthis = path.basename(_idPickerImage.path);
+      var viewthis = path.basename(_idPickerImage.path);
                             CloudinaryClient client = new CloudinaryClient(
                               "822285642732717",
                               "6k0dMMg3As30mPmjeWLeFL5-qQ4",
                               "amadpogi");
+      if (formkey.currentState.validate()) {
+        formkey.currentState.save();
+          
                             await client.uploadImage( _idPickerImage.path ,filename: "Profile/$viewthis") .then((result){
                                 stringPath = result.secure_url;
                                   print(stringPath);
@@ -902,6 +916,12 @@ getYourIdImage( ImageSource source) async{
     });
   }
 
+  void showProg(bool load) {
+
+    
+
+  }
+
   void _showDial(String message) {
     showDialog(
     context: context,
@@ -928,7 +948,7 @@ getYourIdImage( ImageSource source) async{
                   height: 150.0,
                 ),
                 Container(
-                  height: 100.0,
+                  height: 150.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
@@ -941,23 +961,31 @@ getYourIdImage( ImageSource source) async{
                         end: Alignment.bottomLeft),
                   ),
                 ),
-                Positioned(
-                  top: 50.0,
-                  left: 94.0,
-                  child: Container(
-                    height: 90,
-                    width: 90,
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(45),
-                      image: DecorationImage(
-                        image: AssetImage("asset/img/logo.png"),
-                        fit: BoxFit.cover,
+                Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: Container(
+                          height: 90,
+                          width: 90,
+                          padding: EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(45),
+                            
+                            // border: Border.all(
+                            //   color: Colors.white,
+                            //   style: BorderStyle.solid,
+                            //   width: 2.0,
+                            // ),
+                            image: DecorationImage(
+                              image: AssetImage("asset/img/logo.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
               ],
             ),
             Padding(
@@ -1031,7 +1059,7 @@ getYourIdImage( ImageSource source) async{
                   height: 150.0,
                 ),
                 Container(
-                  height: 100.0,
+                  height: 150.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
@@ -1044,29 +1072,31 @@ getYourIdImage( ImageSource source) async{
                         end: Alignment.bottomLeft),
                   ),
                 ),
-                Positioned(
-                  top: 50.0,
-                  left: 94.0,
-                  child: Container(
-                    height: 90,
-                    width: 90,
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(45),
-
-                      // border: Border.all(
-                      //   color: Colors.white,
-                      //   style: BorderStyle.solid,
-                      //   width: 2.0,
-                      // ),
-                      image: DecorationImage(
-                        image: AssetImage("asset/img/logo.png"),
-                        fit: BoxFit.cover,
+                Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: Container(
+                          height: 90,
+                          width: 90,
+                          padding: EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(45),
+                            
+                            // border: Border.all(
+                            //   color: Colors.white,
+                            //   style: BorderStyle.solid,
+                            //   width: 2.0,
+                            // ),
+                            image: DecorationImage(
+                              image: AssetImage("asset/img/logo.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
               ],
             ),
             Padding(

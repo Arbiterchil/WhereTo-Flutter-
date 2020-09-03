@@ -3,6 +3,7 @@ import 'package:WhereTo/Admin/A_RiderRet/rider_viewRets.dart';
 import 'package:WhereTo/Admin/A_Rider_Remain/rider_reaminStream.dart';
 import 'package:WhereTo/Admin/A_Rider_Remain/rider_remainResponse.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_bottom.dart';
+import 'package:WhereTo/Rider_ViewMenuTransac/rider_previous.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/view_MenuTransac.dart';
 import 'package:flutter/material.dart';
 
@@ -134,7 +135,7 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
                                 onTap: () async {
 
                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                                        return ViewMenuOnTransac(
+                                                        return Riderprevious(
                                                           getID:v[index].id.toString(),
                                                           deliverTo: v[index].deliveryAddress,
                                                           restaurantName: v[index].restaurantName,
