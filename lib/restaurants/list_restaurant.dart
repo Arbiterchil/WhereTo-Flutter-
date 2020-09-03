@@ -154,7 +154,7 @@ class _ListStacticState extends State<ListStactic>
                 builder: (context, datasnapshot) {
                   if(datasnapshot.hasData){
                     if(datasnapshot.data.length >0){
-                       tabController = new TabController(vsync: this, length: datasnapshot.data.length, initialIndex: int.parse(widget.categID)-1 ==null || int.parse(widget.categID)-1 ==0 ? 0 :int.parse(widget.categID)-1);
+                       tabController = new TabController(vsync: this, length: datasnapshot.data.length, initialIndex:  int.parse(widget.categID)-1 ==0 || int.parse(widget.categID)-1 <0 ? 0 :int.parse(widget.categID)-1);
                     return DefaultTabController(
                       length: datasnapshot.data.length, 
                       child: Scaffold(
