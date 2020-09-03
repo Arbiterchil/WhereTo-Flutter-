@@ -1,22 +1,17 @@
 import 'dart:convert';
 
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
-import 'package:WhereTo/AnCustom/restaurant_front.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
-import 'package:WhereTo/Transaction/SearchMenu/FeaturedRestaurant.dart';
 import 'package:WhereTo/Transaction/SearchMenu/bloc.search.dart';
 import 'package:WhereTo/Transaction/SearchMenu/filteredMenu.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
-import 'package:WhereTo/restaurants/searchRestaurant.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:ntp/ntp.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart';
+
 class CustomSearch extends SearchDelegate {
 BlocSearch blocSearch;
    Future<void>getBloc(var id) async {
@@ -368,15 +363,9 @@ BlocSearch blocSearch;
               //   },
               // );
               }else{
-                return Center(
-                  child: Container(
-                  child: Text("No Result Found", style: TextStyle(
-                    fontFamily: "Gilroy-light",
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold
-                  ),)
-                ),
-                );
+              return Center(
+              child: Image.asset("asset/img/nosearch.png")
+              );
               }
 
             }else{
