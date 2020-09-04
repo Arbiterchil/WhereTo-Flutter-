@@ -9,6 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MShowStep extends StatefulWidget {
 
+  final String id;
+
+  const MShowStep({Key key, this.id}) : super(key: key);
 
 
   @override
@@ -26,9 +29,10 @@ class _MShowStepState extends State<MShowStep> {
   var riderID;
   @override
   void initState() {
-    getMenuTransaction();
+    this.getMenuTransaction();
     super.initState();
     sendNotif();
+    
   }
   sendNotif() async {
     SharedPreferences local = await SharedPreferences.getInstance();
@@ -73,20 +77,7 @@ class _MShowStepState extends State<MShowStep> {
  Future<List<RiverMenu>> getMenuTransaction() async {
 
         SharedPreferences local = await SharedPreferences.getInstance();
-        
-          // var check = local.getBool("cuurentIdtrans");
-        // if(check !=null ){
-
-            // if(check){
                   idgetter = local.getString("menuplustrans");
-                  // playerID = local.getString("playerIDS");
-                  // print(idgetter+"-"+playerID);
-
-            // }else{
-            //   print("No Id Getter.");
-            // }
-
-        // }
        
 
         final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/$idgetter');

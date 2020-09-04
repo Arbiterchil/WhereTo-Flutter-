@@ -76,6 +76,7 @@ var iderntify;
     _getUserInfo();
     identify();
     riderCheck();
+    print(widget.getID);
     super.initState();
     
   }
@@ -199,7 +200,7 @@ var iderntify;
                         itemCount: snapshot.data.length,
                         itemBuilder: (context,index){
                               return Padding(
-                                padding: const EdgeInsets.all(0.0),
+                                padding: const EdgeInsets.only(right: 10),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   
@@ -572,66 +573,7 @@ var checkVal = localStorage.getBool('check');
                                                     label:widget.deliverTo,
                                                   ),
                                                   SizedBox(height: 10,),
-                                                      //   Text("Name : ${widget.nametran}",
-                                                      //   style: TextStyle(
-                                                      //   color:pureblue,
-                                                      //   fontWeight: FontWeight.bold,
-                                                      //   fontSize: 16.0,
-                                                      //   fontFamily: 'Gilroy-light'
-                                                      // ),
-                                                      //   ),
-                                                      //   SizedBox(height: 10,),
-                                                      //   Text("Restaurant : ${widget.restaurantName}",
-                                                      //   maxLines: 2,
-                                                      //   style: TextStyle(
-                                                      //   color: pureblue,
-                                                      //   fontWeight: FontWeight.bold,
-                                                      //   fontSize: 16.0,
-                                                      //   fontFamily: 'Gilroy-light'
-                                                      // ),
-                                                      //   ),
-                                                      //   SizedBox(height: 10,),
-                                                      //   Text("Phone Number : ${widget.contactNumber}",
-                                                      //   style: TextStyle(
-                                                      //   color:pureblue,
-                                                      //   fontWeight: FontWeight.bold,
-                                                      //   fontSize: 16.0,
-                                                      //   fontFamily: 'Gilroy-light'
-                                                      // ),
-                                                      //   ),
-                                                      //   SizedBox(height: 10,),
-                                                      //   Text("Delivery Charge : ${widget.deliveryCharge}",
-                                                      //   style: TextStyle(
-                                                      //   color:pureblue,
-                                                      //   fontWeight: FontWeight.bold,
-                                                      //   fontSize: 16.0,
-                                                      //   fontFamily: 'Gilroy-light'
-                                                      // ),
-                                                      //   ),
-                                  //                     SizedBox(height: 10,),
-                                  //                     SingleChildScrollView(
-                                  // scrollDirection: Axis.horizontal,
-                                  //                         child: Container(
-                                  //                           height: 55,
-                                  //                           decoration: BoxDecoration(
-                                  //                             // border: Border.all(
-                                  //                             //   width: 1,
-                                  //                             //   color: pureblue
-                                  //                             // ),
-                                  //                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                                  //                           ),
-                                  //                           child: Text("Delivery Address : ${widget.deliverTo}",
-                                  //                           overflow: TextOverflow.ellipsis,
-                                  //                           style: TextStyle(
-                                                            
-                                  //                           color: pureblue,
-                                  //                           fontWeight: FontWeight.bold,
-                                  //                           fontSize: 16.0,
-                                  //                           fontFamily: 'Gilroy-light'
-                                  //                     ),
-                                  //                           ),
-                                  //                         ),
-                                  //                       ),
+                                                    
                                                       ],
                                                     ),
                                   ),
@@ -747,6 +689,7 @@ var checkVal = localStorage.getBool('check');
                                       color: Colors.white,
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                                       onPressed: () async {
+                                        await ApiCall().transactionComplete('/transactionComplete/${widget.getID}');
                                         SharedPreferences localStorage = await SharedPreferences.getInstance();
                                         localStorage.remove('menuplustrans');
                                         localStorage.remove('playerIDS');
@@ -1115,7 +1058,7 @@ void _showDistictWarning(String meesage) {
       },
     );
   }
-  void assign() async { 
+  void assign(String id, String idyours) async { 
 
       bool checkthis = true;
       var idyours = userData['id'].toString();
@@ -1247,31 +1190,32 @@ void _showDistictWarning(String meesage) {
                   color:Color(0xFF0C375B),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                   onPressed: () async{
-                     bool checkthis = true;
-      var idyours = userData['id'].toString();
+                     
+      var riderId = userData['id'].toString();
       var data = {
-        "transactionId" : '${widget.getID}',
-        "riderId" :  idyours,
+        "transactionId" : "${widget.getID}",
+        "riderId" : riderId ,
       };
 
       var response = await ApiCall().assignRiders(data, '/assignRider');
       var body = json.decode(response.body);
+      
       if(body == true){
-        print("TRUE");
-        SharedPreferences localStore = await SharedPreferences.getInstance();
-        localStore.setBool("cuurentIdtrans", checkthis);
+ SharedPreferences localStore = await SharedPreferences.getInstance();
         localStore.setString("menuplustrans", "${widget.getID}");
         localStore.setString("playerIDS", "${widget.playerId}");
       }else{
-        print("FALSE");
+print(body);
       }
-      setState(() {
+       
+        setState(() {
       available = !available;
       menuHide = !menuHide;
       backTF = !backTF;
       cancelOrder = true;
       riderCheck();
       });
+     
                    Navigator.of(context).pop();
                       },   
                       

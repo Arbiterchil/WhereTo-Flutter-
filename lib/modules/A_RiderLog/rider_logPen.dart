@@ -60,17 +60,19 @@ class _RemitPendingUserState extends State<RemitPendingUser> {
       );
     }else{
         return Container(
-          width: 80,
-        height: 80,
+          width: 200,
+        height: 200,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: pureblue
+            border: Border.all(
+              width: 4,
+              color: pureblue
+            ),
           ),
           child: Center(
             child: Icon(
-              Icons.person,
+              Icons.photo,
               size: 40,
-              color: Colors.white,
+              color: pureblue,
             ),
           ),
         );
@@ -331,16 +333,18 @@ Widget loadingSpring() {
                             }, 
                             child: Container(
                               height: 40,
-                              width: 40,
+                              width: 190,
                               decoration: BoxDecoration(
                                 color: pureblue,
                                 borderRadius: BorderRadius.all(Radius.circular(100)),
                               ),
                               child: Center(
-                               child: Icon(Icons.picture_in_picture,
-                               size: 20,
-                               color: Colors.white
+                               child: Text("Choose From Gallery",
+                               style: TextStyle(
+                                 color: Colors.white,
+                                 fontFamily: 'Gilroy-light',
                                ),
+                               )
                               ),
                             ),
                           
