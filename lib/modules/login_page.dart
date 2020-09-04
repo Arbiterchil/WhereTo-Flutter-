@@ -55,11 +55,11 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           textDirection: TextDirection.ltr,
           children: <Widget>[
-           Text('Contact Number',
+          //  Text('Contact Number',
            
-            style: eLabelStyle,
-            ),
-           SizedBox(height: 20.0,),
+          //   style: eLabelStyle,
+          //   ),
+          //  SizedBox(height: 20.0,),
              Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextFormField(
                 controller: contactNumber,
                 validator: (val){
-                  return phoneValidate(val);
+                  return phoneValidate(contactNumber.text = val);
                 },
                 keyboardType: TextInputType.number,
                 cursorColor: pureblue,
@@ -89,10 +89,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(height: 30.0,),
-             Text('Password',
-            style: eLabelStyle,
-            ),
-            SizedBox(height: 20.0,),
+            //  Text('Password',
+            // style: eLabelStyle,
+            // ),
+            // SizedBox(height: 20.0,),
             Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                     Icons.lock,
                     color: pureblue,
                   ),
-                  hintText: '******',
+                  hintText: 'Password',
                   hintStyle: eHintStyle,
                 ),
               ),
@@ -487,7 +487,6 @@ void _login() async{
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
-      localStorage.setString('trial','trialShow');
       localStorage.setString('user', json.encode(body['user']));
       print(body);
           if(body['user']['userType'] == 0){
