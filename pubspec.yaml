@@ -115,8 +115,9 @@ flutter:
   - asset/img/heartIcon.jpg
   - asset/img/logo.png
   - asset/img/menuBuyinu.png
-
-
+  - asset/img/img1.png
+  - asset/img/img2.png
+  - asset/img/img3.png
 
   #   - images/a_dot_ham.jpeg
 

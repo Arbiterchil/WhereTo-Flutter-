@@ -15,31 +15,31 @@ class _NewCarouselState extends State<NewCarousel> {
 
     [
       // 'asset/img/carousel1.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599107073/cover_1_qlkiqy.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599185567/banner-01_sxhg1m.png',
       'KFC',
       'Located at GMALL of TAGUM'
     ],
     [
       // 'asset/img/carousel2.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599107072/cover_2_o33gbt.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599185568/banner_2_larb7p.png',
       'Jollibee',
       'Located at National HighWay'
     ],
     [
       // 'asset/img/carousel3.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599107072/cover_3_g4e48j.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599185567/banner-03_ssrixm.png',
       'McDonalds',
       'Located at Rizal Street'
     ],
     [
       // 'asset/img/carousel4.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599107072/cover_4_hd79yn.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599185567/banner-04_a96aqd.png',
       'Chowking',
       'Located at National HighWay'
     ],
     [
       // 'asset/img/carousel5.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599107072/cover_5_cgj81a.png',
+      'https://res.cloudinary.com/amadpogi/image/upload/v1599185567/banner-02_hhdcgn.png',
       'Penongs',
       'Located at Lapu-Lapu Street'
     ],
@@ -70,12 +70,12 @@ class _NewCarouselState extends State<NewCarousel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(50),
-                  bottomRight: Radius.circular(50)
-                )
-      ),
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.only(
+      //             bottomLeft: Radius.circular(50),
+      //             bottomRight: Radius.circular(50)
+      //           )
+      // ),
       child: Column(
         children: <Widget>[
           GestureDetector(
@@ -87,12 +87,12 @@ class _NewCarouselState extends State<NewCarousel> {
               }
             } ,
               child: Container(
-              height: 170,
+              height: 140,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(restau[currentIndex][0]),
-                  fit:  BoxFit.fitWidth,
+                  fit:  BoxFit.fill,
                   ),
               ),
               child: Container(

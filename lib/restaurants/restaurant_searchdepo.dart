@@ -132,15 +132,15 @@ class _SearchDepoState extends State<SearchDepo> {
                     NewCarousel(),
                   ],
                 ),
-                SizedBox(height: 20,),
+                // SizedBox(height: 20,),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40,right: 40),
+                  padding: const EdgeInsets.only(left: 0,right: 0),
                   child: Container(
                               height: 50.0,
                               decoration: BoxDecoration(
                                 color: pureblue,
                                 // Colors.white.withOpacity(0.80),
-                                borderRadius: BorderRadius.circular(30.0),
+                                // borderRadius: BorderRadius.circular(30.0),
                               ),
                               alignment: Alignment.centerLeft,
                               child: TextField(
@@ -200,8 +200,8 @@ class _SearchDepoState extends State<SearchDepo> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Container(
-                    width: 200,
-                    height: 40,
+                    width: 300,
+                    height: 20,
                     child: Text(
                       "Featured Food in Restaurants",
                       style: TextStyle(
@@ -223,7 +223,7 @@ class _SearchDepoState extends State<SearchDepo> {
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Container(
                     width: 200,
-                    height: 40,
+                    height: 20,
                     child: Text(
                       "Featured Restaurants",
                       style: TextStyle(

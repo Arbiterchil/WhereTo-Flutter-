@@ -122,9 +122,9 @@ class _Profile extends State<Profile> {
                           height: 330.0,
                           decoration: BoxDecoration(
                             color: pureblue.withOpacity(.79),
-                            borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(290),
-                            ),
+                            // borderRadius: BorderRadius.only(
+                            //   bottomRight: Radius.circular(290),
+                            // ),
                           ),
 
                         ),
@@ -141,7 +141,7 @@ class _Profile extends State<Profile> {
                                                   style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 40.0,
+                                                  fontSize: 30.0,
                                                   fontFamily: 'Gilroy-ExtraBold'
                                                 ),
                                                   ),
