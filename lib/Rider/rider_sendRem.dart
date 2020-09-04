@@ -139,7 +139,7 @@ void sendRemitImage() async{
      loading = true;
    });
    if(_idPickerImage == null){
-      _showDialogError("Put your Screen Shot Image of Gcash or Union Bank .");
+      _showDialogError("Put your Screen Shot Image of Gcash or Union Bank.");
 
       setState(() {
      loading = false;
@@ -166,7 +166,7 @@ var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.
     'imagePath': thimagelink
   };
    var valid = await ApiCall().postRemitRider(data,'/riderRemit');
-  print(valid.body);
+  print(json.decode(valid.body));
    var offline = await ApiCall().getOffline('/goOffline/${widget.idFromLog.toString()}');
 
                                               var bod = json.decode(offline.body);

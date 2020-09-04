@@ -134,7 +134,7 @@ void sendRemitImage() async{
      loading = true;
    });
    if(_idPickerImage == null){
-      _showDialogError("Put your Screen Shot Image of Gcash.");
+      _showDialogError("Put your Screen Shot Image of Gcash or Union Bank");
 
       setState(() {
      loading = false;
