@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWStream_response.dart';
@@ -11,6 +12,7 @@ import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:flutter/material.dart';
 import 'package:ntp/ntp.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 class NewRestaurantViewFeatured extends StatefulWidget {
@@ -105,6 +107,22 @@ Widget _views(NewRestaurantResponse newFeatured){
                 scrollDirection: Axis.horizontal,
                 itemCount: nf.length,
                 itemBuilder: (context,index){
+                  ProgressDialog featuredRestaurant = ProgressDialog(context);
+                              featuredRestaurant.style(
+                                message: "Loading Restaurant Please Wait..",
+                                borderRadius: 10.0,
+                                backgroundColor: Colors.white,
+                                progressWidget: CircularProgressIndicator(),
+                                elevation: 10.0,
+                                insetAnimCurve: Curves.easeInExpo,
+                                progressTextStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: "Gilroy-light"
+                                )
+                              );
+                              featuredRestaurant =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
                    return Column(
                      children: <Widget>[
                        NewRestaurantBox(
@@ -112,9 +130,54 @@ Widget _views(NewRestaurantResponse newFeatured){
                          restaurantName:nf[index].restaurantName ,
                          address: nf[index].address,
                          
-                         onTap: (){
-                           
-                           Navigator.push(
+                         onTap: () async{
+                           featuredRestaurant.show();
+                                SharedPreferences local =
+                                await SharedPreferences.getInstance();
+                                var userjson = local.getString('user');
+                                var user = json.decode(userjson);
+                                var restaurant;
+                                var status;
+                                var address;
+                                var insideResto =nf[index].restaurantName;
+                                var insideAddress =nf[index].address;
+                                var isRead = false;
+                                Map<String, dynamic> temp;
+                                List<dynamic> converted = [];
+                                final response = await ApiCall().getData('/viewUserOrders/${user['id']}');
+                                final List<ViewUserOrder> transaction =viewUserOrderFromJson(response.body);
+                                transaction.forEach((element) {
+                                  restaurant = element.restaurantName;
+                                  status = element.status;
+                                  address =element.address;
+                                  temp = {
+                                    "restaurant": restaurant,
+                                    "status": status,
+                                    "address":address,
+                                  };
+                                  converted.add(temp);
+                                });
+                                for (var i = 0; i < converted.length; i++) {
+                                  if (insideResto ==converted[i]['restaurant'] &&insideAddress==converted[i]['address'] &&converted[i]['status'] < 4) {
+                                    isRead = true;
+                                    break;
+                                  }
+                                }
+                                if (isRead) {
+                                 await featuredRestaurant.hide();
+                                UserDialog_Help.restaurantDialog(context);
+                                } else {
+                                  await featuredRestaurant.hide();
+                                  // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
+                                  //   print(
+                                  //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
+                                  //   showDial(context,
+                                  //       "Sorry The Restaurant is close at the Moment Please Come Back");
+                                  // } else {
+                                  //   if (int.parse(formatNow.split(":")[0]) >=
+                                  //       int.parse(formatOpen.split(":")[0])) {
+                                    
+                                      Navigator.push(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) => ListStactic(
@@ -124,6 +187,9 @@ Widget _views(NewRestaurantResponse newFeatured){
                                                 address:nf[index].address.toString(),
                                                 categID: categ,  
                                                   )));
+                                }
+                           
+                          
                          },
                        ),
                      ],

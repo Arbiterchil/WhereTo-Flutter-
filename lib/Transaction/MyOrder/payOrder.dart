@@ -2,6 +2,7 @@ import 'dart:convert';
 
 
 import 'package:WhereTo/Transaction/MyOrder/DialogOrder.dart';
+import 'package:WhereTo/Transaction/MyOrder/address.dart';
 import 'package:WhereTo/Transaction/getDeviceID/getDeviceID.class.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
@@ -25,11 +26,28 @@ class PayOrder extends StatefulWidget {
 final _navigatorKey = GlobalKey<NavigatorState>();
 class _PayOrderState extends State<PayOrder> {
   var userData;
+  String address;
+  String newAddress;
+  String add;
   @override
   void initState() {
+    getAddress();
     super.initState();
   }
 
+
+    getAddress() async{
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var userJson = localStorage.getString('user');
+        
+        var user = json.decode(userJson);
+        setState(() {
+          userData = user;
+          address =userData!= null ? userData['address'] :  'Fail get data.';
+          newAddress ="${localStorage.getString("unit_number")}, ${localStorage.getString("house_number")}, ${localStorage.getString("building")}, ${localStorage.getString("street_name")}";
+          add =newAddress==null ? address :newAddress;
+        });
+    }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -264,6 +282,56 @@ class _PayOrderState extends State<PayOrder> {
                             ),
                           ),
                           Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Container(
+                              child: Builder(builder: (context) {
+                                return Stack(
+                                  children: [
+                                    Card(
+                                      elevation: 15.5,
+                                      color: Color(0xFF0C375B),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(5),
+                                        child: Center(
+                                            child: Padding(
+                                          padding: EdgeInsets.all(5),
+                                          child: ListTile(
+                                            title: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                              "Delivery Address",
+                                              style: TextStyle(
+                                                fontFamily: "Gilroy-light",
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                             Text(
+                                              "Please input exact Location",
+                                              style: TextStyle(
+                                                fontFamily: "Gilroy-light",
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                              ],
+                                            ),
+                                            trailing: IconButton(icon: Icon(Icons.edit, color: Colors.white), onPressed: (){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                                return AddressLine();
+                                              }));
+                                            }),
+                                          ),
+                                        )),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
+                            ),
+                          ),
+                          
+                          Padding(
                             padding: EdgeInsets.only(top: 50),
                             child: Align(
                               alignment: Alignment.bottomRight,
@@ -291,12 +359,11 @@ class _PayOrderState extends State<PayOrder> {
                                           Map<String, int> converted = {};
                                           List<dynamic> order = [];
                                           List<dynamic> result = [];
-                                          SharedPreferences localStorage =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          var userJson =
-                                              localStorage.getString('user');
+                                          String address;
+                                          SharedPreferences localStorage =await SharedPreferences.getInstance();
+                                          var userJson =localStorage.getString('user');
                                           var user = json.decode(userJson);
+                                          address ="${localStorage.getString("unit_number")}, ${localStorage.getString("house_number")}, ${localStorage.getString("building")}, ${localStorage.getString("street_name")}";
                                           snapshot.forEach((element) async {
                                             setState(() {
                                               id = element.id;
@@ -334,7 +401,7 @@ class _PayOrderState extends State<PayOrder> {
                                               'restaurantId':
                                                   this.widget.restauID,
                                               'order': result,
-                                              "deliveryAddress": user['address'],
+                                              "deliveryAddress": address.contains("null") ?user['address'] :address,
                                               "deliveryCharge": "${widget.fee}",
                                               "barangayId": user['barangayId'],
                                             };

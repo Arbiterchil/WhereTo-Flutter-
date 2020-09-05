@@ -1,8 +1,15 @@
+import 'dart:convert';
+
+import 'package:WhereTo/AnCustom/UserDialog_help.dart';
+import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
+import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
 import 'package:WhereTo/restaurants/blocClassMenu.dart';
 import 'package:WhereTo/restaurants/blocMenuFeatured.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FoodDisplay extends StatefulWidget {
   @override
@@ -36,7 +43,23 @@ class _FoodDisplayState extends State<FoodDisplay> {
                         child: StreamBuilder<List<IsFeatured>>(
                           stream: blocFeatured.stream,
                           builder: (context, snapshot){
-                            if(snapshot.hasData){
+                              ProgressDialog featured = ProgressDialog(context);
+                              featured.style(
+                                message: "Loading Restaurant Please Wait..",
+                                borderRadius: 10.0,
+                                backgroundColor: Colors.white,
+                                progressWidget: CircularProgressIndicator(),
+                                elevation: 10.0,
+                                insetAnimCurve: Curves.easeInExpo,
+                                progressTextStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: "Gilroy-light"
+                                )
+                              );
+                              featured =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
+                              if(snapshot.hasData){
                               if(snapshot.data.length >0){
                               return ListView.builder(
                               scrollDirection: Axis.horizontal,
@@ -48,8 +71,54 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                 foodname: snapshot.data[index].menuName,
                                 description: snapshot.data[index].categoryName,
                                 image: snapshot.data[index].imagePath,
-                                onTap: (){
-                                  Navigator.push(
+                                onTap: ()async{
+                                featured.show();
+                                SharedPreferences local =
+                                await SharedPreferences.getInstance();
+                                var userjson = local.getString('user');
+                                var user = json.decode(userjson);
+                                var restaurant;
+                                var status;
+                                var address;
+                                var insideResto =snapshot.data[index].restaurantName;
+                                var insideAddress =snapshot.data[index].address;
+                                var isRead = false;
+                                Map<String, dynamic> temp;
+                                List<dynamic> converted = [];
+                                final response = await ApiCall().getData('/viewUserOrders/${user['id']}');
+                                final List<ViewUserOrder> transaction =viewUserOrderFromJson(response.body);
+                                transaction.forEach((element) {
+                                  restaurant = element.restaurantName;
+                                  status = element.status;
+                                  address =element.address;
+                                  temp = {
+                                    "restaurant": restaurant,
+                                    "status": status,
+                                    "address":address,
+                                  };
+                                  converted.add(temp);
+                                });
+                                for (var i = 0; i < converted.length; i++) {
+                                  if (insideResto ==converted[i]['restaurant'] &&insideAddress==converted[i]['address'] &&converted[i]['status'] < 4) {
+                                    isRead = true;
+                                    break;
+                                  }
+                                }
+                                if (isRead) {
+                                  await featured.hide();
+                                UserDialog_Help.restaurantDialog(context);
+                                } else {
+                                  await featured.hide();
+                                  // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
+                                  //   print(
+                                  //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
+                                  //   showDial(context,
+                                  //       "Sorry The Restaurant is close at the Moment Please Come Back");
+                                  // } else {
+                                  //   if (int.parse(formatNow.split(":")[0]) >=
+                                  //       int.parse(formatOpen.split(":")[0])) {
+                                    
+                                      Navigator.push(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) => ListStactic(
@@ -64,6 +133,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                                      address:snapshot.data[index].address.toString(),
                                                      categID: snapshot.data[index].categoryId.toString(),  
                                                   )));
+                                }
                                 },
                               ); 
                                 }else{  

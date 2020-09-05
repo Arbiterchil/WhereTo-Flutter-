@@ -60,7 +60,7 @@ class _XviewTransacState extends State<XviewTransac> {
                             image: AssetImage(widget.image),
                           )),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 4),
+                    widget.status =="4" ?Container() :Padding(padding: EdgeInsets.only(top: 4),
                     child: GestureDetector(
                       onTap: widget.onTapCancel,
                       child: Container(
@@ -71,7 +71,7 @@ class _XviewTransacState extends State<XviewTransac> {
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       child: Center(
-                        child: Text(
+                        child:Text(
                           "Cancel",
                           style: TextStyle(
                               decoration: TextDecoration.none,

@@ -664,7 +664,7 @@ class _SignupPageState extends State<SignupPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: 10,),
-              Text("Get Address Automatically?",
+              Text("Delivery Address?",
               maxLines: 2,
               style: TextStyle(
                 fontFamily: 'Gilroy-light',

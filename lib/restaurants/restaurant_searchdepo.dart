@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:WhereTo/AnCustom/LocationSet.dart';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/Services/connectivity_status.dart';
+import 'package:WhereTo/Transaction/MyOrder/address.dart';
 import 'package:WhereTo/Transaction/SearchMenu/newSearch.dart';
 import 'package:WhereTo/Transaction/SearchMenu/search.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
@@ -35,13 +36,18 @@ class _SearchDepoState extends State<SearchDepo> {
   TextEditingController search = new TextEditingController();
   String searchit;
   var userData;
-
+  String address;
+  String newAddress;
+  bool isLoc =false;
   void _getUserInfo() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
+    
     var user = json.decode(userJson);
     setState(() {
       userData = user;
+      address =userData!= null ? userData['address'] :  'Fail get data.';
+      newAddress ="${localStorage.getString("unit_number")}, ${localStorage.getString("house_number")}, ${localStorage.getString("building")}, ${localStorage.getString("street_name")}";
     });
   }
 
@@ -70,29 +76,42 @@ class _SearchDepoState extends State<SearchDepo> {
           padding: EdgeInsets.only(left: 0),
           child: Container(
             width: MediaQuery.of(context).size.width*0.8,
-            child: Column(
-            children: [
-              Text(
+            child: GestureDetector(
+                child: Column(
+                  children: [
+                  Text(
                 "Delivery Address",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 12,
                     fontFamily: "Gilroy-light",
                     fontWeight: FontWeight.bold),
-              ),
-              Text("${userData!= null ? userData['address'] :  'Fail get data.'}", style: TextStyle(
+                  ),
+                  Text(address ?? "" , style: TextStyle(
                 color: Colors.white,
                 fontSize: 10,
                 fontFamily: "Gilroy-light",
                 fontWeight: FontWeight.bold
               ),),
-            ],
-          ),
+                  ],
+                ),
+              onTap: (){
+                setState(() {
+                  isLoc=false;
+                });
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
+              },
+              ),
+
           ),
         ),
         leading: Padding(
           padding: EdgeInsets.only(left: 0),
-          child: Icon(Icons.location_on),
+          child: IconButton(icon: Icon(Icons.location_on), onPressed: (){
+            setState(() {
+              isLoc =true;
+            });
+          }),
         ),
         actions: [
           Padding(
