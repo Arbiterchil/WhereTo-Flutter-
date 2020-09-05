@@ -83,7 +83,7 @@ class _AddressLineState extends State<AddressLine> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         prefixIcon: Icon(
-                          Icons.home_work_rounded,
+                          Icons.add_to_home_screen,
                           color: pureblue,
                         ),
                         hintText: baranggay.text.isEmpty?'Unit Number' : baranggay.text,
@@ -116,7 +116,7 @@ class _AddressLineState extends State<AddressLine> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         prefixIcon: Icon(
-                          Icons.house_outlined,
+                          Icons.home,
                           color: pureblue,
                         ),
                         hintText: 'House Number',
@@ -149,7 +149,7 @@ class _AddressLineState extends State<AddressLine> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         prefixIcon: Icon(
-                          Icons.home_filled,
+                          Icons.home,
                           color: pureblue,
                         ),
                         hintText: 'Village/Subdivision',
