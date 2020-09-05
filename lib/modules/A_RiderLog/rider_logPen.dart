@@ -160,8 +160,7 @@ var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.
     'remitId':bods,
     'imagePath': thimagelink
   };
-   var valid = await ApiCall().postRemitRider(data,'/riderRemit');
-  print(valid.body);
+  await ApiCall().postRemitRider(data,'/riderRemit');
 
                                 Navigator.pushAndRemoveUntil(
                               context,

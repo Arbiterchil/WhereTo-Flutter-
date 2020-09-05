@@ -488,9 +488,11 @@ void _login() async{
       localStorage.setBool('check', value);
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
+      localStorage.setString('trial','trialShow');
       print(body);
           if(body['user']['userType'] == 0){
         print('Customer');
+
         Navigator.pushReplacement(
         context,
         new MaterialPageRoute(

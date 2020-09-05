@@ -160,17 +160,14 @@ void sendRemitImage() async{
       .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
 var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.toString()}');
   var bods = json.decode(response.body)['id'];
+  print(bods);
   var data=
   {
-    'remitId':bods,
-    'imagePath': thimagelink
+    "remitId":bods,
+    "imagePath": thimagelink
   };
-   var valid = await ApiCall().postRemitRider(data,'/riderRemit');
-  print(json.decode(valid.body));
-   var offline = await ApiCall().getOffline('/goOffline/${widget.idFromLog.toString()}');
-
-                                              var bod = json.decode(offline.body);
-                                              print(bod); 
+  await ApiCall().postRemitRider(data,'/riderRemit');
+   await ApiCall().getOffline('/goOffline/${widget.idFromLog.toString()}');
                                SharedPreferences localStorage = await SharedPreferences.getInstance();
                                localStorage.remove('user');
                                localStorage.remove('token');
@@ -178,10 +175,10 @@ var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.
                                var res = await ApiCall().getData('/logout');
                             var body = json.decode(res.body);
                            print(body);
-                                Navigator.pushAndRemoveUntil(
+                                Navigator.pushReplacement(
                               context,
                               new MaterialPageRoute(
-                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
+                                  builder: (context) => LoginPage()));
   _showDial("Send Done to the Admins.");
    }  
 }
