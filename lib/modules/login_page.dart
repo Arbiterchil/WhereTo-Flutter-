@@ -220,7 +220,7 @@ class _LoginPageState extends State<LoginPage> {
    void configSignal() async {
      await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
-    await OneSignal.shared.init('2348f522-f77b-4be6-8eae-7c634e4b96b2');
+    await OneSignal.shared.init('f5091806-1654-435d-8799-0cbd5fc49280');
     await OneSignal.shared.getPermissionSubscriptionState();
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();

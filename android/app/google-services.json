@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "161725438693",
-    "firebase_url": "https://whereto-3f801.firebaseio.com",
-    "project_id": "whereto-3f801",
-    "storage_bucket": "whereto-3f801.appspot.com"
+    "project_number": "815899744481",
+    "firebase_url": "https://whereto-7db28.firebaseio.com",
+    "project_id": "whereto-7db28",
+    "storage_bucket": "whereto-7db28.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:161725438693:android:03d73505184d1aad96520c",
+        "mobilesdk_app_id": "1:815899744481:android:ed11d7698899d7a7eabfa0",
         "android_client_info": {
-          "package_name": "com.example.WhereTo"
+          "package_name": "com.WhereTo.NextKnight"
         }
       },
       "oauth_client": [
         {
-          "client_id": "161725438693-gjsvaen5rorv38lpmuqkomfdlnsrv6i0.apps.googleusercontent.com",
+          "client_id": "815899744481-as4tf3tqeejuunq81gsv37skucvlbdbl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC2riP72_PfgTfsz2WzjbCn-u0FYFJQGAs"
+          "current_key": "AIzaSyCRjm9UbRkYokD9g7yzkIraXd6kovUoZmI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "161725438693-gjsvaen5rorv38lpmuqkomfdlnsrv6i0.apps.googleusercontent.com",
+              "client_id": "815899744481-as4tf3tqeejuunq81gsv37skucvlbdbl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
