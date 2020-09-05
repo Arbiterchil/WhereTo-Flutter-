@@ -438,7 +438,7 @@ class _PayOrderState extends State<PayOrder> {
                                           await OneSignal.shared
                                               .promptLocationPermission();
                                           await OneSignal.shared.init(
-                                              '2348f522-f77b-4be6-8eae-7c634e4b96b2');
+                                              'f5091806-1654-435d-8799-0cbd5fc49280');
                                           OneSignal.shared.setInFocusDisplayType(
                                               OSNotificationDisplayType
                                                   .notification);
@@ -482,12 +482,12 @@ class _PayOrderState extends State<PayOrder> {
                                               },
                                             ],
                                             "app_id":
-                                                "2348f522-f77b-4be6-8eae-7c634e4b96b2"
+                                                "f5091806-1654-435d-8799-0cbd5fc49280"
                                           };
                                           Map<String, String> headers = {
                                             'Content-Type': 'application/json',
                                             'authorization':
-                                                'Basic MzExOTY5NWItZGJhYi00MmI3LWJjZjktZWJjOTJmODE4YjE5'
+                                                'Basic MGM5OTlmNzgtYzdlMi00NjUyLWFlOGEtZDYxZDM5YTUwNjll'
                                           };
 
                                           await http.post(url,
