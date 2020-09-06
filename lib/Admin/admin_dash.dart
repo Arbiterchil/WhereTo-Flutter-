@@ -363,9 +363,23 @@ class _AdminDashState extends State<AdminDash> {
                     ),
                       ],
                     ),
+                   SizedBox(height: 20,),
+                    RaisedButton(
+                  splashColor: Colors.amberAccent,
+                 color: Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () =>Admin_out.exit(context),
+                  child: Text(
+                    "Log Out",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.0,
+                        fontFamily: 'OpenSans'),
+                  ),
+                  ),
                    SizedBox(height: 10,),
-
-
                 ],
               ),
             ),
