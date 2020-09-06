@@ -618,7 +618,7 @@ class _SignupPageState extends State<SignupPage> {
 }
   
 
-  List dataBarangay = List();
+  List<dynamic> dataBarangay = List();
 
   callBarangay() async {
     var respon = await ApiCall().getBararang('/getBarangayList');
@@ -627,7 +627,7 @@ class _SignupPageState extends State<SignupPage> {
     setState(() {
       dataBarangay = bararang;
     });
-    print(bararang);
+    // print(bararang);
   }
 
 

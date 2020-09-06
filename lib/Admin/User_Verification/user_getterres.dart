@@ -9,7 +9,7 @@ class UserVerified {
 
   UserVerified(this.userView, this.error);
 
- UserVerified.fromJson(json)
+ UserVerified.fromJson(List<dynamic> json)
   : userView = json,error = "" ;
     
 

@@ -185,7 +185,7 @@ var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.
 List allresult = [];
 void getAdminDevices() async{
  var bods = await ApiCall().getAdminDevice('/getAllAdminDeviceId');
-    List body = json.decode(bods.body);   
+    List<dynamic> body = json.decode(bods.body);   
     for(int i = 0 ; i < body.length ;i++){
       allresult.add((body[i]['deviceId'].toString())); 
     }

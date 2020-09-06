@@ -7,7 +7,7 @@ final List<RetieveAlltransac> feature;
 
   RetrievResponse(this.feature, this.error);
 
-  RetrievResponse.fromJson(json)
+  RetrievResponse.fromJson(List<dynamic> json)
   : feature = json,error = "" ;
     
 

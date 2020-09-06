@@ -101,6 +101,42 @@ class _Profile extends State<Profile> {
     }
 
   }
+
+  Widget imageBack(){
+
+    if(getImage != null){
+      return  Container(
+                             height: 350,
+                             width: MediaQuery.of(context).size.width,
+                             decoration: BoxDecoration(
+                               image: DecorationImage(
+                                 image: NetworkImage(getImage),
+                                 fit: BoxFit.cover),
+                             ),
+                             child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5,sigmaY: 5),
+                             child: Container(
+                               height: 350,
+                               width: MediaQuery.of(context).size.width,
+                               decoration: BoxDecoration(
+                                 color: Colors.white.withOpacity(0.0)
+                               ),
+                             ),
+                             ),
+                           );
+    }else{
+      return  Container(
+                             height: 120,
+                             width: 120,
+                             decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               image: DecorationImage(
+                                 image: AssetImage('asset/img/logo.png'),
+                                 fit: BoxFit.cover),
+                             ),
+                           );
+    }
+
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -118,16 +154,18 @@ class _Profile extends State<Profile> {
                           overflow: Overflow.visible,
                           alignment: Alignment.topCenter,
                           children: <Widget>[
-                            Container(
-                          height: 330.0,
-                          decoration: BoxDecoration(
-                            color: pureblue.withOpacity(.79),
-                            // borderRadius: BorderRadius.only(
-                            //   bottomRight: Radius.circular(290),
-                            // ),
-                          ),
+                            imageBack(),
+                        //     Container(
+                        //   height: 330.0,
+                        //   decoration: BoxDecoration(
+                        //     // color: pureblue.withOpacity(.79),
+                        //     // borderRadius: BorderRadius.only(
+                        //     //   bottomRight: Radius.circular(290),
+                        //     // ),
 
-                        ),
+                        //   ),
+
+                        // ),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(padding: const EdgeInsets.only(left: 30,top: 40),
@@ -139,7 +177,7 @@ class _Profile extends State<Profile> {
                                 SizedBox(height: 10,),
                                 Text(userData!= null ? '${userData['name']}':  'Fail get data.',
                                                   style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: pureblue,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 30.0,
                                                   fontFamily: 'Gilroy-ExtraBold'
@@ -148,7 +186,7 @@ class _Profile extends State<Profile> {
                                                   SizedBox(height: 10,),
                                                   Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
                                                   style: TextStyle(
-                                                  color: Color(0xfff2f2f2),
+                                                  color: pureblue,
                                                   fontWeight: FontWeight.normal,
                                                   fontSize: 20.0,
                                                   fontFamily: 'Gilroy-light'

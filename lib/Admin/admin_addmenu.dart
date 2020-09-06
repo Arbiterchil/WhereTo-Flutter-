@@ -41,7 +41,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
   int count = 1;
   int indexx;
   var ids;
-  List dataCategory = List();
+  List<dynamic> dataCategory = List();
   List<String> items = [];
   String selectPerson;
   final pick = ImagePicker();

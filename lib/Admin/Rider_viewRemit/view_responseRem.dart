@@ -9,7 +9,7 @@ class RemitResponse {
 
   RemitResponse(this.viewRemit, this.error);
 
- RemitResponse.fromJson(json)
+ RemitResponse.fromJson(List<dynamic> json)
   : viewRemit = json,error = "" ;
     
 

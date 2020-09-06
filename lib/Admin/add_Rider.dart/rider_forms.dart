@@ -28,7 +28,7 @@ class _RiderFormsState extends State<RiderForms> {
     super.initState();
     callBarangay();
   }
-  List dataBarangay = [];
+  List<dynamic> dataBarangay = [];
   void callBarangay() async{
 
     var respon = await ApiCall().getBararang('/getBarangayList');

@@ -9,7 +9,7 @@ class UnRemitResponse {
 
   UnRemitResponse(this.viewRemit, this.error);
 
- UnRemitResponse.fromJson(json)
+ UnRemitResponse.fromJson(List<dynamic> json)
   : viewRemit = json,error = "" ;
     
 

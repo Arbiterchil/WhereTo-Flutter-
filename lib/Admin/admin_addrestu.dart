@@ -32,7 +32,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
     String closetimeString;
     String datesofdays;
     String features;
-    List dataBarangay = [];
+    List<dynamic> dataBarangay = [];
     bool loading = false;
     final pick = ImagePicker();
    File _idPickerImage;

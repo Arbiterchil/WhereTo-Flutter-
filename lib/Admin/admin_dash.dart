@@ -102,7 +102,7 @@ class _AdminDashState extends State<AdminDash> {
                                 fontSize: 16,
                               ),),
                               SizedBox(height: 10,),
-                              Text("6",
+                              Text("?",
                               style: TextStyle(
                                 color:  Colors.amber,
                                 fontFamily: 'Gilroy-ExtraBold',
@@ -133,7 +133,7 @@ class _AdminDashState extends State<AdminDash> {
                                 fontSize: 16,
                               ),),
                               SizedBox(height: 10,),
-                              Text("10",
+                              Text("?",
                               style: TextStyle(
                                 color:  pureblue, 
                                 // Color(0xFF0C375B),
@@ -165,7 +165,7 @@ class _AdminDashState extends State<AdminDash> {
                                 fontSize: 16,
                               ),),
                               SizedBox(height: 10,),
-                              Text("6",
+                              Text("?",
                               style: TextStyle(
                                 color:  Colors.deepOrange,
                                 fontFamily: 'Gilroy-ExtraBold',

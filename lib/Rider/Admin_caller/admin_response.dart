@@ -9,7 +9,7 @@ class AdminResponseDevice {
 
   AdminResponseDevice(this.adminResponse, this.error);
 
- AdminResponseDevice.fromJson(json)
+ AdminResponseDevice.fromJson(List<dynamic> json)
   : adminResponse = json,error = "" ;
     
 

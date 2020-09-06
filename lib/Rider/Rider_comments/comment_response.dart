@@ -10,7 +10,7 @@ class CommentResponse {
 
   CommentResponse(this.riderview, this.error);
 
- CommentResponse.fromJson(json)
+ CommentResponse.fromJson(List<dynamic> json)
   : riderview = json,error = "" ;
     
 

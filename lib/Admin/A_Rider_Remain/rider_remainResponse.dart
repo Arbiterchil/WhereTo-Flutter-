@@ -10,7 +10,7 @@ class RemainResponse {
 
   RemainResponse(this.retieveAlltransac, this.error);
 
- RemainResponse.fromJson(json)
+ RemainResponse.fromJson(List<dynamic> json)
   : retieveAlltransac = json,error = "" ;
     
 
