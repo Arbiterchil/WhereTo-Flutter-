@@ -98,7 +98,6 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
                     SizedBox(height: 20,),
                     Container(
                       height: 30,
-                      width: 90,
                       decoration: BoxDecoration(
                         color: Color(0xFF0C375B),
                         borderRadius: BorderRadius.all(Radius.circular(30))
