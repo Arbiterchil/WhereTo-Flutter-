@@ -37,6 +37,8 @@ class ListStactic extends StatefulWidget {
 class _ListStacticState extends State<ListStactic>
     with SingleTickerProviderStateMixin {
   MenuBloc menuBloc;
+  final PageStorageBucket _bucket = new PageStorageBucket();
+  final PageStorageKey key = new PageStorageKey("isLoad");
   Future<void> disposeBloc() async {
     menuBloc.dispose();
   }
@@ -194,58 +196,61 @@ class _ListStacticState extends State<ListStactic>
                             ),
                         ),
                           body: TabBarView(
-                            controller: tabController,
-                            children: datasnapshot.data.map<Widget>((Category category){
-                            return Padding(padding: EdgeInsets.only(top: 10),
-                            child: Container(
-                            child: FutureBuilder(
-                              future: MenuBloc().getRest(widget.nameRestau, category.id.toString()),
-                              builder: (context, snapshot){
-                                if(snapshot.hasData){
-                                  if(snapshot.data.length >0){
-                                    return ListView.builder(
-                                      itemCount: snapshot.data.length,
-                                      itemBuilder: (context, index){
-                                       if(snapshot.data.length >0){
-                                         return Padding(padding: EdgeInsets.all(15),
-                                          child: MenuBoxRestaurant(
-                                          image: snapshot.data[index].imagePath,
-                                          menuName: snapshot.data[index].menuName,
-                                          menuDescription: snapshot.data[index].description,
-                                          fixprice: double.parse(snapshot.data[index].price.toString()),
-                                          onTap: (){
-                                            BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(
-                                              name: snapshot.data[index].menuName,
-                                              description: snapshot.data[index].description,
-                                              price: double.parse(snapshot.data[index].price.toString()),
-                                              quantity: 1,
-                                              id: snapshot.data[index].menuId,
-                                              image: snapshot.data[index].imagePath,
-                                            )));
-                                          },
-                                        ),
-                                      );
-                                       }else{ 
-                                         return Container();
-                                       }
-                                    });
+                              controller: tabController,
+                              children: datasnapshot.data.map<Widget>((Category category){
+                              return Padding(padding: EdgeInsets.only(top: 10),
+                              child: Container(
+                              child: FutureBuilder(
+                                future: MenuBloc().getRest(widget.nameRestau, category.id.toString()),
+                                builder: (context, snapshot){
+                                  if(snapshot.hasData){
+                                    if(snapshot.data.length >0){
+                                      return ListView.builder(
+                                        cacheExtent: 9999,
+                                        itemCount: snapshot.data.length,
+                                        itemBuilder: (context, index){
+                                         if(snapshot.data.length >0){
+                                           return Padding(padding: EdgeInsets.all(15),
+                                            child: MenuBoxRestaurant(
+                                            image: snapshot.data[index].imagePath,
+                                            menuName: snapshot.data[index].menuName,
+                                            menuDescription: snapshot.data[index].description,
+                                            fixprice: double.parse(snapshot.data[index].price.toString()),
+                                            onTap: (){
+                                              BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(
+                                                name: snapshot.data[index].menuName,
+                                                description: snapshot.data[index].description,
+                                                price: double.parse(snapshot.data[index].price.toString()),
+                                                quantity: 1,
+                                                id: snapshot.data[index].menuId,
+                                                image: snapshot.data[index].imagePath,
+                                              )));
+                                            },
+                                          ),
+                                        );
+                                         }else{ 
+                                           return Container();
+                                         }
+                                      });
+                                    }else{
+                                      return Container();
+                                    }
                                   }else{
-                                    return Container();
+                                    return Center(
+                                    child: Container(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
                                   }
-                                }else{
-                                  return Center(
-                                  child: Container(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                );
-                                }
-                              },
-                            )
-                          ),
-                          ); 
-                            }).toList()
+                                },
+                              )
                             ),
-                      ), 
+                            ); 
+                              }).toList()
+                              ),
+                          ),
+                    
+                      
                       
                       );
                     }

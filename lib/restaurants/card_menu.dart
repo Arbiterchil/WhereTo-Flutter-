@@ -18,8 +18,17 @@ class MenuBoxRestaurant extends StatefulWidget {
 }
 
 class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
+
+
+  final PageStorageBucket _bucket = new PageStorageBucket();
+  final PageStorageKey key = new PageStorageKey("isLoad");
+
   @override
   Widget build(BuildContext context) {
+
+    setState(() {
+      PageStorage.of(context).writeState(context, "Load!", identifier: ValueKey(key));
+    });
     return Container(
       height:120,
       decoration: BoxDecoration(
@@ -114,15 +123,19 @@ class _MenuBoxRestaurantState extends State<MenuBoxRestaurant> {
               alignment: Alignment.centerRight,
               // child: Padding(
               //   padding: const EdgeInsets.only(top: 5,right: 20),
-                child: ExtendedImage.network(widget.image,
+                child: PageStorage(
+                  bucket: _bucket,
+                  key: key, 
+                  child: ExtendedImage.network(widget.image,
                   height: MediaQuery.of(context).size.height,
                   width: 120,
-                  fit: BoxFit.fill,
                   cache: true,
+                  fit: BoxFit.fill,
                   border: Border.all(color: Colors.white, width: 1.1),
                   shape: BoxShape.circle,
                   borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 )
+                  ),
                 // ),
             ),
             Align(

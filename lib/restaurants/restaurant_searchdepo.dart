@@ -217,7 +217,7 @@ String categ ="0";
                                   animType: AnimType.SCALE,
                                   dialogType: DialogType.INFO,
                                   title: "Location Not Available",
-                                  desc: "This app is only available in Tagum City for the mean time",
+                                  desc: "This app is only available in Tagum City for the meantime",
                                   btnOkText: "Comeback Later",
                                   btnOkColor: Color(0xFF0C375B),
                                   btnOkOnPress: () async {
@@ -351,22 +351,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                 scrollDirection: Axis.horizontal,
                 itemCount: nf.length,
                 itemBuilder: (context,index){
-                  ProgressDialog featuredRestaurant = ProgressDialog(context);
-                              featuredRestaurant.style(
-                                message: "Loading Restaurant Please Wait..",
-                                borderRadius: 10.0,
-                                backgroundColor: Colors.white,
-                                progressWidget: CircularProgressIndicator(),
-                                elevation: 10.0,
-                                insetAnimCurve: Curves.easeInExpo,
-                                progressTextStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: "Gilroy-light"
-                                )
-                              );
-                              featuredRestaurant =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
+                  
                    return Column(
                      children: <Widget>[
                        NewRestaurantBox(
@@ -375,7 +360,23 @@ Widget _views(NewRestaurantResponse newFeatured){
                          address: nf[index].address,
                          
                          onTap: () async{
-                           featuredRestaurant.show();
+                           ProgressDialog featuredRestaurant = ProgressDialog(context);
+                              featuredRestaurant.style(
+                                message: "Loading Restaurant Please Wait..",
+                                borderRadius: 10.0,
+                                backgroundColor: Colors.white,
+                                progressWidget: CircularProgressIndicator(),
+                                elevation: 10.0,
+                                insetAnimCurve: Curves.fastLinearToSlowEaseIn,
+                                progressTextStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: "Gilroy-light"
+                                )
+                              );
+                              featuredRestaurant =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
+                              featuredRestaurant.show();
                                 SharedPreferences local =
                                 await SharedPreferences.getInstance();
                                 var userjson = local.getString('user');

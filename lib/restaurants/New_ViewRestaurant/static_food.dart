@@ -16,18 +16,23 @@ class StaticFoodDisplay extends StatefulWidget {
 }
 
 class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
- 
+   final PageStorageBucket _bucket = new PageStorageBucket();
+   final PageStorageKey key = new PageStorageKey("persistent");
    @override
  
   @override
   Widget build(BuildContext context) {
-   
+    setState(() {
+        PageStorage.of(context).writeState(context, "Load!",);
+    });
       return Padding(
       padding: const EdgeInsets.all(7.0),
       child: GestureDetector(
         onTap: widget.onTap,
-        child: 
-            Container(
+        child: PageStorage(
+            bucket: _bucket,
+            key: key,
+            child: Container(
             height: 215,
             width: 235,
             decoration: BoxDecoration(
@@ -111,7 +116,7 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
               ],
             ),
           ),
-        
+        ),
       ),
     );
   }

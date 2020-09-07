@@ -46,22 +46,6 @@ class _FoodDisplayState extends State<FoodDisplay> {
                         child: StreamBuilder<List<IsFeatured>>(
                           stream: blocFeatured.stream,
                           builder: (context, snapshot){
-                              ProgressDialog featured = ProgressDialog(context);
-                              featured.style(
-                                message: "Loading Restaurant Please Wait..",
-                                borderRadius: 10.0,
-                                backgroundColor: Colors.white,
-                                progressWidget: CircularProgressIndicator(),
-                                elevation: 10.0,
-                                insetAnimCurve: Curves.easeInExpo,
-                                progressTextStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: "Gilroy-light"
-                                )
-                              );
-                              featured =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
                               if(snapshot.hasData){
                               if(snapshot.data.length >0){
                               return ListView.builder(
@@ -79,6 +63,22 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                   description: snapshot.data[index].categoryName,
                                   image: snapshot.data[index].imagePath,
                                   onTap: ()async{
+                              ProgressDialog featured = ProgressDialog(context);
+                              featured.style(
+                                message: "Loading Restaurant Please Wait..",
+                                borderRadius: 10.0,
+                                backgroundColor: Colors.white,
+                                progressWidget: CircularProgressIndicator(),
+                                elevation: 10.0,
+                                insetAnimCurve: Curves.fastLinearToSlowEaseIn,
+                                progressTextStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: "Gilroy-light"
+                                )
+                              );
+                              featured =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
                                   featured.show();
                                   SharedPreferences local =
                                   await SharedPreferences.getInstance();
