@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/AnCustom/send_helpID.dart';
 import 'package:WhereTo/AnCustom/send_validId.dart';
+import 'package:WhereTo/Rider/Tab_navi.dart';
 import 'package:WhereTo/Transaction/newView_MyOrder.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/Tab_naviUser.dart';
@@ -39,6 +40,16 @@ class _HomePageState extends State<HomePage> {
      "MyOrders":GlobalKey<NavigatorState>(),
    };
  int _selectedIndex = 0;
+ void _selectTab(String tabItem, int index) {
+    if(tabItem == _currentPage ){
+      _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
+    } else {
+      setState(() {
+        _currentPage = pageKeys[index];
+        _selectedIndex = index;
+      });
+    }
+  }
   var userData;
   String image;
   @override
@@ -140,14 +151,43 @@ void onTabTapped(int index) {
     });
   }
 
-
+ Widget _buildOffstageNavigator(String tabItem) {
+    return Offstage(
+      offstage: _currentPage != tabItem,
+      child: TabNavigator(
+        navigatorKey: _navigatorKeys[tabItem],
+        tabItem: tabItem,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
      return Scaffold(
       body: WillPopScope(
-        onWillPop: () async => false,
-        child: _child[_selectedIndex],
+       onWillPop: () async {
+        
+        final isFirstRouteInCurrentTab =
+            !await _navigatorKeys[_currentPage].currentState.maybePop();
+            
+        if (isFirstRouteInCurrentTab) {
+          if (_currentPage != "SearchRestaurant") {
+            _selectTab("SearchRestaurant", 1);
+            
+            return false;
+            
+          }
+          
+        }
+         return isFirstRouteInCurrentTab ?  UserDialog_Help.exit(context) : false ;
+       },
+       child: Stack(
+          children: <Widget>[ 
+            _buildOffstageNavigator("SearchRestaurant"),
+            _buildOffstageNavigator("MyOrders"),
+            _buildOffstageNavigator("UserProfile"),
+          ],
+        ),
 
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -158,8 +198,9 @@ void onTabTapped(int index) {
         unselectedItemColor: 
         Color(0xFF0C375B),
 
+        // currentIndex: _selectedIndex,
         currentIndex: _selectedIndex,
-        onTap: onTabTapped,
+        onTap: (int index) { _selectTab(pageKeys[index], index); },
         items: [
               BottomNavigationBarItem(
               icon: new Icon(Icons.view_list),

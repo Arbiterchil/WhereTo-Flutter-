@@ -55,6 +55,7 @@ class _RiderProfileState extends State<RiderProfile> {
       });
     }
   }
+  
 
   @override
   void initState() {
