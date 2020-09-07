@@ -32,12 +32,12 @@ class _HomePageState extends State<HomePage> {
  var idmine;
  var gethis;
  bool lace =false;
-   List<String> pageKeys = ["SearchRestaurant","UserProfile","MyOrders"];
+   List<String> pageKeys = ["SearchRestaurant","MyOrders","UserProfile"];
    Map<String,GlobalKey<NavigatorState>> _navigatorKeys =
     {
      "SearchRestaurant":GlobalKey<NavigatorState>(),
-     "UserProfile":GlobalKey<NavigatorState>(),
      "MyOrders":GlobalKey<NavigatorState>(),
+     "UserProfile":GlobalKey<NavigatorState>(),
    };
  int _selectedIndex = 0;
  void _selectTab(String tabItem, int index) {
@@ -145,16 +145,16 @@ builder: (context) => ValidIds(id: message,));
   ];
 
 
-void onTabTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+// void onTabTapped(int index) {
+//     setState(() {
+//       _selectedIndex = index;
+//     });
+//   }
 
  Widget _buildOffstageNavigator(String tabItem) {
     return Offstage(
       offstage: _currentPage != tabItem,
-      child: TabNavigator(
+      child: TabUserNav(
         navigatorKey: _navigatorKeys[tabItem],
         tabItem: tabItem,
       ),

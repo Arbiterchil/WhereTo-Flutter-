@@ -27,10 +27,11 @@ class TabUserNav extends StatelessWidget {
     
    if(tabItem == "SearchRestaurant")
       child = SearchDepo();
+   else if(tabItem == "UserProfile")
+      child = Profile();
     else if(tabItem == "MyOrders")
     child = MyNewViewOrder();
-       else if(tabItem == "UserProfile")
-      child = Profile();
+
     
     return Navigator(
       key: navigatorKey,
