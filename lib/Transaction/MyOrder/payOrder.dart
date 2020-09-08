@@ -423,7 +423,7 @@ class _PayOrderState extends State<PayOrder> {
                                               orders.hide();
                                                 DialogOrder().getDialog(context, "Order Succesfully Placed", "Order Success", Icons.check, Colors.black);
                                                 BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) =>HomePage()));
+                                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>HomePage()));
                                             }else{
                                             orders.hide();
                                              DialogOrder().getDialog(context, "Slow/No Internet Connection", "Order Failed", Icons.error, Color(0xFFFF3345));

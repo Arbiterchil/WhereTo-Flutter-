@@ -35,7 +35,7 @@ class ListStactic extends StatefulWidget {
 }
 
 class _ListStacticState extends State<ListStactic>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   MenuBloc menuBloc;
   final PageStorageBucket _bucket = new PageStorageBucket();
   final PageStorageKey key = new PageStorageKey("isLoad");
@@ -50,6 +50,11 @@ class _ListStacticState extends State<ListStactic>
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
