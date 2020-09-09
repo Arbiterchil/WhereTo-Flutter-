@@ -40,8 +40,9 @@ String categ ="0";
   @override
   void initState() {
     _getUserInfo();
-    super.initState();
     streamRestaurantsFeatured..getFeaturedViewRestaurant();
+    super.initState();
+    
   }
 
   @override
@@ -104,14 +105,31 @@ String categ ="0";
                   children: <Widget>[
                     NewCarousel(),
                   ],),
-                  
+                  SizedBox(height: 10,),
                 viewMenuFeaturedTitle(),
                 SizedBox(height: 10,),
                 FoodDisplay(),
                 SizedBox(height: 15,),
                 viewzRestaurantFeaturedTitle(),
                 SizedBox(height: 10,),
-                 streamRestu(),
+                 Padding(
+                  padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                  child: StreamBuilder<NewRestaurantResponse>(
+      stream: streamRestaurantsFeatured.subject.stream,
+      builder: (context , AsyncSnapshot<NewRestaurantResponse> snaphot){
+        if(snaphot.hasData){
+            if(snaphot.data.error !=null && snaphot.data.error.length > 0){
+                return _error(snaphot.data.error);
+            }
+              return _views(snaphot.data);
+        }else if(snaphot.hasError){
+              return _error(snaphot.error);
+        }else{
+              return _load();
+        }
+      },
+                ),
+                ),
                  SizedBox(height: 15,),
                   deliveryAdress(),
                    SizedBox(height: 10,),
@@ -360,29 +378,6 @@ String categ ="0";
     // );
   }
 
-  Widget streamRestu(){
-
-    return Padding(
-                  padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                  child: StreamBuilder<NewRestaurantResponse>(
-      stream: streamRestaurantsFeatured.subject.stream,
-      builder: (context , AsyncSnapshot<NewRestaurantResponse> snaphot){
-        if(snaphot.hasData){
-            if(snaphot.data.error !=null && snaphot.data.error.length > 0){
-                return _error(snaphot.data.error);
-            }
-              return _views(snaphot.data);
-        }else if(snaphot.hasError){
-              return _error(snaphot.error);
-        }else{
-              return _load();
-        }
-      },
-                ),
-                );
-
-  }
-
   Widget viewMenuFeaturedTitle(){
 
     return Padding(
@@ -398,9 +393,9 @@ String categ ="0";
         child: Text("Featured Food in Restaurants",
          style: TextStyle(
                             color: wheretoDark,
-                            fontWeight: FontWeight.w500,
+                             fontWeight: FontWeight.bold,
                             fontSize: 16.0,
-                            fontFamily: 'OpenSans'),
+                            fontFamily: 'Gilroy-ExtraBold'),
                       ),
         ),
     );
@@ -423,9 +418,9 @@ String categ ="0";
         child: Text("Featured Restaurants",
          style: TextStyle(
                             color: wheretoDark,
-                             fontWeight: FontWeight.w500,
+                             fontWeight: FontWeight.bold,
                             fontSize: 16.0,
-                            fontFamily: 'OpenSans'),
+                            fontFamily: 'Gilroy-ExtraBold'),
                       ),
         ),
     );
@@ -469,11 +464,11 @@ String categ ="0";
                                     Icons.search,
                                     color: wheretoDark,
                                   ),
-                                  hintText: "Search for Food",
+                                  hintText: "Search",
                                   hintStyle: TextStyle(
                                     color: wheretoDark,
                                     fontWeight: FontWeight.bold,
-                                    fontFamily: 'Gilroy-light'),
+                                    fontFamily: 'Gilroy-ExtraBold'),
                                 ),
                                 onTap: () {
                                   if(userData['address'].toString().contains("Tagum")){
@@ -583,7 +578,7 @@ String categ ="0";
                   style: TextStyle(
                           color: wheretoDark,
                           fontSize: 16,
-                          fontFamily: "OpenSans",
+                          fontFamily: "Gilroy-ExtraBold",
                           fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -592,7 +587,7 @@ String categ ="0";
                     Text(address ?? "" , style: TextStyle(
                   color:wheretoDark,
                   fontSize: 10,
-                  fontFamily: "OpenSans",
+                  fontFamily: "Gilroy-light",
                 ),),
                     ],
                   ),
