@@ -726,7 +726,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                   //   if (int.parse(formatNow.split(":")[0]) >=
                                   //       int.parse(formatOpen.split(":")[0])) {
                                     
-                                      Navigator.pushReplacement(
+                                      Navigator.push(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) => ListStactic(
