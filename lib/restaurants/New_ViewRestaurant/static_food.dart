@@ -7,9 +7,11 @@ class StaticFoodDisplay extends StatefulWidget {
   final String description;
   final String restaurantname; 
   final String image;
+  final String pricetag;
 
-  const StaticFoodDisplay({Key key, this.onTap, this.foodname, this.description, this.restaurantname, this.image}) : super(key: key);
+  const StaticFoodDisplay({Key key, this.onTap, this.foodname, this.description, this.restaurantname, this.image, this.pricetag}) : super(key: key);
 
+ 
   
   @override
   _StaticFoodDisplayState createState() => _StaticFoodDisplayState();
@@ -60,19 +62,37 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
             ),
             child: Stack(
               children: <Widget>[
+               
                 Container(
                   height: 215,
                 width: 235,
                 decoration: BoxDecoration(
                    borderRadius: BorderRadius.circular(20.0),
                   gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
                       colors: [
-                        Colors.black.withOpacity(.5),
-                        Colors.white.withOpacity(.0),
+                        Colors.black.withOpacity(.4),
+                        Colors.white.withOpacity(.2),
 
-                      ]),
+                      ],
+                      stops: [0.4,2],
+                      )
+                      ,
                 ),
+                ),
+                 Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(padding: const EdgeInsets.only(bottom: 10,right: 10),
+                  child: Text(widget.pricetag.toString(),
+                   style: TextStyle(
+                              color:Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                      fontFamily: 'Gilroy-ExtraBold' 
+                          ),
+                  ),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.topRight,
@@ -93,7 +113,7 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    height: 70,
+                    height: 80,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       // borderRadius: BorderRadius.only(
@@ -108,25 +128,28 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(widget.foodname,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color:Colors.white,
                                   fontWeight: FontWeight.bold,
-                                      fontSize: 14.0,
+                                      fontSize: 17.0,
                                       fontFamily: 'Gilroy-ExtraBold' 
                           ),),
                           SizedBox(height: 5.0,),
                           Text(widget.description,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color:Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                      fontSize: 8.0,
-                                      fontFamily: 'Gilroy-light' 
+                                  fontWeight: FontWeight.bold,
+                                      fontSize: 10.0,
+                                      fontFamily: 'Gilroy-ExtraBold' 
                           ),),
                            SizedBox(height: 5.0,),
                           Text(widget.restaurantname,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color:Colors.white,
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FontWeight.bold,
                                       fontSize: 10.0,
                                       fontFamily: 'Gilroy-light' 
                           ),),

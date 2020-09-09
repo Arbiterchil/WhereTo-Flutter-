@@ -59,6 +59,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                   bucket: _bucket,
                                   key: key,
                                   child: StaticFoodDisplay(
+                                  pricetag: "P ?.00",
                                   restaurantname: snapshot.data[index].restaurantName,
                                   foodname: snapshot.data[index].menuName,
                                   description: snapshot.data[index].categoryName,

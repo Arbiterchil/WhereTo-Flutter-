@@ -87,13 +87,15 @@ String categ ="0";
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      logoutIcon(),
+                      SizedBox(width: 10,),
                       cirlceLoaction(),
                       SizedBox(width: 10,),
                       Expanded(
                         child: textbarSearch()
                         ),
                         SizedBox(width: 10,),
-                      logoutIcon()
+                      
                     ],
                   ),
                   
@@ -130,7 +132,7 @@ String categ ="0";
                 ),
                 ),
                  SizedBox(height: 15,),
-                  deliveryAdress(),
+                //   deliveryAdress(),
                    SizedBox(height: 10,),
                  Divider(
                   height: 6.0,
@@ -141,7 +143,8 @@ String categ ="0";
                 ),
                 SizedBox(height: 20,),
                 
-                // SharedPrefCallnameData(),
+                SharedPrefCallnameData(),
+                 SizedBox(height: 10,),
               ],
             ),
           ),
@@ -437,8 +440,8 @@ String categ ="0";
                                  boxShadow: [
                              BoxShadow(
                                color: Colors.grey[200],
-                               spreadRadius: 1.1,
-                               blurRadius: 2.2
+                               spreadRadius: 3.3,
+                               blurRadius: 3.3
                              ),
                            ],
                           // border: Border.all(
@@ -508,15 +511,15 @@ String categ ="0";
            boxShadow: [
                              BoxShadow(
                                color: Colors.grey[200],
-                               spreadRadius: 1.1,
-                               blurRadius: 2.2
+                               spreadRadius: 3.3,
+                               blurRadius: 3.3
                              ),
                            ],
         ),
         child:  Icon(
                       Icons.exit_to_app,
                       color: Color(0xFF0C375B),
-                      size: 20,
+                      size: 30,
                     ),
       ),
     );
@@ -535,8 +538,8 @@ String categ ="0";
          boxShadow: [
                              BoxShadow(
                                color: Colors.grey[200],
-                               spreadRadius: 1.1,
-                               blurRadius: 2.2
+                               spreadRadius: 3.3,
+                               blurRadius: 3.3
                              ),
                            ],
       ),
@@ -544,7 +547,7 @@ String categ ="0";
         icon: 
         Icon(
           Icons.location_on
-          ,size: 20,
+          ,size: 30,
           ), onPressed: (){
             setState(() {
               isLoc =true;
