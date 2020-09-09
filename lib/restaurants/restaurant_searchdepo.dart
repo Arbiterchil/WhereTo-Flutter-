@@ -117,10 +117,10 @@ String categ ="0";
                    SizedBox(height: 10,),
                  Divider(
                   height: 6.0,
-                  thickness: 2,
+                  thickness: 1,
                   color: wheretoDark,
-                  indent: 90.0,
-                  endIndent: 90.0,
+                  indent: 60.0,
+                  endIndent: 60.0,
                 ),
                 SizedBox(height: 20,),
                 
@@ -392,17 +392,17 @@ String categ ="0";
         width: 190,
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: wheretoDark,
-          )
+          // border: Border.all(
+          //   width: 1,
+          //   color: wheretoDark,
+          // )
         ),
         child: Text("Featured Food in Restaurants",
          style: TextStyle(
                             color: wheretoDark,
                             fontWeight: FontWeight.bold,
                             fontSize: 12.0,
-                            fontFamily: 'Gilroy-light'),
+                            fontFamily: 'OpenSans'),
                       ),
         ),
     );
@@ -419,17 +419,17 @@ String categ ="0";
         width: 150,
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: wheretoDark,
-          )
+          // border: Border.all(
+          //   width: 1,
+          //   color: wheretoDark,
+          // )
         ),
         child: Text("Featured Restaurants",
          style: TextStyle(
                             color: wheretoDark,
                             fontWeight: FontWeight.bold,
                             fontSize: 12.0,
-                            fontFamily: 'Gilroy-light'),
+                            fontFamily: 'OpenSans'),
                       ),
         ),
     );
@@ -587,7 +587,7 @@ String categ ="0";
                   style: TextStyle(
                           color: wheretoDark,
                           fontSize: 16,
-                          fontFamily: "Gilroy-light",
+                          fontFamily: "OpenSans",
                           fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -595,8 +595,8 @@ String categ ="0";
                     SizedBox(height: 10,),
                     Text(address ?? "" , style: TextStyle(
                   color:wheretoDark,
-                  fontSize: 12,
-                  fontFamily: "Gilroy-ExtraBold",
+                  fontSize: 10,
+                  fontFamily: "OpenSans",
                 ),),
                     ],
                   ),
