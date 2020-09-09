@@ -39,10 +39,9 @@ String categ ="0";
 
   @override
   void initState() {
+    super.initState();
     _getUserInfo();
     streamRestaurantsFeatured..getFeaturedViewRestaurant();
-    super.initState();
-    
   }
 
   @override
@@ -175,29 +174,29 @@ String categ ="0";
     //         child: GestureDetector(
     //             child: Column(
     //               children: [
-              //     Text(
-              //   "Delivery Address",
-              //   style: TextStyle(
-              //       color: Colors.white,
-              //       fontSize: 12,
-              //       fontFamily: "Gilroy-light",
-              //       fontWeight: FontWeight.bold),
-              //     ),
-              //     Text(address ?? "" , style: TextStyle(
-              //   color: Colors.white,
-              //   fontSize: 10,
-              //   fontFamily: "Gilroy-light",
-              //   fontWeight: FontWeight.bold
-              // ),),
-              //     ],
-              //   ),
-              // onTap: (){
-              //   setState(() {
-              //     isLoc=false;
-              //   });
-              //   // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
-              // },
-              // ),
+    //               Text(
+    //             "Delivery Address",
+    //             style: TextStyle(
+    //                 color: Colors.white,
+    //                 fontSize: 12,
+    //                 fontFamily: "Gilroy-light",
+    //                 fontWeight: FontWeight.bold),
+    //               ),
+    //               Text(address ?? "" , style: TextStyle(
+    //             color: Colors.white,
+    //             fontSize: 10,
+    //             fontFamily: "Gilroy-light",
+    //             fontWeight: FontWeight.bold
+    //           ),),
+    //               ],
+    //             ),
+    //           onTap: (){
+    //             setState(() {
+    //               isLoc=false;
+    //             });
+    //             // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
+    //           },
+    //           ),
 
     //       ),
     //     ),

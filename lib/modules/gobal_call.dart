@@ -106,7 +106,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                                 
                            Text(userData!= null ? '${userData['name']}':  'Fail get data.',
                                                     style: TextStyle(
-                                                    color: wheretoDark,
+                                                    color: pureblue,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16.0,
                                                     fontFamily: 'Gilroy-ExtraBold'
@@ -115,7 +115,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                                                     SizedBox(height: 2,),
                                                     Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
                                                     style: TextStyle(
-                                                    color: wheretoDark,
+                                                    color: pureblue,
                                                     fontWeight: FontWeight.normal,
                                                     fontSize: 10.0,
                                                     fontFamily: 'Gilroy-light'
@@ -163,7 +163,7 @@ class NCard extends StatelessWidget {
         // decoration: eBox,
         child: Row(
           children: <Widget>[
-            Icon(icon,color: wheretoDark,size: 15.0,),
+            Icon(icon,color: pureblue,size: 15.0,),
             SizedBox(width: 7.0,),
         
              Flexible(
@@ -176,7 +176,7 @@ class NCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: TextStyle(
-                        color: wheretoDark,
+                        color: pureblue,
                         fontWeight: FontWeight.w700,
                         fontSize: 12.0,
                         fontFamily: 'Gilroy-light'
