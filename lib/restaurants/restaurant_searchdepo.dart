@@ -108,11 +108,11 @@ String categ ="0";
                 viewMenuFeaturedTitle(),
                 SizedBox(height: 10,),
                 FoodDisplay(),
-                SizedBox(height: 25,),
+                SizedBox(height: 15,),
                 viewzRestaurantFeaturedTitle(),
                 SizedBox(height: 10,),
                  streamRestu(),
-                 SizedBox(height: 25,),
+                 SizedBox(height: 15,),
                   deliveryAdress(),
                    SizedBox(height: 10,),
                  Divider(
@@ -388,8 +388,6 @@ String categ ="0";
     return Padding(
       padding: const EdgeInsets.only(left: 5.0,right: 5.0),
       child: Container(
-        height: 30,
-        width: 190,
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           // border: Border.all(
@@ -400,8 +398,8 @@ String categ ="0";
         child: Text("Featured Food in Restaurants",
          style: TextStyle(
                             color: wheretoDark,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.0,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
                             fontFamily: 'OpenSans'),
                       ),
         ),
@@ -415,8 +413,6 @@ String categ ="0";
     return Padding(
       padding: const EdgeInsets.only(left: 5.0,right: 5.0),
       child: Container(
-        height: 30,
-        width: 150,
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           // border: Border.all(
@@ -427,8 +423,8 @@ String categ ="0";
         child: Text("Featured Restaurants",
          style: TextStyle(
                             color: wheretoDark,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.0,
+                             fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
                             fontFamily: 'OpenSans'),
                       ),
         ),
