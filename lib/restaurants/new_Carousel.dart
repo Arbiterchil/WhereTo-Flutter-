@@ -70,6 +70,7 @@ class _NewCarouselState extends State<NewCarousel> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 180,
       // decoration: BoxDecoration(
       //   borderRadius: BorderRadius.only(
       //             bottomLeft: Radius.circular(50),
@@ -86,40 +87,59 @@ class _NewCarouselState extends State<NewCarousel> {
                 back();
               }
             } ,
-              child: Container(
-              height: 140,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(restau[currentIndex][0]),
-                  fit:  BoxFit.fill,
-                  ),
-              ),
-              child: Container(
-                // decoration: BoxDecoration(
-                //   gradient: LinearGradient(
-                //     begin: Alignment.bottomRight,
-                //     colors: [
-                //       Colors.white.withOpacity(.9),
-                //       Colors.grey.withOpacity(.0)
-                //     ])
-                // ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      width: 90,
-                      margin: EdgeInsets.only(bottom: 30),
-                      child: Row(
-                        children: buildindicators(),
-                      ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5.0,right: 5.0),
+                child: Container(
+                height: 140,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  //  boxShadow: [
+                  //            BoxShadow(
+                  //              color: Colors.grey[200],
+                  //              spreadRadius: 1.1,
+                  //              blurRadius: 2.2
+                  //            ),
+                  //          ],
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  image: DecorationImage(
+                    image: NetworkImage(restau[currentIndex][0]),
+                    fit:  BoxFit.fill,
                     ),
-                  ],
                 ),
-              ),
+                // child: Container(
+                //   // decoration: BoxDecoration(
+                //   //   gradient: LinearGradient(
+                //   //     begin: Alignment.bottomRight,
+                //   //     colors: [
+                //   //       Colors.white.withOpacity(.9),
+                //   //       Colors.grey.withOpacity(.0)
+                //   //     ])
+                //   // ),
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.end,
+                //     children: <Widget>[
+                     
+                //     ],
+                //   ),
+                // ),
           ),
+              ),
             
           ),
+          SizedBox(height: 10,),
+           Padding(
+            padding: const EdgeInsets.only(left: 5.0,right: 5.0),
+             child: Container(
+               width: MediaQuery.of(context).size.width,
+               child: Container(
+                            width: 30,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: buildindicators(),
+                            ),
+                          ),
+             ),
+           ),
           //  Padding(
           //    padding: const EdgeInsets.only(right: 80),
           //    child: Transform.translate(
@@ -219,11 +239,11 @@ class _NewCarouselState extends State<NewCarousel> {
 
     return Flexible(
       child: Container(
-        height: 4,
+        height: 5,
         margin: EdgeInsets.only(right: 5),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(40),
-          color: isture ?  Colors.amberAccent: Colors.white
+          // borderRadius: BorderRadius.circular(40),
+          color: isture ? wheretoDark:  Colors.amberAccent
         ),
       ),
     );

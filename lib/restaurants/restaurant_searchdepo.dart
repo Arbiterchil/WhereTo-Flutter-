@@ -46,7 +46,6 @@ String categ ="0";
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     streamRestaurantsFeatured..drainStream();
   }
@@ -72,6 +71,66 @@ String categ ="0";
 
   @override
   Widget build(BuildContext context) {
+
+    return Scaffold(
+      backgroundColor: Colors.grey[50],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(top:8.0,left: 10.0,right: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      cirlceLoaction(),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: textbarSearch()
+                        ),
+                        SizedBox(width: 10,),
+                      logoutIcon()
+                    ],
+                  ),
+                  
+                ),
+                SizedBox(height: 20,),
+                
+                 Stack(
+                  children: <Widget>[
+                    NewCarousel(),
+                  ],),
+                  
+                viewMenuFeaturedTitle(),
+                SizedBox(height: 10,),
+                FoodDisplay(),
+                SizedBox(height: 25,),
+                viewzRestaurantFeaturedTitle(),
+                SizedBox(height: 10,),
+                 streamRestu(),
+                 SizedBox(height: 25,),
+                  deliveryAdress(),
+                   SizedBox(height: 10,),
+                 Divider(
+                  height: 6.0,
+                  thickness: 2,
+                  color: wheretoDark,
+                  indent: 90.0,
+                  endIndent: 90.0,
+                ),
+                SizedBox(height: 20,),
+                
+                // SharedPrefCallnameData(),
+              ],
+            ),
+          ),
+        )),
+    );
+
     // var connectionStatus =Provider.of<ConnectivityStatus>(context);
     // if(connectionStatus ==ConnectivityStatus.Wifi){
     //   asuka.showSnackBar(SnackBar(content: Text("Connected",style: TextStyle(
@@ -88,104 +147,321 @@ String categ ="0";
     //     color: Colors.orange
     //   ),)));
     // }
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: pureblue,
-        title: Padding(
-          padding: EdgeInsets.only(left: 0),
-          child: Container(
-            width: MediaQuery.of(context).size.width*0.8,
-            child: GestureDetector(
-                child: Column(
-                  children: [
-                  Text(
-                "Delivery Address",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontFamily: "Gilroy-light",
-                    fontWeight: FontWeight.bold),
-                  ),
-                  Text(address ?? "" , style: TextStyle(
-                color: Colors.white,
-                fontSize: 10,
-                fontFamily: "Gilroy-light",
-                fontWeight: FontWeight.bold
-              ),),
-                  ],
-                ),
-              onTap: (){
-                setState(() {
-                  isLoc=false;
-                });
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
-              },
-              ),
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     backgroundColor: pureblue,
+    //     title: Padding(
+    //       padding: EdgeInsets.only(left: 0),
+    //       child: Container(
+    //         width: MediaQuery.of(context).size.width*0.8,
+    //         child: GestureDetector(
+    //             child: Column(
+    //               children: [
+              //     Text(
+              //   "Delivery Address",
+              //   style: TextStyle(
+              //       color: Colors.white,
+              //       fontSize: 12,
+              //       fontFamily: "Gilroy-light",
+              //       fontWeight: FontWeight.bold),
+              //     ),
+              //     Text(address ?? "" , style: TextStyle(
+              //   color: Colors.white,
+              //   fontSize: 10,
+              //   fontFamily: "Gilroy-light",
+              //   fontWeight: FontWeight.bold
+              // ),),
+              //     ],
+              //   ),
+              // onTap: (){
+              //   setState(() {
+              //     isLoc=false;
+              //   });
+              //   // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
+              // },
+              // ),
 
-          ),
+    //       ),
+    //     ),
+    //     leading: Padding(
+    //       padding: EdgeInsets.only(left: 0),
+    //       child: IconButton(icon: Icon(Icons.location_on), onPressed: (){
+    //         setState(() {
+    //           isLoc =true;
+    //         });
+    //       }),
+    //     ),
+    //     actions: [
+    //       Padding(
+    //         padding: const EdgeInsets.only(right: 10),
+    //         child: GestureDetector(
+    //           onTap: () => UserDialog_Help.exit(context),
+    //           child: Container(
+    //             height: 30,
+    //             width: 30,
+    //             decoration: BoxDecoration(
+    //               shape: BoxShape.circle,
+    //               color: Colors.white,
+    //             ),
+    //             child: Center(
+    //               child: Icon(
+    //                 Icons.exit_to_app,
+    //                 color: Color(0xFF0C375B),
+    //                 size: 20,
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    //   key: scaffoldKey,
+    //   body: WillPopScope(
+    //     onWillPop: () async => false,
+    //     child: SafeArea(
+    //       child: SingleChildScrollView(
+    //         physics: AlwaysScrollableScrollPhysics(),
+    //         child: Column(
+    //           crossAxisAlignment: CrossAxisAlignment.start,
+    //           children: <Widget>[
+    //             Stack(
+    //               children: <Widget>[
+    //                 NewCarousel(),
+    //               ],
+    //             ),
+    //             // SizedBox(height: 20,),
+    //             Padding(
+    //               padding: const EdgeInsets.only(left: 0,right: 0),
+    //               child: Container(
+    //                           height: 50.0,
+    //                           decoration: BoxDecoration(
+    //                             color: pureblue,
+    //                             // Colors.white.withOpacity(0.80),
+    //                             // borderRadius: BorderRadius.circular(30.0),
+    //                           ),
+    //                           alignment: Alignment.centerLeft,
+    //                           child: TextField(
+    //                             readOnly: true,
+    //                             showCursor: false,
+    //                             style: TextStyle(
+    //                                 color: Colors.white,
+    //                                 fontWeight: FontWeight.bold,
+    //                                 fontFamily: 'Gilroy-light'),
+    //                             decoration: InputDecoration(
+    //                               border: InputBorder.none,
+    //                               contentPadding: const EdgeInsets.only(
+    //                                 top: 15.0,
+    //                               ),
+    //                               prefixIcon: Icon(
+    //                                 Icons.search,
+    //                                 color:  Colors.white,
+    //                               ),
+    //                               hintText: "Search for Food",
+    //                               hintStyle: TextStyle(
+    //                                 color: Colors.white,
+    //                                 fontWeight: FontWeight.bold,
+    //                                 fontFamily: 'Gilroy-light'),
+    //                             ),
+    //                             onTap: () {
+    //                               if(userData['address'].toString().contains("Tagum")){
+    //                               //   Navigator.push(context,
+    //                               //     MaterialPageRoute(builder: (context) {
+    //                               //   return SearchResto();
+    //                               // }));
+    //                               showSearch(context: context, delegate: CustomSearch());
+    //                               }else{
+    //                               AwesomeDialog(
+    //                               context: context,
+    //                               headerAnimationLoop: false,
+    //                               animType: AnimType.SCALE,
+    //                               dialogType: DialogType.INFO,
+    //                               title: "Location Not Available",
+    //                               desc: "This app is only available in Tagum City for the meantime",
+    //                               btnOkText: "Comeback Later",
+    //                               btnOkColor: Color(0xFF0C375B),
+    //                               btnOkOnPress: () async {
+    //                               Navigator.pop(context);
+    //                               }).show();
+    //                               }
+                                  
+    //                             },
+    //                           )),
+    //             ),
+    //             SizedBox(height: 20,),
+    //             Padding(
+    //               padding: const EdgeInsets.only(left: 10,right: 10,),
+    //               child: SharedPrefCallnameData(),
+    //             ),
+                
+    //             SizedBox(height: 40,),
+    //             Padding(
+    //               padding: const EdgeInsets.only(left: 20, right: 20),
+    //               child: Container(
+    //                 width: 300,
+    //                 height: 20,
+    //                 child: Text(
+    //                   "Featured Food in Restaurants",
+    //                   style: TextStyle(
+    //                       color: pureblue,
+    //                       fontWeight: FontWeight.bold,
+    //                       fontSize: 16.0,
+    //                       fontFamily: 'Gilroy-light'),
+    //                 ),
+    //               ),
+    //             ),
+    //             SizedBox(
+    //               height: 10,
+    //             ),
+    //             FoodDisplay(),
+    //             SizedBox(
+    //               height: 30,
+    //             ),
+    //             Padding(
+    //               padding: const EdgeInsets.only(left: 20, right: 20),
+    //               child: Container(
+    //                 width: 200,
+    //                 height: 20,
+    //                 child: Text(
+    //                   "Featured Restaurants",
+    //                   style: TextStyle(
+    //                       color:pureblue,
+    //                       fontWeight: FontWeight.bold,
+    //                       fontSize: 16.0,
+    //                       fontFamily: 'Gilroy-light'),
+    //                 ),
+    //               ),
+    //             ),
+    //             SizedBox(
+    //               height: 5.0,
+    //             ),
+    //             Padding(
+    //               padding: const EdgeInsets.only(left: 10, right: 10),
+    //               child: StreamBuilder<NewRestaurantResponse>(
+    //   stream: streamRestaurantsFeatured.subject.stream,
+    //   builder: (context , AsyncSnapshot<NewRestaurantResponse> snaphot){
+    //     if(snaphot.hasData){
+    //         if(snaphot.data.error !=null && snaphot.data.error.length > 0){
+    //             return _error(snaphot.data.error);
+    //         }
+    //           return _views(snaphot.data);
+    //     }else if(snaphot.hasError){
+    //           return _error(snaphot.error);
+    //     }else{
+    //           return _load();
+    //     }
+    //   },
+    //             ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
+  }
+
+  Widget streamRestu(){
+
+    return Padding(
+                  padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                  child: StreamBuilder<NewRestaurantResponse>(
+      stream: streamRestaurantsFeatured.subject.stream,
+      builder: (context , AsyncSnapshot<NewRestaurantResponse> snaphot){
+        if(snaphot.hasData){
+            if(snaphot.data.error !=null && snaphot.data.error.length > 0){
+                return _error(snaphot.data.error);
+            }
+              return _views(snaphot.data);
+        }else if(snaphot.hasError){
+              return _error(snaphot.error);
+        }else{
+              return _load();
+        }
+      },
+                ),
+                );
+
+  }
+
+  Widget viewMenuFeaturedTitle(){
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 5.0,right: 5.0),
+      child: Container(
+        height: 30,
+        width: 190,
+        padding: EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: wheretoDark,
+          )
         ),
-        leading: Padding(
-          padding: EdgeInsets.only(left: 0),
-          child: IconButton(icon: Icon(Icons.location_on), onPressed: (){
-            setState(() {
-              isLoc =true;
-            });
-          }),
+        child: Text("Featured Food in Restaurants",
+         style: TextStyle(
+                            color: wheretoDark,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.0,
+                            fontFamily: 'Gilroy-light'),
+                      ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: GestureDetector(
-              onTap: () => UserDialog_Help.exit(context),
-              child: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.exit_to_app,
-                    color: Color(0xFF0C375B),
-                    size: 20,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      key: scaffoldKey,
-      body: WillPopScope(
-        onWillPop: () async => false,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    NewCarousel(),
-                  ],
-                ),
-                // SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 0,right: 0),
-                  child: Container(
+    );
+  
+
+  }
+
+   Widget viewzRestaurantFeaturedTitle(){
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 5.0,right: 5.0),
+      child: Container(
+        height: 30,
+        width: 150,
+        padding: EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: wheretoDark,
+          )
+        ),
+        child: Text("Featured Restaurants",
+         style: TextStyle(
+                            color: wheretoDark,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.0,
+                            fontFamily: 'Gilroy-light'),
+                      ),
+        ),
+    );
+  
+
+  }
+
+  Widget textbarSearch(){
+    return Container(
                               height: 50.0,
                               decoration: BoxDecoration(
-                                color: pureblue,
+                                color:Colors.white,
                                 // Colors.white.withOpacity(0.80),
-                                // borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(30.0),
+                                 boxShadow: [
+                             BoxShadow(
+                               color: Colors.grey[200],
+                               spreadRadius: 1.1,
+                               blurRadius: 2.2
+                             ),
+                           ],
+                          // border: Border.all(
+                          //   width: 1,
+                          //   color: wheretoDark,
+                          // ),
                               ),
                               alignment: Alignment.centerLeft,
                               child: TextField(
                                 readOnly: true,
                                 showCursor: false,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: wheretoDark,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Gilroy-light'),
                                 decoration: InputDecoration(
@@ -195,11 +471,11 @@ String categ ="0";
                                   ),
                                   prefixIcon: Icon(
                                     Icons.search,
-                                    color:  Colors.white,
+                                    color: wheretoDark,
                                   ),
                                   hintText: "Search for Food",
                                   hintStyle: TextStyle(
-                                    color: Colors.white,
+                                    color: wheretoDark,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Gilroy-light'),
                                 ),
@@ -226,80 +502,117 @@ String categ ="0";
                                   }
                                   
                                 },
-                              )),
-                ),
-                SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10,right: 10,),
-                  child: SharedPrefCallnameData(),
-                ),
-                
-                SizedBox(height: 40,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Container(
-                    width: 300,
-                    height: 20,
-                    child: Text(
-                      "Featured Food in Restaurants",
-                      style: TextStyle(
-                          color: pureblue,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                          fontFamily: 'Gilroy-light'),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                FoodDisplay(),
-                SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Container(
-                    width: 200,
-                    height: 20,
-                    child: Text(
-                      "Featured Restaurants",
-                      style: TextStyle(
-                          color:pureblue,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                          fontFamily: 'Gilroy-light'),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: StreamBuilder<NewRestaurantResponse>(
-      stream: streamRestaurantsFeatured.subject.stream,
-      builder: (context , AsyncSnapshot<NewRestaurantResponse> snaphot){
-        if(snaphot.hasData){
-            if(snaphot.data.error !=null && snaphot.data.error.length > 0){
-                return _error(snaphot.data.error);
-            }
-              return _views(snaphot.data);
-        }else if(snaphot.hasError){
-              return _error(snaphot.error);
-        }else{
-              return _load();
-        }
-      },
-                ),
-                ),
-              ],
-            ),
-          ),
+                              )
+                );
+  }
+
+  Widget logoutIcon(){
+    return GestureDetector(
+      onTap: () => UserDialog_Help.exit(context),
+      child: Container(
+        height: 50,
+      width: 50,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+           boxShadow: [
+                             BoxShadow(
+                               color: Colors.grey[200],
+                               spreadRadius: 1.1,
+                               blurRadius: 2.2
+                             ),
+                           ],
         ),
+        child:  Icon(
+                      Icons.exit_to_app,
+                      color: Color(0xFF0C375B),
+                      size: 20,
+                    ),
       ),
     );
+
+
   }
+
+  Widget cirlceLoaction(){
+
+    return Container(
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+         boxShadow: [
+                             BoxShadow(
+                               color: Colors.grey[200],
+                               spreadRadius: 1.1,
+                               blurRadius: 2.2
+                             ),
+                           ],
+      ),
+      child: IconButton(
+        icon: 
+        Icon(
+          Icons.location_on
+          ,size: 20,
+          ), onPressed: (){
+            setState(() {
+              isLoc =true;
+            });
+          }),
+    );
+
+  }
+
+  Widget deliveryAdress(){
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 10,right: 10),
+      child: Container(
+              width: MediaQuery.of(context).size.width*0.8,
+              child: GestureDetector(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    Container(
+                       height: 20,
+        decoration: BoxDecoration(
+          // border: Border.all(
+          //   width: 1,
+          //   color: wheretoDark
+          // ),
+        ),
+                        child: Text(
+                  "Delivery Address : ",
+                  style: TextStyle(
+                          color: wheretoDark,
+                          fontSize: 16,
+                          fontFamily: "Gilroy-light",
+                          fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    
+                    SizedBox(height: 10,),
+                    Text(address ?? "" , style: TextStyle(
+                  color:wheretoDark,
+                  fontSize: 12,
+                  fontFamily: "Gilroy-ExtraBold",
+                ),),
+                    ],
+                  ),
+                onTap: (){
+                  setState(() {
+                    isLoc=false;
+                  });
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
+                },
+                ),
+
+            ),
+    );
+    
+  }
+
   Widget _load(){
       return Center(
         child: Column(

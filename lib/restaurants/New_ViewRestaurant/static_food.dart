@@ -37,6 +37,14 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
             width: 235,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
+
+                    // gradient: LinearGradient(
+                    //   begin: Alignment.bottomCenter,
+                    //   colors: [
+                    //     Colors.white.withOpacity(.9),
+                    //     Colors.grey.withOpacity(.0)
+                    //   ]),
+                  
               image: DecorationImage(
                 image: NetworkImage(widget.image),
                 fit: BoxFit.cover
@@ -52,6 +60,20 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
             ),
             child: Stack(
               children: <Widget>[
+                Container(
+                  height: 215,
+                width: 235,
+                decoration: BoxDecoration(
+                   borderRadius: BorderRadius.circular(20.0),
+                  gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withOpacity(.5),
+                        Colors.white.withOpacity(.0),
+
+                      ]),
+                ),
+                ),
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
@@ -74,11 +96,11 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
                     height: 70,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(50),
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),),
-                      color: pureblue,
+                      // borderRadius: BorderRadius.only(
+                      //   topRight: Radius.circular(50),
+                      //   bottomLeft: Radius.circular(20),
+                      //   bottomRight: Radius.circular(20),),
+                      // color: pureblue,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
