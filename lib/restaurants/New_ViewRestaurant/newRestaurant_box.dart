@@ -47,14 +47,14 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
                 decoration: BoxDecoration(
                    borderRadius: BorderRadius.circular(20.0),
                    gradient: LinearGradient(
-                      begin: Alignment.bottomLeft,
+                      begin: Alignment.bottomCenter,
                       end: Alignment.topRight,
                       colors: [
-                        Colors.black.withOpacity(.4),
-                        Colors.white.withOpacity(.2),
+                       Colors.black.withOpacity(.5),
+                        Colors.white.withOpacity(.0),
 
                       ],
-                      stops: [0.4,2],
+                      stops: [0.3,2.5],
                       )
                       ,
                 ),

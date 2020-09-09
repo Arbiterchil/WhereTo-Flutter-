@@ -630,7 +630,7 @@ String categ ="0";
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Error :  $error")
+                Text("Come Back Later.")
               ],
             ),
           );
