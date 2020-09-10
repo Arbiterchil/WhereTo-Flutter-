@@ -8,6 +8,7 @@ import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/Transaction/SearchMenu/newSearch.dart';
 import 'package:WhereTo/Transaction/SearchMenu/search.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/googlemap_address.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWStream_response.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_class.dart';
@@ -118,7 +119,7 @@ String categ ="0";
                 setState(() {
                   isLoc=false;
                 });
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MapAdress()));
               },
               ),
 
