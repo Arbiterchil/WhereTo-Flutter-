@@ -50,6 +50,13 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                              width: 80,
                              decoration: BoxDecoration(
                                shape: BoxShape.circle,
+                                boxShadow: [
+                             BoxShadow(
+                               color: Colors.grey[200],
+                               spreadRadius: 1.1,
+                               blurRadius: 2.2
+                             ),
+                           ],
                                image: DecorationImage(
                                  image: NetworkImage(getImage),
                                  fit: BoxFit.cover),
@@ -61,6 +68,13 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                              width: 80,
                              decoration: BoxDecoration(
                                shape: BoxShape.circle,
+                                boxShadow: [
+                             BoxShadow(
+                               color: Colors.grey[200],
+                               spreadRadius: 1.1,
+                               blurRadius: 2.2
+                             ),
+                           ],
                                image: DecorationImage(
                                  image: AssetImage('asset/img/logo.png'),
                                  fit: BoxFit.cover),

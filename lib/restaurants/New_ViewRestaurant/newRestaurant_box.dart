@@ -41,17 +41,35 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
           ),
           child: Stack(
             children: <Widget>[
+               Container(
+                height: 195,
+          width: 145,
+                decoration: BoxDecoration(
+                   borderRadius: BorderRadius.circular(20.0),
+                   gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topRight,
+                      colors: [
+                       Colors.black.withOpacity(.5),
+                        Colors.white.withOpacity(.0),
+
+                      ],
+                      stops: [0.3,2.5],
+                      )
+                      ,
+                ),
+                ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   height: 60,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(50),
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),),
-                    color: pureblue,
+                    // borderRadius: BorderRadius.only(
+                    //   topRight: Radius.circular(50),
+                    //   bottomLeft: Radius.circular(20),
+                    //   bottomRight: Radius.circular(20),),
+                    // color: pureblue,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),

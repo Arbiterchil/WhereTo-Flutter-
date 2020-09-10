@@ -169,13 +169,30 @@ BlocSearch blocSearch;
                                     fit: BoxFit.cover)
                                 ),
                               ),
+                              Container(
+                decoration: BoxDecoration(
+                   borderRadius: BorderRadius.circular(12.0),
+                  gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topRight,
+                      colors: [
+                       Colors.black.withOpacity(.5),
+                        Colors.white.withOpacity(.0),
+
+                      ],
+                      stops: [0.3,2.5],
+                      )
+                      ,
+                ),
+                ),
                               Align(
                                 alignment: Alignment.bottomLeft,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: pureblue
+
+                                    // color: pureblue
                                   ),
-                                  height: 50,
+                                  height: 70,
                                   width: MediaQuery.of(context).size.width,
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 10,top: 10),

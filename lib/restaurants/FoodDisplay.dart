@@ -39,7 +39,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
     return Container(
       height: 220,
       child: Padding(
-                      padding: const EdgeInsets.only(left: 10,right: 10),
+                      padding: const EdgeInsets.only(left: 0,right: 0),
                       child: Container(
                         height: 200,
                         width: MediaQuery.of(context).size.width,
@@ -47,6 +47,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                           stream: blocFeatured.stream,
                           builder: (context, snapshot){
                               if(snapshot.hasData){
+                                
                               if(snapshot.data.length >0){
                               return ListView.builder(
                               cacheExtent:9999,
@@ -58,6 +59,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                   bucket: _bucket,
                                   key: key,
                                   child: StaticFoodDisplay(
+                                  pricetag: "P ?.00",
                                   restaurantname: snapshot.data[index].restaurantName,
                                   foodname: snapshot.data[index].menuName,
                                   description: snapshot.data[index].categoryName,

@@ -86,38 +86,60 @@ class _NewCarouselState extends State<NewCarousel> {
                 back();
               }
             } ,
-              child: Container(
-              height: 140,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(restau[currentIndex][0]),
-                  fit:  BoxFit.fill,
-                  ),
-              ),
-              child: Container(
-                // decoration: BoxDecoration(
-                //   gradient: LinearGradient(
-                //     begin: Alignment.bottomRight,
-                //     colors: [
-                //       Colors.white.withOpacity(.9),
-                //       Colors.grey.withOpacity(.0)
-                //     ])
-                // ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      width: 90,
-                      margin: EdgeInsets.only(bottom: 30),
-                      child: Row(
-                        children: buildindicators(),
-                      ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5,right: 5),
+                child: Container(
+                height: 140,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                   boxShadow: [
+                             BoxShadow(
+                               color: Colors.grey[200],
+                               spreadRadius: 1.1,
+                               blurRadius: 2.2
+                             ),
+                           ],
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  image: DecorationImage(
+                    image: NetworkImage(restau[currentIndex][0]),
+                    fit:  BoxFit.fill,
                     ),
-                  ],
                 ),
-              ),
+                child: Container(
+                  // decoration: BoxDecoration(
+                  //   gradient: LinearGradient(
+                  //     begin: Alignment.bottomRight,
+                  //     colors: [
+                  //       Colors.white.withOpacity(.9),
+                  //       Colors.grey.withOpacity(.0)
+                  //     ])
+                  // ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      colors: [
+                         Colors.black.withOpacity(.2),
+                        Colors.white.withOpacity(.0),
+
+                      ]),
+                
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        width: 90,
+                        margin: EdgeInsets.only(bottom: 30),
+                        child: Row(
+                          children: buildindicators(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
           ),
+              ),
             
           ),
           //  Padding(
