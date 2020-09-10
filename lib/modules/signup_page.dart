@@ -301,8 +301,7 @@ class _SignupPageState extends State<SignupPage> {
               child: TextFormField(
                 readOnly: true,
                 onTap: () async {
-                  
-                   Position postion =await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+                   Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                           final coordinates =new Coordinates(postion.latitude,postion.longitude);
                           var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
                           var first =addresses.first;
@@ -675,7 +674,7 @@ class _SignupPageState extends State<SignupPage> {
               SizedBox(height: 120,),
               GestureDetector(
                 onTap: () async{
-                  Position postion =await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+                  Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                           final coordinates =new Coordinates(postion.latitude,postion.longitude);
                           var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
                           var first =addresses.first;
