@@ -13,36 +13,25 @@ class MapAdress extends StatefulWidget {
 }
 
 class _MapAdressState extends State<MapAdress> {
-  LatLng latlng =LatLng(8.0, 125.0);
+  LatLng latlng;
   Completer<GoogleMapController> _controller =Completer();
-  final Set<Marker> marker ={};
+  List<Marker> marker =[];
  @override
   void initState() {
-    getLang();
     super.initState();
   }
 
-  getLang() async{
+  
+  getPosition() async{
   Position postion =await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
-  final coordinates =new Coordinates(postion.latitude,postion.longitude);
-  LatLng _latlang =LatLng(coordinates.latitude, coordinates.longitude);
-  setState(() {
-    if(_latlang!=null){
-      latlng =_latlang;
-    }
-  });
+  LatLng coordinates =new LatLng(postion.latitude,postion.longitude);
+  return coordinates;
   }
 
 
   onMapCreated(GoogleMapController controller){
     _controller.complete(controller);
   }
-  onCameraPosition(CameraPosition position){
-    latlng =position.target;
-  }
- onMarkers(){
-   
- }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,19 +40,36 @@ class _MapAdressState extends State<MapAdress> {
       ),
       body: Stack(
         children: [
-          GoogleMap(
-            onMapCreated: onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: latlng==null ?LatLng(0,0) :latlng, 
-              zoom: 18
-              ),
-              mapType: MapType.normal,
-              markers: marker,
-              onCameraMove: onCameraPosition,
-              myLocationEnabled: true,              
-              myLocationButtonEnabled: true,
-
-            ),
+          FutureBuilder(
+            future: getPosition(),
+            builder: (context,snapshot){
+            if(snapshot.hasData){
+              if(snapshot!=null){
+                marker.add(Marker(
+                  markerId: MarkerId('marker'),
+                  draggable: false,
+                  position: snapshot.data,
+                ));
+                return GoogleMap(
+                zoomControlsEnabled: true,
+                onMapCreated: onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: snapshot.data, 
+                  zoom: 17
+                  ),
+                  mapType: MapType.normal,
+                  markers: Set.from(marker),            
+                  myLocationButtonEnabled: true,
+                  
+                );
+              }else{
+                return Container();
+              }
+            }else{
+              return Container();
+            }
+            }
+            )
         ],
       ),
     );

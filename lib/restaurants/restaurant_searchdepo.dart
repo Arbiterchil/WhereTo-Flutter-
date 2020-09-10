@@ -551,7 +551,7 @@ String categ ="0";
           ,size: 30,
           ), onPressed: (){
             setState(() {
-              isLoc =true;
+             Navigator.push(context, MaterialPageRoute(builder: (context) => MapAdress()));
             });
           }),
     );
