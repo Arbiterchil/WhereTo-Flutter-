@@ -72,8 +72,7 @@ String categ ="0";
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-          home: Scaffold(
+    return  Scaffold(
         backgroundColor: Colors.grey[50],
         body: SafeArea(
           child: SingleChildScrollView(
@@ -150,7 +149,7 @@ String categ ="0";
               ),
             ),
           )),
-      ),
+      
     );
 
     // var connectionStatus =Provider.of<ConnectivityStatus>(context);
@@ -552,51 +551,57 @@ String categ ="0";
           ,size: 30,
           ), onPressed: ()async{
             
-              
-            //  Navigator.push(context, MaterialPageRoute(builder: (context) => MapAdress()));
-            Scaffold.of(context).showBottomSheet((context){
-                    return Padding(padding: EdgeInsets.all(20),
+            showModalBottomSheet(context: context, barrierColor: Colors.white.withOpacity(0.05),backgroundColor: Colors.transparent, builder: (context){
+              return Padding(padding: EdgeInsets.all(30),
                       child: Container(
                        
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(10)
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40.0),
+                          topRight: Radius.circular(40.0),
+                          bottomLeft: Radius.circular(40.0),
+                          bottomRight: Radius.circular(40.0),
+                        )
                       ),
-                      height: 200,
-                      child:  Column(
+                      height: 250,
+                      child:Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                           Expanded(child:Padding(padding: EdgeInsets.all(8),
-                            child:ListTile(
-                              leading: Icon(Icons.location_on),
+                           Expanded(child:ListTile(
+                              leading: Icon(Icons.location_on, size: 30, color: Colors.black),
                               subtitle: Text("$address", style: TextStyle(
                                 fontFamily: "Gilroy-light",
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
                                 ),),
-                            ),                         
+                                                   
                            ),),
                              
-                            Padding(padding: EdgeInsets.all(10),
-                            child: ListTile(
-                              leading: IconButton(icon: Icon(Icons.add, size: 30,), onPressed: (){
-                                  
+                              ListTile(
+                              leading: IconButton(icon: Icon(Icons.add, size: 30, color: Colors.black,), 
+                              onPressed: (){
+                                 Navigator.push(context, MaterialPageRoute(builder: (context) => MapAdress()));
+                               
                               }),
-                              subtitle: Padding(padding: EdgeInsets.only(bottom: 10.5),
-                              child: Text("New Address", style: TextStyle(
+                              subtitle:  Text("New Address", style: TextStyle(
+                                color: Colors.black,
                                 fontFamily: "Gilroy-light",
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
                                 ),),
-                            ),  
-                            ),          
-                           ),
+                            ), 
+                            
+                                
+                           
                           ],
                         ),
                       
                       ) 
                     
                     );
-                  }); 
+            });
           
           }),
     );
