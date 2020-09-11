@@ -23,6 +23,7 @@ class _MapAdressState extends State<MapAdress> {
   PickResult selectedPlace;
   @override
   void initState() {
+    
     super.initState();
   }
 
@@ -32,6 +33,8 @@ class _MapAdressState extends State<MapAdress> {
     LatLng coordinates = new LatLng(postion.latitude, postion.longitude);
     setState(() {
       latlng = coordinates;
+   
+      
     });
     return coordinates;
   }
@@ -68,49 +71,54 @@ class _MapAdressState extends State<MapAdress> {
     return Scaffold(
       body: Stack(
         children: [
-          // FutureBuilder(
-          //   future: getPosition(),
-          //   builder: (context, snapshot) {
-          //     if (snapshot.hasData) {
-          //       if (snapshot != null) {
-          //         marker.add(Marker(
-          //           markerId: MarkerId('marker'),
-          //           draggable: false,
-          //           position: snapshot.data,
-          //         ));
-          //         return GoogleMap(
-          //           zoomControlsEnabled: true,
-          //           onMapCreated: onMapCreated,
-          //           initialCameraPosition: CameraPosition(
-          //             target: snapshot.data,
-          //             zoom: 17,
-          //             bearing: 45.0,
-          //           ),
-          //           mapType: MapType.normal,
-          //           markers: Set.from(marker),
-          //           myLocationButtonEnabled: true,
-          //           myLocationEnabled: true,
-          //         );
-          //       } else {
-          //         return Container();
-          //       }
-          //     } else {
-          //       return Center(
-          //         child: CircularProgressIndicator(strokeWidth: 4.5,
-          //         ),
-          //       );
-          //     }
-          //   })
-          PlacePicker(
-            apiKey: googleKey,
-            initialPosition: latlng,
-            useCurrentLocation: true,
-            onPlacePicked: (result) {
+          FutureBuilder(
+            future: getPosition(),
+            builder: (context, snapshot) {
+              // if (snapshot.hasData) {
+              //   if (snapshot != null) {
+              //     marker.add(Marker(
+              //       markerId: MarkerId('marker'),
+              //       draggable: false,
+              //       position: snapshot.data,
+              //     ));
+              //     return GoogleMap(
+              //       zoomControlsEnabled: true,
+              //       onMapCreated: onMapCreated,
+              //       initialCameraPosition: CameraPosition(
+              //         target: snapshot.data,
+              //         zoom: 17,
+              //         bearing: 45.0,
+              //       ),
+              //       mapType: MapType.normal,
+              //       markers: Set.from(marker),
+              //       myLocationButtonEnabled: true,
+              //       myLocationEnabled: true,
+              //     );
+              //   } else {
+              //     return Container();
+              //   }
+              // } else {
+              //   return Center(
+              //     child: CircularProgressIndicator(strokeWidth: 4.5,
+              //     ),
+              //   );
+              // }
+              return PlacePicker(
+              apiKey: googleKey,
+              initialPosition: snapshot.data,
+              useCurrentLocation: true,
+              searchForInitialValue: true,
+              
+              usePlaceDetailSearch: true,
+              onPlacePicked: (result) {
               selectedPlace = result;
-
+              
               Navigator.pop(context);
             },
-          ),
+          );
+          
+            })
+          
         ],
       ),
     );

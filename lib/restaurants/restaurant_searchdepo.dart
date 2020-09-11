@@ -13,21 +13,18 @@ import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWStream_response.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_class.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_response.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_view.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/newRestaurant_box.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
-import 'package:WhereTo/restaurants/carousel_rest.dart';
-import 'package:WhereTo/restaurants/dialog.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:WhereTo/restaurants/new_Carousel.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'FoodDisplay.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_place/google_place.dart';
 class SearchDepo extends StatefulWidget {
   @override
   _SearchDepoState createState() => _SearchDepoState();
@@ -70,86 +67,90 @@ String categ ="0";
     });
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.only(top:8.0,left: 10.0,right: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      logoutIcon(),
-                      SizedBox(width: 10,),
-                      cirlceLoaction(),
-                      SizedBox(width: 10,),
-                      Expanded(
-                        child: textbarSearch()
-                        ),
+    return MaterialApp(
+          home: Scaffold(
+        backgroundColor: Colors.grey[50],
+        body: SafeArea(
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.only(top:8.0,left: 10.0,right: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        logoutIcon(),
                         SizedBox(width: 10,),
-                      
-                    ],
+                        cirlceLoaction(),
+                        SizedBox(width: 10,),
+                        Expanded(
+                          child: textbarSearch()
+                          ),
+                          SizedBox(width: 10,),
+                        
+                      ],
+                    ),
+                    
                   ),
+                  SizedBox(height: 20,),
                   
-                ),
-                SizedBox(height: 20,),
-                
-                 Stack(
-                  children: <Widget>[
-                    NewCarousel(),
-                  ],),
+                   Stack(
+                    children: <Widget>[
+                      NewCarousel(),
+                    ],),
+                    SizedBox(height: 10,),
+                  viewMenuFeaturedTitle(),
                   SizedBox(height: 10,),
-                viewMenuFeaturedTitle(),
-                SizedBox(height: 10,),
-                FoodDisplay(),
-                SizedBox(height: 15,),
-                viewzRestaurantFeaturedTitle(),
-                SizedBox(height: 10,),
-                 Padding(
-                  padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                  child: StreamBuilder<NewRestaurantResponse>(
-      stream: streamRestaurantsFeatured.subject.stream,
-      builder: (context , AsyncSnapshot<NewRestaurantResponse> snaphot){
-        if(snaphot.hasData){
-            if(snaphot.data.error !=null && snaphot.data.error.length > 0){
-                return _error(snaphot.data.error);
-            }
-              return _views(snaphot.data);
-        }else if(snaphot.hasError){
-              return _error(snaphot.error);
-        }else{
-              return _load();
-        }
-      },
-                ),
-                ),
-                 SizedBox(height: 15,),
-                //   deliveryAdress(),
+                  FoodDisplay(),
+                  SizedBox(height: 15,),
+                  viewzRestaurantFeaturedTitle(),
+                  SizedBox(height: 10,),
+                   Padding(
+                    padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                    child: StreamBuilder<NewRestaurantResponse>(
+        stream: streamRestaurantsFeatured.subject.stream,
+        builder: (context , AsyncSnapshot<NewRestaurantResponse> snaphot){
+          if(snaphot.hasData){
+              if(snaphot.data.error !=null && snaphot.data.error.length > 0){
+                  return _error(snaphot.data.error);
+              }
+                return _views(snaphot.data);
+          }else if(snaphot.hasError){
+                return _error(snaphot.error);
+          }else{
+                return _load();
+          }
+        },
+                  ),
+                  ),
+                   SizedBox(height: 15,),
+                  //   deliveryAdress(),
+                     SizedBox(height: 10,),
+                   Divider(
+                    height: 6.0,
+                    thickness: 1,
+                    color: wheretoDark,
+                    indent: 60.0,
+                    endIndent: 60.0,
+                  ),
+                  SizedBox(height: 20,),
+                  
+                  SharedPrefCallnameData(),
                    SizedBox(height: 10,),
-                 Divider(
-                  height: 6.0,
-                  thickness: 1,
-                  color: wheretoDark,
-                  indent: 60.0,
-                  endIndent: 60.0,
-                ),
-                SizedBox(height: 20,),
-                
-                SharedPrefCallnameData(),
-                 SizedBox(height: 10,),
-              ],
+                ],
+              ),
             ),
-          ),
-        )),
+          )),
+      ),
     );
 
     // var connectionStatus =Provider.of<ConnectivityStatus>(context);
@@ -549,10 +550,54 @@ String categ ="0";
         Icon(
           Icons.location_on
           ,size: 30,
-          ), onPressed: (){
-            setState(() {
-             Navigator.push(context, MaterialPageRoute(builder: (context) => MapAdress()));
-            });
+          ), onPressed: ()async{
+            
+              
+            //  Navigator.push(context, MaterialPageRoute(builder: (context) => MapAdress()));
+            Scaffold.of(context).showBottomSheet((context){
+                    return Padding(padding: EdgeInsets.all(20),
+                      child: Container(
+                       
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      height: 200,
+                      child:  Column(
+                          children: [
+                           Expanded(child:Padding(padding: EdgeInsets.all(8),
+                            child:ListTile(
+                              leading: Icon(Icons.location_on),
+                              subtitle: Text("$address", style: TextStyle(
+                                fontFamily: "Gilroy-light",
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                ),),
+                            ),                         
+                           ),),
+                             
+                            Padding(padding: EdgeInsets.all(10),
+                            child: ListTile(
+                              leading: IconButton(icon: Icon(Icons.add, size: 30,), onPressed: (){
+                                  
+                              }),
+                              subtitle: Padding(padding: EdgeInsets.only(bottom: 10.5),
+                              child: Text("New Address", style: TextStyle(
+                                fontFamily: "Gilroy-light",
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                ),),
+                            ),  
+                            ),          
+                           ),
+                          ],
+                        ),
+                      
+                      ) 
+                    
+                    );
+                  }); 
+          
           }),
     );
 
@@ -599,9 +644,9 @@ String categ ="0";
                     isLoc=false;
                   });
                   // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
-                },
-                ),
-
+                  
+                }
+              )
             ),
     );
     
