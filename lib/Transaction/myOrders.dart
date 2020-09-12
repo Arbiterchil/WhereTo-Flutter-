@@ -29,10 +29,11 @@ class _MyOrderState extends State<MyOrder> {
   String statusExist;
   String sunkist;
   bool isExist = false;
-  BlocAll bloc;
   String sec;
-  Future<void> getBloc(var id) async {
-    await bloc.getMenuTransaction(id);
+
+  final bloc = BlocAll();
+  Future<void> getBloc() async {
+    await bloc.getMenuTransaction();
   }
 
   Future<void> disposeBloc() async {
@@ -42,7 +43,6 @@ class _MyOrderState extends State<MyOrder> {
   @override
   void initState() {
     getData();
-
     super.initState();
   }
 
@@ -71,8 +71,7 @@ class _MyOrderState extends State<MyOrder> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      bloc = BlocAll();
-      getBloc(widget.id.toString());
+      getBloc();
     });
     return Scaffold(
         body: Stack(
@@ -126,7 +125,7 @@ class _MyOrderState extends State<MyOrder> {
 
   Widget xStreamAsshole() {
     return StreamBuilder<List<ViewUserOrder>>(
-      stream: bloc.stream,
+      stream: bloc.sinkMyOrder,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.length > 0) {

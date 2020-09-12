@@ -13,7 +13,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomSearch extends SearchDelegate {
-BlocSearch blocSearch;
+ final blocSearch = BlocSearch();
    Future<void>getBloc(var id) async {
     await blocSearch.getmenu(id);
   }
@@ -47,7 +47,6 @@ BlocSearch blocSearch;
   @override
   Widget buildResults(BuildContext context) {
       return StatefulBuilder(builder: (context, state){
-      blocSearch = BlocSearch();
       getBloc(query.toString()); 
       return Padding(
       padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
@@ -60,7 +59,7 @@ BlocSearch blocSearch;
               topLeft: Radius.circular(30), topRight: Radius.circular(30)),
         ),
         child: StreamBuilder<List<FilterRestaurant>>(
-          stream: blocSearch.streamMenuApi,
+          stream: blocSearch.sinkSubjectFilter,
           builder: (context, snapshot){
             ProgressDialog pr = ProgressDialog(context);
               pr.style(

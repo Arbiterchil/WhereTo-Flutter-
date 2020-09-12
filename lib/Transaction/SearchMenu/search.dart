@@ -27,7 +27,7 @@ class SearchResto extends StatefulWidget {
 class _SearchRestoState extends State<SearchResto> {
   var focus = new FocusNode();
      final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-    BlocSearch blocSearch;
+   final blocSearch = BlocSearch();
     Future<void>getBloc(String id) async {
     await blocSearch.getmenu(id);
     }
@@ -40,7 +40,6 @@ class _SearchRestoState extends State<SearchResto> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-    blocSearch = BlocSearch();
     getBloc(search.text); 
     });
     // FocusScope.of(context).requestFocus(focus);
@@ -88,7 +87,7 @@ class _SearchRestoState extends State<SearchResto> {
             topLeft: Radius.circular(30), topRight: Radius.circular(30)),
           ),
           child: StreamBuilder<List<FilterRestaurant>>(
-            stream: blocSearch.streamMenuApi,
+            stream: blocSearch.sinkSubjectFilter,
             builder: (context,snapshot){
               ProgressDialog pr = ProgressDialog(context);
               pr.style(

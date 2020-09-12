@@ -28,9 +28,9 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
   String statusExist;
   int sunkist;
   bool isExist = false;
-  BlocAll bloc;
-  Future<void> getBloc(var id) async {
-    await bloc.getMenuTransaction(id);
+  final bloc =BlocAll();
+  Future<void> getBloc() async {
+    await bloc.getMenuTransaction();
   }
 
   Future<void> disposeBloc() async {
@@ -46,24 +46,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
   void initState() {
     getData();
     super.initState();
-    SharedPreferences.getInstance().then((SharedPreferences value) {
-      localStorage = value;
-      var userJson = localStorage.getString('user');
-      var user = json.decode(userJson);
-      setState(() {
-        userData = user;
-        if (userData['id'] == null) {
-          isTrue = false;
-        } else {
-          isTrue = true;
-        }
-        if (isTrue) {
-          userID = userData['id'];
-        } else {
-          userID = "0";
-        }
-      });
-    });
+    
   }
 
   getData() async {
@@ -91,8 +74,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      bloc = BlocAll();
-      getBloc(userID);
+      getBloc();
     });
     return Scaffold(
       body: Stack(
@@ -149,7 +131,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
 
   Widget xStreamAsshole() {
     return StreamBuilder<List<ViewUserOrder>>(
-      stream: bloc.stream,
+      stream: bloc.sinkMyOrder,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.length > 0) {

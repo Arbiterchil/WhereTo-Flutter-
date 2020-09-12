@@ -6,6 +6,7 @@ import 'package:WhereTo/Transaction/MyOrder/payOrder.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
+import 'package:WhereTo/google_maps/address.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -136,7 +137,7 @@ class _TransactionListState extends State<TransactionList> {
                       return Stack(
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(bottom: 50),
+                            padding: EdgeInsets.only(bottom: 150),
                             child: ListView.builder(
                                 physics: BouncingScrollPhysics(),
                                 itemCount: snapshot.length,
@@ -367,13 +368,79 @@ class _TransactionListState extends State<TransactionList> {
                                 }),
                           ),
                           Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              height: 150,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(15)),
+                                color: Colors.white
+                              ),
+                            child: Stack(
+                            children: [
+                            Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 80),
+                              child: Container(
+                                height: 70,
+                                child: Builder(builder: (context) {
+                                  return Stack(
+                                    children: [
+                                      Card(
+                                        elevation: 15.5,
+                                        color: Color(0xFF0C375B),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(5),
+                                          child: Center(
+                                              child: Padding(
+                                            padding: EdgeInsets.all(5),
+                                            child: ListTile(
+                                              title: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                "Optional Delivery Address",
+                                                style: TextStyle(
+                                                  fontFamily: "Gilroy-light",
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                               Text(
+                                                "You can choose Optional Delivery Address",
+                                                style: TextStyle(
+                                                  fontFamily: "Gilroy-light",
+                                                  color: Colors.white,
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                                ],
+                                              ),
+                                              trailing: IconButton(icon: Icon(Icons.edit, color: Colors.white), onPressed: (){
+                                                Navigator.push(context, MaterialPageRoute(builder: (context){
+                                                  return AddressLine();
+                                                }));
+                                              }),
+                                            ),
+                                          )),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }),
+                              ),
+                            ),
+                          ),
+                          Align(
                             alignment: Alignment.bottomRight,
                             child: Stack(
                               children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 20),
+                                Card(
+                                elevation: 15.5,
+                                color: Color(0xFF0C375B),
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 5),
                                   child: Container(
-                                    height: 55,
+                                    height: 60,
                                     width: double.infinity,
                                     child: GestureDetector(
                                       onTap: () async {
@@ -427,6 +494,8 @@ class _TransactionListState extends State<TransactionList> {
                                     ),
                                   ),
                                 ),
+                                      ),
+                                
                                 // Padding(
                                 //   padding: EdgeInsets.only(top: 13, left: 30),
                                 //   child: Container(
@@ -444,6 +513,10 @@ class _TransactionListState extends State<TransactionList> {
                               ],
                             ),
                           ),
+                                ],
+                              )
+                            ),
+                          )
                         ],
                       );
                       }
@@ -452,6 +525,7 @@ class _TransactionListState extends State<TransactionList> {
                     listener: (BuildContext context, orderList) {}),
               ),
             ),
+            
           ],
         ),
       ),

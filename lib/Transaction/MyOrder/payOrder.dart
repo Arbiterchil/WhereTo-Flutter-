@@ -2,12 +2,15 @@ import 'dart:convert';
 
 
 import 'package:WhereTo/Transaction/MyOrder/DialogOrder.dart';
-import 'package:WhereTo/Transaction/MyOrder/address.dart';
+import 'package:WhereTo/Transaction/newView_MyOrder.dart';
+import 'package:WhereTo/google_maps/address.dart';
 import 'package:WhereTo/Transaction/getDeviceID/getDeviceID.class.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
+import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:WhereTo/modules/homepage.dart';
+import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,31 +26,47 @@ class PayOrder extends StatefulWidget {
   @override
   _PayOrderState createState() => _PayOrderState();
 }
-final _navigatorKey = GlobalKey<NavigatorState>();
 class _PayOrderState extends State<PayOrder> {
   var userData;
   String address;
   String newAddress;
   String add;
+  String coordinates;
+  String newcoordinates;
   @override
   void initState() {
-    getAddress();
     super.initState();
+    getAddress();
+    getNewAd();
+    getCoordinates();
+    getnewCoordinates();
   }
 
 
-    getAddress() async{
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-        var userJson = localStorage.getString('user');
-        
-        var user = json.decode(userJson);
-        setState(() {
-          userData = user;
-          address =userData!= null ? userData['address'] :  'Fail get data.';
-          newAddress ="${localStorage.getString("unit_number")}, ${localStorage.getString("house_number")}, ${localStorage.getString("building")}, ${localStorage.getString("street_name")}";
-          add =newAddress==null ? address :newAddress;
-        });
-    }
+  getAddress() async{
+  var address =await ID().getaddress();
+  setState(() {
+    userData =address;
+  });
+}
+  getNewAd() async{
+    var newad =await ID().getnewAddress();
+    setState(() {
+      newAddress =newad;
+    });
+  }
+  getCoordinates() async{
+    var coordi =await ID().getCoordinates();
+    setState(() {
+      coordinates =coordi;
+    });
+  }
+  getnewCoordinates() async{
+    var newCoor =await ID().getnewCoordinates();
+    setState(() {
+      newcoordinates =newCoor;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -288,6 +307,7 @@ class _PayOrderState extends State<PayOrder> {
                               child: Container(
                                 child: Builder(builder: (context) {
                                   return Stack(
+                                    fit: StackFit.passthrough,
                                     children: [
                                       Card(
                                         elevation: 15.5,
@@ -308,22 +328,23 @@ class _PayOrderState extends State<PayOrder> {
                                                   color: Colors.white,
                                                 ),
                                               ),
-                                               Text(
-                                                "Please input exact Location",
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                " ${newAddress.toString().contains("null")?userData:newAddress}",
                                                 style: TextStyle(
                                                   fontFamily: "Gilroy-light",
                                                   color: Colors.white,
-                                                  fontSize: 15,
+                                                  fontSize: 12
                                                 ),
                                               ),
                                                 ],
-                                              ),
-                                              trailing: IconButton(icon: Icon(Icons.edit, color: Colors.white), onPressed: (){
-                                                Navigator.push(context, MaterialPageRoute(builder: (context){
-                                                  return AddressLine();
-                                                }));
-                                              }),
-                                            ),
+                                              )
+                                                  
+                                               
+                                                ),
+
                                           )),
                                         ),
                                       ),
@@ -403,7 +424,7 @@ class _PayOrderState extends State<PayOrder> {
                                                 'restaurantId':
                                                     this.widget.restauID,
                                                 'order': result,
-                                                "deliveryAddress": address.contains("null") ?user['address'] :address,
+                                                "deliveryAddress": "${newcoordinates.toString().contains("null")?coordinates:newcoordinates}",
                                                 "deliveryCharge": "${widget.fee}",
                                                 "barangayId": user['barangayId'],
                                               };
@@ -423,7 +444,7 @@ class _PayOrderState extends State<PayOrder> {
                                               orders.hide();
                                                 DialogOrder().getDialog(context, "Order Succesfully Placed", "Order Success", Icons.check, Colors.black);
                                                 BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
-                                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>HomePage()));
+                                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>MyNewViewOrder()));
                                             }else{
                                             orders.hide();
                                              DialogOrder().getDialog(context, "Slow/No Internet Connection", "Order Failed", Icons.error, Color(0xFFFF3345));

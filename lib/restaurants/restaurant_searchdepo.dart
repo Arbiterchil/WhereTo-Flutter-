@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:WhereTo/AnCustom/LocationSet.dart';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/Services/connectivity_status.dart';
-import 'package:WhereTo/Transaction/MyOrder/address.dart';
+import 'package:WhereTo/google_maps/address.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/Transaction/SearchMenu/newSearch.dart';
 import 'package:WhereTo/Transaction/SearchMenu/search.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:WhereTo/google_maps/googlemap_address.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWStream_response.dart';
@@ -66,8 +67,6 @@ String categ ="0";
       newAddress ="${localStorage.getString("unit_number")}, ${localStorage.getString("house_number")}, ${localStorage.getString("building")}, ${localStorage.getString("street_name")}";
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -556,6 +555,7 @@ String categ ="0";
                       child: Container(
                        
                       decoration: BoxDecoration(
+                        
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(40.0),
@@ -778,7 +778,8 @@ Widget _views(NewRestaurantResponse newFeatured){
                                   // } else {
                                   //   if (int.parse(formatNow.split(":")[0]) >=
                                   //       int.parse(formatOpen.split(":")[0])) {
-                                    
+                                    var id =await ID().getaddress();
+                                    if(id.contains("Tagum")){
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(
@@ -789,6 +790,22 @@ Widget _views(NewRestaurantResponse newFeatured){
                                                 address:nf[index].address.toString(),
                                                 categID: categ,  
                                                   )));
+                                    }else{
+                                       AwesomeDialog(
+                                          context: context,
+                                          headerAnimationLoop: false,
+                                          animType: AnimType.SCALE,
+                                          dialogType: DialogType.INFO,
+                                          title: "Location Not Available",
+                                          desc:
+                                              "This app is only available in Tagum City for the meantime",
+                                          btnOkText: "Comeback Later",
+                                          btnOkColor: Color(0xFF0C375B),
+                                          btnOkOnPress: () async {
+                                            Navigator.pop(context);
+                                          }).show();
+                                    }
+                                      
                                 }
                            
                           

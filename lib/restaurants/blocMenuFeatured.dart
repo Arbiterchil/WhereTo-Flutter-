@@ -5,19 +5,19 @@ import 'dart:async';
 
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/restaurants/blocClassMenu.dart';
+import 'package:rxdart/rxdart.dart';
 
 class BlocisFeatured{
-StreamController<List<IsFeatured>> streamApi =StreamController.broadcast();
-Sink<List<IsFeatured>> get sinkApi =>streamApi.sink;
-Stream<List<IsFeatured>> get stream =>streamApi.stream;
 
+PublishSubject<List<IsFeatured>> _publishSubject =PublishSubject();
+Stream<List<IsFeatured>> get sinkAllMenu =>_publishSubject.stream;
 
 Future<void>getIsFeatured() async{
   final response = await ApiCall().getData('/getAllMenu');
   final List<IsFeatured> transaction = isFeaturedFromJson(response.body);
   List<IsFeatured> filter =transaction.where((element) => element.isFeatured.toString().contains("1")).toList();
-  sinkApi.add(filter);
+  _publishSubject.sink.add(filter);
 }
 
-void dispose() =>streamApi.close();
+void dispose() =>_publishSubject.close();
 }

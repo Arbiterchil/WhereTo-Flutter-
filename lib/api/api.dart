@@ -16,6 +16,15 @@ class ApiCall{
     headers: _setHeaders()
     );
   }
+  newAddress(data,api) async {
+    var fullurl = url+api;
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+  }
+  
+  
 
    getRestaurantSalesReport(data,api) async {
     var fullurl = url+api;

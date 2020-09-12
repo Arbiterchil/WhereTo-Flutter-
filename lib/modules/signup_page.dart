@@ -4,15 +4,11 @@ import 'dart:ui';
 import 'package:WhereTo/AnCustom/getAddress_diloag.dart';
 import 'package:WhereTo/AnCustom/pop.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/modules/bara_rang.dart';
 import 'package:WhereTo/modules/login_page.dart';
-import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/modules/tac/tac_help.dart';
-import 'package:WhereTo/modules/tac/terms_condition.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -27,7 +23,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../styletext.dart';
 import 'homepage.dart';
 import 'package:path/path.dart' as path;
-import 'package:http/http.dart' as http;
 class MyChoice {
   String pickchoice;
   int numberpick;
@@ -42,7 +37,8 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   String selectPerson;
   var idbararangSaika;
-
+  var addresses;
+  String coordi;
   final formkey = GlobalKey<FormState>();
 
   TextEditingController fulname = TextEditingController();
@@ -303,7 +299,10 @@ class _SignupPageState extends State<SignupPage> {
                 onTap: () async {
                    Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                           final coordinates =new Coordinates(postion.latitude,postion.longitude);
-                          var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
+                          setState(() {
+                            coordi ="${postion.latitude},${postion.longitude}";
+                          });
+                          addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
                           var first =addresses.first;
                           ownAddress.text ="${first.addressLine}";
                   // AwesomeDialog(
@@ -676,7 +675,7 @@ class _SignupPageState extends State<SignupPage> {
                 onTap: () async{
                   Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                           final coordinates =new Coordinates(postion.latitude,postion.longitude);
-                          var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
+                          addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
                           var first =addresses.first;
                           ownAddress.text ="${first.addressLine}";
                   Navigator.pop(context);
@@ -891,12 +890,12 @@ getYourIdImage( ImageSource source) async{
             print(valid.body);
             
             
-            SharedPreferences localStorage =
-                await SharedPreferences.getInstance();
+            SharedPreferences localStorage =await SharedPreferences.getInstance();
             localStorage.setBool('check', value);
             localStorage.setString('token', body['token']);
             localStorage.setString('trial','trialShow');
             localStorage.setString('user', json.encode(body['user']));
+            localStorage.setString("coordinates", coordi);
             
             Navigator.pushReplacement(context,
                 new MaterialPageRoute(builder: (context) => HomePage()));
