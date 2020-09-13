@@ -8,6 +8,8 @@ import 'package:WhereTo/Admin/updateAdmin/text_editor.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -28,6 +30,9 @@ class _RestaurantUpdateNewTwoState extends State<RestaurantUpdateNewTwo> {
   final int restaurantId;
 
   _RestaurantUpdateNewTwoState(this.restaurantId);
+
+  LatLng latlng = new LatLng(12.8797,121.7740);
+String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
 
    List<String> opentime = 
     [
@@ -79,6 +84,7 @@ class _RestaurantUpdateNewTwoState extends State<RestaurantUpdateNewTwo> {
     TextEditingController owner = TextEditingController(); 
     TextEditingController representative  = TextEditingController();
     TextEditingController address = TextEditingController();
+    TextEditingController newAddre = TextEditingController();
     TextEditingController contactnumber = TextEditingController();
     TextEditingController barangayId  = TextEditingController();
     TextEditingController openTimes  = TextEditingController();
@@ -90,15 +96,17 @@ class _RestaurantUpdateNewTwoState extends State<RestaurantUpdateNewTwo> {
 
 
     final formkey = GlobalKey<FormState>();
-     String selectPerson;
+    String selectPerson;
     String opentimeString;
     String closetimeString;
     String datesofdays;
     String features;
     List dataBarangay = List();
+    bool him = false;
     bool loading = false;
     bool loading1 = false;
     bool loading2 = false;
+    
     final pick = ImagePicker();
    File _idPickerImage;
    String stringPath;
@@ -152,6 +160,7 @@ class _RestaurantUpdateNewTwoState extends State<RestaurantUpdateNewTwo> {
       "Saturaday",
       "Sunday"
     ];
+   
     void weekdays(){
           for(int i = 0 ; i < weeks.length ; i++){
             nani = i.toString();
@@ -335,7 +344,7 @@ class _RestaurantUpdateNewTwoState extends State<RestaurantUpdateNewTwo> {
           'restaurantName' : retaurantname.text,
           'owner' : owner.text,
           'representative' : representative.text,
-          'address' : address.text,
+          'address' : newAddre.text != null ? newAddre.text : address.text,
           'barangayId' :  selectPerson == null ? barangayId.text : selectPerson.toString() ,
           'contactNumber' : contactnumber.text,
           'openTime' : opentimeString == null ?  openTimes.text :  opentimeString,
@@ -716,12 +725,50 @@ class _RestaurantUpdateNewTwoState extends State<RestaurantUpdateNewTwo> {
            hint: "Restaurant Name",
          ),
          SizedBox(height: 15,),
-          TextEditGetter(
-           iconic: Icons.my_location,
-           validate: (val) => val.isEmpty ? ' Please Put The Address' : null,
-           control: address,
-           hint: "Address Name",
+         TextEditGetter(
+             iconic: Icons.my_location,
+             validate: (val) => val.isEmpty ? ' Please Put The Address' : null,
+             control: him ? newAddre :address,
+             hint: "Address Name",
+             onTaps:  () {
+                showModalBottomSheet(
+    isDismissible: true,
+    context: context, 
+  builder: (_){
+
+    return SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
+      child: Column(
+        children: [
+          Container(
+        height: 390,
+        width: MediaQuery.of(context).size.width,
+        child: PlacePicker(
+                      apiKey: googleKey,
+                      initialPosition: latlng,
+                      useCurrentLocation: true,
+                      searchForInitialValue: true,
+                      usePlaceDetailSearch: true,
+                      onPlacePicked: (result) async {
+                        String lat = result.geometry.location.lat.toString();
+                        String lng = result.geometry.location.lng.toString();
+                        print("the Bilat is $lat and Oten is $lng");
+                        setState(() {
+                          him =true;
+                          newAddre.text = "$lat,$lng";
+                        });
+                        Navigator.pop(context);
+                        }
+                    ),
+      ),
+        ],
+      ),
+    );
+
+  });
+             },
          ),
+          
          SizedBox(height: 15,),
           TextEditGetter(
            iconic: Icons.contacts,
@@ -1225,4 +1272,5 @@ void _showDialogDelete( String message){
     ); 
     },);
 }
+
 }

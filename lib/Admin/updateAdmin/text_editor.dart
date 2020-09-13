@@ -9,10 +9,11 @@ class TextEditGetter extends StatefulWidget {
   final TextEditingController control;
   final String hint;
   final IconData iconic;
+  final Function onTaps;
 
-  const TextEditGetter({Key key, this.validate, this.saved, this.control, this.hint, this.iconic}) : super(key: key);
+  const TextEditGetter({Key key, this.validate, this.saved, this.control, this.hint, this.iconic, this.onTaps}) : super(key: key);
 
-  
+
   _TextEditGetterState createState() => _TextEditGetterState();
 }
 
@@ -25,6 +26,7 @@ class _TextEditGetterState extends State<TextEditGetter> {
               decoration: eBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
+                onTap: widget.onTaps,
                 cursorColor: pureblue,
                 controller: widget.control,
                 validator: widget.validate,
