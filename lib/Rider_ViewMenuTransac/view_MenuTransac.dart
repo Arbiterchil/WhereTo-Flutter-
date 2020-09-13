@@ -119,6 +119,7 @@ var iderntify;
       "include_player_ids": ['${widget.playerId}'],
       "include_segments": ["Users Notif"],
       "excluded_segments": [],
+       "large_icon": "https://res.cloudinary.com/amadpogi/image/upload/v1600008167/logo_nh4bpx.png",
       "contents": {"en": "Your Order is Being Delivered."},
 
       "data": {
@@ -149,6 +150,7 @@ var iderntify;
       "include_player_ids": ['${widget.playerId}'],
       "include_segments": ["Users Notif"],
       "excluded_segments": [],
+       "large_icon": "https://res.cloudinary.com/amadpogi/image/upload/v1600008167/logo_nh4bpx.png",
       "contents": {"en": "Your Order Successfully Delivered."},
 
       "data": {

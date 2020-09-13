@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
  
     String _currentPage = "SearchRestaurant";
     String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
- var data;
+ String data;
  var checkbool;
  var idmine;
  var gethis;
@@ -56,9 +56,11 @@ class _HomePageState extends State<HomePage> {
   
   void initState() {
      getShared();
-    configSignal();
+     
+
     super.initState();
-     _onsSignal();
+    _onsSignal();
+        //  configSignal();
     postuserId();
     
   }
@@ -71,7 +73,24 @@ class _HomePageState extends State<HomePage> {
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();
    await OneSignal.shared.sendTags({'UR': 'TRUE'});  
+     OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared
+        .setNotificationReceivedHandler((OSNotification notification){
 
+        setState(() {
+           data = notification.payload.additionalData["force"].toString();
+           print("$data is you");
+          // if(data != null){
+            if(data == "penalty"){
+               _showDone(meesages.toString());
+            }else{
+              print("None");
+            }
+          // }
+        });
+        
+    });                     
   }
  void getShared() async {
 
@@ -86,25 +105,10 @@ class _HomePageState extends State<HomePage> {
 
  }
  
- configSignal() {
+//  configSignal(){
 
-    OneSignal.shared
-        .setInFocusDisplayType(OSNotificationDisplayType.notification);
-    OneSignal.shared
-        .setNotificationReceivedHandler((OSNotification notification){
-      data = notification.payload.additionalData;
-        setState(() {
-          if(data != null){
-            if(data["force"] == "penalty"){
-               _showDone(meesages.toString());
-            }else{
-              print("None");
-            }
-          }
-        });
-        
-    });                            
-}
+          
+// }
 
 void postuserId() async {
    var status = await OneSignal.shared.getPermissionSubscriptionState();

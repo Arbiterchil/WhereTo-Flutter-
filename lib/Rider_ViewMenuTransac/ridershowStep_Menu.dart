@@ -49,6 +49,8 @@ class _MShowStepState extends State<MShowStep> {
           "include_player_ids": ['$playerID'],
           "include_segments": ["Users Notif"],
           "excluded_segments": [],
+          "large_icon": "https://res.cloudinary.com/amadpogi/image/upload/v1600008167/logo_nh4bpx.png",
+          "big_picture":"https://res.cloudinary.com/amadpogi/image/upload/v1599185567/banner-01_sxhg1m.png",
           "contents": {"en": "Your Order is Accepted and Ongoing to Buy The Menu."},
 
           "data": {
