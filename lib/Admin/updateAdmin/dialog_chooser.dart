@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:WhereTo/Admin/Get_Sales/get_Sales.dart';
+import 'package:WhereTo/Admin/admin_addmenu.dart';
+import 'package:WhereTo/Admin/updateAdmin/add_menuChoose.dart';
 import 'package:WhereTo/Admin/updateAdmin/menu_update.dart';
 import 'package:WhereTo/Admin/updateAdmin/restu_update.dart';
 import 'package:WhereTo/styletext.dart';
@@ -31,7 +33,7 @@ class _ChooseEdittoState extends State<ChooseEditto> {
       elevation: 0,
       backgroundColor: Colors.transparent,
         child: Container(
-            height: 350,
+            height: 550,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -128,6 +130,39 @@ class _ChooseEdittoState extends State<ChooseEditto> {
                     ),
                     child: Center(
                       child: Text("Sales Report",
+                      style: TextStyle(
+                        color: pureblue,
+                        fontSize: 18,
+                        fontFamily: 'Gilroy-light'
+                      ),                     
+                      ),
+                    ),
+                  ),
+                ),
+
+                 SizedBox(height: 40,),
+                 GestureDetector(
+                  onTap: (){
+
+                      Navigator.push(  
+            context,
+            new MaterialPageRoute(
+            builder: (context) => AddMenuFromChooser(
+              restaurandID: widget.restaurantId,
+            )));
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: pureblue
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(50))
+                    ),
+                    child: Center(
+                      child: Text("Add Menu",
                       style: TextStyle(
                         color: pureblue,
                         fontSize: 18,

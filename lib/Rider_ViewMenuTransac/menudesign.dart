@@ -40,96 +40,99 @@ class _MenuDesignState extends State<MenuDesign> {
           color: pureblue
         )
        ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            textDirection: TextDirection.ltr,
-              children: <Widget>[
-                Container(
-                  height: 50.0,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                  // color: Color(0xFF398AE5),
-                  // // Color(0xFF398AE5),
-                  // // Colors.white,
-                  // shape: BoxShape.rectangle,
-                 
-                ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: 1,
-                          color: pureblue
-                        )
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset("asset/img/logo.png"),
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              textDirection: TextDirection.ltr,
+                children: <Widget>[
+                  Container(
+                    height: 50.0,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                    // color: Color(0xFF398AE5),
+                    // // Color(0xFF398AE5),
+                    // // Colors.white,
+                    // shape: BoxShape.rectangle,
+                   
+                  ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            width: 1,
+                            color: pureblue
+                          )
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset("asset/img/logo.png"),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Divider(
-                  height: 6.0,
-                  thickness: 2,
-                  color: pureblue,
-                  indent: 10.0,
-                  endIndent: 10.0,
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        textDirection: TextDirection.ltr,
-                        children: <Widget>[
-                          Text(
-                            widget.menuname,
-                            style: TextStyle(
-                              color: pureblue,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 11.0,
-                          fontFamily: 'OpenSans')
-                            ),
-                            SizedBox(height: 10.0,),
-                            Text(
-                            widget.description,
-                            maxLines: 2,
-                            style: TextStyle(
-                              color: pureblue,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 11.0,
-                          fontFamily: 'OpenSans')
-                            ),
-                          SizedBox(height: 10.0,),
-                          Text("Price : "+
-                            widget.price,
-                            style: TextStyle(
-                              color: pureblue,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 11.0,
-                          fontFamily: 'OpenSans')
-                            ),
-                            SizedBox(height: 10.0,),
-                          Text("Quantity : "+
-                            widget.quantity,
-                            style: TextStyle(
-                              color: pureblue,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 11.0,
-                          fontFamily: 'OpenSans')
-                            ),
-                        ],
-                      ),
+                  Divider(
+                    height: 6.0,
+                    thickness: 2,
+                    color: pureblue,
+                    indent: 10.0,
+                    endIndent: 10.0,
                   ),
-                  
-              ],
-          
+
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          textDirection: TextDirection.ltr,
+                          children: <Widget>[
+                            Text(
+                              widget.menuname,
+                              style: TextStyle(
+                                color: pureblue,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 11.0,
+                            fontFamily: 'OpenSans')
+                              ),
+                              SizedBox(height: 10.0,),
+                              Text(
+                              widget.description,
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: pureblue,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 11.0,
+                            fontFamily: 'OpenSans')
+                              ),
+                            SizedBox(height: 10.0,),
+                            Text("Price : "+
+                              widget.price,
+                              style: TextStyle(
+                                color: pureblue,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 11.0,
+                            fontFamily: 'OpenSans')
+                              ),
+                              SizedBox(height: 10.0,),
+                            Text("Quantity : "+
+                              widget.quantity,
+                              style: TextStyle(
+                                color: pureblue,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 11.0,
+                            fontFamily: 'OpenSans')
+                              ),
+                          ],
+                        ),
+                    ),
+                    
+                ],
+            
+            ),
           ),     
     );
   }

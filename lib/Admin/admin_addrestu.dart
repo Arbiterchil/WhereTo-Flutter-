@@ -6,6 +6,8 @@ import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/editProfileScreen.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -18,7 +20,8 @@ class AdminAddRestaurant extends StatefulWidget {
 
 class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
 
-    
+    LatLng latlng = new LatLng(12.8797,121.7740);
+String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
 
     final scaffoldKey = new GlobalKey<ScaffoldState>();
     TextEditingController owner  = TextEditingController();
@@ -32,7 +35,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
     String closetimeString;
     String datesofdays;
     String features;
-    List<dynamic> dataBarangay = [];
+    List<dynamic> dataBarangay = List();
     bool loading = false;
     final pick = ImagePicker();
    File _idPickerImage;
@@ -275,6 +278,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
               height: 50.0,
               child: TextFormField(
                 cursorColor: pureblue,
+                onTap: () => viewMapo(),
                 controller: address,
                 validator: (val) => val.isEmpty ? ' Please Put Your Address' : null,
                 style: TextStyle(
@@ -839,6 +843,7 @@ class _AdminAddRestaurantState extends State<AdminAddRestaurant> {
             ),
             
         ),
+        
         onWillPop: () async => false),
     );
   }
@@ -1128,6 +1133,72 @@ void _showDial( String message){
     ); 
     },);
 }
- 
+
+void viewMapo(){
+
+  showModalBottomSheet(
+    isDismissible: true,
+    context: context, 
+  builder: (_){
+
+    return SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
+      child: Column(
+        children: [
+          Container(
+        height: 390,
+        width: MediaQuery.of(context).size.width,
+        child: PlacePicker(
+                      apiKey: googleKey,
+                      initialPosition: latlng,
+                      useCurrentLocation: true,
+                      searchForInitialValue: true,
+                      usePlaceDetailSearch: true,
+                      onPlacePicked: (result) async {
+                        String lat = result.geometry.location.lat.toString();
+                        String lng = result.geometry.location.lng.toString();
+                        print("the Bilat is $lat and Oten is $lng");
+                        address.text = "$lat,$lng";
+                        Navigator.pop(context);
+                        }
+                    ),
+      ),
+        ],
+      ),
+    );
+
+  });
+
+  // showDialog(context: context,builder: (context) {
+
+  //   return Dialog(
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(20),
+  //     ),
+  //     elevation: 0,
+  //     child: Container(
+  //     height: 700,
+  //     width: MediaQuery.of(context).size.width,
+  //     child: PlacePicker(
+  //                   apiKey: googleKey,
+  //                   initialPosition: latlng,
+  //                   useCurrentLocation: true,
+  //                   searchForInitialValue: true,
+  //                   usePlaceDetailSearch: true,
+  //                   onPlacePicked: (result) async {
+  //                     String lat = result.geometry.location.lat.toString();
+  //                     String lng = result.geometry.location.lng.toString();
+  //                     print("the Bilat is $lat and Oten is $lng");
+  //                     address.text = "$lat,$lng";
+  //                     }
+  //                 ),
+  //   ),
+  //   );
+
+
+  // });
+  
+}
+
 
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:WhereTo/AnCustom/Rider_havePendingtrans.dart';
 import 'package:WhereTo/AnCustom/dialog_showGlobal.dart';
+import 'package:WhereTo/Rider/Rider_map.dart';
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/Rider/rider_dash.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_headerpage.dart';
@@ -616,8 +617,28 @@ var checkVal = localStorage.getBool('check');
                                           ),     
                           SizedBox(height: 20,),
 
-                           
-                             
+                           Container(
+                             width: 160,
+                             height: 50,
+                             child: RaisedButton(
+                               shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.all(Radius.circular(50)),
+                               ),
+                               color: pureblue,
+                               onPressed: () => Navigator.push(context, 
+                               MaterialPageRoute(builder: (_)=> RiderLocationMap())
+                               ),
+                               child:Center(
+                                 child: Text("Location",
+                                 style: TextStyle(
+                                   color: Colors.white,
+                                   fontFamily: 'Gilroy-light'
+                                 ),
+                                 ),
+                               ) 
+                               ,),
+                           ),
+                             SizedBox(height: 20,),
                              Container(
                              height: 50.0,
                              width: 120,
