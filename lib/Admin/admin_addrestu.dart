@@ -747,9 +747,8 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
 
   @override
   void initState() {
-    
-    super.initState();
     callBarangay();
+    super.initState();
     weekdays();
     _featured();
   }
