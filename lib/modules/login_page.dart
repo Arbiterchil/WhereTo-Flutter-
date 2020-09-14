@@ -4,6 +4,7 @@ import 'package:WhereTo/Admin/navbottom_admin.dart';
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/Rider/rider_sendRem.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:WhereTo/modules/A_RiderLog/rider_logPen.dart';
 import 'package:WhereTo/modules/homepage.dart';
 import 'package:WhereTo/modules/signup_page.dart';
@@ -463,7 +464,7 @@ class _LoginPageState extends State<LoginPage> {
 void _login() async{
  String hens ;
  bool value = true;
-
+var coordinates =await ID().getPosition();
  setState(() {
       isLoading = true;
     });
@@ -490,6 +491,7 @@ void _login() async{
       localStorage.setString('user', json.encode(body['user']));
       localStorage.setString('trial','trialShow');
       localStorage.setString("address", body['user']['address']);
+      localStorage.setString("coordinates", coordinates);
       print(body);
           if(body['user']['userType'] == 0){
         print('Customer');
