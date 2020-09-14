@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/static_food.dart';
 import 'package:WhereTo/restaurants/blocClassMenu.dart';
@@ -60,13 +61,14 @@ class _FoodDisplayState extends State<FoodDisplay> {
                               bucket: _bucket,
                               key: key,
                               child: StaticFoodDisplay(
-                                pricetag: "P ?.00",
+                                pricetag: "P ${snapshot.data[index].price.toString()}",
                                 restaurantname:
                                     snapshot.data[index].restaurantName,
                                 foodname: snapshot.data[index].menuName,
                                 description: snapshot.data[index].categoryName,
                                 image: snapshot.data[index].imagePath,
                                 onTap: () async {
+                                  var coordinates =await CoordinatesConverter().convert(snapshot.data[index].address);
                                   ProgressDialog featured =
                                       ProgressDialog(context);
                                   featured.style(
@@ -157,9 +159,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                                     baranggay: snapshot
                                                         .data[index]
                                                         .barangayName,
-                                                    address: snapshot
-                                                        .data[index].address
-                                                        .toString(),
+                                                    address: coordinates,
                                                     categID: snapshot
                                                         .data[index].categoryId
                                                         .toString(),

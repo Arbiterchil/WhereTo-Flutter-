@@ -1,13 +1,9 @@
 import 'dart:convert';
-
-import 'package:WhereTo/AnCustom/LocationSet.dart';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
-import 'package:WhereTo/Services/connectivity_status.dart';
-import 'package:WhereTo/google_maps/address.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/Transaction/SearchMenu/newSearch.dart';
-import 'package:WhereTo/Transaction/SearchMenu/search.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:WhereTo/google_maps/googlemap_address.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
@@ -20,12 +16,11 @@ import 'package:WhereTo/restaurants/new_Carousel.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'FoodDisplay.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_place/google_place.dart';
+
 class SearchDepo extends StatefulWidget {
   @override
   _SearchDepoState createState() => _SearchDepoState();
@@ -41,6 +36,7 @@ String categ ="0";
     super.initState();
     _getUserInfo();
     streamRestaurantsFeatured..getFeaturedViewRestaurant();
+    
   }
 
   @override
@@ -72,6 +68,7 @@ String categ ="0";
   Widget build(BuildContext context) {
 
     return  Scaffold(
+        
         backgroundColor: Colors.grey[50],
         body: SafeArea(
           child: SingleChildScrollView(
@@ -708,14 +705,19 @@ Widget _views(NewRestaurantResponse newFeatured){
                 scrollDirection: Axis.horizontal,
                 itemCount: nf.length,
                 itemBuilder: (context,index){
-                  
+                 
                    return Column(
                      children: <Widget>[
-                       NewRestaurantBox(
+                       FutureBuilder(
+                         future: CoordinatesConverter().convert(nf[index].address),
+                         builder: (context, snapshot){
+                        if(snapshot.data==null){
+                          return Container();
+                        }else{
+                          return NewRestaurantBox(
                         image: nf[index].imagePath,
                          restaurantName:nf[index].restaurantName ,
-                         address: nf[index].address,
-                         
+                         address: snapshot.data, 
                          onTap: () async{
                            ProgressDialog featuredRestaurant = ProgressDialog(context);
                               featuredRestaurant.style(
@@ -787,7 +789,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                                 restauID:nf[index].id.toString(),
                                                 nameRestau: nf[index].restaurantName.toString(),
                                                 baranggay: nf[index].barangayId.toString(),
-                                                address:nf[index].address.toString(),
+                                                address:snapshot.data,
                                                 categID: categ,  
                                                   )));
                                     }else{
@@ -810,7 +812,9 @@ Widget _views(NewRestaurantResponse newFeatured){
                            
                           
                          },
-                       ),
+                        );
+                        }
+                         })
                      ],
                    );
                 },

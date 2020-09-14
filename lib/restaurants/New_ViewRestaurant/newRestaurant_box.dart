@@ -1,4 +1,5 @@
 
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class NewRestaurantBox extends StatefulWidget {
 }
 
 class _NewRestaurantBoxState extends State<NewRestaurantBox> {
+  
   @override
   Widget build(BuildContext context) {
     return Padding(

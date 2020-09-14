@@ -7,6 +7,7 @@ import 'dart:convert';
 List<IsFeatured> isFeaturedFromJson(String str) => List<IsFeatured>.from(json.decode(str).map((x) => IsFeatured.fromJson(x)));
 
 
+
 class IsFeatured {
     IsFeatured({
         this.menuId,
@@ -17,6 +18,7 @@ class IsFeatured {
         this.menuName,
         this.categoryId,
         this.isFeatured,
+        this.price,
         this.categoryName,
         this.imagePath,
     });
@@ -29,6 +31,7 @@ class IsFeatured {
     final String menuName;
     final int categoryId;
     final int isFeatured;
+    final int price;
     final String categoryName;
     final String imagePath;
 
@@ -41,6 +44,7 @@ class IsFeatured {
         menuName: json["menuName"],
         categoryId: json["categoryId"],
         isFeatured: json["isFeatured"],
+        price: json["price"],
         categoryName: json["categoryName"],
         imagePath: json["imagePath"],
     );
@@ -54,7 +58,10 @@ class IsFeatured {
         "menuName": menuName,
         "categoryId": categoryId,
         "isFeatured": isFeatured,
+        "price": price,
         "categoryName": categoryName,
         "imagePath": imagePath,
     };
 }
+
+

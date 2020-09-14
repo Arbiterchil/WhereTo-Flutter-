@@ -368,7 +368,7 @@ class _TransactionListState extends State<TransactionList> {
                                 }),
                           ),
                           Align(
-                            alignment: Alignment.bottomCenter,
+                            alignment: Alignment.bottomLeft,
                             child: Container(
                               height: 150,
                               decoration: BoxDecoration(
@@ -377,60 +377,7 @@ class _TransactionListState extends State<TransactionList> {
                               ),
                             child: Stack(
                             children: [
-                            Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 80),
-                              child: Container(
-                                height: 70,
-                                child: Builder(builder: (context) {
-                                  return Stack(
-                                    children: [
-                                      Card(
-                                        elevation: 15.5,
-                                        color: Color(0xFF0C375B),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(5),
-                                          child: Center(
-                                              child: Padding(
-                                            padding: EdgeInsets.all(5),
-                                            child: ListTile(
-                                              title: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                "Optional Delivery Address",
-                                                style: TextStyle(
-                                                  fontFamily: "Gilroy-light",
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                               Text(
-                                                "You can choose Optional Delivery Address",
-                                                style: TextStyle(
-                                                  fontFamily: "Gilroy-light",
-                                                  color: Colors.white,
-                                                  fontSize: 10,
-                                                ),
-                                              ),
-                                                ],
-                                              ),
-                                              trailing: IconButton(icon: Icon(Icons.edit, color: Colors.white), onPressed: (){
-                                                Navigator.push(context, MaterialPageRoute(builder: (context){
-                                                  return AddressLine();
-                                                }));
-                                              }),
-                                            ),
-                                          )),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                }),
-                              ),
-                            ),
-                          ),
-                          Align(
+                              Align(
                             alignment: Alignment.bottomRight,
                             child: Stack(
                               children: <Widget>[
@@ -513,10 +460,66 @@ class _TransactionListState extends State<TransactionList> {
                               ],
                             ),
                           ),
+                            
+                          
                                 ],
                               )
                             ),
-                          )
+                          ),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 80),
+                              child: Container(
+                                height: 70,
+                                child: Builder(builder: (context) {
+                                  return Stack(
+                                    children: [
+                                      Card(
+                                        elevation: 15.5,
+                                        color: Color(0xFF0C375B),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(5),
+                                          child: Center(
+                                              child: Padding(
+                                            padding: EdgeInsets.all(5),
+                                            child: ListTile(
+                                              title: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                "Optional Delivery Address",
+                                                style: TextStyle(
+                                                  fontFamily: "Gilroy-light",
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                               Text(
+                                                "You can choose Optional Delivery Address",
+                                                style: TextStyle(
+                                                  fontFamily: "Gilroy-light",
+                                                  color: Colors.white,
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                                ],
+                                              ),
+                                              trailing: IconButton(icon: Icon(Icons.edit, color: Colors.white), onPressed: (){
+                                                Navigator.push(context, MaterialPageRoute(builder: (context){
+                                                  return AddressLine();
+                                                }));
+                                              }),
+                                            ),
+                                          )),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }),
+                              ),
+                            ),
+                          ),
+                          
                         ],
                       );
                       }

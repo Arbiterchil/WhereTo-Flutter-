@@ -28,11 +28,11 @@ class PayOrder extends StatefulWidget {
 }
 class _PayOrderState extends State<PayOrder> {
   var userData;
-  String address;
-  String newAddress;
-  String add;
-  String coordinates;
-  String newcoordinates;
+  var address;
+  var newAddress;
+  var add;
+  var coordinates;
+  var newcoordinates;
   @override
   void initState() {
     super.initState();

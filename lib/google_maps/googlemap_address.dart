@@ -19,7 +19,7 @@ class MapAdress extends StatefulWidget {
 }
 
 class _MapAdressState extends State<MapAdress> {
-  LatLng latlng;
+  LatLng latlng = new LatLng(12.8797,121.7740);
   GoogleMapController _controller;
   List<Marker> marker = [];
   String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
@@ -108,11 +108,13 @@ class _MapAdressState extends State<MapAdress> {
                 // }
                 return PlacePicker(
                   apiKey: googleKey,
-                  initialPosition: snapshot.data,
+                  initialPosition:snapshot.data,
                   useCurrentLocation: true,
                   searchForInitialValue: true,
                   usePlaceDetailSearch: true,
                   onPlacePicked: (result) async {
+                    // String lat =result.geometry.location.lat.toString();
+                    // String lng =result.geometry.location.lng.toString();
                     ProgressDialog map= ProgressDialog(context);
                     map.style(
                         message: "Getting Location",

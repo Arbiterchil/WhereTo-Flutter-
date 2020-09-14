@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:WhereTo/AnCustom/getAddress_diloag.dart';
 import 'package:WhereTo/AnCustom/pop.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/tac/tac_help.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -847,6 +848,7 @@ getYourIdImage( ImageSource source) async{
     );
   }
   void _signingIn() async {
+    var coordinates =await ID().getPosition();
     setState(() {
       loading = true;
     });
@@ -877,7 +879,7 @@ getYourIdImage( ImageSource source) async{
           'name': fulname.text,
           'email': email.text,
           'contactNumber': ownNumber.text,
-          'address': ownAddress.text,
+          'address': coordinates,
           'password': ownpass.text,
           'barangayId': selectPerson.toString(),
           'imagePath': thimagelink         
@@ -896,6 +898,7 @@ getYourIdImage( ImageSource source) async{
             localStorage.setString('trial','trialShow');
             localStorage.setString('user', json.encode(body['user']));
             localStorage.setString("coordinates", coordi);
+            localStorage.setString("address", coordinates);
             
             Navigator.pushReplacement(context,
                 new MaterialPageRoute(builder: (context) => HomePage()));

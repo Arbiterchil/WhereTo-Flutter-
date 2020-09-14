@@ -49,9 +49,8 @@ dependencies:
   badges: ^1.1.1
   onesignal_flutter: ^2.6.0
   workmanager: ^0.2.3
-  url_launcher: ^5.5.0
+  url_launcher: ^5.5.3
   geocoder: ^0.2.1
-  geolocation: ^1.1.2
   location: ^3.0.2
   geodesy: ^0.3.2
   draggable_fab: ^0.1.1
@@ -60,7 +59,11 @@ dependencies:
 
   # dio: ^3.0.9
   ntp: ^1.0.7
-  google_maps_flutter: ^0.5.31
+  google_maps_flutter: ^0.5.32 
+  flutter_polyline_points: ^0.2.1
+  google_map_polyline:
+  permission:
+  android_intent: ^0.3.7+3
   awesome_dialog: ^1.1.3
   image_picker: ^0.6.7+4
   image_cropper: ^1.3.0
