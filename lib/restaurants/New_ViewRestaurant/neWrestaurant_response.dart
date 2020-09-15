@@ -9,7 +9,7 @@ class NewRestaurantResponse {
 
   NewRestaurantResponse(this.feature, this.error);
 
-  NewRestaurantResponse.fromJson(List<dynamic> json)
+  NewRestaurantResponse.fromJson(List<NeWRestaurant> json)
   : feature = json,error = "" ;
     
 

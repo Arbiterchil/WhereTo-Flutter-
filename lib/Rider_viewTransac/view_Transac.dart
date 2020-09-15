@@ -1,3 +1,4 @@
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,17 @@ class ViewTransacRider extends StatefulWidget {
 }
 
 class _ViewTransacRiderState extends State<ViewTransacRider> {
+
+ String data1 ="";
+ String data2 = "";
+  @override
+  void initState() {
+
+    super.initState();
+    CoordinatesConverter().convert(widget.deliveryAddress).then((value) => setState(()=> data1 =value));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -83,7 +95,7 @@ class _ViewTransacRiderState extends State<ViewTransacRider> {
                     SizedBox(height: 7.0,),
                     Flexible(
                       child: Container(
-                        child: Text(widget.deliveryAddress,
+                        child: Text(data1,
                         overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,

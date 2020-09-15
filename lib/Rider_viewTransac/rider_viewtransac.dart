@@ -5,6 +5,7 @@ import 'package:WhereTo/Admin/A_RiderRet/rider_viewRets.dart';
 import 'package:WhereTo/Admin/A_Rider_Remain/rider_remainView.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_bottom.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/view_MenuTransac.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -23,7 +24,7 @@ class RiderTransaction extends StatefulWidget {
 }
 class _RiderTransactionState extends State<RiderTransaction> {
 
-  
+    var del;
 var totalAll;
   var priceTotal = 0 ;
   var totals;
@@ -44,9 +45,10 @@ var totalAll;
      menuTrans(); 
     super.initState();
     retriveStream..getRetieveTransac();
-   
+    
   }
- 
+
+
   void menuTrans() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var idfromSave = localStorage.getString('menuplustrans');
@@ -209,7 +211,7 @@ List idsComming = [];
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Error :  $error")
+                Text("Please Refresh to get Fresh Data.")
               ],
             ),
           );
@@ -230,9 +232,15 @@ List idsComming = [];
             ),
           );
         }else{
+        
           return ListView.builder(
             itemCount: v.length,
             itemBuilder: (context,index){
+              //  del = v[index].deliveryAddress;
+              //  converting();
+             
+             
+
               return Column(
                 children: <Widget>[
                   Padding(
@@ -241,7 +249,7 @@ List idsComming = [];
                                 transacId: v[index].id.toString(),
                                 name: v[index].name,
                                 address: v[index].address,
-                                deliveryAddress: v[index].deliveryAddress,
+                                deliveryAddress:v[index].deliveryAddress,
                                 restaurantName: v[index].restaurantName,
                                 onTap: () async {
 
@@ -256,7 +264,7 @@ List idsComming = [];
                                                           nametran:  v[index].name,
                                                           contactNumber : v[index].contactNumber.toString(),
                                                           playerId: v[index].deviceId,
-                                                          user_coor : user_coor.toString());
+                                                          user_coor : v[index].address);
                                                       }));
                                 },
                     ),
@@ -267,8 +275,16 @@ List idsComming = [];
             
             );
         }
-  }
 
+    
+
+  }
+  String valuemore= "";
+  void converting(){
+    
+     CoordinatesConverter().convert(del).then((value) => setState(()=> valuemore =value));
+      print(valuemore);
+  } 
 
   // Widget _viewRider(){
 

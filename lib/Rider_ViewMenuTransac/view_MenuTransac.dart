@@ -7,6 +7,8 @@ import 'package:WhereTo/Rider/rider_dash.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_headerpage.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/button_OkAssign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
+import 'package:WhereTo/google_maps/Rider_route.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:http/http.dart' as http;
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/ridershowStep_Menu.dart';
@@ -571,10 +573,19 @@ var checkVal = localStorage.getBool('check');
                                                   ),
                                                   SizedBox(height: 10,),
 
-                                                   NCard(
-                                                    icon: Icons.motorcycle,
-                                                    label:widget.deliverTo,
-                                                  ),
+                                                   FutureBuilder(
+                                                     future: CoordinatesConverter().convert(widget.deliverTo),
+                                                    builder: (context,snaps){
+                                                      if(snaps.data == null){
+                                                        return Text("Data Error");
+                                                      }else{
+                                                        return  NCard(
+                                                    icon: Icons.money_off,
+                                                    label:snaps.data
+                                                  );
+                                                      }
+                                                    },
+                                                   ),
                                                   SizedBox(height: 10,),
                                                     
                                                       ],
@@ -619,17 +630,22 @@ var checkVal = localStorage.getBool('check');
                                           ),     
                           SizedBox(height: 20,),
 
-                           Container(
-                             width: 160,
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                 Container(
+                             width: 110,
                              height: 50,
                              child: RaisedButton(
                                shape: RoundedRectangleBorder(
                                  borderRadius: BorderRadius.all(Radius.circular(50)),
                                ),
                                color: pureblue,
-                               onPressed: () => Navigator.push(context, 
-                               MaterialPageRoute(builder: (_)=> RiderLocationMap())
-                               ),
+                               onPressed: (){
+                                 RiderRoute().getRoute(widget.deliverTo);
+                               },
                                child:Center(
                                  child: Text("Location",
                                  style: TextStyle(
@@ -640,6 +656,30 @@ var checkVal = localStorage.getBool('check');
                                ) 
                                ,),
                            ),
+                           Container(
+                             width: 110,
+                             height: 50,
+                             child: RaisedButton(
+                               shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.all(Radius.circular(50)),
+                               ),
+                               color: pureblue,
+                               onPressed: (){
+                                 RiderRoute().getRoute(widget.user_coor);
+                               },
+                               child:Center(
+                                 child: Text("Restaurant",
+                                 style: TextStyle(
+                                   color: Colors.white,
+                                   fontFamily: 'Gilroy-light'
+                                 ),
+                                 ),
+                               ) 
+                               ,),
+                           ),
+                              ],
+                            ),
+                          ),
                              SizedBox(height: 20,),
                              Container(
                              height: 50.0,
@@ -1217,7 +1257,7 @@ void _showDistictWarning(String meesage) {
       var riderId = userData['id'].toString();
       var data = {
         "transactionId" : "${widget.getID}",
-        "riderId" : riderId ,
+        "riderId" : riderId !=null ? riderId : userData['id'] ,
       };
 
       var response = await ApiCall().assignRiders(data, '/assignRider');

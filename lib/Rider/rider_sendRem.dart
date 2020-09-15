@@ -171,6 +171,7 @@ var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.
                                SharedPreferences localStorage = await SharedPreferences.getInstance();
                                localStorage.remove('user');
                                localStorage.remove('token');
+                               localStorage.remove('userTYPO');
                                localStorage.remove('menuplustrans');
                                var res = await ApiCall().getData('/logout');
                             var body = json.decode(res.body);

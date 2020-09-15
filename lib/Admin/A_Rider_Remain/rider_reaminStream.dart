@@ -8,8 +8,8 @@ class RemainStream {
  final RemainApi _api = RemainApi();
   final BehaviorSubject<RemainResponse> _subject = BehaviorSubject<RemainResponse>();
 
-  getRemianData(String id) async{
-    RemainResponse response = await _api.getRemaintran(id);
+  getRemianData() async{
+    RemainResponse response = await _api.getRemaintran();
     _subject.sink.add(response);
   }
 

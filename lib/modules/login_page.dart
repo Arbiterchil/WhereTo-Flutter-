@@ -11,6 +11,7 @@ import 'package:WhereTo/modules/signup_page.dart';
 import 'package:WhereTo/path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -382,7 +383,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: _formGet(context),
                 ),
                 SizedBox(height: 20,),
-                Container(
+                isLoading ? spinDot() : Container(
                   width: MediaQuery.of(context).size.width,
                   child: Stack(
                     children: <Widget>
@@ -458,7 +459,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
-
+  Widget spinDot(){
+    return Container(
+      height: 40,
+      width: MediaQuery.of(context).size.width,
+      child: Center(
+        child: SpinKitThreeBounce(
+          color: pureblue,
+          size: 20.0,
+        ),
+      ),
+    );
+  }
 
 
 void _login() async{
@@ -491,6 +503,7 @@ var coordinates =await ID().getPosition();
       localStorage.setString('user', json.encode(body['user']));
       localStorage.setString('trial','trialShow');
       localStorage.setString("address", body['user']['address']);
+      localStorage.setString("userTYPO", body['userType'].toString());
       localStorage.setString("coordinates", coordinates);
       print(body);
           if(body['user']['userType'] == 0){

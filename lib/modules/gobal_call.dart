@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +17,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
   String getRestaurant;
   String searchit;
   String getImage;
+  String addre = "";
 @override
   void initState() {
     // TODO: implement initState
@@ -30,6 +32,7 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
     var user = json.decode(userJson);
     setState(() {
       userData = user;
+      addre = user['address'];
     });
     if(userData['imagePath'] != null){
 
@@ -126,11 +129,19 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                                    icon: Icons.phone_android,
                                    label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
                                                       ),
-                                                      NCard(
+                                                   FutureBuilder(
+                                                     future: CoordinatesConverter().convert(addre),
+                                                     builder: (context,snaps){
+                                                      if(snaps.data ==null){
+                                                        return Container();
+                                                      }else{
+                                                         return    NCard(
                                                         active: false,
                                    icon: Icons.my_location,
-                                   label: userData!= null ? '${userData['address']}' :  'Fail get data.',
-                                                      ),
+                                   label: snaps.data != null ? '${snaps.data}' :  'Fail get data.',
+                                                      );
+                                                      }
+                                                     }),
                               ],
                             ),
                           ),

@@ -1,29 +1,21 @@
-import 'dart:convert';
-
-List<Unverified> unverifiedFromJson(String str) => List<Unverified>.from(json.decode(str).map((x) => Unverified.fromJson(x)));
-
-String unverifiedToJson(List<Unverified> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 class Unverified {
-    Unverified({
-        this.userId,
-        this.name,
-        this.imagePath,
-    });
-  
-    int userId;
-    String name;
-    String imagePath;
+  int userId;
+  String name;
+  String imagePath;
 
-    factory Unverified.fromJson(Map<String, dynamic> json) => Unverified(
-        userId: json["userId"],
-        name: json["name"],
-        imagePath: json["imagePath"],
-    );
+  Unverified({this.userId, this.name, this.imagePath});
 
-    Map<String, dynamic> toJson() => {
-        "userId": userId,
-        "name": name,
-        "imagePath": imagePath,
-    };
+  Unverified.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    name = json['name'];
+    imagePath = json['imagePath'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userId'] = this.userId;
+    data['name'] = this.name;
+    data['imagePath'] = this.imagePath;
+    return data;
+  }
 }

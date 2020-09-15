@@ -10,11 +10,12 @@ class RemainResponse {
 
   RemainResponse(this.retieveAlltransac, this.error);
 
- RemainResponse.fromJson(List<dynamic> json)
+
+ RemainResponse.fromJson(List<RetieveAlltransac> json)
   : retieveAlltransac = json,error = "" ;
     
 
-  RemainResponse.withError(String errorvalue)
+  RemainResponse.withError(String errorvalue) 
   : retieveAlltransac = List(),
   error = errorvalue; 
 

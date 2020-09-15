@@ -28,7 +28,7 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
   void initState() {
 
     super.initState();
-    remainStream..getRemianData(id);
+    remainStream..getRemianData();
   }
 
   @override
@@ -98,7 +98,7 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Error :  $error")
+                Text("Something went wrong")
               ],
             ),
           );
@@ -145,6 +145,7 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
                                                           nametran:  v[index].name,
                                                           contactNumber : v[index].contactNumber.toString(),
                                                           playerId: v[index].deviceId,
+                                                          user_coor: v[index].address,
                                                           );
                                                       }));
                                 },

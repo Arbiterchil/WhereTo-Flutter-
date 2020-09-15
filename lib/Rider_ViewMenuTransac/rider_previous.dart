@@ -6,6 +6,8 @@ import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/ridershowStep_Menu.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/Rider_route.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -595,10 +597,19 @@ var checkVal = localStorage.getBool('check');
                                                   ),
                                                   SizedBox(height: 10,),
 
-                                                   NCard(
-                                                    icon: Icons.motorcycle,
-                                                    label:widget.deliverTo,
-                                                  ),
+                                                   FutureBuilder(
+                                                     future: CoordinatesConverter().convert(widget.deliverTo),
+                                                    builder: (context,snaps){
+                                                      if(snaps.data == null){
+                                                        return Text("Data Error");
+                                                      }else{
+                                                        return  NCard(
+                                                    icon: Icons.money_off,
+                                                    label:snaps.data
+                                                  );
+                                                      }
+                                                    },
+                                                   ),
                                                   SizedBox(height: 10,),
                                                       //   Text("Name : ${widget.nametran}",
                                                       //   style: TextStyle(
@@ -701,7 +712,57 @@ var checkVal = localStorage.getBool('check');
                                             ),
                                           ),     
                           SizedBox(height: 20,),
-
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                 Container(
+                             width: 110,
+                             height: 50,
+                             child: RaisedButton(
+                               shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.all(Radius.circular(50)),
+                               ),
+                               color: pureblue,
+                               onPressed: (){
+                                 RiderRoute().getRoute(widget.deliverTo);
+                               },
+                               child:Center(
+                                 child: Text("Location",
+                                 style: TextStyle(
+                                   color: Colors.white,
+                                   fontFamily: 'Gilroy-light'
+                                 ),
+                                 ),
+                               ) 
+                               ,),
+                           ),
+                           Container(
+                             width: 110,
+                             height: 50,
+                             child: RaisedButton(
+                               shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.all(Radius.circular(50)),
+                               ),
+                               color: pureblue,
+                               onPressed: (){
+                                 RiderRoute().getRoute(widget.user_coor);
+                               },
+                               child:Center(
+                                 child: Text("Restaurant",
+                                 style: TextStyle(
+                                   color: Colors.white,
+                                   fontFamily: 'Gilroy-light'
+                                 ),
+                                 ),
+                               ) 
+                               ,),
+                           ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20,),
                            
                              
                              Container(

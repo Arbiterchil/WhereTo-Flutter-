@@ -10,12 +10,12 @@ class CommentResponse {
 
   CommentResponse(this.riderview, this.error);
 
- CommentResponse.fromJson(List<dynamic> json)
+ CommentResponse.fromJson(List<RiderComments> json)
   : riderview = json,error = "" ;
     
 
   CommentResponse.withError(String errorvalue)
-  : riderview = List(),
+  : riderview = List<dynamic>(),
   error = errorvalue; 
 
 

@@ -19,8 +19,6 @@ class RemitPendingUser extends StatefulWidget {
 
   const RemitPendingUser({Key key, this.id}) : super(key: key);
 
-  get idFromLog => null;
-
   @override
   _RemitPendingUserState createState() => _RemitPendingUserState(id);
 }
@@ -118,7 +116,6 @@ class _RemitPendingUserState extends State<RemitPendingUser> {
   }
 
   void getAmount() async{
-
     var response = await ApiCall().getRiderRemit('/getRiderRemit/$id');
   var bods = json.decode(response.body)['amount'];
   print(bods);
@@ -153,12 +150,13 @@ void sendRemitImage() async{
           thimagelink = stringPath;
       })
       .catchError((error) => print("ERROR_CLOUDINARY::  $error"));
-var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.toString()}');
+var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.id.toString()}');
   var bods = json.decode(response.body)['id'];
-  var data=
-  {
-    'remitId':bods,
-    'imagePath': thimagelink
+  print(bods);
+  var data =
+  { 
+    "remitId":bods,
+    "imagePath": thimagelink
   };
   await ApiCall().postRemitRider(data,'/riderRemit');
 

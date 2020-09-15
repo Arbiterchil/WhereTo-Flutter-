@@ -5,10 +5,12 @@ import 'package:WhereTo/Admin/Restaurant.dart';
 import 'package:WhereTo/Admin/Rider_viewRemit/view_RemitImages.dart';
 import 'package:WhereTo/Admin/r_source.dart';
 import 'package:WhereTo/Admin/view_allID.dart';
+import 'package:WhereTo/Admin/view_saleOurs/show_resultsRemitList.dart';
 import 'package:WhereTo/AnCustom/admin_help.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/styletext.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -181,17 +183,24 @@ class _AdminDashState extends State<AdminDash> {
                       ),
                       SizedBox(height: 40,),
                     ButtonAdmins(
-                      icon: Icons.verified_user,
+                      icon: EvaIcons.shield,
                       namebutton: "Verify User Valid ID.",
                       ontap: () =>Navigator.pushReplacement(context,
                 new MaterialPageRoute(builder: (context) => ViewAllImageId())),
                     ),
                     SizedBox(height: 30,),
                     ButtonAdmins(
-                      icon: Icons.check,
+                      icon: EvaIcons.checkmark,
                       namebutton: "Approve Remittance.",
                       ontap: () => Navigator.pushReplacement(context,
                 new MaterialPageRoute(builder: (context) => RemitViewImagesAdmin())),
+                    ),
+                     SizedBox(height: 30,),
+                    ButtonAdmins(
+                      icon: EvaIcons.list,
+                      namebutton: "Remittance List.",
+                      ontap: () => Navigator.pushReplacement(context,
+                new MaterialPageRoute(builder: (context) => ShowemitListResult())),
                     ),
                   SizedBox(height: 20,),
                   Padding(padding: const EdgeInsets.only(left: 30,right: 30),

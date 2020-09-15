@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:WhereTo/Admin/admin_addmenu.dart';
+import 'package:WhereTo/BarangaylocalList/barangay_class.dart';
+import 'package:WhereTo/BarangaylocalList/barangay_response.dart';
+import 'package:WhereTo/BarangaylocalList/barangay_stream.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/editProfileScreen.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
@@ -147,17 +150,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
 
     ];
 
-   void callBarangay() async{
-
-    var respon = await ApiCall().getBararang('/getBarangayList');
-    var bararang = json.decode(respon.body);
   
-    setState(() {
-      dataBarangay = bararang;
-    });
-    // print(bararang);
-
-  }
     phoneValidate(String val){
           Pattern pattern = r'^([+0]9)?[0-9]{10,11}$';
           RegExp regExp = new RegExp(pattern);
@@ -174,7 +167,118 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
           }
 
     }   
-    
+
+
+    Widget _view(BaranggayRespone respone){
+    List<Barangays> bararangs = respone.bararangSaika;
+    if(bararangs.length == 0 ){
+          return Container(
+            child: Text('Come Back Later.',
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+              fontSize:  16.0,
+              fontWeight: FontWeight.normal
+            ),),
+          );
+        }else{
+
+             
+                return Container(
+                    width: MediaQuery.of(context).size.width,
+                alignment: Alignment.centerLeft,
+                decoration:BoxDecoration(
+                color: Colors.white,
+            borderRadius: BorderRadius.circular(100.0),
+            border: Border.all(width: 1, color: Color(0xFF0F75BB) ),
+              ),
+              child: Padding(
+               padding: const EdgeInsets.only(left: 10),
+               child: DropdownButtonHideUnderline(
+                 child: Stack(
+                   children: [
+                     Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top:10.0),
+                              child: Icon(
+                                Icons.place,
+                                color: Color(0xFF0F75BB),
+                              ),
+                            )),
+                    Padding(
+                       padding: const EdgeInsets.only(left: 30),
+                       child: ButtonTheme(
+                         alignedDropdown: true,
+                         child: DropdownButton<String>(
+                             isExpanded: true,
+                             hint:  Text(
+                                    "Select Barangay",
+                                    style: TextStyle(
+                                        color: Color(0xFF0F75BB),
+                                        fontFamily: 'Gilroy-light'),
+                                  ),
+                                   dropdownColor: Colors.white,
+                                   icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color:Color(0xFF0F75BB),
+                                  ),
+                                
+                             items: bararangs.map((e) {
+                                return new DropdownMenuItem(
+                                  child: Text(e.barangayName,
+                                  style: TextStyle(
+                                            color: Color(0xFF0F75BB),
+                                            fontFamily: 'Gilroy-light'),),
+                                            value: e.id.toString(),
+                                );
+                             }).toList(),
+                               value:selectPerson,
+                               
+                             onChanged: (val){
+                                setState(()=>selectPerson = val);
+                             },
+                             )
+                       ),
+                      ),        
+                   ],
+                 ),
+               ),
+                ),
+                );
+        }
+  }  
+
+  Widget _errorTempMessage(String error){
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("Comback Later.")
+              ],
+            ),
+          );
+}
+ Widget _loading(){
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+                  height: 25.0,
+                  width: 25.0,
+                  child:  CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+                    strokeWidth: 4.0,
+                  ),
+                ),
+          ],
+
+
+        ),
+      );
+    }
+
     Widget formAdd(){
       return Form(
         key: formkey,
@@ -337,63 +441,79 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
             //         style: eLabelStyle,
             //         ),
             //         SizedBox(height: 10.0,),
-                    Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
-              decoration: eBoxDecorationStyle,
-              height: 50.0,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: DropdownButtonHideUnderline(
-                      child:
-            Stack(
-                        children: <Widget>[
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Icon(Icons.place,color: pureblue,)),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 30),
-                            child:
+            //         Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   alignment: Alignment.centerLeft,
+            //   decoration: eBoxDecorationStyle,
+            //   height: 50.0,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(left: 10),
+            //     child: DropdownButtonHideUnderline(
+            //           child:
+            // Stack(
+            //             children: <Widget>[
+            //               Align(
+            //                 alignment: Alignment.centerLeft,
+            //                 child: Icon(Icons.place,color: pureblue,)),
+            //               Padding(
+            //                 padding: const EdgeInsets.only(left: 30),
+            //                 child:
                             
                             
-                             DropdownButton(
-                                  isExpanded: true ,
-                                  hint: Text( "Select Barangay",
-                                  style: TextStyle(
+            //                  DropdownButton(
+            //                       isExpanded: true ,
+            //                       hint: Text( "Select Barangay",
+            //                       style: TextStyle(
                                       
-                                      color:pureblue,
-                                      fontFamily: 'Gilroy-light'
-                                    ),),
-                                  dropdownColor: Colors.white,
-                                  icon: Icon(Icons.arrow_drop_down,color: pureblue,),
+            //                           color:pureblue,
+            //                           fontFamily: 'Gilroy-light'
+            //                         ),),
+            //                       dropdownColor: Colors.white,
+            //                       icon: Icon(Icons.arrow_drop_down,color: pureblue,),
                                   
-                                  value: selectPerson,
-                                  items: dataBarangay.map((item) {
-                                  return new DropdownMenuItem(
-                                    child: Text(item['barangayName'],
-                                    style: TextStyle(
+            //                       value: selectPerson,
+            //                       items: dataBarangay.map((item) {
+            //                       return new DropdownMenuItem(
+            //                         child: Text(item['barangayName'],
+            //                         style: TextStyle(
                                       
-                                      color: pureblue,
-                                      fontFamily: 'Gilroy-light'
-                                    ),
-                                    ),
-                                    value: item['id'].toString(),
-                                  );
-                                }).toList(),
-                                  onChanged: (item){
-                                    setState(() {
-                                      selectPerson = item;
-                                      print(item);
-                                    });
-                                  }
-                                  ),
-                          ),
-                        ],
-                      ),
-                    ),
+            //                           color: pureblue,
+            //                           fontFamily: 'Gilroy-light'
+            //                         ),
+            //                         ),
+            //                         value: item['id'].toString(),
+            //                       );
+            //                     }).toList(),
+            //                       onChanged: (item){
+            //                         setState(() {
+            //                           selectPerson = item;
+            //                           print(item);
+            //                         });
+            //                       }
+            //                       ),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
                   
-              )
-            ),
+            //   )
+            // ),
+
+             StreamBuilder<BaranggayRespone>(
+      stream: bararangStream.subject.stream,
+      builder: (context,AsyncSnapshot<BaranggayRespone> snaphot){
+         if(snaphot.hasData){
+            if(snaphot.data.error !=null && snaphot.data.error.length > 0){
+                return _errorTempMessage(snaphot.data.error);
+            }
+              return _view(snaphot.data);
+        }else if(snaphot.hasError){
+              return _errorTempMessage(snaphot.error);
+        }else{
+              return _loading();
+        }
+      
+      }),
             SizedBox(height: 15.0,),
             // Text("Open Time",
             //         style: eLabelStyle,
@@ -747,12 +867,28 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
 
   @override
   void initState() {
-    callBarangay();
+    
     super.initState();
+    // callBarangay();
     weekdays();
     _featured();
+    bararangStream..getBarangayListFormDb();
   }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    bararangStream..drainStreamData();
+  }
+//  void callBarangay() async{
 
+//     var respon = await ApiCall().getBararang('/getBarangayList');
+//     var bararang = json.decode(respon.body);
+  
+//     setState(() =>  dataBarangay = bararang);
+//     // print(bararang);
+
+//   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

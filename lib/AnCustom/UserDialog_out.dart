@@ -115,6 +115,7 @@ var userData;
                                SharedPreferences localStorage = await SharedPreferences.getInstance();
                                localStorage.remove('user');
                                localStorage.remove('token');
+                               localStorage.remove('userTYPO');
                                localStorage.remove('menuplustrans');
                               //  print(body);
                                 Navigator.pushAndRemoveUntil(

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/designbuttons.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 
 import 'package:WhereTo/modules/OtherFeatures/trans_port.dart';
 import 'package:WhereTo/modules/login_page.dart';
@@ -42,6 +43,7 @@ class _Profile extends State<Profile> {
   final scaffoldKey = new GlobalKey<ScaffoldState>();
    TextEditingController search = new TextEditingController();
   String getImage;
+  String addre ="";
   @override
   void initState() {
     _getUserInfo();
@@ -55,6 +57,7 @@ class _Profile extends State<Profile> {
     var user = json.decode(userJson);
     setState(() {
       userData = user;
+      addre = user['address'];
     });
   //     var response = await ApiCall().getCheckUser('/getUserVerification/${userData['id']}');
   //  var body = json.decode(response.body)['imagePath'];
@@ -243,11 +246,19 @@ class _Profile extends State<Profile> {
                                                     SizedBox(height: 40,),
                                                     Padding(
                                                       padding: const EdgeInsets.only(left: 20,right: 20),
-                                                      child: NCard(
+                                                      child: FutureBuilder(
+                                                     future: CoordinatesConverter().convert(addre),
+                                                     builder: (context,snaps){
+                                                      if(snaps.data ==null){
+                                                        return Container();
+                                                      }else{
+                                                         return    NCard(
                                                         active: false,
-                                 icon: Icons.my_location,
-                                 label: userData!= null ? '${userData['address']}' :  'Fail get data.',
-                                                      ),
+                                   icon: Icons.my_location,
+                                   label: snaps.data != null ? '${snaps.data}' :  'Fail get data.',
+                                                      );
+                                                      }
+                                                     }),
                                                     ),
                       SizedBox(height: 40,),
                       GestureDetector(

@@ -90,6 +90,8 @@ dependencies:
   google_maps_place_picker: ^0.10.0
   hive: ^1.4.4
   latlong: ^0.6.1
+  geolocator: ^6.0.0+4
+  eva_icons_flutter: ^2.0.1
   # syncfusion_flutter_datepicker: ^18.2.55-beta
 
 dev_dependencies:

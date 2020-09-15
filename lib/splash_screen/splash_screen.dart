@@ -29,10 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _getUserInfo() async {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
-      var userJson = localStorage.getString('user'); 
-      var user = json.decode(userJson);
+      var userJson = localStorage.getString('userTYPO'); 
       setState(() {
-        userData = user;
+        userData = userJson;
       });
   }
 
@@ -48,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
    
       Navigator.pushReplacement(context, MaterialPageRoute(
       builder: (context) => PathWay( 
-        getStringthis: userData != null ? userData['userType'].toString() : "trialShow"  ,)));
+        getStringthis: userData != null ? userData.toString() : "trialShow"  ,)));
 
   }
 

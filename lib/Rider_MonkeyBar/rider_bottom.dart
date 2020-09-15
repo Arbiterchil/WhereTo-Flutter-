@@ -1,5 +1,6 @@
 
 
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 
@@ -78,22 +79,14 @@ class _CustomgettransacState extends State<Customgettransac> {
                                                     ),
                                                       ),
                                                        SizedBox(height: 3.0,),
-
-                                                       Text(widget.address,
-                                                          overflow: TextOverflow.ellipsis,
-                                                          style: TextStyle(
-                                                          color:pureblue,
-                                                          fontWeight: FontWeight.normal,
-                                                          fontSize: 11.0,
-                                                          fontFamily: 'Gilroy-light'
-                                                    ),
-                                                          ),
-                                                      
-                                                      
-                                                      SizedBox(height: 3.0,), 
-                                                      Flexible(
-                                                            child: Container(
-                                                              child: Text('To: '+widget.deliveryAddress,
+                                                        FutureBuilder(
+                                                              future: CoordinatesConverter().convert(widget.address),
+                                                              builder: (con ,snaps){
+                                                                if(snaps.data == null){
+                                                                  return Container();
+                                                                }else{
+                                                                  return Container(
+                                                              child: Text('From: ${snaps.data}',
                                                               overflow: TextOverflow.ellipsis,
                                                               style: TextStyle(
                                                               color: pureblue,
@@ -102,6 +95,42 @@ class _CustomgettransacState extends State<Customgettransac> {
                                                               fontFamily: 'Gilroy-light'
                                                     ),
                                                               ),
+                                                            );
+                                                                }
+                                                              },
+                                                            ),
+                                                    //    Text(,
+                                                    //       overflow: TextOverflow.ellipsis,
+                                                    //       style: TextStyle(
+                                                    //       color:pureblue,
+                                                    //       fontWeight: FontWeight.normal,
+                                                    //       fontSize: 11.0,
+                                                    //       fontFamily: 'Gilroy-light'
+                                                    // ),
+                                                    //       ),
+                                                      
+                                                      
+                                                      SizedBox(height: 3.0,), 
+                                                      Flexible(
+                                                            child: FutureBuilder(
+                                                              future: CoordinatesConverter().convert(widget.deliveryAddress),
+                                                              builder: (con ,snaps){
+                                                                if(snaps.data == null){
+                                                                  return Container();
+                                                                }else{
+                                                                  return Container(
+                                                              child: Text('To: ${snaps.data}',
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: TextStyle(
+                                                              color: pureblue,
+                                                              fontWeight: FontWeight.normal,
+                                                              fontSize: 11.0,
+                                                              fontFamily: 'Gilroy-light'
+                                                    ),
+                                                              ),
+                                                            );
+                                                                }
+                                                              },
                                                             ),
                                                           ),
                                                        
