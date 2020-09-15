@@ -7,6 +7,7 @@ import 'package:WhereTo/Transaction/MyOrder/userOrder.dart';
 import 'package:WhereTo/Transaction/x_view.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/designbuttons.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -83,7 +84,9 @@ class _MyOrderState extends State<MyOrder> {
                   alignment: Alignment.topLeft,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                     setState(() {
+                        Navigator.pop(context);
+                     });
                     },
                     child: Container(
                       height: 50,
@@ -147,10 +150,16 @@ class _MyOrderState extends State<MyOrder> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          XviewTransac(
+                          FutureBuilder(
+                            future: CoordinatesConverter().convert(snapshot.data[index].address.toString()),
+                            builder: (context, datasnapshot){
+                              if(datasnapshot.data==null){
+                                return Container();
+                              }else{
+                                return XviewTransac(
                             image: "asset/img/doneprocess.png",
-                            deliveryAddress: /*"snapshot.data[index].deliveryAddress*/ "",
-                            address: snapshot.data[index].address,
+                            deliveryAddress: "",
+                            address: datasnapshot.data.toString(),
                             restaurantName: snapshot.data[index].restaurantName,
                             status: sunkist == "0"
                                 ? snapshot.data[index].status.toString()
@@ -269,7 +278,9 @@ class _MyOrderState extends State<MyOrder> {
                               //   return StepperStatus(status: sunkist);
                               // }));
                             },
-                          ),
+                          );
+                              }
+                            })
                         ],
                       ),
                     );

@@ -17,6 +17,8 @@ import 'package:WhereTo/styletext.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:latlong/latlong.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'FoodDisplay.dart';
@@ -546,7 +548,7 @@ String categ ="0";
           Icons.location_on
           ,size: 30,
           ), onPressed: ()async{
-            
+
             showModalBottomSheet(context: context, barrierColor: Colors.white.withOpacity(0.05),backgroundColor: Colors.transparent, builder: (context){
               return Padding(padding: EdgeInsets.all(30),
                       child: Container(
@@ -789,7 +791,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                                 restauID:nf[index].id.toString(),
                                                 nameRestau: nf[index].restaurantName.toString(),
                                                 baranggay: nf[index].barangayId.toString(),
-                                                address:snapshot.data,
+                                                address:nf[index].address,
                                                 categID: categ,  
                                                   )));
                                     }else{

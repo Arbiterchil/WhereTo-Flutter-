@@ -7,18 +7,22 @@ import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/google_maps/address.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
+import 'package:WhereTo/google_maps/deliveryCharge.dart';
+import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:latlong/latlong.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
 class TransactionList extends StatefulWidget {
-  final String barangay;
+  final String restaurantAddress;
   final String restauID;
-  TransactionList({this.restauID, this.barangay});
+  TransactionList({this.restauID,this.restaurantAddress});
   @override
   _TransactionListState createState() => _TransactionListState();
 }
@@ -121,19 +125,7 @@ class _TransactionListState extends State<TransactionList> {
                           )
                         );
                       }else{
-                        ProgressDialog pr = ProgressDialog(context);
-                      pr.style(
-                          message: "Calculating Please Wait a Moment..",
-                          borderRadius: 10.0,
-                          backgroundColor: Colors.white,
-                          progressWidget: CircularProgressIndicator(),
-                          elevation: 10.0,
-                          insetAnimCurve: Curves.easeInExpo,
-                          progressTextStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 10.0,
-                              fontWeight: FontWeight.w300,
-                              fontFamily: "Gilroy-light"));
+                        
                       return Stack(
                         children: <Widget>[
                           Padding(
@@ -391,27 +383,67 @@ class _TransactionListState extends State<TransactionList> {
                                     width: double.infinity,
                                     child: GestureDetector(
                                       onTap: () async {
-                                         pr = ProgressDialog(context,
+                                        ProgressDialog _pr = ProgressDialog(context);
+                                        _pr.style(
+                                        message: "Calculating Please Wait a Moment..",
+                                        borderRadius: 10.0,
+                                        backgroundColor: Colors.white,
+                                        progressWidget: CircularProgressIndicator(),
+                                        elevation: 10.0,
+                                        insetAnimCurve: Curves.easeInExpo,
+                                        progressTextStyle: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 10.0,
+                                            fontWeight: FontWeight.w300,
+                                            fontFamily: "Gilroy-light"));
+                                        _pr = ProgressDialog(context,
                                          type: ProgressDialogType.Normal,
                                          isDismissible: false);
-                                        pr.show();
+                                         _pr.show();
                                        
+                                        var position =await ID().getPosition();
+                                        var newCoordinates =await ID().getnewCoordinates();
+                                        String splitNewCoordinatesLat;
+                                        String splitNewCoordinatesLng; 
+                                        String splitUserLat =position.split(',')[0].toString();
+                                        String splitUserLng =position.split(',')[1].toString();
+                                        String splitRestoLat =widget.restaurantAddress.split(',')[0].toString();
+                                        String splitRestoLng =widget.restaurantAddress.split(',')[1].toString();
+                                        double latUser =double.parse(splitUserLat);
+                                        double latLng =double.parse(splitUserLng);
+                                        double latResto =double.parse(splitRestoLat);
+                                        double lngResto =double.parse(splitRestoLng);
+                                        double deliveryCharge;
                                         
-                                        var fee = await ComputationFee().getFee(widget.barangay);
-                                        if (snapshot.length == 0) {
+                                       
+                                        if(snapshot.isEmpty){
                                           print("No Order");
-                                          pr.hide();
-                                        } else {
-                                          pr.hide();
+                      
+                                        } else{
+                                        if(newCoordinates.contains("null")){
+                                        deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(latResto, lngResto) , LatLng(latUser, latLng ));
+                                        }else{
+                                        splitNewCoordinatesLat =newCoordinates.split(',')[0].toString();
+                                        splitNewCoordinatesLng =newCoordinates.split(',')[1].toString();
+                                        double newLat =double.parse(splitNewCoordinatesLat);
+                                        double newLng =double.parse(splitNewCoordinatesLng);
+                                        deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(latResto, lngResto) , LatLng(newLat, newLng )); 
+                                        }
+                                          if(deliveryCharge!=null){
+                                          
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       PayOrder(
-                                                          fee: fee,
+                                                          fee: deliveryCharge,
                                                           restauID: widget
                                                               .restauID)));
+                                          }
+                                          
                                         }
+                                        _pr.hide(); 
+                                        
                                         // SharedPreferences localStorage = await SharedPreferences.getInstance();
                                         // var userJson = localStorage.getString('user');
                                         // var user = json.decode(userJson);

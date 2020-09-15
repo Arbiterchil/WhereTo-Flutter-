@@ -159,7 +159,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                                     baranggay: snapshot
                                                         .data[index]
                                                         .barangayName,
-                                                    address: coordinates,
+                                                    address: snapshot.data[index].address,
                                                     categID: snapshot
                                                         .data[index].categoryId
                                                         .toString(),

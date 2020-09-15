@@ -7,6 +7,7 @@ import 'package:WhereTo/Transaction/mycart.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/modules/homepage.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/blocCategory.class.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/blocMenu.class.dart';
@@ -83,8 +84,14 @@ class _ListStacticState extends State<ListStactic>
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Gilroy-light'),
             ),
-            Text(
-              widget.address,
+            FutureBuilder(
+              future: CoordinatesConverter().convert(widget.address),
+              builder: (context, snapshot){
+              if(snapshot.data==null){
+                return Container();
+              }else{
+              return Text(
+              snapshot.data,
               textAlign: TextAlign.center,
               style: TextStyle(
                   letterSpacing: 2.0,
@@ -92,7 +99,9 @@ class _ListStacticState extends State<ListStactic>
                   fontSize: 15.0,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Gilroy-light'),
-            ),
+            );
+              }
+              })
               ],
             ),
             actions: [
@@ -114,7 +123,7 @@ class _ListStacticState extends State<ListStactic>
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => MyCart(
-                                              barangay: widget.baranggay,
+                                              restaurantAddress: widget.address,
                                               restauID: widget.restauID.toString(),
                                               nameRestau: widget.nameRestau,
                                             )));
@@ -126,25 +135,6 @@ class _ListStacticState extends State<ListStactic>
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top:  10),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    color: Colors.white,
-                  ),
-                  onPressed: () async {
-                    SharedPreferences local =
-                        await SharedPreferences.getInstance();
-                    var userjson = local.getString('user');
-                    var user = json.decode(userjson);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                MyOrder(id: user['id'].toString())));
-                  }),
-                ),
             ],
             leading: IconButton(
                 icon: Icon(Icons.arrow_back_ios),
