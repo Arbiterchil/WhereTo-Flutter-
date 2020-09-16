@@ -23,7 +23,7 @@ List<Menu> search = menuFromJson(response.body);
 List<dynamic> filtered =search.where((element) => element.restaurantName.contains(query)).toList();
 return filtered;
 }
-
+  
 Future<void> getCateg() async {
 final response = await ApiCall().getRestarant('/getCategories');
 List<Category> search = categoryFromJson(response.body);

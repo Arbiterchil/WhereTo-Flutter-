@@ -27,7 +27,7 @@ class Menu {
     final String imagePath;
 
     factory Menu.fromJson(Map<String, dynamic> json) => Menu(
-        menuId: json["menuId"],
+        menuId: json["menuId"] ,
         restaurantId: json["restaurantId"],
         restaurantName: json["restaurantName"],
         menuName: json["menuName"],
@@ -37,12 +37,12 @@ class Menu {
     );
 
     Map<String, dynamic> toJson() => {
-        "menuId": menuId,
-        "restaurantId": restaurantId,
-        "restaurantName": restaurantName,
-        "menuName": menuName,
-        "description": description,
-        "price": price,
-        "imagePath": imagePath,
+        "menuId": menuId ?? this.menuId,
+        "restaurantId": restaurantId ?? this.restaurantId,
+        "restaurantName": restaurantName ?? this.restaurantName,
+        "menuName": menuName ?? this.menuName,
+        "description": description ?? this.description,
+        "price": price ?? this.price,
+        "imagePath": imagePath ?? this.imagePath,
     };
 }

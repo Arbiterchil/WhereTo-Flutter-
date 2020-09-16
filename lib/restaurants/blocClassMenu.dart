@@ -49,19 +49,19 @@ class IsFeatured {
         imagePath: json["imagePath"],
     );
 
-    Map<String, dynamic> toJson() => {
-        "menuId": menuId,
-        "restaurantId": restaurantId,
-        "restaurantName": restaurantName,
-        "address": address,
-        "barangayName": barangayName,
-        "menuName": menuName,
-        "categoryId": categoryId,
-        "isFeatured": isFeatured,
-        "price": price,
-        "categoryName": categoryName,
-        "imagePath": imagePath,
-    };
+    // Map<String, dynamic> toJson() => {
+    //     "menuId": menuId,
+    //     "restaurantId": restaurantId,
+    //     "restaurantName": restaurantName,
+    //     "address": address,
+    //     "barangayName": barangayName,
+    //     "menuName": menuName,
+    //     "categoryId": categoryId,
+    //     "isFeatured": isFeatured,
+    //     "price": price,
+    //     "categoryName": categoryName,
+    //     "imagePath": imagePath,
+    // };
 }
 
 
