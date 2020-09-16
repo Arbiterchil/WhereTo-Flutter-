@@ -133,7 +133,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                     await featured.hide();
                                     UserDialog_Help.restaurantDialog(context);
                                   } else {
-                                    await featured.hide();
+                                    
                                     // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
                                     //   print(
                                     //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
@@ -142,8 +142,11 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                     // } else {
                                     //   if (int.parse(formatNow.split(":")[0]) >=
                                     //       int.parse(formatOpen.split(":")[0])) {
-                                    var id = await ID().getaddress();
-                                    if (id.contains("Tagum")) {
+                                    var addr =await ID().getPosition();
+                                    var converterUser =await CoordinatesConverter().addressByCity(addr);
+                                    var converterResto =await CoordinatesConverter().addressByCity(snapshot.data[index].address);
+                                    if (converterUser.contains(converterResto)) {
+                                      await featured.hide();
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(

@@ -791,7 +791,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                  await featuredRestaurant.hide();
                                 UserDialog_Help.restaurantDialog(context);
                                 } else {
-                                  await featuredRestaurant.hide();
+                                  
                                   // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
                                   //   print(
                                   //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
@@ -800,9 +800,14 @@ Widget _views(NewRestaurantResponse newFeatured){
                                   // } else {
                                   //   if (int.parse(formatNow.split(":")[0]) >=
                                   //       int.parse(formatOpen.split(":")[0])) {
-                                    var id =await ID().getaddress();
-                                    if(id.contains("Tagum")){
-                                      Navigator.push(
+                                    var addr =await ID().getPosition();
+                                    var converterUser =await CoordinatesConverter().addressByCity(addr);
+                                    var converterResto =await CoordinatesConverter().addressByCity(nf[index].address);
+                                   
+                                  
+                                    if(converterUser.contains(converterResto)){
+                                    await featuredRestaurant.hide();
+                                    Navigator.push(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) => ListStactic(
@@ -820,14 +825,12 @@ Widget _views(NewRestaurantResponse newFeatured){
                                           dialogType: DialogType.INFO,
                                           title: "Location Not Available",
                                           desc:
-                                              "This app is only available in Tagum City for the meantime",
+                                              "No Restaurants On This City Yet!",
                                           btnOkText: "Comeback Later",
                                           btnOkColor: Color(0xFF0C375B),
-                                          btnOkOnPress: () async {
-                                            Navigator.pop(context);
-                                          }).show();
+                                          ).show();
                                     }
-                                      
+                                    
                                 }
                            
                           
