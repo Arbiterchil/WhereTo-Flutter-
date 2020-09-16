@@ -65,11 +65,10 @@ class _HomePageState extends State<HomePage> {
     
   }
   var datapasser;
-  _onsSignal() async{
-    await OneSignal.shared.init('f5091806-1654-435d-8799-0cbd5fc49280');
-     await OneSignal.shared.setLocationShared(true);
+_onsSignal() async{
+  if(!mounted) return;
+    await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
-    await OneSignal.shared.getPermissionSubscriptionState();
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();
    await OneSignal.shared.sendTags({'UR': 'TRUE'});  
@@ -77,7 +76,6 @@ class _HomePageState extends State<HomePage> {
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
     OneSignal.shared
         .setNotificationReceivedHandler((OSNotification notification){
-
         setState(() {
            data = notification.payload.additionalData["force"].toString();
            print("$data is you");
@@ -111,8 +109,8 @@ class _HomePageState extends State<HomePage> {
 // }
 
 void postuserId() async {
-   var status = await OneSignal.shared.getPermissionSubscriptionState();
-    var playerId = status.subscriptionStatus.userId;
+   OSPermissionSubscriptionState status = await OneSignal.shared.getPermissionSubscriptionState();
+    String playerId = status.subscriptionStatus.userId;
     var data =
     {
       "userId" : userData['id'].toString(),

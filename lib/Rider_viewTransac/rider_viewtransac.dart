@@ -73,21 +73,8 @@ void mybackUp() {
                    constant =notification.payload.additionalData; 
                   // if(constant != null){
                     finalID = constant['transact_id'];
-                    // print(constant['id'].toString());
-                    // print(constant['transact_id'].toString());
-                    // print(constant['player_id'].toString());
-                    // print(constant['user_coordinates'].toString());
-                    // print(constant['transac_id'].toString());
-                    getmessage = true;
-                    // getThisShitOn(constant['transact_id'].toString());  
-                    
+                    getmessage = true; 
                     playerId = constant['player_id'].toString();
-                    // user_coor = constant['user_coordinates'].toString();
-                    // idsComming.add(finalID);
-                                  
-                  // }else{
-                  //   print("No Data");
-                  // }
                 });          
     });
  }   
