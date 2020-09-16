@@ -53,6 +53,7 @@ String categ ="0";
   var userData;
   String address;
   String newAddress;
+  String addressusi = "";
   bool isLoc =false;
   void _getUserInfo() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -430,7 +431,13 @@ String categ ="0";
   }
 
   Widget textbarSearch(){
-    return Container(
+   return FutureBuilder(
+     future: CoordinatesConverter().convert(address),
+     builder: (context , snaps){
+      if(snaps.data == null){
+        return Container();
+      }else{
+        return Container(
                               height: 50.0,
                               decoration: BoxDecoration(
                                 color:Colors.white,
@@ -472,7 +479,7 @@ String categ ="0";
                                     fontFamily: 'Gilroy-ExtraBold'),
                                 ),
                                 onTap: () {
-                                  if(userData['address'].toString().contains("Tagum")){
+                                  if(snaps.data.toString().contains("Tagum")){
                                   //   Navigator.push(context,
                                   //     MaterialPageRoute(builder: (context) {
                                   //   return SearchResto();
@@ -496,6 +503,8 @@ String categ ="0";
                                 },
                               )
                 );
+      }
+   });
   }
 
   Widget logoutIcon(){
@@ -569,12 +578,21 @@ String categ ="0";
                           children: [
                            Expanded(child:ListTile(
                               leading: Icon(Icons.location_on, size: 30, color: Colors.black),
-                              subtitle: Text("$address", style: TextStyle(
+                              subtitle: FutureBuilder(
+                                future: CoordinatesConverter().convert(address),
+                                builder: (context,snaps){
+                                  if(snaps.data == null){
+                                    return Container();
+                                  }else{
+                                    return  Text(snaps.data, style: TextStyle(
                                 fontFamily: "Gilroy-light",
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                ),),
+                                ),);
+                                  }
+                                },
+                              ),
                                                    
                            ),),
                              

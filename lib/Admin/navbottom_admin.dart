@@ -41,15 +41,17 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
 
   @override
   void initState() {
-    this.postuserId();
-    this.getShared();
+ 
     super.initState();
-    this.configSignal();
+     postuserId();
+    getShared();
+    // this.configSignal();
   }
-  void configSignal() async {
+   configSignal() async {
+      if(!mounted) return;
      await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
-    await OneSignal.shared.init('f5091806-1654-435d-8799-0cbd5fc49280');
+    // await OneSignal.shared.init('f5091806-1654-435d-8799-0cbd5fc49280');
     await OneSignal.shared.getPermissionSubscriptionState();
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();
@@ -72,8 +74,8 @@ class _AdminHomeDashState extends State<AdminHomeDash> {
 
  }
   void postuserId() async {
-   var status = await OneSignal.shared.getPermissionSubscriptionState();
-    var playerId = status.subscriptionStatus.userId;
+   OSPermissionSubscriptionState status = await OneSignal.shared.getPermissionSubscriptionState();
+    String playerId = status.subscriptionStatus.userId;
     getterThis = playerId;
     var data =
     {
