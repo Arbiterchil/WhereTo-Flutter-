@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/A_loadingSimpe/simple_loading.dart';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/api/api.dart';
@@ -69,27 +70,33 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                 image: snapshot.data[index].imagePath,
                                 onTap: () async {
                                   var coordinates =await CoordinatesConverter().convert(snapshot.data[index].address);
-                                  ProgressDialog featured =
-                                      ProgressDialog(context);
-                                  featured.style(
-                                      message:
-                                          "Loading Restaurant Please Wait..",
-                                      borderRadius: 10.0,
-                                      backgroundColor: Colors.white,
-                                      progressWidget:
-                                          CircularProgressIndicator(),
-                                      elevation: 10.0,
-                                      insetAnimCurve:
-                                          Curves.fastLinearToSlowEaseIn,
-                                      progressTextStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w300,
-                                          fontFamily: "Gilroy-light"));
-                                  featured = ProgressDialog(context,
-                                      type: ProgressDialogType.Normal,
-                                      isDismissible: false);
-                                  featured.show();
+                                  
+                                    showDialog(
+                            barrierDismissible: true,
+                            context: context,
+                            builder: (con)=>SimpleAppLoader());
+
+                                  // ProgressDialog featured =
+                                  //     ProgressDialog(context);
+                                  // featured.style(
+                                  //     message:
+                                  //         "Loading Restaurant Please Wait..",
+                                  //     borderRadius: 10.0,
+                                  //     backgroundColor: Colors.white,
+                                  //     progressWidget:
+                                  //         CircularProgressIndicator(),
+                                  //     elevation: 10.0,
+                                  //     insetAnimCurve:
+                                  //         Curves.fastLinearToSlowEaseIn,
+                                  //     progressTextStyle: TextStyle(
+                                  //         color: Colors.black,
+                                  //         fontSize: 15.0,
+                                  //         fontWeight: FontWeight.w300,
+                                  //         fontFamily: "Gilroy-light"));
+                                  // featured = ProgressDialog(context,
+                                  //     type: ProgressDialogType.Normal,
+                                  //     isDismissible: false);
+                                  // featured.show();
                                   SharedPreferences local =
                                       await SharedPreferences.getInstance();
                                   var userjson = local.getString('user');
@@ -130,7 +137,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                     }
                                   }
                                   if (isRead) {
-                                    await featured.hide();
+                                    // await featured.hide();
                                     UserDialog_Help.restaurantDialog(context);
                                   } else {
                                     
@@ -146,7 +153,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                     var converterUser =await CoordinatesConverter().addressByCity(addr);
                                     var converterResto =await CoordinatesConverter().addressByCity(snapshot.data[index].address);
                                     if (converterUser.contains(converterResto)) {
-                                      await featured.hide();
+                                      // await featured.hide();
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(

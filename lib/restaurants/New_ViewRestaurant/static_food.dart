@@ -1,5 +1,6 @@
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class StaticFoodDisplay extends StatefulWidget {
   final Function onTap;
@@ -99,12 +100,19 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 10 ,top: 10),
                     child: Container(
-                      height: 40,
-                      width: 40,
+                      height: 50,
+                      width: 50,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage("asset/img/heartIcon.jpg")
+                        color: Colors.white
+                        // image: DecorationImage(
+                        //   image: AssetImage("asset/img/heartIcon.jpg")
+                        // ),
+                      ),
+                      child: Center(
+                        child: SpinKitPumpingHeart(
+                          color: Colors.redAccent,
+                          size: 25,
                         ),
                       ),
                     ),

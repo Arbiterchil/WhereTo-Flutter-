@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:WhereTo/A_loadingSimpe/simple_loading.dart';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
 import 'package:WhereTo/Transaction/SearchMenu/newSearch.dart';
@@ -739,23 +740,30 @@ Widget _views(NewRestaurantResponse newFeatured){
                          restaurantName:nf[index].restaurantName ,
                          address: snapshot.data, 
                          onTap: () async{
-                           ProgressDialog featuredRestaurant = ProgressDialog(context);
-                              featuredRestaurant.style(
-                                message: "Loading Restaurant Please Wait..",
-                                borderRadius: 10.0,
-                                backgroundColor: Colors.white,
-                                progressWidget: CircularProgressIndicator(),
-                                elevation: 10.0,
-                                insetAnimCurve: Curves.fastLinearToSlowEaseIn,
-                                progressTextStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: "Gilroy-light"
-                                )
-                              );
-                              featuredRestaurant =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
-                              featuredRestaurant.show();
+
+                          showDialog(
+                            barrierDismissible: true,
+                            context: context,
+                            builder: (con)=>SimpleAppLoader());
+
+                          //  ProgressDialog featuredRestaurant = ProgressDialog(context);
+                          //     featuredRestaurant.style(
+                          //       message: "Loading Restaurant Please Wait..",
+                          //       borderRadius: 10.0,
+                          //       backgroundColor: Colors.white,
+                          //       progressWidget: CircularProgressIndicator(),
+                          //       elevation: 10.0,
+                          //       insetAnimCurve: Curves.fastLinearToSlowEaseIn,
+                          //       progressTextStyle: TextStyle(
+                          //           color: Colors.black,
+                          //           fontSize: 15.0,
+                          //           fontWeight: FontWeight.w300,
+                          //           fontFamily: "Gilroy-light"
+                          //       )
+                          //     );
+                          //     featuredRestaurant =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
+                          //     featuredRestaurant.show();
+                          
                                 SharedPreferences local =
                                 await SharedPreferences.getInstance();
                                 var userjson = local.getString('user');
@@ -788,7 +796,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                   }
                                 }
                                 if (isRead) {
-                                 await featuredRestaurant.hide();
+                                //  await featuredRestaurant.hide();
                                 UserDialog_Help.restaurantDialog(context);
                                 } else {
                                   
@@ -806,7 +814,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                    
                                   
                                     if(converterUser.contains(converterResto)){
-                                    await featuredRestaurant.hide();
+                                    // await featuredRestaurant.hide();
                                     Navigator.push(
                                           context,
                                           new MaterialPageRoute(

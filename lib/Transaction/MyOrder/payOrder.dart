@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 
+import 'package:WhereTo/A_loadingSimpe/for_Order.dart';
 import 'package:WhereTo/Transaction/MyOrder/DialogOrder.dart';
 import 'package:WhereTo/Transaction/newView_MyOrder.dart';
 import 'package:WhereTo/google_maps/address.dart';
@@ -101,19 +102,19 @@ class _PayOrderState extends State<PayOrder> {
                   width: MediaQuery.of(context).size.width,
                   child: BlocConsumer<OrderBloc, List<TransactionOrders>>(
                     builder: (context, snapshot) {
-                      ProgressDialog orders= ProgressDialog(context);
-                      orders.style(
-                      message: "Notifying The Riders about the Order..",
-                      borderRadius: 10.0,
-                      backgroundColor: Colors.white,
-                      progressWidget: CircularProgressIndicator(),
-                      elevation: 10.0,
-                      insetAnimCurve: Curves.easeInExpo,
-                      progressTextStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.w300,
-                      fontFamily: "Gilroy-light"));
+                      // ProgressDialog orders= ProgressDialog(context);
+                      // orders.style(
+                      // message: "Notifying The Riders about the Order..",
+                      // borderRadius: 10.0,
+                      // backgroundColor: Colors.white,
+                      // progressWidget: CircularProgressIndicator(),
+                      // elevation: 10.0,
+                      // insetAnimCurve: Curves.easeInExpo,
+                      // progressTextStyle: TextStyle(
+                      // color: Colors.black,
+                      // fontSize: 10.0,
+                      // fontWeight: FontWeight.w300,
+                      // fontFamily: "Gilroy-light"));
                       return Builder(builder: (context) {
                         Map<String, dynamic> string;
                         Map<String, int> converted1 = {};
@@ -368,9 +369,15 @@ class _PayOrderState extends State<PayOrder> {
                                         child: GestureDetector(
                                           onTap: () async {
                                             
-                                            orders = ProgressDialog(context, type: ProgressDialogType.Normal,
-                                            isDismissible: false);
-                                            orders.show();
+                                            // orders = ProgressDialog(context, type: ProgressDialogType.Normal,
+                                            // isDismissible: false);
+                                            // orders.show();
+
+                                              showDialog(
+                            barrierDismissible: true,
+                            context: context,
+                            builder: (con)=>ForOrderLoading());
+
                                             var location = Location();
                                             var userLocation =
                                                 await location.getLocation();
@@ -441,12 +448,12 @@ class _PayOrderState extends State<PayOrder> {
                                               });
                                               print(data);
                                               print("Success");
-                                              orders.hide();
+                                              // orders.hide();
                                                 DialogOrder().getDialog(context, "Order Succesfully Placed", "Order Success", Icons.check, Colors.black);
                                                 BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
                                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>SearchDepo()));
                                             }else{
-                                            orders.hide();
+                                            // orders.hide();
                                              DialogOrder().getDialog(context, "Slow/No Internet Connection", "Order Failed", Icons.error, Color(0xFFFF3345));
                                             }
                                             final response = await ApiCall().getData('/getAllPlayerId');
@@ -518,7 +525,7 @@ class _PayOrderState extends State<PayOrder> {
                                                 body: json.encode(contents));
                                             print(playerId);
                                             }catch(e){
-                                             orders.hide();
+                                            //  orders.hide();
                                              DialogOrder().getDialog(context, "Slow/No Internet Connection", "Order Failed", Icons.error, Color(0xFFFF3345));
                                             }
                                             // print(tags);

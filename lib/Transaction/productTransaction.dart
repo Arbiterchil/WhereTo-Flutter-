@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/A_loadingSimpe/simple_loading.dart';
 import 'package:WhereTo/Transaction/Barangay/Barangay.class.dart';
 import 'package:WhereTo/Transaction/MyOrder/ComputationFee.dart';
 import 'package:WhereTo/Transaction/MyOrder/payOrder.dart';
@@ -383,24 +384,28 @@ class _TransactionListState extends State<TransactionList> {
                                     width: double.infinity,
                                     child: GestureDetector(
                                       onTap: () async {
-                                        ProgressDialog _pr = ProgressDialog(context);
-                                        _pr.style(
-                                        message: "Calculating Please Wait a Moment..",
-                                        borderRadius: 10.0,
-                                        backgroundColor: Colors.white,
-                                        progressWidget: CircularProgressIndicator(),
-                                        elevation: 10.0,
-                                        insetAnimCurve: Curves.easeInExpo,
-                                        progressTextStyle: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 10.0,
-                                            fontWeight: FontWeight.w300,
-                                            fontFamily: "Gilroy-light"));
-                                        _pr = ProgressDialog(context,
-                                         type: ProgressDialogType.Normal,
-                                         isDismissible: false);
-                                         _pr.show();
-                                       
+                                        // ProgressDialog _pr = ProgressDialog(context);
+                                        // _pr.style(
+                                        // message: "Calculating Please Wait a Moment..",
+                                        // borderRadius: 10.0,
+                                        // backgroundColor: Colors.white,
+                                        // progressWidget: CircularProgressIndicator(),
+                                        // elevation: 10.0,
+                                        // insetAnimCurve: Curves.easeInExpo,
+                                        // progressTextStyle: TextStyle(
+                                        //     color: Colors.black,
+                                        //     fontSize: 10.0,
+                                        //     fontWeight: FontWeight.w300,
+                                        //     fontFamily: "Gilroy-light"));
+                                        // _pr = ProgressDialog(context,
+                                        //  type: ProgressDialogType.Normal,
+                                        //  isDismissible: false);
+                                        //  _pr.show();
+                                         showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (con)=>SimpleAppLoader());
+
                                         var position =await ID().getPosition();
                                         var newCoordinates =await ID().getnewCoordinates();
                                         String splitNewCoordinatesLat;
@@ -442,7 +447,7 @@ class _TransactionListState extends State<TransactionList> {
                                           }
                                           
                                         }
-                                        _pr.hide(); 
+                                        // _pr.hide(); 
                                         
                                         // SharedPreferences localStorage = await SharedPreferences.getInstance();
                                         // var userJson = localStorage.getString('user');
