@@ -147,11 +147,11 @@ builder: (context) => ValidIds(id: message,));
   ];
 
 
-// void onTabTapped(int index) {
-//     setState(() {
-//       _selectedIndex = index;
-//     });
-//   }
+void onTabTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
  Widget _buildOffstageNavigator(String tabItem) {
     return Offstage(
@@ -163,26 +163,34 @@ builder: (context) => ValidIds(id: message,));
     );
   }
 
+  final List<Widget> _childs= 
+  [
+     SearchDepo(),
+     MyNewViewOrder(),
+     Profile()
+  ];
+
   @override
   Widget build(BuildContext context) {
      return Scaffold(
       body: WillPopScope(
-       onWillPop: () async {
+        onWillPop: () async => false,
+      //  onWillPop: () async {
         
-        final isFirstRouteInCurrentTab =
-            !await _navigatorKeys[_currentPage].currentState.maybePop();
+      //   final isFirstRouteInCurrentTab =
+      //       !await _navigatorKeys[_currentPage].currentState.maybePop();
             
-        if (isFirstRouteInCurrentTab) {
-          if (_currentPage != "SearchRestaurant") {
-            _selectTab("SearchRestaurant", 1);
+      //   if (isFirstRouteInCurrentTab) {
+      //     if (_currentPage != "SearchRestaurant") {
+      //       _selectTab("SearchRestaurant", 1);
             
-            return false;
+      //       return false;
             
-          }
+      //     }
           
-        }
-         return isFirstRouteInCurrentTab ?  UserDialog_Help.exit(context) : false ;
-       },
+      //   }
+      //    return isFirstRouteInCurrentTab ?  UserDialog_Help.exit(context) : false ;
+      //  },
        child: Stack(
           children: <Widget>[ 
             _buildOffstageNavigator("SearchRestaurant"),
@@ -200,9 +208,10 @@ builder: (context) => ValidIds(id: message,));
         unselectedItemColor: 
         Color(0xFF0C375B),
 
-        // currentIndex: _selectedIndex,
         currentIndex: _selectedIndex,
-        onTap: (int index) { _selectTab(pageKeys[index], index); },
+        onTap: onTabTapped,
+        // currentIndex: _selectedIndex,
+        // onTap: (int index) { _selectTab(pageKeys[index], index); },
         items: [
               BottomNavigationBarItem(
               icon: new Icon(Icons.view_list),
