@@ -191,14 +191,15 @@ void onTabTapped(int index) {
       //   }
       //    return isFirstRouteInCurrentTab ?  UserDialog_Help.exit(context) : false ;
       //  },
-       child: Stack(
-          children: <Widget>[ 
-            _buildOffstageNavigator("SearchRestaurant"),
-            _buildOffstageNavigator("MyOrders"),
-            _buildOffstageNavigator("UserProfile"),
-          ],
-        ),
+      //  child: Stack(
+      //     children: <Widget>[ 
+      //       _buildOffstageNavigator("SearchRestaurant"),
+      //       _buildOffstageNavigator("MyOrders"),
+      //       _buildOffstageNavigator("UserProfile"),
+      //     ],
+      //   ),
 
+      child: _childs[_selectedIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: 
