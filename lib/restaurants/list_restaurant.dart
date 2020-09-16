@@ -65,209 +65,212 @@ class _ListStacticState extends State<ListStactic>
       menuBloc = MenuBloc();
       getCateg();
     });
-    return Builder(
-      builder: (context) {
-        return Scaffold(
-          backgroundColor: Color(0xFF0C375B),
-          appBar: AppBar(
-            bottomOpacity: 0.2,
+    return WillPopScope(
+          onWillPop: ()async=>false,
+          child: Builder(
+        builder: (context) {
+          return Scaffold(
             backgroundColor: Color(0xFF0C375B),
-            title: Column(
-              children: [
-              Text(
-              widget.nameRestau,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  letterSpacing: 2.0,
-                  color: Colors.white,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Gilroy-light'),
-            ),
-            FutureBuilder(
-              future: CoordinatesConverter().convert(widget.address),
-              builder: (context, snapshot){
-              if(snapshot.data==null){
-                return Container();
-              }else{
-              return Text(
-              snapshot.data,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  letterSpacing: 2.0,
-                  color: Colors.white,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Gilroy-light'),
-            );
-              }
-              })
-              ],
-            ),
-            actions: [
-              Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Container(
-                  child: BlocConsumer<OrderBloc, List<TransactionOrders>>(
-                    builder: (context, snapshot) {
-                      return Badge(
-                        badgeContent: Text(snapshot.length.toString()),
-                        badgeColor: Colors.white,
-                        borderRadius: 20,
-                        position: BadgePosition.topLeft(),
-                        child: Container(
-                          child: IconButton(
-                              icon: Icon(Icons.add_shopping_cart),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MyCart(
-                                              restaurantAddress: widget.address,
-                                              restauID: widget.restauID.toString(),
-                                              nameRestau: widget.nameRestau,
-                                            )));
-                              }),
-                        ),
-                      );
-                    },
-                    listener: (BuildContext context, order) {},
+            appBar: AppBar(
+              bottomOpacity: 0.2,
+              backgroundColor: Color(0xFF0C375B),
+              title: Column(
+                children: [
+                Text(
+                widget.nameRestau,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    letterSpacing: 2.0,
+                    color: Colors.white,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Gilroy-light'),
+              ),
+              FutureBuilder(
+                future: CoordinatesConverter().convert(widget.address),
+                builder: (context, snapshot){
+                if(snapshot.data==null){
+                  return Container();
+                }else{
+                return Text(
+                snapshot.data,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    letterSpacing: 2.0,
+                    color: Colors.white,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Gilroy-light'),
+              );
+                }
+                })
+                ],
+              ),
+              actions: [
+                Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Container(
+                    child: BlocConsumer<OrderBloc, List<TransactionOrders>>(
+                      builder: (context, snapshot) {
+                        return Badge(
+                          badgeContent: Text(snapshot.length.toString()),
+                          badgeColor: Colors.white,
+                          borderRadius: 20,
+                          position: BadgePosition.topLeft(),
+                          child: Container(
+                            child: IconButton(
+                                icon: Icon(Icons.add_shopping_cart),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MyCart(
+                                                restaurantAddress: widget.address,
+                                                restauID: widget.restauID.toString(),
+                                                nameRestau: widget.nameRestau,
+                                              )));
+                                }),
+                          ),
+                        );
+                      },
+                      listener: (BuildContext context, order) {},
+                    ),
                   ),
                 ),
-              ),
-            ],
-            leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  Navigator.pop(context);
-                  BlocProvider.of<OrderBloc>(context)
-                      .add(Computation.deleteAll());
-                }),
-          ),
-          body: Builder(builder: (context) {
-            return Container(
-              child: StreamBuilder<List<Category>>(
-                stream: menuBloc.streamCateg,
-                builder: (context, datasnapshot) {
-                  if(datasnapshot.hasData){
-                    if(datasnapshot.data.length >0){
-                       tabController = new TabController(vsync: this, length: datasnapshot.data.length, initialIndex:  int.parse(widget.categID)-1 ==0 || int.parse(widget.categID)-1 <0 ? 0 :int.parse(widget.categID)-1);
-                    return DefaultTabController(
-                      length: datasnapshot.data.length, 
-                      child: Scaffold(
-                        backgroundColor: Color(0xFF0C375B),
-                        appBar: PreferredSize(
-                          preferredSize: Size.fromHeight(50.5),
-                          child: AppBar(
-                            elevation: 0,
-                            excludeHeaderSemantics: true,
-                            // toolbarHeight: 50.5,
-                            automaticallyImplyLeading: false,
-                            backgroundColor: Color(0xFF0C375B),
-                            bottom: TabBar(
-                              controller: tabController,
-                              indicatorSize: TabBarIndicatorSize.label,
-                              labelColor: Colors.white,
-                              unselectedLabelColor:Colors.transparent,
-                              indicator: MD2Indicator(
-                                indicatorHeight: 5, 
-                                indicatorColor: Colors.blue, 
-                                indicatorSize:MD2IndicatorSize.normal),
-                              isScrollable: true,
-                              tabs: datasnapshot.data.map<Widget>((Category category){
-                                return Container(
-                                  width: 100,
-                                  child: Tab(
-                                    child: Text(category.categoryName, style: TextStyle(
-                                    letterSpacing: 2.0,
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Gilroy-light'),),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                            ),
-                        ),
-                          body: TabBarView(
-                              controller: tabController,
-                              children: datasnapshot.data.map<Widget>((Category category){
-                              return Padding(padding: EdgeInsets.only(top: 10),
-                              child: Container(
-                              child: FutureBuilder(
-                                future: MenuBloc().getRest(widget.nameRestau, category.id.toString()),
-                                builder: (context, snapshot){
-                                  if(snapshot.hasData){
-                                    if(snapshot.data.length >0){
-                                      return ListView.builder(
-                                        cacheExtent: 9999,
-                                        itemCount: snapshot.data.length,
-                                        itemBuilder: (context, index){
-                                         if(snapshot.data.length >0){
-                                           return Padding(padding: EdgeInsets.all(15),
-                                            child: MenuBoxRestaurant(
-                                            image: snapshot.data[index].imagePath,
-                                            menuName: snapshot.data[index].menuName,
-                                            menuDescription: snapshot.data[index].description,
-                                            fixprice: double.parse(snapshot.data[index].price.toString()),
-                                            onTap: (){
-                                              BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(
-                                                name: snapshot.data[index].menuName,
-                                                description: snapshot.data[index].description,
-                                                price: double.parse(snapshot.data[index].price.toString()),
-                                                quantity: 1,
-                                                id: snapshot.data[index].menuId,
-                                                image: snapshot.data[index].imagePath,
-                                              )));
-                                            },
-                                          ),
-                                        );
-                                         }else{ 
-                                           return Container();
-                                         }
-                                      });
-                                    }else{
-                                      return Container();
-                                    }
-                                  }else{
-                                    return Center(
-                                    child: Container(
-                                      child: CircularProgressIndicator(),
+              ],
+              leading: IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    BlocProvider.of<OrderBloc>(context)
+                        .add(Computation.deleteAll());
+                  }),
+            ),
+            body: Builder(builder: (context) {
+              return Container(
+                child: StreamBuilder<List<Category>>(
+                  stream: menuBloc.streamCateg,
+                  builder: (context, datasnapshot) {
+                    if(datasnapshot.hasData){
+                      if(datasnapshot.data.length >0){
+                         tabController = new TabController(vsync: this, length: datasnapshot.data.length, initialIndex:  int.parse(widget.categID)-1 ==0 || int.parse(widget.categID)-1 <0 ? 0 :int.parse(widget.categID)-1);
+                      return DefaultTabController(
+                        length: datasnapshot.data.length, 
+                        child: Scaffold(
+                          backgroundColor: Color(0xFF0C375B),
+                          appBar: PreferredSize(
+                            preferredSize: Size.fromHeight(50.5),
+                            child: AppBar(
+                              elevation: 0,
+                              excludeHeaderSemantics: true,
+                              // toolbarHeight: 50.5,
+                              automaticallyImplyLeading: false,
+                              backgroundColor: Color(0xFF0C375B),
+                              bottom: TabBar(
+                                controller: tabController,
+                                indicatorSize: TabBarIndicatorSize.label,
+                                labelColor: Colors.white,
+                                unselectedLabelColor:Colors.transparent,
+                                indicator: MD2Indicator(
+                                  indicatorHeight: 5, 
+                                  indicatorColor: Colors.blue, 
+                                  indicatorSize:MD2IndicatorSize.normal),
+                                isScrollable: true,
+                                tabs: datasnapshot.data.map<Widget>((Category category){
+                                  return Container(
+                                    width: 100,
+                                    child: Tab(
+                                      child: Text(category.categoryName, style: TextStyle(
+                                      letterSpacing: 2.0,
+                                      color: Colors.white,
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Gilroy-light'),),
                                     ),
                                   );
-                                  }
-                                },
-                              )
-                            ),
-                            ); 
-                              }).toList()
+                                }).toList(),
+                              ),
                               ),
                           ),
-                    
+                            body: TabBarView(
+                                controller: tabController,
+                                children: datasnapshot.data.map<Widget>((Category category){
+                                return Padding(padding: EdgeInsets.only(top: 10),
+                                child: Container(
+                                child: FutureBuilder(
+                                  future: MenuBloc().getRest(widget.nameRestau, category.id.toString()),
+                                  builder: (context, snapshot){
+                                    if(snapshot.hasData){
+                                      if(snapshot.data.length >0){
+                                        return ListView.builder(
+                                          cacheExtent: 9999,
+                                          itemCount: snapshot.data.length,
+                                          itemBuilder: (context, index){
+                                           if(snapshot.data.length >0){
+                                             return Padding(padding: EdgeInsets.all(15),
+                                              child: MenuBoxRestaurant(
+                                              image: snapshot.data[index].imagePath,
+                                              menuName: snapshot.data[index].menuName,
+                                              menuDescription: snapshot.data[index].description,
+                                              fixprice: double.parse(snapshot.data[index].price.toString()),
+                                              onTap: (){
+                                                BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(
+                                                  name: snapshot.data[index].menuName,
+                                                  description: snapshot.data[index].description,
+                                                  price: double.parse(snapshot.data[index].price.toString()),
+                                                  quantity: 1,
+                                                  id: snapshot.data[index].menuId,
+                                                  image: snapshot.data[index].imagePath,
+                                                )));
+                                              },
+                                            ),
+                                          );
+                                           }else{ 
+                                             return Container();
+                                           }
+                                        });
+                                      }else{
+                                        return Container();
+                                      }
+                                    }else{
+                                      return Center(
+                                      child: Container(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    );
+                                    }
+                                  },
+                                )
+                              ),
+                              ); 
+                                }).toList()
+                                ),
+                            ),
                       
-                      
+                        
+                        
+                        );
+                      }
+                    }else{
+                      return Center(
+                        child: Container(
+                        width: 40.0,
+                        height: 40.0,
+                        child: CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                        strokeWidth: 3.0,
+                        ),
+                        ),
                       );
                     }
-                  }else{
-                    return Center(
-                      child: Container(
-                      width: 40.0,
-                      height: 40.0,
-                      child: CircularProgressIndicator(
-                      backgroundColor: Colors.white,
-                      strokeWidth: 3.0,
-                      ),
-                      ),
-                    );
-                  }
-                  return Container();
-                },
-              ),
-            );
-          }),
-        );
-      },
+                    return Container();
+                  },
+                ),
+              );
+            }),
+          );
+        },
+      ),
     );
   }
 }

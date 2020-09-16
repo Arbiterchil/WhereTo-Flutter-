@@ -40,533 +40,537 @@ class _TransactionListState extends State<TransactionList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(top: 40, left: 10, right: 10),
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Align(
-                alignment: Alignment.topLeft,
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color: Color(0xFF0C375B), shape: BoxShape.circle),
-                    child: Center(
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
+    return WillPopScope(
+          onWillPop: ()async=> false,
+          child: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.only(top: 40, left: 10, right: 10),
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: Color(0xFF0C375B), shape: BoxShape.circle),
+                      child: Center(
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
+                  )),
+              Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    "My Cart",
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Color(0xFF0C375B),
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Gilroy-light'),
                   ),
-                )),
-            Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Text(
-                  "My Cart",
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Color(0xFF0C375B),
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Gilroy-light'),
                 ),
               ),
-            ),
-            Align(
-                // Navigator.pop(context);
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () => BlocProvider.of<OrderBloc>(context)
-                      .add(Computation.deleteAll()),
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color: Color(0xFF0C375B), shape: BoxShape.circle),
-                    child: Center(
-                      child: Icon(
-                        Icons.clear,
-                        color: Colors.white,
+              Align(
+                  // Navigator.pop(context);
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                    onTap: () => BlocProvider.of<OrderBloc>(context)
+                        .add(Computation.deleteAll()),
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: Color(0xFF0C375B), shape: BoxShape.circle),
+                      child: Center(
+                        child: Icon(
+                          Icons.clear,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                )),
-            Padding(
-              padding: EdgeInsets.only(top: 56),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: BlocConsumer<OrderBloc, List<TransactionOrders>>(
-                    buildWhen: (List<TransactionOrders> previous,
-                        List<TransactionOrders> current) {
-                      return true;
-                    },
-                    listenWhen: (List<TransactionOrders> previous,
-                        List<TransactionOrders> current) {
-                      if (current.length > previous.length) {
+                  )),
+              Padding(
+                padding: EdgeInsets.only(top: 56),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: BlocConsumer<OrderBloc, List<TransactionOrders>>(
+                      buildWhen: (List<TransactionOrders> previous,
+                          List<TransactionOrders> current) {
                         return true;
-                      }
-                      return false;
-                    },
-                    builder: (context, snapshot) {
-                      if(snapshot.length ==0){
-                        return Center(
-                          child: Padding(padding: EdgeInsets.only(top: 50)
-                           ,
-                           child: Column(
-                            children: [
-                              
-                              Image.asset("asset/img/emptycart.png"),
-                            ],
-                          ), 
-                          )
-                        );
-                      }else{
-                        
-                      return Stack(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 150),
-                            child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                itemCount: snapshot.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: EdgeInsets.all(15),
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Container(
-                                            child: Container(
-                                          height: 120,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFF2F2F2),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20)),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.black12,
-                                                  spreadRadius: 4.4,
-                                                  blurRadius: 4.4),
-                                            ],
-                                          ),
-                                          child: InkWell(
-                                            onLongPress: () {
-                                              BlocProvider.of<OrderBloc>(
-                                                      context)
-                                                  .add(Computation.delete(
-                                                      index));
-                                            },
-                                            child: Stack(
-                                              children: <Widget>[
-                                                Align(
-                                                  alignment:
-                                                      Alignment.bottomLeft,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 5,
-                                                        bottom: 20,
-                                                        left: 5),
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 100,
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                        vertical: 20 / 4,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                          color:
-                                                              Color(0xFF0C375B),
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          30))),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "₱ " +
-                                                              snapshot[index]
-                                                                  .price
-                                                                  .toStringAsFixed(2),
-                                                          style: GoogleFonts
-                                                              .roboto(
-                                                            color: Colors.white,
-                                                            letterSpacing: 1,
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w500,
+                      },
+                      listenWhen: (List<TransactionOrders> previous,
+                          List<TransactionOrders> current) {
+                        if (current.length > previous.length) {
+                          return true;
+                        }
+                        return false;
+                      },
+                      builder: (context, snapshot) {
+                        if(snapshot.length ==0){
+                          return Center(
+                            child: Padding(padding: EdgeInsets.only(top: 50)
+                             ,
+                             child: Column(
+                              children: [
+                                
+                                Image.asset("asset/img/emptycart.png"),
+                              ],
+                            ), 
+                            )
+                          );
+                        }else{
+                          
+                        return Stack(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 150),
+                              child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  itemCount: snapshot.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.all(15),
+                                      child: Stack(
+                                        children: <Widget>[
+                                          Container(
+                                              child: Container(
+                                            height: 120,
+                                            width:
+                                                MediaQuery.of(context).size.width,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFFF2F2F2),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20)),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.black12,
+                                                    spreadRadius: 4.4,
+                                                    blurRadius: 4.4),
+                                              ],
+                                            ),
+                                            child: InkWell(
+                                              onLongPress: () {
+                                                BlocProvider.of<OrderBloc>(
+                                                        context)
+                                                    .add(Computation.delete(
+                                                        index));
+                                              },
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.bottomLeft,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 5,
+                                                          bottom: 20,
+                                                          left: 5),
+                                                      child: Container(
+                                                        height: 40,
+                                                        width: 100,
+                                                        padding:
+                                                            EdgeInsets.symmetric(
+                                                          vertical: 20 / 4,
+                                                        ),
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                Color(0xFF0C375B),
+                                                            borderRadius:
+                                                                BorderRadius.all(
+                                                                    Radius
+                                                                        .circular(
+                                                                            30))),
+                                                        child: Center(
+                                                          child: Text(
+                                                            "₱ " +
+                                                                snapshot[index]
+                                                                    .price
+                                                                    .toStringAsFixed(2),
+                                                            style: GoogleFonts
+                                                                .roboto(
+                                                              color: Colors.white,
+                                                              letterSpacing: 1,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight.w500,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    child: ExtendedImage.network(snapshot[index].image,
-                                                    height: MediaQuery.of(context).size.height,
-                                                    width: 120,
-                                                    fit: BoxFit.fill,
-                                                    cache: true,
-                                                    border: Border.all(color: Colors.white, width: 1.1),
-                                                    shape: BoxShape.circle,
-                                                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                                                  )
+                                                  Align(
+                                                    alignment: Alignment.topRight,
+                                                    child: Container(
+                                                      width: 120,
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: ExtendedImage.network(snapshot[index].image,
+                                                      height: MediaQuery.of(context).size.height,
+                                                      width: 120,
+                                                      fit: BoxFit.fill,
+                                                      cache: true,
+                                                      border: Border.all(color: Colors.white, width: 1.1),
+                                                      shape: BoxShape.circle,
+                                                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                                    )
+                                                    ),
                                                   ),
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 10, left: 7),
-                                                      child: Text(
-                                                        snapshot[index].name,
-                                                        style: TextStyle(
-                                                          color:
-                                                              Color(0xFF0C375B),
-                                                          fontSize: 15,
-                                                          letterSpacing: 1,
-                                                          fontWeight:
-                                                              FontWeight.w400,
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding: EdgeInsets.only(
+                                                            top: 10, left: 7),
+                                                        child: Text(
+                                                          snapshot[index].name,
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color(0xFF0C375B),
+                                                            fontSize: 15,
+                                                            letterSpacing: 1,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 8, left: 7),
-                                                      child: Text(
-                                                        snapshot[index]
-                                                            .description,
-                                                        style: TextStyle(
-                                                          color:
-                                                              Color(0xFF0C375B),
-                                                          fontSize: 12,
-                                                          letterSpacing: 1,
-                                                          fontWeight:
-                                                              FontWeight.w400,
+                                                      Padding(
+                                                        padding: EdgeInsets.only(
+                                                            top: 8, left: 7),
+                                                        child: Text(
+                                                          snapshot[index]
+                                                              .description,
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color(0xFF0C375B),
+                                                            fontSize: 12,
+                                                            letterSpacing: 1,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 90, left: 170),
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.bottomRight,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: <Widget>[
-                                                          Container(
-                                                            child: Row(
-                                                              children: <
-                                                                  Widget>[
-                                                                InkWell(
-                                                                  onTap: () {
-                                                                    if (snapshot[index]
-                                                                            .quantity >
-                                                                        1) {
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 90, left: 170),
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.bottomRight,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: <Widget>[
+                                                            Container(
+                                                              child: Row(
+                                                                children: <
+                                                                    Widget>[
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      if (snapshot[index]
+                                                                              .quantity >
+                                                                          1) {
+                                                                        setState(
+                                                                            () {
+                                                                          snapshot[index]
+                                                                              .quantity = snapshot[index]
+                                                                                  .quantity -
+                                                                              1;
+                                                                          print(
+                                                                              ' ${snapshot[index].id.toString()} ${snapshot[index].quantity.toString()}');
+                                                                        });
+                                                                      }
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      width: 30,
+                                                                      child: Icon(
+                                                                        Icons
+                                                                            .remove,
+                                                                        color:  Color(0xFF0C375B),
+                                                                        size: 25,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    width: 30,
+                                                                    child: Center(
+                                                                        child:
+                                                                            Text(
+                                                                      snapshot[
+                                                                              index]
+                                                                          .quantity
+                                                                          .toString(),
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              15,
+                                                                          color:  Color(0xFF0C375B)),
+                                                                    )),
+                                                                  ),
+                                                                  InkWell(
+                                                                    onTap: () {
                                                                       setState(
                                                                           () {
                                                                         snapshot[index]
-                                                                            .quantity = snapshot[index]
-                                                                                .quantity -
-                                                                            1;
+                                                                                .quantity =
+                                                                            snapshot[index].quantity +
+                                                                                1;
                                                                         print(
                                                                             ' ${snapshot[index].id.toString()} ${snapshot[index].quantity.toString()}');
                                                                       });
-                                                                    }
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 30,
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .remove,
-                                                                      color:  Color(0xFF0C375B),
-                                                                      size: 25,
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      margin: EdgeInsets
+                                                                          .only(
+                                                                              right:
+                                                                                  5),
+                                                                      width: 30,
+                                                                      child: Icon(
+                                                                        Icons.add,
+                                                                        color:  Color(0xFF0C375B),
+                                                                        size: 25,
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                Container(
-                                                                  width: 30,
-                                                                  child: Center(
-                                                                      child:
-                                                                          Text(
-                                                                    snapshot[
-                                                                            index]
-                                                                        .quantity
-                                                                        .toString(),
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        color:  Color(0xFF0C375B)),
-                                                                  )),
-                                                                ),
-                                                                InkWell(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      snapshot[index]
-                                                                              .quantity =
-                                                                          snapshot[index].quantity +
-                                                                              1;
-                                                                      print(
-                                                                          ' ${snapshot[index].id.toString()} ${snapshot[index].quantity.toString()}');
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    margin: EdgeInsets
-                                                                        .only(
-                                                                            right:
-                                                                                5),
-                                                                    width: 30,
-                                                                    child: Icon(
-                                                                      Icons.add,
-                                                                      color:  Color(0xFF0C375B),
-                                                                      size: 25,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )),
-                                              ],
+                                                          ],
+                                                        ),
+                                                      )),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        )),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                              height: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(15)),
-                                color: Colors.white
-                              ),
-                            child: Stack(
-                            children: [
-                              Align(
-                            alignment: Alignment.bottomRight,
-                            child: Stack(
-                              children: <Widget>[
-                                Card(
-                                elevation: 15.5,
-                                color: Color(0xFF0C375B),
-                                child: Padding(
-                                  padding: EdgeInsets.only(bottom: 5),
-                                  child: Container(
-                                    height: 60,
-                                    width: double.infinity,
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        // ProgressDialog _pr = ProgressDialog(context);
-                                        // _pr.style(
-                                        // message: "Calculating Please Wait a Moment..",
-                                        // borderRadius: 10.0,
-                                        // backgroundColor: Colors.white,
-                                        // progressWidget: CircularProgressIndicator(),
-                                        // elevation: 10.0,
-                                        // insetAnimCurve: Curves.easeInExpo,
-                                        // progressTextStyle: TextStyle(
-                                        //     color: Colors.black,
-                                        //     fontSize: 10.0,
-                                        //     fontWeight: FontWeight.w300,
-                                        //     fontFamily: "Gilroy-light"));
-                                        // _pr = ProgressDialog(context,
-                                        //  type: ProgressDialogType.Normal,
-                                        //  isDismissible: false);
-                                        //  _pr.show();
-                                         showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (con)=>SimpleAppLoader());
+                                          )),
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Container(
+                                height: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                                  color: Colors.white
+                                ),
+                              child: Stack(
+                              children: [
+                                Align(
+                              alignment: Alignment.bottomRight,
+                              child: Stack(
+                                children: <Widget>[
+                                  Card(
+                                  elevation: 15.5,
+                                  color: Color(0xFF0C375B),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(bottom: 5),
+                                    child: Container(
+                                      height: 60,
+                                      width: double.infinity,
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          // ProgressDialog _pr = ProgressDialog(context);
+                                          // _pr.style(
+                                          // message: "Calculating Please Wait a Moment..",
+                                          // borderRadius: 10.0,
+                                          // backgroundColor: Colors.white,
+                                          // progressWidget: CircularProgressIndicator(),
+                                          // elevation: 10.0,
+                                          // insetAnimCurve: Curves.easeInExpo,
+                                          // progressTextStyle: TextStyle(
+                                          //     color: Colors.black,
+                                          //     fontSize: 10.0,
+                                          //     fontWeight: FontWeight.w300,
+                                          //     fontFamily: "Gilroy-light"));
+                                          // _pr = ProgressDialog(context,
+                                          //  type: ProgressDialogType.Normal,
+                                          //  isDismissible: false);
+                                          //  _pr.show();
+                                           showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (con)=>SimpleAppLoader());
 
-                                        var position =await ID().getPosition();
-                                        var newCoordinates =await ID().getnewCoordinates();
-                                        String splitNewCoordinatesLat;
-                                        String splitNewCoordinatesLng; 
-                                        String splitUserLat =position.split(',')[0].toString();
-                                        String splitUserLng =position.split(',')[1].toString();
-                                        String splitRestoLat =widget.restaurantAddress.split(',')[0].toString();
-                                        String splitRestoLng =widget.restaurantAddress.split(',')[1].toString();
-                                        double latUser =double.parse(splitUserLat);
-                                        double latLng =double.parse(splitUserLng);
-                                        double latResto =double.parse(splitRestoLat);
-                                        double lngResto =double.parse(splitRestoLng);
-                                        double deliveryCharge;
-                                        
-                                       
-                                        if(snapshot.isEmpty){
-                                          print("No Order");
-                      
-                                        } else{
-                                        if(newCoordinates.contains("null")){
-                                        deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(latResto, lngResto) , LatLng(latUser, latLng ));
-                                        }else{
-                                        splitNewCoordinatesLat =newCoordinates.split(',')[0].toString();
-                                        splitNewCoordinatesLng =newCoordinates.split(',')[1].toString();
-                                        double newLat =double.parse(splitNewCoordinatesLat);
-                                        double newLng =double.parse(splitNewCoordinatesLng);
-                                        deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(latResto, lngResto) , LatLng(newLat, newLng )); 
-                                        }
-                                          if(deliveryCharge!=null){
+                                          var position =await ID().getPosition();
+                                          var newCoordinates =await ID().getnewCoordinates();
+                                          String splitNewCoordinatesLat;
+                                          String splitNewCoordinatesLng; 
+                                          String splitUserLat =position.split(',')[0].toString();
+                                          String splitUserLng =position.split(',')[1].toString();
+                                          String splitRestoLat =widget.restaurantAddress.split(',')[0].toString();
+                                          String splitRestoLng =widget.restaurantAddress.split(',')[1].toString();
+                                          double latUser =double.parse(splitUserLat);
+                                          double latLng =double.parse(splitUserLng);
+                                          double latResto =double.parse(splitRestoLat);
+                                          double lngResto =double.parse(splitRestoLng);
+                                          double deliveryCharge;
                                           
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PayOrder(
-                                                          fee: deliveryCharge,
-                                                          restauID: widget
-                                                              .restauID)));
+                                         
+                                          if(snapshot.isEmpty){
+                                            print("No Order");
+                        
+                                          } else{
+                                          if(newCoordinates.contains("null")){
+                                          deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(latResto, lngResto) , LatLng(latUser, latLng ));
+                                          }else{
+                                          splitNewCoordinatesLat =newCoordinates.split(',')[0].toString();
+                                          splitNewCoordinatesLng =newCoordinates.split(',')[1].toString();
+                                          double newLat =double.parse(splitNewCoordinatesLat);
+                                          double newLng =double.parse(splitNewCoordinatesLng);
+                                          deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(latResto, lngResto) , LatLng(newLat, newLng )); 
                                           }
+                                          if(deliveryCharge!=null){
+                                            
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PayOrder(
+                                                            fee: deliveryCharge,
+                                                            restauID: widget
+                                                                .restauID)));
                                           
-                                        }
-                                        // _pr.hide(); 
-                                        
-                                        // SharedPreferences localStorage = await SharedPreferences.getInstance();
-                                        // var userJson = localStorage.getString('user');
-                                        // var user = json.decode(userJson);
-                                        // print(fee);
-                                        // print(widget.barangay);
-                                        // print(user['barangayId']);
-                                      },
-                                      child: Container(
-                                        height: 60,
-                                        width: 190,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFF0C375B),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "View Place Orders ",
-                                            style: TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.white,
-                                                fontFamily: 'Gilroy-light'),
+                                            }
+                                            
+                                          }
+                                          // _pr.hide(); 
+                                          
+                                          // SharedPreferences localStorage = await SharedPreferences.getInstance();
+                                          // var userJson = localStorage.getString('user');
+                                          // var user = json.decode(userJson);
+                                          // print(fee);
+                                          // print(widget.barangay);
+                                          // print(user['barangayId']);
+                                        },
+                                        child: Container(
+                                          height: 60,
+                                          width: 190,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF0C375B),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "View Place Orders ",
+                                              style: TextStyle(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.white,
+                                                  fontFamily: 'Gilroy-light'),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                      ),
-                                
-                                // Padding(
-                                //   padding: EdgeInsets.only(top: 13, left: 30),
-                                //   child: Container(
-                                //     child: Text(
-                                //       "View Place Orders ",
-                                //       style: TextStyle(
-                                //           fontSize: 25,
-                                //           fontWeight: FontWeight.w400,
-                                //           color: Colors.white,
-                                //           fontFamily: 'Gilroy-light'
-                                //           ),
-                                //     ),
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                          ),
-                            
-                          
-                                ],
-                              )
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 80),
-                              child: Container(
-                                height: 70,
-                                child: Builder(builder: (context) {
-                                  return Stack(
-                                    children: [
-                                      Card(
-                                        elevation: 15.5,
-                                        color: Color(0xFF0C375B),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(5),
-                                          child: Center(
-                                              child: Padding(
-                                            padding: EdgeInsets.all(5),
-                                            child: ListTile(
-                                              title: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                "Optional Delivery Address",
-                                                style: TextStyle(
-                                                  fontFamily: "Gilroy-light",
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                               Text(
-                                                "You can choose Optional Delivery Address",
-                                                style: TextStyle(
-                                                  fontFamily: "Gilroy-light",
-                                                  color: Colors.white,
-                                                  fontSize: 10,
-                                                ),
-                                              ),
-                                                ],
-                                              ),
-                                              trailing: IconButton(icon: Icon(Icons.edit, color: Colors.white), onPressed: (){
-                                                Navigator.push(context, MaterialPageRoute(builder: (context){
-                                                  return AddressLine();
-                                                }));
-                                              }),
-                                            ),
-                                          )),
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                }),
+                                  
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(top: 13, left: 30),
+                                  //   child: Container(
+                                  //     child: Text(
+                                  //       "View Place Orders ",
+                                  //       style: TextStyle(
+                                  //           fontSize: 25,
+                                  //           fontWeight: FontWeight.w400,
+                                  //           color: Colors.white,
+                                  //           fontFamily: 'Gilroy-light'
+                                  //           ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
                               ),
                             ),
-                          ),
-                          
-                        ],
-                      );
-                      }
-                      
-                    },
-                    listener: (BuildContext context, orderList) {}),
+                              
+                            
+                                  ],
+                                )
+                              ),
+                            ),
+                            // Align(
+                            //   alignment: Alignment.bottomLeft,
+                            //   child: Padding(
+                            //     padding: EdgeInsets.only(bottom: 80),
+                            //     child: Container(
+                            //       height: 70,
+                            //       child: Builder(builder: (context) {
+                            //         return Stack(
+                            //           children: [
+                            //             Card(
+                            //               elevation: 15.5,
+                            //               color: Color(0xFF0C375B),
+                            //               child: Padding(
+                            //                 padding: EdgeInsets.all(5),
+                            //                 child: Center(
+                            //                     child: Padding(
+                            //                   padding: EdgeInsets.all(5),
+                            //                   child: ListTile(
+                            //                     title: Column(
+                            //                       crossAxisAlignment: CrossAxisAlignment.start,
+                            //                       children: [
+                            //                         Text(
+                            //                       "Optional Delivery Address",
+                            //                       style: TextStyle(
+                            //                         fontFamily: "Gilroy-light",
+                            //                         color: Colors.white,
+                            //                       ),
+                            //                     ),
+                            //                      Text(
+                            //                       "You can choose Optional Delivery Address",
+                            //                       style: TextStyle(
+                            //                         fontFamily: "Gilroy-light",
+                            //                         color: Colors.white,
+                            //                         fontSize: 10,
+                            //                       ),
+                            //                     ),
+                            //                       ],
+                            //                     ),
+                            //                     trailing: IconButton(icon: Icon(Icons.edit, color: Colors.white), onPressed: (){
+                            //                       Navigator.push(context, MaterialPageRoute(builder: (context){
+                            //                         return AddressLine();
+                            //                       }));
+                            //                     }),
+                            //                   ),
+                            //                 )),
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         );
+                            //       }),
+                            //     ),
+                            //   ),
+                            // ),
+                            
+                          ],
+                        );
+                        }
+                        
+                      },
+                      listener: (BuildContext context, orderList) {}),
+                ),
               ),
-            ),
-            
-          ],
+              
+            ],
+          ),
         ),
       ),
     );

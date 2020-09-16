@@ -13,7 +13,7 @@ class SimpleAppLoader extends StatefulWidget {
 
 class _SimpleAppLoaderState extends State<SimpleAppLoader> with TickerProviderStateMixin {
   
-  var duration =  const Duration(milliseconds: 1900);  
+  var duration =  const Duration(seconds: 3);  
 
   @override
   void initState() {

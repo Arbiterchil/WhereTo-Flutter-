@@ -15,11 +15,14 @@ class MyCart extends StatefulWidget {
 class _MyCartState extends State<MyCart> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: TransactionList(
-          restaurantAddress: widget.restaurantAddress,
-          restauID: widget.restauID,
-    ),
+    return WillPopScope(
+      onWillPop: ()async=> false,
+          child: Scaffold(
+        body: TransactionList(
+            restaurantAddress: widget.restaurantAddress,
+            restauID: widget.restauID,
+      ),
+      ),
     );
   }
   

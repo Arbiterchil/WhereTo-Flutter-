@@ -14,7 +14,7 @@ class ForOrderLoading extends StatefulWidget {
 
 class _ForOrderLoadingState extends State<ForOrderLoading> {
 
-    var duration =  const Duration(milliseconds: 1900);  
+    var duration =  const Duration(seconds: 2);  
 
 
      startTIme(){

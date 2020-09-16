@@ -132,7 +132,7 @@ class CustomSearch extends SearchDelegate {
                                   // } else {
                                   //   if (int.parse(formatNow.split(":")[0]) >=
                                   //       int.parse(formatOpen.split(":")[0])) {
-                                   
+                                    
                                       Navigator.pushReplacement(
                                           context,
                                           new MaterialPageRoute(

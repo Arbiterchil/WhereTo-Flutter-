@@ -72,7 +72,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                   var coordinates =await CoordinatesConverter().convert(snapshot.data[index].address);
                                   
                                     showDialog(
-                            barrierDismissible: true,
+                            barrierDismissible: false,
                             context: context,
                             builder: (con)=>SimpleAppLoader());
 
@@ -152,7 +152,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                     var addr =await ID().getPosition();
                                     var converterUser =await CoordinatesConverter().addressByCity(addr);
                                     var converterResto =await CoordinatesConverter().addressByCity(snapshot.data[index].address);
-                                    if (converterUser.contains(converterResto)) {
+                                  
                                       // await featured.hide();
                                       Navigator.push(
                                           context,
@@ -174,21 +174,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                                         .data[index].categoryId
                                                         .toString(),
                                                   )));
-                                    } else {
-                                      AwesomeDialog(
-                                          context: context,
-                                          headerAnimationLoop: false,
-                                          animType: AnimType.SCALE,
-                                          dialogType: DialogType.INFO,
-                                          title: "Location Not Available",
-                                          desc:
-                                              "This app is only available in Tagum City for the meantime",
-                                          btnOkText: "Comeback Later",
-                                          btnOkColor: Color(0xFF0C375B),
-                                          btnOkOnPress: () async {
-                                            Navigator.pop(context);
-                                          }).show();
-                                    }
+                                    
                                   }
                                 },
                               ),

@@ -5,7 +5,7 @@ class DeliveryCharge {
     var distance = new Distance();
     final double km = distance.as(LengthUnit.Kilometer,
         restaurant, user);
-    double charge = 40.0;
+    double charge = 30.0;
     for (int c = 4; c <= km; c++) {
       if (c > 4) {
         charge += 5;

@@ -559,67 +559,67 @@ String categ ="0";
           ,size: 30,
           ), onPressed: ()async{
 
-            showModalBottomSheet(context: context, barrierColor: Colors.white.withOpacity(0.05),backgroundColor: Colors.transparent, builder: (context){
-              return Padding(padding: EdgeInsets.all(30),
-                      child: Container(
+            // showModalBottomSheet(context: context, barrierColor: Colors.white.withOpacity(0.05),backgroundColor: Colors.transparent, builder: (context){
+            //   return Padding(padding: EdgeInsets.all(30),
+            //           child: Container(
                        
-                      decoration: BoxDecoration(
+            //           decoration: BoxDecoration(
                         
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(40.0),
-                          topRight: Radius.circular(40.0),
-                          bottomLeft: Radius.circular(40.0),
-                          bottomRight: Radius.circular(40.0),
-                        )
-                      ),
-                      height: 250,
-                      child:Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                           Expanded(child:ListTile(
-                              leading: Icon(Icons.location_on, size: 30, color: Colors.black),
-                              subtitle: FutureBuilder(
-                                future: CoordinatesConverter().convert(address),
-                                builder: (context,snaps){
-                                  if(snaps.data == null){
-                                    return Container();
-                                  }else{
-                                    return  Text(snaps.data, style: TextStyle(
-                                fontFamily: "Gilroy-light",
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                ),);
-                                  }
-                                },
-                              ),
+            //             color: Colors.white,
+            //             borderRadius: BorderRadius.only(
+            //               topLeft: Radius.circular(40.0),
+            //               topRight: Radius.circular(40.0),
+            //               bottomLeft: Radius.circular(40.0),
+            //               bottomRight: Radius.circular(40.0),
+            //             )
+            //           ),
+            //           height: 250,
+            //           child:Column(
+            //             crossAxisAlignment: CrossAxisAlignment.center,
+            //               children: [
+            //                Expanded(child:ListTile(
+            //                   leading: Icon(Icons.location_on, size: 30, color: Colors.black),
+            //                   subtitle: FutureBuilder(
+            //                     future: CoordinatesConverter().convert(address),
+            //                     builder: (context,snaps){
+            //                       if(snaps.data == null){
+            //                         return Container();
+            //                       }else{
+            //                         return  Text(snaps.data, style: TextStyle(
+            //                     fontFamily: "Gilroy-light",
+            //                     color: Colors.black,
+            //                     fontWeight: FontWeight.bold,
+            //                     fontSize: 20,
+            //                     ),);
+            //                       }
+            //                     },
+            //                   ),
                                                    
-                           ),),
+            //                ),),
                              
-                              ListTile(
-                              leading: IconButton(icon: Icon(Icons.add, size: 30, color: Colors.black,), 
-                              onPressed: (){
-                                 Navigator.push(context, MaterialPageRoute(builder: (context) => MapAdress()));
+            //                   ListTile(
+            //                   leading: IconButton(icon: Icon(Icons.add, size: 30, color: Colors.black,), 
+            //                   onPressed: (){
+            //                      Navigator.push(context, MaterialPageRoute(builder: (context) => MapAdress()));
                                
-                              }),
-                              subtitle:  Text("New Address", style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: "Gilroy-light",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                ),),
-                            ), 
+            //                   }),
+            //                   subtitle:  Text("New Address", style: TextStyle(
+            //                     color: Colors.black,
+            //                     fontFamily: "Gilroy-light",
+            //                     fontWeight: FontWeight.bold,
+            //                     fontSize: 20,
+            //                     ),),
+            //                 ), 
                             
                                 
                            
-                          ],
-                        ),
+            //               ],
+            //             ),
                       
-                      ) 
+            //           ) 
                     
-                    );
-            });
+            //         );
+            // });
           
           }),
     );
@@ -742,7 +742,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                          onTap: () async{
 
                           showDialog(
-                            barrierDismissible: true,
+                            barrierDismissible: false,
                             context: context,
                             builder: (con)=>SimpleAppLoader());
 
@@ -813,7 +813,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                     var converterResto =await CoordinatesConverter().addressByCity(nf[index].address);
                                    
                                   
-                                    if(converterUser.contains(converterResto)){
+                                    
                                     // await featuredRestaurant.hide();
                                     Navigator.push(
                                           context,
@@ -825,19 +825,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                                 address:nf[index].address,
                                                 categID: categ,  
                                                   )));
-                                    }else{
-                                       AwesomeDialog(
-                                          context: context,
-                                          headerAnimationLoop: false,
-                                          animType: AnimType.SCALE,
-                                          dialogType: DialogType.INFO,
-                                          title: "Location Not Available",
-                                          desc:
-                                              "No Restaurants On This City Yet!",
-                                          btnOkText: "Comeback Later",
-                                          btnOkColor: Color(0xFF0C375B),
-                                          ).show();
-                                    }
+                                    
                                     
                                 }
                            
