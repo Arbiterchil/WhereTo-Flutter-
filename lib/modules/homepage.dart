@@ -90,6 +90,84 @@ _onsSignal() async{
         
     });                     
   }
+
+  void _showDone(String message){
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context){
+      return Dialog(
+       
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child:Container(
+        height: 300.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+        color: Colors.white),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+              children: <Widget>[
+                SizedBox(height: 20,),
+                Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('asset/img/penalty.png'),
+                  ),
+                ),
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(message,
+                  style: TextStyle(
+                    color: Color(0xFF0C375B),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 11.0,
+                    fontFamily: 'Gilroy-light'
+                  ),
+                  
+                  ),),
+                  SizedBox(height: 25.0,),
+                  Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[         
+                RaisedButton(
+                  color:Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () async {
+                    
+                      SharedPreferences localStorage = await SharedPreferences.getInstance();
+                               localStorage.remove('user');
+                               localStorage.remove('token');
+                               localStorage.remove('menuplustrans');
+                              //  print(body);
+                                Navigator.pushAndRemoveUntil(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
+                      },   
+                      
+                  child: Text ( "OK",
+                   style :TextStyle(
+                  color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+                  ],
+                ), 
+              ],
+          ),
+        ),
+      ),
+    ); 
+    },);
+}
  void getShared() async {
 
       SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -232,114 +310,5 @@ void onTabTapped(int index) {
 
     );
   }
-void _showDone(String message){
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context){
-      return Dialog(
-       
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child:Container(
-        height: 300.0,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-        color: Colors.white),
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-              children: <Widget>[
-                SizedBox(height: 20,),
-                Container(
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('asset/img/penalty.png'),
-                  ),
-                ),
-                ),
-                SizedBox(height: 10,),
-                // Stack(
-                //   children: <Widget>[
-                //     Container(
-                //       height: 150.0,
-                //     ),
-                //     Container(
-                //       height: 100.0,
-                //       decoration: BoxDecoration(
-                //         color: pureblue,
-                //         borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
-                //          ),
 
-                //     ),
-                //     Positioned(
-                //       top: 50.0,
-                //       left: 94.0,
-                //       child: Container(
-                //         height: 90,
-                //         width: 90,
-                //         padding: EdgeInsets.all(10.0),
-                //         decoration: BoxDecoration(
-                //           color: Colors.white,
-                //           borderRadius: BorderRadius.circular(45),
-                //           image: DecorationImage(
-                //             image: AssetImage("asset/img/logo.png"),
-                //             fit: BoxFit.cover,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(message,
-                  style: TextStyle(
-                    color: Color(0xFF0C375B),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 11.0,
-                    fontFamily: 'Gilroy-light'
-                  ),
-                  
-                  ),),
-                  SizedBox(height: 25.0,),
-                  Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[         
-                RaisedButton(
-                  color:Color(0xFF0C375B),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: () async {
-                    
-                      SharedPreferences localStorage = await SharedPreferences.getInstance();
-                               localStorage.remove('user');
-                               localStorage.remove('token');
-                               localStorage.remove('menuplustrans');
-                              //  print(body);
-                                Navigator.pushAndRemoveUntil(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
-                      },   
-                      
-                  child: Text ( "OK",
-                   style :TextStyle(
-                  color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12.0,
-                              fontFamily: 'OpenSans'
-                ),),),
-                  ],
-                ), 
-              ],
-          ),
-        ),
-      ),
-    ); 
-    },);
-}
 }

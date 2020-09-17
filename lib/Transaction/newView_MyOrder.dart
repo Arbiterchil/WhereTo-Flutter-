@@ -4,6 +4,7 @@ import 'package:WhereTo/Transaction/MyOrder/DialogOrder.dart';
 import 'package:WhereTo/Transaction/x_view.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
+import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -38,6 +39,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
     bloc.dispose();
   }
 
+  String datass = "";
 
   var userData;
   var userID;
@@ -46,6 +48,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
   @override
   void initState() {
     getData();
+    _onsSignal();
     super.initState();
     
   }
@@ -71,6 +74,110 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
       });
     });
   }
+   String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
+_onsSignal() async{
+  if(!mounted) return;
+    await OneSignal.shared.setLocationShared(true);
+    await OneSignal.shared.promptLocationPermission();
+    await OneSignal.shared.setSubscription(true);
+    await OneSignal.shared.getTags();
+   await OneSignal.shared.sendTags({'UR': 'TRUE'});  
+     OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared
+        .setNotificationReceivedHandler((OSNotification notification){
+        setState(() {
+           datass = notification.payload.additionalData["force"].toString();
+           print("$datass is you");
+          // if(data != null){
+            if(data == "penalty"){
+               _showDone(meesages.toString());
+            }else{
+              print("None");
+            }
+          // }
+        });
+        
+    });                     
+  }
+
+  void _showDone(String message){
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context){
+      return Dialog(
+       
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child:Container(
+        height: 300.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+        color: Colors.white),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+              children: <Widget>[
+                SizedBox(height: 20,),
+                Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('asset/img/penalty.png'),
+                  ),
+                ),
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(message,
+                  style: TextStyle(
+                    color: Color(0xFF0C375B),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 11.0,
+                    fontFamily: 'Gilroy-light'
+                  ),
+                  
+                  ),),
+                  SizedBox(height: 25.0,),
+                  Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[         
+                RaisedButton(
+                  color:Color(0xFF0C375B),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  onPressed: () async {
+                    
+                      SharedPreferences localStorage = await SharedPreferences.getInstance();
+                               localStorage.remove('user');
+                               localStorage.remove('token');
+                               localStorage.remove('menuplustrans');
+                              //  print(body);
+                                Navigator.pushAndRemoveUntil(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
+                      },   
+                      
+                  child: Text ( "OK",
+                   style :TextStyle(
+                  color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              fontFamily: 'OpenSans'
+                ),),),
+                  ],
+                ), 
+              ],
+          ),
+        ),
+      ),
+    ); 
+    },);
+}
 
   @override
   Widget build(BuildContext context) {

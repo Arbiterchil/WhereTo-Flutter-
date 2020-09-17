@@ -56,6 +56,7 @@ String categ ="0";
   String newAddress;
   String addressusi = "";
   bool isLoc =false;
+  String newAnd ="";
   void _getUserInfo() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
@@ -63,7 +64,7 @@ String categ ="0";
     var user = json.decode(userJson);
     setState(() {
       userData = user;
-      address =userData!= null ? userData['address'] :  'Fail get data.';
+      address =userData!= null ? user['latitude']+","+user['longitude']:  'Fail get data.';
       newAddress ="${localStorage.getString("unit_number")}, ${localStorage.getString("house_number")}, ${localStorage.getString("building")}, ${localStorage.getString("street_name")}";
     });
   }

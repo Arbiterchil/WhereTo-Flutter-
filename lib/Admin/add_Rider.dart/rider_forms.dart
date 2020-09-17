@@ -4,8 +4,11 @@ import 'package:WhereTo/BarangaylocalList/barangay_class.dart';
 import 'package:WhereTo/BarangaylocalList/barangay_response.dart';
 import 'package:WhereTo/BarangaylocalList/barangay_stream.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/modules/editProfileScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 
 import '../../styletext.dart';
 
@@ -22,10 +25,14 @@ class _RiderFormsState extends State<RiderForms> {
     TextEditingController email = TextEditingController();
     TextEditingController licensenumber = TextEditingController();
     TextEditingController plateNumber = TextEditingController();
-
+    LatLng latlng = new LatLng(12.8797,121.7740);
+String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
     final formkey = GlobalKey<FormState>();
     String selectPerson;
    bool loading = false;
+   String lats ="";
+   String longs = "";
+   String toShowAddress = "";
   @override
   void initState() {
     super.initState();
@@ -69,7 +76,7 @@ class _RiderFormsState extends State<RiderForms> {
     else
       return null;
     }
- 
+  
   @override
   void dispose() {
     super.dispose();
@@ -149,31 +156,51 @@ class _RiderFormsState extends State<RiderForms> {
           //           ),
           // SizedBox(height: 10.0,),
           SizedBox(height: 15.0,),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
-              decoration: eBoxDecorationStyle,
-              height: 50.0,
-              child: TextFormField(
-                cursorColor: pureblue,
-                controller: addressmadafa,
-                validator: (val) => val.isEmpty ? ' Please Put A Address Name' : null,
-                style: TextStyle(
-                  color: pureblue,
-                  fontFamily: 'Gilroy-light',
+          FutureBuilder(
+                  future: CoordinatesConverter().convert(toShowAddress),
+                  builder: (con ,snaps){
+                    if(snaps.data == null){
+                     return  NCard(
+                    active: false,
+                    icon: Icons.my_location,
+                    label: toShowAddress ,
+                    onTap: () => viewMapo(),
+                  );
+                    }else{
+                       return  NCard(
+                    active: false,
+                    icon: Icons.my_location,
+                    label: snaps.data ,
+                    onTap: () => viewMapo(),
+                  );
+                    }
+                  },
                 ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top:14.0),
-                  prefixIcon: Icon(
-                    Icons.my_location,
-                    color: pureblue,
-                  ),
-                  hintText: 'Address',
-                  hintStyle: eHintStyle,
-                ),
-              ),
-            ),
+          // Container(
+          //     width: MediaQuery.of(context).size.width,
+          //     alignment: Alignment.centerLeft,
+          //     decoration: eBoxDecorationStyle,
+          //     height: 50.0,
+          //     child: TextFormField(
+          //       cursorColor: pureblue,
+          //       controller: addressmadafa, 
+          //       validator: (val) => val.isEmpty ? ' Please Put A Address Name' : null,
+          //       style: TextStyle(
+          //         color: pureblue,
+          //         fontFamily: 'Gilroy-light',
+          //       ),
+          //       decoration: InputDecoration(
+          //         border: InputBorder.none,
+          //         contentPadding: EdgeInsets.only(top:14.0),
+          //         prefixIcon: Icon(
+          //           Icons.my_location,
+          //           color: pureblue,
+          //         ),
+          //         hintText: 'Address',
+          //         hintStyle: eHintStyle,
+          //       ),
+          //     ),
+          //   ),
           SizedBox(height: 15.0,),
           // Text('Contact Number',
           //           style: eLabelStyle,
@@ -531,16 +558,19 @@ class _RiderFormsState extends State<RiderForms> {
 
 
     if(selectPerson == null){
-    print("Select Barangay");
-    _showDistictWarning();
-  }else{
+
+    _showDistictWarning("Select Barangay");
+  }else if(toShowAddress.isEmpty){
+    _showDistictWarning("Please Put the Address.");
+    }else{
     if(formkey.currentState.validate()){
       formkey.currentState.save();
       var data = {
             "name" : fullanme.text,
             "email" : email.text,
             "contactNumber" : contactnumber.text,
-            "address" : addressmadafa.text,
+            "latitude": lats.toString(),
+            "longitude": longs.toString(),
             "barangayId": selectPerson.toString(),
             "licenseNumber": licensenumber.text,
             "plateNumber": plateNumber.text
@@ -565,7 +595,7 @@ class _RiderFormsState extends State<RiderForms> {
     loading = false;
   });
   }
-  void _showDistictWarning(){
+  void _showDistictWarning(String message){
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -575,13 +605,7 @@ class _RiderFormsState extends State<RiderForms> {
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: mCustomDistictWarning(context),
-    ); 
-    },);
-}
- mCustomDistictWarning(BuildContext context){
-
-       return Container(
+      child: Container(
         height: 300.0,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
@@ -638,7 +662,7 @@ class _RiderFormsState extends State<RiderForms> {
                 
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: Text("Please Select a District.",
+                  child: Text(message,
                   style: TextStyle(
                     color: Color(0xFF0C375B),
                     fontWeight: FontWeight.w700,
@@ -670,10 +694,10 @@ class _RiderFormsState extends State<RiderForms> {
               ],
           ),
         ),
-      );
-
-
-    }
+      ),
+    ); 
+    },);
+}
   void _showDone(){
   showDialog(
     context: context,
@@ -783,5 +807,103 @@ class _RiderFormsState extends State<RiderForms> {
 
 
     }
+    void viewMapo(){
 
+  showModalBottomSheet(
+    isDismissible: true,
+    context: context, 
+  builder: (_){
+
+    return SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
+      child: Column(
+        children: [
+          Container(
+        height: 390,
+        width: MediaQuery.of(context).size.width,
+        child: PlacePicker(
+                      apiKey: googleKey,
+                      initialPosition: latlng,
+                      useCurrentLocation: true,
+                      searchForInitialValue: true,
+                      usePlaceDetailSearch: true,
+                      onPlacePicked: (result) async {
+                        String lat = result.geometry.location.lat.toString();
+                        String lng = result.geometry.location.lng.toString();
+                        print("the Bilat is $lat and Oten is $lng");
+                        setState(() {
+                          toShowAddress = "$lat,$lng";
+                        lats = lat;
+                        longs = lng;
+                        });
+                        print(lats+"-"+longs);
+                        Navigator.pop(context);
+                        }
+                    ),
+      ),
+        ],
+      ),
+    );
+
+  });
+  
+}
+
+}
+
+class NCard extends StatelessWidget {
+
+  final bool active;
+  final IconData icon;
+  final String label;
+  final Function onTap;
+  const NCard({this.active,this.icon,this.onTap,this.label});
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+        onTap: onTap,
+      child: Container(
+        height: 50.0,
+        width: MediaQuery.of(context).size.width,
+        // decoration: BoxDecoration(
+        //   color: Color(0xFF0C375B),
+        //   borderRadius: BorderRadius.all(Radius.circular(40))
+        // ),
+        // padding: EdgeInsets.symmetric(horizontal: 15,vertical: 7),
+        // decoration: eBox,
+        decoration: eBoxDecorationStyle,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            children: <Widget>[
+              Icon(icon,color: pureblue,size: 15.0,),
+              SizedBox(width: 7.0,),
+
+               Flexible(
+                 flex: 1,
+                 child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      child: Container(
+                        child: Text(label,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: pureblue,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16.0,
+                          fontFamily: 'Gilroy-light'
+                        ),),
+                      ),
+                    ),
+               ),
+             
+              
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

@@ -389,6 +389,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                     active: false,
                     icon: Icons.my_location,
                     label: toShowAddress ,
+                    
                     onTap: () => viewMapo(),
                   );
                     }else{
@@ -1031,7 +1032,7 @@ setState(() {
 
     //                          }
     if(selectPerson == null || opentimeString == null ||
-       closetimeString == null || datesofdays == null){
+       closetimeString == null || datesofdays == null || toShowAddress.isEmpty){
          print('tan aw balik sa part');
          _showDial("Please Specify all empty Fields");
     }else if(_idPickerImage == null){
@@ -1335,35 +1336,6 @@ void viewMapo(){
     );
 
   });
-
-  // showDialog(context: context,builder: (context) {
-
-  //   return Dialog(
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(20),
-  //     ),
-  //     elevation: 0,
-  //     child: Container(
-  //     height: 700,
-  //     width: MediaQuery.of(context).size.width,
-  //     child: PlacePicker(
-  //                   apiKey: googleKey,
-  //                   initialPosition: latlng,
-  //                   useCurrentLocation: true,
-  //                   searchForInitialValue: true,
-  //                   usePlaceDetailSearch: true,
-  //                   onPlacePicked: (result) async {
-  //                     String lat = result.geometry.location.lat.toString();
-  //                     String lng = result.geometry.location.lng.toString();
-  //                     print("the Bilat is $lat and Oten is $lng");
-  //                     address.text = "$lat,$lng";
-  //                     }
-  //                 ),
-  //   ),
-  //   );
-
-
-  // });
   
 }
 
@@ -1376,7 +1348,8 @@ class NCard extends StatelessWidget {
   final IconData icon;
   final String label;
   final Function onTap;
-  const NCard({this.active,this.icon,this.onTap,this.label});
+  final String hint;
+  const NCard({this.active,this.icon,this.onTap,this.label,this.hint});
   @override
   Widget build(BuildContext context) {
 
