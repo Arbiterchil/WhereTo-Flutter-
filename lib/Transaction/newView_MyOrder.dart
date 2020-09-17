@@ -39,7 +39,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
     bloc.dispose();
   }
 
-  String datass = "";
+  
 
   var userData;
   var userID;
@@ -48,9 +48,9 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
   @override
   void initState() {
     getData();
-    _onsSignal();
-    super.initState();
     
+    super.initState();
+    _onsSignal();
   }
 
   getData() async {
@@ -75,6 +75,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
     });
   }
    String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
+  String datass = "";
 _onsSignal() async{
   if(!mounted) return;
     await OneSignal.shared.setLocationShared(true);
@@ -90,7 +91,7 @@ _onsSignal() async{
            datass = notification.payload.additionalData["force"].toString();
            print("$datass is you");
           // if(data != null){
-            if(data == "penalty"){
+            if(datass == "penalty"){
                _showDone(meesages.toString());
             }else{
               print("None");
