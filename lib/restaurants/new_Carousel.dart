@@ -25,12 +25,12 @@ class _NewCarouselState extends State<NewCarousel> {
       'Jollibee',
       'Located at National HighWay'
     ],
-    [
-      // 'asset/img/carousel3.jpg',
-      'https://res.cloudinary.com/amadpogi/image/upload/v1599185567/banner-03_ssrixm.png',
-      'McDonalds',
-      'Located at Rizal Street'
-    ],
+    // [
+    //   // 'asset/img/carousel3.jpg',
+    //   'https://res.cloudinary.com/amadpogi/image/upload/v1599185567/banner-03_ssrixm.png',
+    //   'McDonalds',
+    //   'Located at Rizal Street'
+    // ],
     [
       // 'asset/img/carousel4.jpg',
       'https://res.cloudinary.com/amadpogi/image/upload/v1599185567/banner-04_a96aqd.png',
@@ -92,13 +92,13 @@ class _NewCarouselState extends State<NewCarousel> {
                 height: 140,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                   boxShadow: [
-                             BoxShadow(
-                               color: Colors.grey[200],
-                               spreadRadius: 1.1,
-                               blurRadius: 2.2
-                             ),
-                           ],
+                  //  boxShadow: [
+                  //            BoxShadow(
+                  //              color: Colors.grey[200],
+                  //              spreadRadius: 1.1,
+                  //              blurRadius: 2.2
+                  //            ),
+                  //          ],
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   image: DecorationImage(
                     image: NetworkImage(restau[currentIndex][0]),
@@ -116,13 +116,13 @@ class _NewCarouselState extends State<NewCarousel> {
                   // ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      colors: [
-                         Colors.black.withOpacity(.2),
-                        Colors.white.withOpacity(.0),
+                    // gradient: LinearGradient(
+                    //   begin: Alignment.bottomCenter,
+                    //   colors: [
+                    //      Colors.black.withOpacity(.2),
+                    //     Colors.white.withOpacity(.0),
 
-                      ]),
+                    //   ]),
                 
                   ),
                   child: Column(
