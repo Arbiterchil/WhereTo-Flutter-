@@ -729,16 +729,11 @@ Widget _views(NewRestaurantResponse newFeatured){
                  
                    return Column(
                      children: <Widget>[
-                       FutureBuilder(
-                         future: CoordinatesConverter().convert(nf[index].address),
-                         builder: (context, snapshot){
-                        if(snapshot.data==null){
-                          return Container();
-                        }else{
-                          return NewRestaurantBox(
+
+                      NewRestaurantBox(
                         image: nf[index].imagePath,
                          restaurantName:nf[index].restaurantName ,
-                         address: snapshot.data, 
+                         address:nf[index].latitude+","+nf[index].longitude, 
                          onTap: () async{
 
                           showDialog(
@@ -772,7 +767,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                 var status;
                                 var address;
                                 var insideResto =nf[index].restaurantName;
-                                var insideAddress =nf[index].address;
+                                var insideAddress =nf[index].latitude+","+nf[index].longitude;
                                 var isRead = false;
                                 Map<String, dynamic> temp;
                                 List<dynamic> converted = [];
@@ -810,7 +805,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                   //       int.parse(formatOpen.split(":")[0])) {
                                     var addr =await ID().getPosition();
                                     var converterUser =await CoordinatesConverter().addressByCity(addr);
-                                    var converterResto =await CoordinatesConverter().addressByCity(nf[index].address);
+                                    var converterResto =await CoordinatesConverter().addressByCity(nf[index].latitude+","+nf[index].longitude);
                                    
                                   
                                     
@@ -822,7 +817,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                                 restauID:nf[index].id.toString(),
                                                 nameRestau: nf[index].restaurantName.toString(),
                                                 baranggay: nf[index].barangayId.toString(),
-                                                address:nf[index].address,
+                                                address:nf[index].latitude+","+nf[index].longitude,
                                                 categID: categ,  
                                                   )));
                                     
@@ -831,9 +826,9 @@ Widget _views(NewRestaurantResponse newFeatured){
                            
                           
                          },
-                        );
-                        }
-                         })
+                        ),
+                        
+                        
                      ],
                    );
                 },

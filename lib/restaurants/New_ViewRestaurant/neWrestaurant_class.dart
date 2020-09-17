@@ -3,7 +3,8 @@ class NeWRestaurant {
   String restaurantName;
   String owner;
   String representative;
-  String address;
+  String latitude;
+  String longitude;
   int barangayId;
   String contactNumber;
   String openTime;
@@ -21,7 +22,8 @@ class NeWRestaurant {
       this.restaurantName,
       this.owner,
       this.representative,
-      this.address,
+      this.latitude,
+      this.longitude,
       this.barangayId,
       this.contactNumber,
       this.openTime,
@@ -39,7 +41,8 @@ class NeWRestaurant {
     restaurantName = json['restaurantName'];
     owner = json['owner'];
     representative = json['representative'];
-    address = json['address'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
     barangayId = json['barangayId'];
     contactNumber = json['contactNumber'];
     openTime = json['openTime'];
@@ -59,7 +62,8 @@ class NeWRestaurant {
     data['restaurantName'] = this.restaurantName;
     data['owner'] = this.owner;
     data['representative'] = this.representative;
-    data['address'] = this.address;
+    data['latitude'] = this.latitude;
+    data['longitude'] = this.longitude;
     data['barangayId'] = this.barangayId;
     data['contactNumber'] = this.contactNumber;
     data['openTime'] = this.openTime;

@@ -128,7 +128,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                        NewRestaurantBox(
                         image: nf[index].imagePath,
                          restaurantName:nf[index].restaurantName ,
-                         address: nf[index].address,
+                         address: nf[index].latitude+","+nf[index].longitude,
                          
                          onTap: () async{
                            featuredRestaurant.show();
@@ -140,7 +140,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                 var status;
                                 var address;
                                 var insideResto =nf[index].restaurantName;
-                                var insideAddress =nf[index].address;
+                                var insideAddress =nf[index].latitude+","+nf[index].longitude;
                                 var isRead = false;
                                 Map<String, dynamic> temp;
                                 List<dynamic> converted = [];
@@ -184,7 +184,7 @@ Widget _views(NewRestaurantResponse newFeatured){
                                                 restauID:nf[index].id.toString(),
                                                 nameRestau: nf[index].restaurantName.toString(),
                                                 baranggay: nf[index].barangayId.toString(),
-                                                address:nf[index].address.toString(),
+                                                address:nf[index].latitude+","+nf[index].longitude,
                                                 categID: categ,  
                                                   )));
                                 }
