@@ -23,7 +23,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class TransactionList extends StatefulWidget {
   final String restaurantAddress;
   final String restauID;
-  TransactionList({this.restauID,this.restaurantAddress});
+  final double restoLat;
+  final double restoLng;
+  TransactionList({this.restauID,this.restaurantAddress, this.restoLat, this.restoLng});
   @override
   _TransactionListState createState() => _TransactionListState();
 }
@@ -408,18 +410,10 @@ class _TransactionListState extends State<TransactionList> {
                                             context: context,
                                             builder: (con)=>SimpleAppLoader());
 
-                                          var position =await ID().getPosition();
+                                          var userLat =await ID().getLat();
+                                          var userLng =await ID().getLng();
+
                                           
-                                          String splitNewCoordinatesLat;
-                                          String splitNewCoordinatesLng; 
-                                          String splitUserLat =position.split(',')[0].toString();
-                                          String splitUserLng =position.split(',')[1].toString();
-                                          String splitRestoLat =widget.restaurantAddress.split(',')[0].toString();
-                                          String splitRestoLng =widget.restaurantAddress.split(',')[1].toString();
-                                          double latUser =double.parse(splitUserLat);
-                                          double latLng =double.parse(splitUserLng);
-                                          double latResto =double.parse(splitRestoLat);
-                                          double lngResto =double.parse(splitRestoLng);
                                           double deliveryCharge;
                                           
                                          
@@ -427,15 +421,9 @@ class _TransactionListState extends State<TransactionList> {
                                             print("No Order");
                         
                                           } else{
-                                          if(newCoordinates.contains("null")){
-                                          deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(latResto, lngResto) , LatLng(latUser, latLng ));
-                                          }else{
-                                          splitNewCoordinatesLat =newCoordinates.split(',')[0].toString();
-                                          splitNewCoordinatesLng =newCoordinates.split(',')[1].toString();
-                                          double newLat =double.parse(splitNewCoordinatesLat);
-                                          double newLng =double.parse(splitNewCoordinatesLng);
-                                          deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(latResto, lngResto) , LatLng(newLat, newLng )); 
-                                          }
+                                          
+                                          deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(widget.restoLat, widget.restoLng) , LatLng(userLat, userLng)); 
+                                        }
                                           if(deliveryCharge!=null){
                                             
                                             Navigator.push(
@@ -447,7 +435,7 @@ class _TransactionListState extends State<TransactionList> {
                                                             restauID: widget
                                                                 .restauID)));
                                           
-                                            }
+                                            
                                             
                                           }
                                           // _pr.hide(); 

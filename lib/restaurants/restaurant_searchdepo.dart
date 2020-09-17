@@ -29,17 +29,13 @@ class SearchDepo extends StatefulWidget {
   _SearchDepoState createState() => _SearchDepoState();
 }
 
-
-
 class _SearchDepoState extends State<SearchDepo> {
-String categ ="0";
+  String categ = "0";
 
   @override
   void initState() {
     super.initState();
-    _getUserInfo();
     streamRestaurantsFeatured..getFeaturedViewRestaurant();
-    
   }
 
   @override
@@ -55,102 +51,111 @@ String categ ="0";
   String address;
   String newAddress;
   String addressusi = "";
-  bool isLoc =false;
-  String newAnd ="";
-  void _getUserInfo() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var userJson = localStorage.getString('user');
-    
-    var user = json.decode(userJson);
-    setState(() {
-      userData = user;
-      address =userData!= null ? user['latitude']+","+user['longitude']:  'Fail get data.';
-      newAddress ="${localStorage.getString("unit_number")}, ${localStorage.getString("house_number")}, ${localStorage.getString("building")}, ${localStorage.getString("street_name")}";
-    });
-  }
+  bool isLoc = false;
+  String newAnd = "";
 
   @override
   Widget build(BuildContext context) {
-
-    return  Scaffold(
-        
-        backgroundColor: Colors.grey[50],
-        body: SafeArea(
+    return Scaffold(
+      backgroundColor: Colors.grey[50],
+      body: SafeArea(
           child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.only(top:8.0,left: 10.0,right: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        logoutIcon(),
-                        SizedBox(width: 10,),
-                        cirlceLoaction(),
-                        SizedBox(width: 10,),
-                        Expanded(
-                          child: textbarSearch()
-                          ),
-                          SizedBox(width: 10,),
-                        
-                      ],
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 10.0, right: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    logoutIcon(),
+                    SizedBox(
+                      width: 10,
                     ),
-                    
-                  ),
-                  SizedBox(height: 20,),
-                  
-                   Stack(
-                    children: <Widget>[
-                      NewCarousel(),
-                    ],),
-                    SizedBox(height: 10,),
-                  viewMenuFeaturedTitle(),
-                  SizedBox(height: 10,),
-                  FoodDisplay(),
-                  SizedBox(height: 15,),
-                  viewzRestaurantFeaturedTitle(),
-                  SizedBox(height: 10,),
-                   Padding(
-                    padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                    child: StreamBuilder<NewRestaurantResponse>(
-        stream: streamRestaurantsFeatured.subject.stream,
-        builder: (context , AsyncSnapshot<NewRestaurantResponse> snaphot){
-          if(snaphot.hasData){
-              if(snaphot.data.error !=null && snaphot.data.error.length > 0){
-                  return _error(snaphot.data.error);
-              }
-                return _views(snaphot.data);
-          }else if(snaphot.hasError){
-                return _error(snaphot.error);
-          }else{
-                return _load();
-          }
-        },
-                  ),
-                  ),
-                   SizedBox(height: 15,),
-                  //   deliveryAdress(),
-                     SizedBox(height: 10,),
-                   Divider(
-                    height: 6.0,
-                    thickness: 1,
-                    color: wheretoDark,
-                    indent: 60.0,
-                    endIndent: 60.0,
-                  ),
-                  SizedBox(height: 20,),
-                  
-                  SharedPrefCallnameData(),
-                   SizedBox(height: 10,),
+                    cirlceLoaction(),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(child: textbarSearch()),
+                    SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+
+              Stack(
+                children: <Widget>[
+                  NewCarousel(),
                 ],
               ),
-            ),
-          )),
-      
+              SizedBox(
+                height: 10,
+              ),
+              viewMenuFeaturedTitle(),
+              SizedBox(
+                height: 10,
+              ),
+              FoodDisplay(),
+              SizedBox(
+                height: 15,
+              ),
+              viewzRestaurantFeaturedTitle(),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                child: StreamBuilder<NewRestaurantResponse>(
+                  stream: streamRestaurantsFeatured.subject.stream,
+                  builder:
+                      (context, AsyncSnapshot<NewRestaurantResponse> snaphot) {
+                    if (snaphot.hasData) {
+                      if (snaphot.data.error != null &&
+                          snaphot.data.error.length > 0) {
+                        return _error(snaphot.data.error);
+                      }
+                      return _views(snaphot.data);
+                    } else if (snaphot.hasError) {
+                      return _error(snaphot.error);
+                    } else {
+                      return _load();
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              //   deliveryAdress(),
+              SizedBox(
+                height: 10,
+              ),
+              Divider(
+                height: 6.0,
+                thickness: 1,
+                color: wheretoDark,
+                indent: 60.0,
+                endIndent: 60.0,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+
+              SharedPrefCallnameData(),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        ),
+      )),
     );
 
     // var connectionStatus =Provider.of<ConnectivityStatus>(context);
@@ -305,7 +310,7 @@ String categ ="0";
     //                               Navigator.pop(context);
     //                               }).show();
     //                               }
-                                  
+
     //                             },
     //                           )),
     //             ),
@@ -314,7 +319,7 @@ String categ ="0";
     //               padding: const EdgeInsets.only(left: 10,right: 10,),
     //               child: SharedPrefCallnameData(),
     //             ),
-                
+
     //             SizedBox(height: 40,),
     //             Padding(
     //               padding: const EdgeInsets.only(left: 20, right: 20),
@@ -382,190 +387,142 @@ String categ ="0";
     // );
   }
 
-  Widget viewMenuFeaturedTitle(){
-
+  Widget viewMenuFeaturedTitle() {
     return Padding(
-      padding: const EdgeInsets.only(left: 5.0,right: 5.0),
+      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
       child: Container(
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          // border: Border.all(
-          //   width: 1,
-          //   color: wheretoDark,
-          // )
+            // border: Border.all(
+            //   width: 1,
+            //   color: wheretoDark,
+            // )
+            ),
+        child: Text(
+          "Featured Food in Restaurants",
+          style: TextStyle(
+              color: wheretoDark,
+              fontWeight: FontWeight.bold,
+              fontSize: 16.0,
+              fontFamily: 'Gilroy-ExtraBold'),
         ),
-        child: Text("Featured Food in Restaurants",
-         style: TextStyle(
-                            color: wheretoDark,
-                             fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                            fontFamily: 'Gilroy-ExtraBold'),
-                      ),
-        ),
+      ),
     );
-  
-
   }
 
-   Widget viewzRestaurantFeaturedTitle(){
-
+  Widget viewzRestaurantFeaturedTitle() {
     return Padding(
-      padding: const EdgeInsets.only(left: 5.0,right: 5.0),
+      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
       child: Container(
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
+            // border: Border.all(
+            //   width: 1,
+            //   color: wheretoDark,
+            // )
+            ),
+        child: Text(
+          "Featured Restaurants",
+          style: TextStyle(
+              color: wheretoDark,
+              fontWeight: FontWeight.bold,
+              fontSize: 16.0,
+              fontFamily: 'Gilroy-ExtraBold'),
+        ),
+      ),
+    );
+  }
+
+  Widget textbarSearch() {
+    return Container(
+        height: 50.0,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          // Colors.white.withOpacity(0.80),
+          borderRadius: BorderRadius.circular(30.0),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey[200], spreadRadius: 3.3, blurRadius: 3.3),
+          ],
           // border: Border.all(
           //   width: 1,
           //   color: wheretoDark,
-          // )
+          // ),
         ),
-        child: Text("Featured Restaurants",
-         style: TextStyle(
-                            color: wheretoDark,
-                             fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                            fontFamily: 'Gilroy-ExtraBold'),
-                      ),
-        ),
-    );
-  
-
+        alignment: Alignment.centerLeft,
+        child: TextField(
+          readOnly: true,
+          showCursor: false,
+          style: TextStyle(
+              color: wheretoDark,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Gilroy-light'),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.only(
+              top: 15.0,
+            ),
+            prefixIcon: Icon(
+              Icons.search,
+              color: wheretoDark,
+            ),
+            hintText: "Search",
+            hintStyle: TextStyle(
+                color: wheretoDark,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Gilroy-ExtraBold'),
+          ),
+          onTap: () {},
+        ));
   }
 
-  Widget textbarSearch(){
-   return FutureBuilder(
-     future: CoordinatesConverter().convert(address),
-     builder: (context , snaps){
-      if(snaps.data == null){
-        return Container();
-      }else{
-        return Container(
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                color:Colors.white,
-                                // Colors.white.withOpacity(0.80),
-                                borderRadius: BorderRadius.circular(30.0),
-                                 boxShadow: [
-                             BoxShadow(
-                               color: Colors.grey[200],
-                               spreadRadius: 3.3,
-                               blurRadius: 3.3
-                             ),
-                           ],
-                          // border: Border.all(
-                          //   width: 1,
-                          //   color: wheretoDark,
-                          // ),
-                              ),
-                              alignment: Alignment.centerLeft,
-                              child: TextField(
-                                readOnly: true,
-                                showCursor: false,
-                                style: TextStyle(
-                                    color: wheretoDark,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Gilroy-light'),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: const EdgeInsets.only(
-                                    top: 15.0,
-                                  ),
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    color: wheretoDark,
-                                  ),
-                                  hintText: "Search",
-                                  hintStyle: TextStyle(
-                                    color: wheretoDark,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Gilroy-ExtraBold'),
-                                ),
-                                onTap: () {
-                                  if(snaps.data.toString().contains("Tagum")){
-                                  //   Navigator.push(context,
-                                  //     MaterialPageRoute(builder: (context) {
-                                  //   return SearchResto();
-                                  // }));
-                                  showSearch(context: context, delegate: CustomSearch());
-                                  }else{
-                                  AwesomeDialog(
-                                  context: context,
-                                  headerAnimationLoop: false,
-                                  animType: AnimType.SCALE,
-                                  dialogType: DialogType.INFO,
-                                  title: "Location Not Available",
-                                  desc: "This app is only available in Tagum City for the meantime",
-                                  btnOkText: "Comeback Later",
-                                  btnOkColor: Color(0xFF0C375B),
-                                  btnOkOnPress: () async {
-                                  Navigator.pop(context);
-                                  }).show();
-                                  }
-                                  
-                                },
-                              )
-                );
-      }
-   });
-  }
-
-  Widget logoutIcon(){
+  Widget logoutIcon() {
     return GestureDetector(
       onTap: () => UserDialog_Help.exit(context),
       child: Container(
         height: 50,
-      width: 50,
+        width: 50,
         decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.circle,
-           boxShadow: [
-                             BoxShadow(
-                               color: Colors.grey[200],
-                               spreadRadius: 3.3,
-                               blurRadius: 3.3
-                             ),
-                           ],
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey[200], spreadRadius: 3.3, blurRadius: 3.3),
+          ],
         ),
-        child:  Icon(
-                      Icons.exit_to_app,
-                      color: Color(0xFF0C375B),
-                      size: 30,
-                    ),
+        child: Icon(
+          Icons.exit_to_app,
+          color: Color(0xFF0C375B),
+          size: 30,
+        ),
       ),
     );
-
-
   }
 
-  Widget cirlceLoaction(){
-
+  Widget cirlceLoaction() {
     return Container(
       height: 50,
       width: 50,
       decoration: BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle,
-         boxShadow: [
-                             BoxShadow(
-                               color: Colors.grey[200],
-                               spreadRadius: 3.3,
-                               blurRadius: 3.3
-                             ),
-                           ],
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey[200], spreadRadius: 3.3, blurRadius: 3.3),
+        ],
       ),
       child: IconButton(
-        icon: 
-        Icon(
-          Icons.location_on
-          ,size: 30,
-          ), onPressed: ()async{
-
+          icon: Icon(
+            Icons.location_on,
+            size: 30,
+          ),
+          onPressed: () async {
             // showModalBottomSheet(context: context, barrierColor: Colors.white.withOpacity(0.05),backgroundColor: Colors.transparent, builder: (context){
             //   return Padding(padding: EdgeInsets.all(30),
             //           child: Container(
-                       
+
             //           decoration: BoxDecoration(
-                        
+
             //             color: Colors.white,
             //             borderRadius: BorderRadius.only(
             //               topLeft: Radius.circular(40.0),
@@ -595,14 +552,14 @@ String categ ="0";
             //                       }
             //                     },
             //                   ),
-                                                   
+
             //                ),),
-                             
+
             //                   ListTile(
-            //                   leading: IconButton(icon: Icon(Icons.add, size: 30, color: Colors.black,), 
+            //                   leading: IconButton(icon: Icon(Icons.add, size: 30, color: Colors.black,),
             //                   onPressed: (){
             //                      Navigator.push(context, MaterialPageRoute(builder: (context) => MapAdress()));
-                               
+
             //                   }),
             //                   subtitle:  Text("New Address", style: TextStyle(
             //                     color: Colors.black,
@@ -610,232 +567,223 @@ String categ ="0";
             //                     fontWeight: FontWeight.bold,
             //                     fontSize: 20,
             //                     ),),
-            //                 ), 
-                            
-                                
-                           
+            //                 ),
+
             //               ],
             //             ),
-                      
-            //           ) 
-                    
+
+            //           )
+
             //         );
             // });
-          
           }),
     );
-
   }
 
-  Widget deliveryAdress(){
-
+  Widget deliveryAdress() {
     return Padding(
-      padding: const EdgeInsets.only(left: 10,right: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10),
       child: Container(
-              width: MediaQuery.of(context).size.width*0.8,
-              child: GestureDetector(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                    Container(
-                       height: 20,
-        decoration: BoxDecoration(
-          // border: Border.all(
-          //   width: 1,
-          //   color: wheretoDark
-          // ),
-        ),
-                        child: Text(
-                  "Delivery Address : ",
-                  style: TextStyle(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: GestureDetector(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 20,
+                    decoration: BoxDecoration(
+                        // border: Border.all(
+                        //   width: 1,
+                        //   color: wheretoDark
+                        // ),
+                        ),
+                    child: Text(
+                      "Delivery Address : ",
+                      style: TextStyle(
                           color: wheretoDark,
                           fontSize: 16,
                           fontFamily: "Gilroy-ExtraBold",
                           fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    
-                    SizedBox(height: 10,),
-                    Text(address ?? "" , style: TextStyle(
-                  color:wheretoDark,
-                  fontSize: 10,
-                  fontFamily: "Gilroy-light",
-                ),),
-                    ],
+                    ),
                   ),
-                onTap: (){
-                  setState(() {
-                    isLoc=false;
-                  });
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
-                  
-                }
-              )
-            ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    address ?? "",
+                    style: TextStyle(
+                      color: wheretoDark,
+                      fontSize: 10,
+                      fontFamily: "Gilroy-light",
+                    ),
+                  ),
+                ],
+              ),
+              onTap: () {
+                setState(() {
+                  isLoc = false;
+                });
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
+              })),
     );
-    
   }
 
-  Widget _load(){
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-                  height: 25.0,
-                  width: 25.0,
-                  child:  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
-                    strokeWidth: 4.0,
+  Widget _load() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            height: 25.0,
+            width: 25.0,
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+              strokeWidth: 4.0,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _error(String error) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[Text("Come Back Later.")],
+      ),
+    );
+  }
+
+  Widget _views(NewRestaurantResponse newFeatured) {
+    List<NeWRestaurant> nf = newFeatured.feature;
+    if (nf.length == 0) {
+      return Container(
+        child: Text(
+          'Feature Fast Food.',
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+              fontSize: 16.0,
+              fontWeight: FontWeight.normal),
+        ),
+      );
+    } else {
+      return SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 210.0,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: nf.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: <Widget>[
+                  NewRestaurantBox(
+                    image: nf[index].imagePath,
+                    restaurantName: nf[index].restaurantName,
+                    address: nf[index].latitude + "," + nf[index].longitude,
+                    onTap: () async {
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (con) => SimpleAppLoader());
+
+                      //  ProgressDialog featuredRestaurant = ProgressDialog(context);
+                      //     featuredRestaurant.style(
+                      //       message: "Loading Restaurant Please Wait..",
+                      //       borderRadius: 10.0,
+                      //       backgroundColor: Colors.white,
+                      //       progressWidget: CircularProgressIndicator(),
+                      //       elevation: 10.0,
+                      //       insetAnimCurve: Curves.fastLinearToSlowEaseIn,
+                      //       progressTextStyle: TextStyle(
+                      //           color: Colors.black,
+                      //           fontSize: 15.0,
+                      //           fontWeight: FontWeight.w300,
+                      //           fontFamily: "Gilroy-light"
+                      //       )
+                      //     );
+                      //     featuredRestaurant =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
+                      //     featuredRestaurant.show();
+
+                      SharedPreferences local =
+                          await SharedPreferences.getInstance();
+                      var userjson = local.getString('user');
+                      var user = json.decode(userjson);
+                      var restaurant;
+                      var status;
+                      var restoLat;
+                      var restoLng;
+                      var insideResto = nf[index].restaurantName;
+                      var insideLat = nf[index].latitude;
+                      var insideLng = nf[index].longitude;
+                      var isRead = false;
+                      Map<String, dynamic> temp;
+                      List<dynamic> converted = [];
+                      final response = await ApiCall()
+                          .getData('/viewUserOrders/${user['id']}');
+                      final List<ViewUserOrder> transaction =
+                          viewUserOrderFromJson(response.body);
+                      transaction.forEach((element) {
+                        restaurant = element.restaurantName;
+                        status = element.status;
+                        restoLat = element.restoLatitude;
+                        restoLng = element.restoLongitude;
+                        temp = {
+                          "restaurant": restaurant,
+                          "status": status,
+                          "restolatitude": restoLat,
+                          "restoLongitude": restoLng,
+                        };
+                        converted.add(temp);
+                      });
+                      for (var i = 0; i < converted.length; i++) {
+                        if (insideResto == converted[i]['restaurant'] &&
+                            insideLat == converted[i]['restolatitude'] &&
+                            insideLng == converted[i]['restoLongitude'] &&
+                            converted[i]['status'] < 4) {
+                          isRead = true;
+                          break;
+                        }
+                      }
+                      if (isRead) {
+                        // await featured.hide();
+                        UserDialog_Help.restaurantDialog(context);
+                      } else {
+                        // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
+                        //   print(
+                        //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
+                        //   showDial(context,
+                        //       "Sorry The Restaurant is close at the Moment Please Come Back");
+                        // } else {
+                        //   if (int.parse(formatNow.split(":")[0]) >=
+                        //       int.parse(formatOpen.split(":")[0])) {
+
+                        // await featured.hide();
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => ListStactic(
+                                      restauID: nf[index].id.toString(),
+                                      nameRestau:
+                                          nf[index].restaurantName.toString(),
+                                      baranggay:
+                                          nf[index].barangayId.toString(),
+                                      lat: double.parse(nf[index].latitude),
+                                      lng: double.parse(nf[index].longitude),
+                                      categID: categ,
+                                    )));
+                      }
+                    },
                   ),
-                ),
-          ],
-
-
+                ],
+              );
+            },
+          ),
         ),
       );
     }
- Widget _error(String error){
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Come Back Later.")
-              ],
-            ),
-          );
-}
-Widget _views(NewRestaurantResponse newFeatured){
-        List<NeWRestaurant> nf = newFeatured.feature;
-        if(nf.length == 0 ){
-          return Container(
-            child: Text('Feature Fast Food.',
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'OpenSans',
-              fontSize:  16.0,
-              fontWeight: FontWeight.normal
-            ),),
-          );
-        }else{
-          return SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 210.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: nf.length,
-                itemBuilder: (context,index){
-                 
-                   return Column(
-                     children: <Widget>[
-
-                      NewRestaurantBox(
-                        image: nf[index].imagePath,
-                         restaurantName:nf[index].restaurantName ,
-                         address:nf[index].latitude+","+nf[index].longitude, 
-                         onTap: () async{
-
-                          showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (con)=>SimpleAppLoader());
-
-                          //  ProgressDialog featuredRestaurant = ProgressDialog(context);
-                          //     featuredRestaurant.style(
-                          //       message: "Loading Restaurant Please Wait..",
-                          //       borderRadius: 10.0,
-                          //       backgroundColor: Colors.white,
-                          //       progressWidget: CircularProgressIndicator(),
-                          //       elevation: 10.0,
-                          //       insetAnimCurve: Curves.fastLinearToSlowEaseIn,
-                          //       progressTextStyle: TextStyle(
-                          //           color: Colors.black,
-                          //           fontSize: 15.0,
-                          //           fontWeight: FontWeight.w300,
-                          //           fontFamily: "Gilroy-light"
-                          //       )
-                          //     );
-                          //     featuredRestaurant =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
-                          //     featuredRestaurant.show();
-                          
-                                SharedPreferences local =
-                                await SharedPreferences.getInstance();
-                                var userjson = local.getString('user');
-                                var user = json.decode(userjson);
-                                var restaurant;
-                                var status;
-                                var address;
-                                var insideResto =nf[index].restaurantName;
-                                var insideAddress =nf[index].latitude+","+nf[index].longitude;
-                                var isRead = false;
-                                Map<String, dynamic> temp;
-                                List<dynamic> converted = [];
-                                final response = await ApiCall().getData('/viewUserOrders/${user['id']}');
-                                final List<ViewUserOrder> transaction =viewUserOrderFromJson(response.body);
-                                transaction.forEach((element) {
-                                  restaurant = element.restaurantName;
-                                  status = element.status;
-                                  address =element.address;
-                                  temp = {
-                                    "restaurant": restaurant,
-                                    "status": status,
-                                    "address":address,
-                                  };
-                                  converted.add(temp);
-                                });
-                                for (var i = 0; i < converted.length; i++) {
-                                  if (insideResto ==converted[i]['restaurant'] &&insideAddress==converted[i]['address'] &&converted[i]['status'] < 4) {
-                                    isRead = true;
-                                    break;
-                                  }
-                                }
-                                if (isRead) {
-                                //  await featuredRestaurant.hide();
-                                UserDialog_Help.restaurantDialog(context);
-                                } else {
-                                  
-                                  // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
-                                  //   print(
-                                  //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
-                                  //   showDial(context,
-                                  //       "Sorry The Restaurant is close at the Moment Please Come Back");
-                                  // } else {
-                                  //   if (int.parse(formatNow.split(":")[0]) >=
-                                  //       int.parse(formatOpen.split(":")[0])) {
-                                    var addr =await ID().getPosition();
-                                    var converterUser =await CoordinatesConverter().addressByCity(addr);
-                                    var converterResto =await CoordinatesConverter().addressByCity(nf[index].latitude+","+nf[index].longitude);
-                                   
-                                  
-                                    
-                                    // await featuredRestaurant.hide();
-                                    Navigator.push(
-                                          context,
-                                          new MaterialPageRoute(
-                                              builder: (context) => ListStactic(
-                                                restauID:nf[index].id.toString(),
-                                                nameRestau: nf[index].restaurantName.toString(),
-                                                baranggay: nf[index].barangayId.toString(),
-                                                address:nf[index].latitude+","+nf[index].longitude,
-                                                categID: categ,  
-                                                  )));
-                                    
-                                    
-                                }
-                           
-                          
-                         },
-                        ),
-                        
-                        
-                     ],
-                   );
-                },
-                ),
-            ),
-          );
-        }
-    }
+  }
 }

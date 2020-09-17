@@ -150,16 +150,10 @@ class _MyOrderState extends State<MyOrder> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          FutureBuilder(
-                            future: CoordinatesConverter().convert(snapshot.data[index].address.toString()),
-                            builder: (context, datasnapshot){
-                              if(datasnapshot.data==null){
-                                return Container();
-                              }else{
-                                return XviewTransac(
+                          XviewTransac(
                             image: "asset/img/doneprocess.png",
                             deliveryAddress: "",
-                            address: datasnapshot.data.toString(),
+                            address: snapshot.data.toString(),
                             restaurantName: snapshot.data[index].restaurantName,
                             status: sunkist == "0"
                                 ? snapshot.data[index].status.toString()
@@ -278,9 +272,7 @@ class _MyOrderState extends State<MyOrder> {
                               //   return StepperStatus(status: sunkist);
                               // }));
                             },
-                          );
-                              }
-                            })
+                          )
                         ],
                       ),
                     );

@@ -62,16 +62,16 @@ class _FoodDisplayState extends State<FoodDisplay> {
                               bucket: _bucket,
                               key: key,
                               child: StaticFoodDisplay(
-                                pricetag: "P ${snapshot.data[index].price.toString()}",
+                                pricetag: "P ${snapshot.data[index].totalPrice.toString()}",
                                 restaurantname:
                                     snapshot.data[index].restaurantName,
                                 foodname: snapshot.data[index].menuName,
                                 description: snapshot.data[index].categoryName,
                                 image: snapshot.data[index].imagePath,
                                 onTap: () async {
-                                  var coordinates =await CoordinatesConverter().convert(snapshot.data[index].address);
                                   
-                                    showDialog(
+                                  
+                            showDialog(
                             barrierDismissible: false,
                             context: context,
                             builder: (con)=>SimpleAppLoader());
@@ -103,35 +103,32 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                   var user = json.decode(userjson);
                                   var restaurant;
                                   var status;
-                                  var address;
+                                  var restoLat;
+                                  var restoLng;
                                   var insideResto =
                                       snapshot.data[index].restaurantName;
-                                  var insideAddress =
-                                      snapshot.data[index].address;
+                                  var insideLat =snapshot.data[index].latitude;
+                                  var insideLng =snapshot.data[index].longitude;
                                   var isRead = false;
                                   Map<String, dynamic> temp;
                                   List<dynamic> converted = [];
-                                  final response = await ApiCall()
-                                      .getData('/viewUserOrders/${user['id']}');
-                                  final List<ViewUserOrder> transaction =
-                                      viewUserOrderFromJson(response.body);
+                                  final response = await ApiCall().getData('/viewUserOrders/${user['id']}');
+                                  final List<ViewUserOrder> transaction =viewUserOrderFromJson(response.body);
                                   transaction.forEach((element) {
                                     restaurant = element.restaurantName;
                                     status = element.status;
-                                    address = element.address;
+                                    restoLat = element.restoLatitude;
+                                    restoLng =element.restoLongitude;
                                     temp = {
                                       "restaurant": restaurant,
                                       "status": status,
-                                      "address": address,
+                                      "restolatitude":restoLat ,
+                                      "restoLongitude":restoLng,
                                     };
                                     converted.add(temp);
                                   });
                                   for (var i = 0; i < converted.length; i++) {
-                                    if (insideResto ==
-                                            converted[i]['restaurant'] &&
-                                        insideAddress ==
-                                            converted[i]['address'] &&
-                                        converted[i]['status'] < 4) {
+                                    if (insideResto ==converted[i]['restaurant'] &&insideLat ==converted[i]['restolatitude'] && insideLng ==converted[i]['restoLongitude'] && converted[i]['status'] < 4) {
                                       isRead = true;
                                       break;
                                     }
@@ -149,9 +146,8 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                     // } else {
                                     //   if (int.parse(formatNow.split(":")[0]) >=
                                     //       int.parse(formatOpen.split(":")[0])) {
-                                    var addr =await ID().getPosition();
-                                    var converterUser =await CoordinatesConverter().addressByCity(addr);
-                                    var converterResto =await CoordinatesConverter().addressByCity(snapshot.data[index].address);
+                                   
+                                    
                                   
                                       // await featured.hide();
                                       Navigator.push(
@@ -169,7 +165,8 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                                     baranggay: snapshot
                                                         .data[index]
                                                         .barangayName,
-                                                    address: snapshot.data[index].address,
+                                                    lat: double.parse(snapshot.data[index].latitude),
+                                                    lng: double.parse(snapshot.data[index].longitude),
                                                     categID: snapshot
                                                         .data[index].categoryId
                                                         .toString(),

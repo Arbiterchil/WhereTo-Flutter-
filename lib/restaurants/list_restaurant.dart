@@ -27,9 +27,10 @@ class ListStactic extends StatefulWidget {
   final String nameRestau;
   final String restauID;
   final String baranggay;
-  final String address;
+  final double lat;
+  final double lng;
   final String categID;
-  const ListStactic({Key key, this.nameRestau, this.restauID, this.baranggay, this.address, this.categID})
+  const ListStactic({Key key, this.nameRestau, this.restauID, this.baranggay, this.lat, this.lng, this.categID})
       : super(key: key);
   @override
   _ListStacticState createState() => _ListStacticState();
@@ -87,7 +88,7 @@ class _ListStacticState extends State<ListStactic>
                     fontFamily: 'Gilroy-light'),
               ),
               FutureBuilder(
-                future: CoordinatesConverter().convert(widget.address),
+                future: CoordinatesConverter().convert(widget.lat, widget.lng),
                 builder: (context, snapshot){
                 if(snapshot.data==null){
                   return Container();
@@ -125,7 +126,8 @@ class _ListStacticState extends State<ListStactic>
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => MyCart(
-                                                restaurantAddress: widget.address,
+                                                restoLat: widget.lat,
+                                                restoLng: widget.lng,
                                                 restauID: widget.restauID.toString(),
                                                 nameRestau: widget.nameRestau,
                                               )));

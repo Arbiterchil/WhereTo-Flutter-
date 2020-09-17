@@ -94,62 +94,76 @@ class CustomSearch extends SearchDelegate {
                                 var user = json.decode(userjson);
                                 var restaurant;
                                 var status;
-                                var address;
-                                var insideResto =snapshot.data[index].restaurantName;
-                                var insideAddress =snapshot.data[index].address;
-                                var isRead = false;
-                                Map<String, dynamic> temp;
-                                List<dynamic> converted = [];
-                                final response = await ApiCall().getData('/viewUserOrders/${user['id']}');
-                                final List<ViewUserOrder> transaction =viewUserOrderFromJson(response.body);
-                                transaction.forEach((element) {
-                                  restaurant = element.restaurantName;
-                                  status = element.status;
-                                  address =element.address;
-                                  temp = {
-                                    "restaurant": restaurant,
-                                    "status": status,
-                                    "address":address,
-                                  };
-                                  converted.add(temp);
-                                });
-                                for (var i = 0; i < converted.length; i++) {
-                                  if (insideResto ==converted[i]['restaurant'] &&insideAddress==converted[i]['address'] &&converted[i]['status'] < 4) {
-                                    isRead = true;
-                                    break;
+                                var restoLat;
+                                var restoLng;
+                                  var insideResto =
+                                      snapshot.data[index].restaurantName;
+                                  var insideLat =snapshot.data[index].latitude;
+                                  var insideLng =snapshot.data[index].longitude;
+                                  var isRead = false;
+                                  Map<String, dynamic> temp;
+                                  List<dynamic> converted = [];
+                                  final response = await ApiCall().getData('/viewUserOrders/${user['id']}');
+                                  final List<ViewUserOrder> transaction =viewUserOrderFromJson(response.body);
+                                  transaction.forEach((element) {
+                                    restaurant = element.restaurantName;
+                                    status = element.status;
+                                    restoLat = element.restoLatitude;
+                                    restoLng =element.restoLongitude;
+                                    temp = {
+                                      "restaurant": restaurant,
+                                      "status": status,
+                                      "restolatitude":restoLat ,
+                                      "restoLongitude":restoLng,
+                                    };
+                                    converted.add(temp);
+                                  });
+                                  for (var i = 0; i < converted.length; i++) {
+                                    if (insideResto ==converted[i]['restaurant'] &&insideLat ==converted[i]['restolatitude'] && insideLng ==converted[i]['restoLongitude'] && converted[i]['status'] < 4) {
+                                      isRead = true;
+                                      break;
+                                    }
                                   }
-                                }
-                                if (isRead) {
-                                  await pr.hide();
-                                UserDialog_Help.restaurantDialog(context);
-                                } else {
-                                  await pr.hide();
-                                  // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
-                                  //   print(
-                                  //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
-                                  //   showDial(context,
-                                  //       "Sorry The Restaurant is close at the Moment Please Come Back");
-                                  // } else {
-                                  //   if (int.parse(formatNow.split(":")[0]) >=
-                                  //       int.parse(formatOpen.split(":")[0])) {
+                                  if (isRead) {
+                                    // await featured.hide();
+                                    UserDialog_Help.restaurantDialog(context);
+                                  } else {
                                     
-                                      Navigator.pushReplacement(
+                                    // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
+                                    //   print(
+                                    //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
+                                    //   showDial(context,
+                                    //       "Sorry The Restaurant is close at the Moment Please Come Back");
+                                    // } else {
+                                    //   if (int.parse(formatNow.split(":")[0]) >=
+                                    //       int.parse(formatOpen.split(":")[0])) {
+                                   
+                                    
+                                  
+                                      // await featured.hide();
+                                      Navigator.push(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) => ListStactic(
                                                     restauID: snapshot
-                                                        .data[index].restaurantId
+                                                        .data[index]
+                                                        .restaurantId
                                                         .toString(),
                                                     nameRestau: snapshot
                                                         .data[index]
                                                         .restaurantName
                                                         .toString(),
-                                                        baranggay: snapshot.data[index].barangayName,
-                                                     address:snapshot.data[index].address.toString(),
-                                                     categID: snapshot.data[index].categoryId.toString(),  
+                                                    baranggay: snapshot
+                                                        .data[index]
+                                                        .barangayName,
+                                                    lat: double.parse(snapshot.data[index].latitude),
+                                                    lng: double.parse(snapshot.data[index].longitude),
+                                                    categID: snapshot
+                                                        .data[index].categoryId
+                                                        .toString(),
                                                   )));
-                                   
-                                }
+                                    
+                                  }
                         },
                         child: Container(
                           decoration: BoxDecoration(

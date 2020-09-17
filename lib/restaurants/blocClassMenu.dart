@@ -13,55 +13,59 @@ class IsFeatured {
         this.menuId,
         this.restaurantId,
         this.restaurantName,
-        this.address,
+        this.latitude,
+        this.longitude,
         this.barangayName,
         this.menuName,
         this.categoryId,
         this.isFeatured,
-        this.price,
         this.categoryName,
         this.imagePath,
+        this.totalPrice,
     });
 
     final int menuId;
     final int restaurantId;
     final String restaurantName;
-    final String address;
+    final String latitude;
+    final String longitude;
     final String barangayName;
     final String menuName;
     final int categoryId;
     final int isFeatured;
-    final int price;
     final String categoryName;
     final String imagePath;
+    final double totalPrice;
 
     factory IsFeatured.fromJson(Map<String, dynamic> json) => IsFeatured(
         menuId: json["menuId"],
         restaurantId: json["restaurantId"],
         restaurantName: json["restaurantName"],
-        address: json["address"],
-        barangayName: json["barangayName"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+        barangayName:json["barangayName"],
         menuName: json["menuName"],
         categoryId: json["categoryId"],
         isFeatured: json["isFeatured"],
-        price: json["price"],
         categoryName: json["categoryName"],
         imagePath: json["imagePath"],
+        totalPrice: json["totalPrice"].toDouble(),
     );
 
-    // Map<String, dynamic> toJson() => {
-    //     "menuId": menuId,
-    //     "restaurantId": restaurantId,
-    //     "restaurantName": restaurantName,
-    //     "address": address,
-    //     "barangayName": barangayName,
-    //     "menuName": menuName,
-    //     "categoryId": categoryId,
-    //     "isFeatured": isFeatured,
-    //     "price": price,
-    //     "categoryName": categoryName,
-    //     "imagePath": imagePath,
-    // };
+    Map<String, dynamic> toJson() => {
+        "menuId": menuId,
+        "restaurantId": restaurantId,
+        "restaurantName": restaurantName,
+        "latitude": latitude,
+        "longitude": longitude,
+        "barangayName": barangayName,
+        "menuName": menuName,
+        "categoryId": categoryId,
+        "isFeatured": isFeatured,
+        "categoryName": categoryName,
+        "imagePath": imagePath,
+        "totalPrice": totalPrice,
+    };
 }
 
 

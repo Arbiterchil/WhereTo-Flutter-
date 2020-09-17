@@ -13,49 +13,59 @@ class FilterRestaurant {
         this.menuId,
         this.restaurantId,
         this.restaurantName,
-        this.address,
+        this.latitude,
+        this.longitude,
         this.barangayName,
         this.menuName,
         this.categoryId,
         this.isFeatured,
         this.categoryName,
         this.imagePath,
+        this.totalPrice,
     });
 
     final int menuId;
     final int restaurantId;
     final String restaurantName;
-    final String address;
+    final String latitude;
+    final String longitude;
     final String barangayName;
     final String menuName;
     final int categoryId;
     final int isFeatured;
     final String categoryName;
     final String imagePath;
+    final double totalPrice;
 
     factory FilterRestaurant.fromJson(Map<String, dynamic> json) => FilterRestaurant(
         menuId: json["menuId"],
         restaurantId: json["restaurantId"],
         restaurantName: json["restaurantName"],
-        address: json["address"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
         barangayName: json["barangayName"],
         menuName: json["menuName"],
         categoryId: json["categoryId"],
         isFeatured: json["isFeatured"],
         categoryName: json["categoryName"],
         imagePath: json["imagePath"],
+        totalPrice: json["totalPrice"].toDouble(),
     );
 
     Map<String, dynamic> toJson() => {
         "menuId": menuId,
         "restaurantId": restaurantId,
         "restaurantName": restaurantName,
-        "address": address,
+        "latitude": latitude,
+        "longitude": longitude,
         "barangayName": barangayName,
         "menuName": menuName,
         "categoryId": categoryId,
         "isFeatured": isFeatured,
         "categoryName": categoryName,
         "imagePath": imagePath,
+        "totalPrice": totalPrice,
     };
 }
+
+

@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 class MyCart extends StatefulWidget {
   final String nameRestau;
   final String restauID;
-  final String restaurantAddress;
-  MyCart({this.nameRestau, this.restauID, this.restaurantAddress});
+  final double restoLat;
+  final double restoLng;
+  MyCart({this.nameRestau, this.restauID, this.restoLat, this.restoLng});
   @override
   _MyCartState createState() => _MyCartState();
 }
@@ -19,7 +20,8 @@ class _MyCartState extends State<MyCart> {
       onWillPop: ()async=> false,
           child: Scaffold(
         body: TransactionList(
-            restaurantAddress: widget.restaurantAddress,
+            restoLat: widget.restoLat,
+            restoLng: widget.restoLng,
             restauID: widget.restauID,
       ),
       ),
