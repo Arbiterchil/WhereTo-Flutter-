@@ -32,7 +32,8 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
     var user = json.decode(userJson);
     setState(() {
       userData = user;
-      addre = user['address'];
+      addre = user['latitude']+","+user['longitude'];
+      print(addre);
     });
     if(userData['imagePath'] != null){
 
