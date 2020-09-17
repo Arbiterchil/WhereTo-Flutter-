@@ -163,13 +163,13 @@ _onsSignal() async{
   void _getUserInfo() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
-    double getThis = localStorage.getDouble('latitude');
-    double thisOther = localStorage.getDouble('longitude');
+    // double getThis = localStorage.getDouble('latitude');
+    // double thisOther = localStorage.getDouble('longitude');
     var user = json.decode(userJson);
     setState(() {
       userData = user;
-     lats = getThis;
-      longs= thisOther;
+    //  lats = getThis;
+    //   longs= thisOther;
     });
   //     var response = await ApiCall().getCheckUser('/getUserVerification/${userData['id']}');
   //  var body = json.decode(response.body)['imagePath'];
@@ -356,23 +356,23 @@ _onsSignal() async{
                                                       ),
                                                  ), 
                                                     SizedBox(height: 40,),
-                                                    
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(left: 20,right: 20),
-                                                      child: FutureBuilder(
-                                                     future: CoordinatesConverter().convert(lats,longs),
-                                                     builder: (context,snaps){
-                                                      if(snaps.data ==null){
-                                                        return Container();
-                                                      }else{
-                                                         return    NCard(
-                                                        active: false,
-                                   icon: Icons.my_location,
-                                   label: snaps.data != null ? '${snaps.data}' :  'Fail get data.',
-                                                      );
-                                                      }
-                                                     }),
-                                                    ),
+
+                                  //                   Padding(
+                                  //                     padding: const EdgeInsets.only(left: 20,right: 20),
+                                  //                     child: FutureBuilder(
+                                  //                    future: CoordinatesConverter().convert(lats,longs),
+                                  //                    builder: (context,snaps){
+                                  //                     if(snaps.data ==null){
+                                  //                       return Container();
+                                  //                     }else{
+                                  //                        return    NCard(
+                                  //                       active: false,
+                                  //  icon: Icons.my_location,
+                                  //  label: snaps.data != null ? '${snaps.data}' :  'Fail get data.',
+                                  //                     );
+                                  //                     }
+                                  //                    }),
+                                  //                   ),
                       SizedBox(height: 40,),
                       GestureDetector(
                             onTap: (){

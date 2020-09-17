@@ -7,10 +7,11 @@ class NewRestaurantBox extends StatefulWidget {
 
   final Function onTap;
   final String restaurantName;
-  final String address;
+  final double address;
+  final double address1;
   final String image;
 
-  const NewRestaurantBox({Key key, this.onTap, this.restaurantName, this.address, this.image}) : super(key: key);
+  const NewRestaurantBox({Key key, this.onTap, this.restaurantName, this.address, this.address1, this.image}) : super(key: key);
 
   @override
   _NewRestaurantBoxState createState() => _NewRestaurantBoxState();
@@ -92,25 +93,36 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
                         ),
                         SizedBox(height: 5.0,),
                         
-                        Flexible(
-                          child: Container(
-                            child: Text(widget.address,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color:Colors.white,
-                                    fontWeight: FontWeight.normal,
-                                        fontSize: 8.0,
-                                        fontFamily: 'Gilroy-light' 
-                            ),),
-                          ),
-                        )
+                        // Flexible(
+                        //   child: Container(
+                        //     child: Text(widget.address,
+                        //     overflow: TextOverflow.ellipsis,
+                        //     style: TextStyle(
+                        //         color:Colors.white,
+                        //             fontWeight: FontWeight.normal,
+                        //                 fontSize: 8.0,
+                        //                 fontFamily: 'Gilroy-light' 
+                        //     ),),
+                        //   ),
+                        // )
                         // FutureBuilder(
-                        //   future: CoordinatesConverter().convert(widget.address),
+                        //   future: CoordinatesConverter().convert(widget.address,widget.address1),
                         //   builder: (cons,snaps){
                         //     if(snaps.data ==null){
                         //       return Container();
                         //     }else{
-                        //       return  F;
+                        //       return  Flexible(
+                        //   child: Container(
+                        //     child: Text(snaps.data,
+                        //     overflow: TextOverflow.ellipsis,
+                        //     style: TextStyle(
+                        //         color:Colors.white,
+                        //             fontWeight: FontWeight.normal,
+                        //                 fontSize: 8.0,
+                        //                 fontFamily: 'Gilroy-light' 
+                        //     ),),
+                        //   ),
+                        // );
                         //     }
                         // }),
                        

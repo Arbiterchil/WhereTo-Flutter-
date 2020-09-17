@@ -31,13 +31,13 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
   void _getUserInfo() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
-    double getThis = localStorage.getDouble('latitude');
-    double thisOther = localStorage.getDouble('longitude');
+    // double getThis = localStorage.getDouble('latitude');
+    // double thisOther = localStorage.getDouble('longitude');
     var user = json.decode(userJson);
     setState(() {
       userData = user;
-      lats = getThis;
-      longs= thisOther;
+      // lats = getThis;
+      // longs= thisOther;
     });
     if(userData['imagePath'] != null){
 
@@ -134,19 +134,19 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                                    icon: Icons.phone_android,
                                    label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
                                                       ),
-                                                   FutureBuilder(
-                                                     future: CoordinatesConverter().convert(lats,longs),
-                                                     builder: (context,snaps){
-                                                      if(snaps.data ==null){
-                                                        return Container();
-                                                      }else{
-                                                         return    NCard(
-                                                        active: false,
-                                   icon: Icons.my_location,
-                                   label: snaps.data != null ? '${snaps.data}' :  'Fail get data.',
-                                                      );
-                                                      }
-                                                     }),
+                                  //                  FutureBuilder(
+                                  //                    future: CoordinatesConverter().convert(lats,longs),
+                                  //                    builder: (context,snaps){
+                                  //                     if(snaps.data ==null){
+                                  //                       return Container();
+                                  //                     }else{
+                                  //                        return NCard(
+                                  //                       active: false,
+                                  //  icon: Icons.my_location,
+                                  //  label: snaps.data != null ? '${snaps.data}' :  'Fail get data.',
+                                  //                     );
+                                  //                     }
+                                  //                    }),
                               ],
                             ),
                           ),

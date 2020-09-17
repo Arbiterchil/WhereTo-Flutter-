@@ -577,19 +577,19 @@ var checkVal = localStorage.getBool('check');
                                                   ),
                                                   SizedBox(height: 10,),
 
-                                                   FutureBuilder(
-                                                     future: CoordinatesConverter().convert(widget.dellats,widget.dellongs),
-                                                    builder: (context,snaps){
-                                                      if(snaps.data == null){
-                                                        return Text("Data Error");
-                                                      }else{
-                                                        return  NCard(
-                                                    icon: Icons.money_off,
-                                                    label:snaps.data
-                                                  );
-                                                      }
-                                                    },
-                                                   ),
+                                                  //  FutureBuilder(
+                                                  //    future: CoordinatesConverter().convert(widget.dellats,widget.dellongs),
+                                                  //   builder: (context,snaps){
+                                                  //     if(snaps.data == null){
+                                                  //       return Text("Data Error");
+                                                  //     }else{
+                                                  //       return  NCard(
+                                                  //   icon: Icons.money_off,
+                                                  //   label:snaps.data
+                                                  // );
+                                                  //     }
+                                                  //   },
+                                                  //  ),
                                                   SizedBox(height: 10,),
                                                     
                                                       ],
