@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:WhereTo/Admin/admin_addmenu.dart';
@@ -46,8 +47,8 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
    File _idPickerImage;
    String stringPath;
    var thimagelink; 
-   String lats ="";
-   String longs = "";
+   double lats ;
+   double longs;
    String toShowAddress = "";
 
     var nani;
@@ -382,7 +383,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                 //     SizedBox(height: 10.0,),
 
                 FutureBuilder(
-                  future: CoordinatesConverter().convert(toShowAddress),
+                  future: CoordinatesConverter().convert(lats,longs),
                   builder: (con ,snaps){
                     if(snaps.data == null){
                      return  NCard(
@@ -1318,15 +1319,15 @@ void viewMapo(){
                       searchForInitialValue: true,
                       usePlaceDetailSearch: true,
                       onPlacePicked: (result) async {
-                        String lat = result.geometry.location.lat.toString();
-                        String lng = result.geometry.location.lng.toString();
+                        double lat = result.geometry.location.lat;
+                        double lng = result.geometry.location.lng;
                         print("the Bilat is $lat and Oten is $lng");
                         setState(() {
-                          toShowAddress = "$lat,$lng";
+                          // toShowAddress = "$lat,$lng";
                         lats = lat;
                         longs = lng;
                         });
-                        print(lats+"-"+longs);
+                        // print(lats+"-"+longs);
                         Navigator.pop(context);
                         }
                     ),

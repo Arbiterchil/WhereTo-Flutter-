@@ -27,8 +27,12 @@ class Riderprevious extends StatefulWidget {
   final String transacIDs;
   final String user_coor;
   final String contactNumber;
+  final double dellats;
+  final double dellongs;
+  final double reslats;
+  final double reslongs;
 
-  const Riderprevious({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor, this.contactNumber}) : super(key: key);
+  const Riderprevious({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor, this.contactNumber, this.dellats, this.dellongs, this.reslats, this.reslongs}) : super(key: key);
 
   @override
   _RiderpreviousState createState() => _RiderpreviousState();
@@ -601,7 +605,7 @@ var checkVal = localStorage.getBool('check');
                                                   SizedBox(height: 10,),
 
                                                    FutureBuilder(
-                                                     future: CoordinatesConverter().convert(widget.deliverTo),
+                                                     future: CoordinatesConverter().convert(widget.dellats,widget.dellongs),
                                                     builder: (context,snaps){
                                                       if(snaps.data == null){
                                                         return Text("Data Error");
@@ -729,7 +733,7 @@ var checkVal = localStorage.getBool('check');
                                ),
                                color: pureblue,
                                onPressed: (){
-                                 RiderRoute().getRoute(widget.deliverTo);
+                                 RiderRoute().getRoute(widget.dellats.toString()+","+widget.dellongs.toString());
                                },
                                child:Center(
                                  child: Text("Location",
@@ -750,7 +754,7 @@ var checkVal = localStorage.getBool('check');
                                ),
                                color: pureblue,
                                onPressed: (){
-                                 RiderRoute().getRoute(widget.user_coor);
+                                 RiderRoute().getRoute(widget.reslats.toString()+","+widget.reslongs.toString(),);
                                },
                                child:Center(
                                  child: Text("Restaurant",

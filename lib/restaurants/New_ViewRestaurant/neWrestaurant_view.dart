@@ -125,73 +125,73 @@ Widget _views(NewRestaurantResponse newFeatured){
                               featuredRestaurant =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
                    return Column(
                      children: <Widget>[
-                       NewRestaurantBox(
-                        image: nf[index].imagePath,
-                         restaurantName:nf[index].restaurantName ,
-                         address: nf[index].latitude+","+nf[index].longitude,
+                      //  NewRestaurantBox(
+                      //   image: nf[index].imagePath,
+                      //    restaurantName:nf[index].restaurantName ,
+                      //    address: nf[index].latitude,nf[index].longitude,
                          
-                         onTap: () async{
-                           featuredRestaurant.show();
-                                SharedPreferences local =
-                                await SharedPreferences.getInstance();
-                                var userjson = local.getString('user');
-                                var user = json.decode(userjson);
-                                var restaurant;
-                                var status;
-                                var address;
-                                var insideResto =nf[index].restaurantName;
-                                var insideAddress =nf[index].latitude+","+nf[index].longitude;
-                                var isRead = false;
-                                Map<String, dynamic> temp;
-                                List<dynamic> converted = [];
-                                final response = await ApiCall().getData('/viewUserOrders/${user['id']}');
-                                final List<ViewUserOrder> transaction =viewUserOrderFromJson(response.body);
-                                transaction.forEach((element) {
-                                  restaurant = element.restaurantName;
-                                  status = element.status;
-                                  address =element.address;
-                                  temp = {
-                                    "restaurant": restaurant,
-                                    "status": status,
-                                    "address":address,
-                                  };
-                                  converted.add(temp);
-                                });
-                                for (var i = 0; i < converted.length; i++) {
-                                  if (insideResto ==converted[i]['restaurant'] &&insideAddress==converted[i]['address'] &&converted[i]['status'] < 4) {
-                                    isRead = true;
-                                    break;
-                                  }
-                                }
-                                if (isRead) {
-                                 await featuredRestaurant.hide();
-                                UserDialog_Help.restaurantDialog(context);
-                                } else {
-                                  await featuredRestaurant.hide();
-                                  // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
-                                  //   print(
-                                  //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
-                                  //   showDial(context,
-                                  //       "Sorry The Restaurant is close at the Moment Please Come Back");
-                                  // } else {
-                                  //   if (int.parse(formatNow.split(":")[0]) >=
-                                  //       int.parse(formatOpen.split(":")[0])) {
+                      //    onTap: () async{
+                      //      featuredRestaurant.show();
+                      //           SharedPreferences local =
+                      //           await SharedPreferences.getInstance();
+                      //           var userjson = local.getString('user');
+                      //           var user = json.decode(userjson);
+                      //           var restaurant;
+                      //           var status;
+                      //           var address;
+                      //           var insideResto =nf[index].restaurantName;
+                      //           var insideAddress =nf[index].latitude+","+nf[index].longitude;
+                      //           var isRead = false;
+                      //           Map<String, dynamic> temp;
+                      //           List<dynamic> converted = [];
+                      //           final response = await ApiCall().getData('/viewUserOrders/${user['id']}');
+                      //           final List<ViewUserOrder> transaction =viewUserOrderFromJson(response.body);
+                      //           transaction.forEach((element) {
+                      //             restaurant = element.restaurantName;
+                      //             status = element.status;
+                      //             address =element.address;
+                      //             temp = {
+                      //               "restaurant": restaurant,
+                      //               "status": status,
+                      //               "address":address,
+                      //             };
+                      //             converted.add(temp);
+                      //           });
+                      //           for (var i = 0; i < converted.length; i++) {
+                      //             if (insideResto ==converted[i]['restaurant'] &&insideAddress==converted[i]['address'] &&converted[i]['status'] < 4) {
+                      //               isRead = true;
+                      //               break;
+                      //             }
+                      //           }
+                      //           if (isRead) {
+                      //            await featuredRestaurant.hide();
+                      //           UserDialog_Help.restaurantDialog(context);
+                      //           } else {
+                      //             await featuredRestaurant.hide();
+                      //             // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
+                      //             //   print(
+                      //             //       "CLOSE current:${formatNow.split(":")[0]} restoTime:${formatClosing.split(":")[0]}");
+                      //             //   showDial(context,
+                      //             //       "Sorry The Restaurant is close at the Moment Please Come Back");
+                      //             // } else {
+                      //             //   if (int.parse(formatNow.split(":")[0]) >=
+                      //             //       int.parse(formatOpen.split(":")[0])) {
                                     
-                                      Navigator.push(
-                                          context,
-                                          new MaterialPageRoute(
-                                              builder: (context) => ListStactic(
-                                                restauID:nf[index].id.toString(),
-                                                nameRestau: nf[index].restaurantName.toString(),
-                                                baranggay: nf[index].barangayId.toString(),
-                                                address:nf[index].latitude+","+nf[index].longitude,
-                                                categID: categ,  
-                                                  )));
-                                }
+                      //                 Navigator.push(
+                      //                     context,
+                      //                     new MaterialPageRoute(
+                      //                         builder: (context) => ListStactic(
+                      //                           restauID:nf[index].id.toString(),
+                      //                           nameRestau: nf[index].restaurantName.toString(),
+                      //                           baranggay: nf[index].barangayId.toString(),
+                      //                           address:nf[index].latitude+","+nf[index].longitude,
+                      //                           categID: categ,  
+                      //                             )));
+                      //           }
                            
                           
-                         },
-                       ),
+                      //    },
+                      //  ),
                      ],
                    );
                 },

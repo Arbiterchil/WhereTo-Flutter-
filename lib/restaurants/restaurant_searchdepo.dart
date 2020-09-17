@@ -683,7 +683,7 @@ class _SearchDepoState extends State<SearchDepo> {
                   NewRestaurantBox(
                     image: nf[index].imagePath,
                     restaurantName: nf[index].restaurantName,
-                    address: nf[index].latitude + "," + nf[index].longitude,
+                    address: nf[index].latitude.toString() + "," + nf[index].longitude.toString(),
                     onTap: () async {
                       showDialog(
                           barrierDismissible: false,
@@ -771,8 +771,8 @@ class _SearchDepoState extends State<SearchDepo> {
                                           nf[index].restaurantName.toString(),
                                       baranggay:
                                           nf[index].barangayId.toString(),
-                                      lat: double.parse(nf[index].latitude),
-                                      lng: double.parse(nf[index].longitude),
+                                      lat: nf[index].latitude,
+                                      lng: nf[index].longitude,
                                       categID: categ,
                                     )));
                       }

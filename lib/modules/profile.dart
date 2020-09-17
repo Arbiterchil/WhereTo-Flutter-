@@ -38,7 +38,8 @@ class _Profile extends State<Profile> {
    bool  load = false;
   final formkey = GlobalKey<FormState>();
   TextEditingController ownconpass = TextEditingController();
-
+  double lats;
+  double longs;
   TextEditingController ownpass = TextEditingController();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
    TextEditingController search = new TextEditingController();
@@ -157,15 +158,18 @@ _onsSignal() async{
     ); 
     },);
 }
+ 
+ 
   void _getUserInfo() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var userJson = localStorage.getString('user');
-    String shitka = localStorage.getDouble('latitude').toString();
-    String nimalka = localStorage.getDouble('longitude').toString();
+    double getThis = localStorage.getDouble('latitude');
+    double thisOther = localStorage.getDouble('longitude');
     var user = json.decode(userJson);
     setState(() {
       userData = user;
-      addre = shitka+","+nimalka;
+     lats = getThis;
+      longs= thisOther;
     });
   //     var response = await ApiCall().getCheckUser('/getUserVerification/${userData['id']}');
   //  var body = json.decode(response.body)['imagePath'];
@@ -355,7 +359,7 @@ _onsSignal() async{
                                                     Padding(
                                                       padding: const EdgeInsets.only(left: 20,right: 20),
                                                       child: FutureBuilder(
-                                                     future: CoordinatesConverter().convert(addre),
+                                                     future: CoordinatesConverter().convert(lats,longs),
                                                      builder: (context,snaps){
                                                       if(snaps.data ==null){
                                                         return Container();

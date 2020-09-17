@@ -225,25 +225,43 @@ List idsComming = [];
             itemBuilder: (context,index){
               //  del = v[index].deliveryAddress;
               //  converting();
-             
-             
-
               return Column(
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Customgettransac( image: "asset/img/logo.png",
-                                transacId: v[index].id.toString(),
-                                name: v[index].name,
-                                address: v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString(),
-                                deliveryAddress:v[index].transLatitude+","+v[index].transLongitude,
-                                restaurantName: v[index].restaurantName,
-                                onTap: () async {
+                    // child: Customgettransac( image: "asset/img/logo.png",
+                    //             transacId: v[index].id.toString(),
+                    //             name: v[index].name,
+                    //             address: v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString(),
+                    //             deliveryAddress:v[index].transLatitude+","+v[index].transLongitude,
+                    //             restaurantName: v[index].restaurantName,
+                    //             onTap: () async {
 
-                                     Navigator.push(context, MaterialPageRoute(builder: (context){
+                    //                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    //                                     return ViewMenuOnTransac(
+                    //                                       getID:v[index].id.toString(),
+                    //                                       deliverTo:v[index].transLatitude+","+v[index].transLongitude,
+                    //                                       restaurantName: v[index].restaurantName,
+                    //                                       deviceID: v[index].deviceId,
+                    //                                       riderID: v[index].riderId.toString(),
+                    //                                       deliveryCharge: v[index].deliveryCharge.toString(),
+                    //                                       nametran:  v[index].name,
+                    //                                       contactNumber : v[index].contactNumber.toString(),
+                    //                                       playerId: v[index].deviceId,
+                    //                                       user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
+                    //                                       );
+                    //                                   }));
+                    //             },
+                    // ),
+                    child: GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context){
                                                         return ViewMenuOnTransac(
                                                           getID:v[index].id.toString(),
-                                                          deliverTo:v[index].transLatitude+","+v[index].transLongitude,
+                                                          reslats: v[index].restoLatitude,
+                                                          reslongs: v[index].restoLongitude,
+                                                          dellats: v[index].transLatitude,
+                                                          dellongs: v[index].transLongitude,
                                                           restaurantName: v[index].restaurantName,
                                                           deviceID: v[index].deviceId,
                                                           riderID: v[index].riderId.toString(),
@@ -251,11 +269,133 @@ List idsComming = [];
                                                           nametran:  v[index].name,
                                                           contactNumber : v[index].contactNumber.toString(),
                                                           playerId: v[index].deviceId,
-                                                          user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
+                                                          // user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
                                                           );
                                                       }));
-                                },
-                    ),
+      },
+      child:  Container(
+             height: 150,
+             width: MediaQuery.of(context).size.width,
+             decoration: BoxDecoration(
+               border: Border.all(
+                 width: 1,
+                 color: pureblue,
+               ),
+               borderRadius: BorderRadius.all(Radius.circular(20)),
+             ),
+             child: Stack(
+               children: <Widget>[
+                 Align(
+                   alignment: Alignment.centerLeft,
+                   child: Padding(
+                     padding: const EdgeInsets.only(left: 20),
+                     child: Container(
+                       height: 50,
+                       width: 50,
+                       decoration: BoxDecoration(
+                         shape: BoxShape.circle,
+                         image: DecorationImage(
+                           image: AssetImage("asset/img/logo.png") )
+                       ),
+                     
+                     ),
+                   ),
+                 ),
+                 Align(
+                   alignment: Alignment.centerRight,
+                   child: Padding(
+                     padding: const EdgeInsets.only(right: 20),
+                     child: Container(
+                        width: 190,
+                       child: Column(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: <Widget>[
+                          Text(v[index].name,
+                                                      style: TextStyle(
+                                                      color: pureblue,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18.0,
+                                                      fontFamily: 'Gilroy-ExtraBold'
+                                                    ),
+                                                      ),
+                                                      SizedBox(height: 7.0,),
+                                                      Text(v[index].restaurantName,
+                                                      style: TextStyle(
+                                                      color: pureblue,
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 11.0,
+                                                      fontFamily: 'Gilroy-light'
+                                                    ),
+                                                      ),
+                                                       SizedBox(height: 3.0,),
+                                                        FutureBuilder(
+                                                              future: CoordinatesConverter().convert(v[index].restoLatitude,v[index].restoLongitude),
+                                                              builder: (con ,snaps){
+                                                                if(snaps.data == null){
+                                                                  return Container();
+                                                                }else{
+                                                                  return Container(
+                                                              child: Text('From: ${snaps.data}',
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: TextStyle(
+                                                              color: pureblue,
+                                                              fontWeight: FontWeight.normal,
+                                                              fontSize: 11.0,
+                                                              fontFamily: 'Gilroy-light'
+                                                    ),
+                                                              ),
+                                                            );
+                                                                }
+                                                              },
+                                                            ),
+                                                    //    Text(,
+                                                    //       overflow: TextOverflow.ellipsis,
+                                                    //       style: TextStyle(
+                                                    //       color:pureblue,
+                                                    //       fontWeight: FontWeight.normal,
+                                                    //       fontSize: 11.0,
+                                                    //       fontFamily: 'Gilroy-light'
+                                                    // ),
+                                                    //       ),
+                                                      
+                                                      
+                                                      SizedBox(height: 3.0,), 
+                                                      Flexible(
+                                                            child: FutureBuilder(
+                                                              future: CoordinatesConverter().convert(v[index].transLatitude,v[index].transLongitude),
+                                                              builder: (con ,snaps){
+                                                                if(snaps.data == null){
+                                                                  return Container();
+                                                                }else{
+                                                                  return Container(
+                                                              child: Text('To: ${snaps.data}',
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: TextStyle(
+                                                              color: pureblue,
+                                                              fontWeight: FontWeight.normal,
+                                                              fontSize: 11.0,
+                                                              fontFamily: 'Gilroy-light'
+                                                    ),
+                                                              ),
+                                                            );
+                                                                }
+                                                              },
+                                                            ),
+                                                          ),
+                                                       
+                         ],
+                       ),
+                     ),
+                   ),
+                 ),
+               ],
+             ),
+
+                 
+                        ),
+    ),
+
                   ),
                 ],
               );
@@ -267,132 +407,5 @@ List idsComming = [];
     
 
   }
-  String valuemore= "";
-  void converting(){
-    
-     CoordinatesConverter().convert(del).then((value) => setState(()=> valuemore =value));
-      print(valuemore);
-  } 
-
-  // Widget _viewRider(){
-
-  //     return Container(
-  //       height: MediaQuery.of(context).size.height,
-  //       width: MediaQuery.of(context).size.width,
-  //         child: ListView.builder(
-  //           scrollDirection: Axis.vertical,
-  //           itemCount: inCommingtoSave.length,
-  //           itemBuilder: (context , index){
-
-  //             return SingleChildScrollView(
-  //                 physics: AlwaysScrollableScrollPhysics(),
-  //               child: Column(
-  //                        children: <Widget>[
-
-  //                         Padding(
-  //                           padding: const EdgeInsets.only(top: 15),
-  //                           child: Customgettransac( image: "asset/img/logo.png",
-  //                             transacId: inCommingtoSave[index]['id'],
-  //                             name: inCommingtoSave[index]['name'],
-  //                             address: inCommingtoSave[index]['address'],
-  //                             deliveryAddress: inCommingtoSave[index]['deliveryAddress'],
-  //                             restaurantName: inCommingtoSave[index]['restaurantName'],
-  //                             onTap: () async {
-
-  //                                  Navigator.push(context, MaterialPageRoute(builder: (context){
-  //                                                     return ViewMenuOnTransac(
-  //                                                       getID: inCommingtoSave[index]['id'],
-  //                                                       deliverTo: inCommingtoSave[index]['deliveryAddress'],
-  //                                                       restaurantName: inCommingtoSave[index]['restaurantName'],
-  //                                                       deviceID: inCommingtoSave[index]['deviceId'],
-  //                                                       riderID: inCommingtoSave[index]['riderId'],
-  //                                                       deliveryCharge: inCommingtoSave[index]['deliveryCharge'],
-  //                                                       nametran:  inCommingtoSave[index]['name'],
-  //                                                       playerId: inCommingtoSave[index]['deviceId'],
-  //                                                       user_coor : user_coor.toString());
-  //                                                   }));
-
-  //                             },),
-  //                         ),
-  //                        ],
-  //                      ),
-  //             );
-
-  //           },
-  //         ),
-
-
-  //     );
-
-
-        // return Container(
-        //     child: FutureBuilder(
-        //       future: getTransac(),
-        //       builder: (BuildContext context , AsyncSnapshot snapshot){
-        //                 if(snapshot.data == null){
-        //             return Container(
-        //               child: Center(
-        //                 child: Text("No Transaction Yet...",
-        //                 style: TextStyle(
-        //         color: Colors.white,
-        //         fontFamily: 'OpenSans',
-        //         fontSize:  16.0,
-        //         fontWeight: FontWeight.normal
-        //       ),),    
-        //               ),
-        //             );
-        //           }else{
-
-        //                   return SingleChildScrollView(
-        //       physics: AlwaysScrollableScrollPhysics(),
-        //       child: Container(
-        //         height: MediaQuery.of(context).size.height,
-        //         width: MediaQuery.of(context).size.width,
-        //         child: ListView.builder(
-        //           itemCount: snapshot.data.length,
-        //           itemBuilder: (context,index){
-        //              return Column(
-        //                children: <Widget>[
-
-        //                 Customgettransac( image: "asset/img/app.jpg",
-        //                   transacId: snapshot.data[index].id.toString(),
-        //                   name: snapshot.data[index].name,
-        //                   address: snapshot.data[index].address,
-        //                   deliveryAddress: snapshot.data[index].deliveryAddress,
-        //                   restaurantName: snapshot.data[index].restaurantName,
-        //                   onTap: () async {
-                             
-        //                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-        //                                           return ViewMenuOnTransac(
-        //                                             getID: snapshot.data[index].id.toString(),
-        //                                             // gotTotal: totals.toString(),
-        //                                             deliverTo: snapshot.data[index].deliveryAddress.toString(),
-        //                                             restaurantName: snapshot.data[index].restaurantName.toString(),
-        //                                             deviceID: snapshot.data[index].deviceId.toString(),
-        //                                             riderID: snapshot.data[index].riderId.toString(),
-        //                                             deliveryCharge: snapshot.data[index].deliveryCharge.toString(),
-        //                                             nametran:  snapshot.data[index].name,
-        //                                             playerId: playerId.toString(),
-        //                                             user_coor : user_coor.toString());
-        //                                         }));
-
-        //                   },),
-        //                ],
-        //              );
-        //           },
-        //           ),
-        //       ),
-        //     );
-
-
-
-        //           }
-        //       },
-        //     ),
-         
-        // );
-
-
-  // }
 
 }
