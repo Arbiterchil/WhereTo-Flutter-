@@ -727,14 +727,18 @@ Widget _views(NewRestaurantResponse newFeatured){
                 scrollDirection: Axis.horizontal,
                 itemCount: nf.length,
                 itemBuilder: (context,index){
-                 
+                
                    return Column(
                      children: <Widget>[
 
-                      NewRestaurantBox(
+                      FutureBuilder(
+                        future: CoordinatesConverter().convert(nf[index].latitude,nf[index].longitude),
+                        builder: (cons,snaps){
+                          if(snaps.data != null){
+                            return NewRestaurantBox(
                         image: nf[index].imagePath,
                          restaurantName:nf[index].restaurantName ,
-                         address:nf[index].latitude+","+nf[index].longitude, 
+                         address:snaps.data, 
                          onTap: () async{
 
                           showDialog(
@@ -827,7 +831,12 @@ Widget _views(NewRestaurantResponse newFeatured){
                            
                           
                          },
-                        ),
+                        );
+                          }else{
+                            return Container();
+                          }
+                        },
+                      ),
                         
                         
                      ],

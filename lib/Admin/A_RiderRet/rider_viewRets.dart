@@ -4,10 +4,10 @@ class RetieveAlltransac {
   String contactNumber;
   String barangayName;
   String restaurantName;
-  String restoLatitude;
-  String restoLongitude;
-  String transLatitude;
-  String transLongitude;
+  double restoLatitude;
+  double restoLongitude;
+  double transLatitude;
+  double transLongitude;
   String createdAt;
   String deviceId;
   int riderId;

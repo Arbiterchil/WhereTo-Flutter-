@@ -30,9 +30,9 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
     final formkey = GlobalKey<FormState>();
     String selectPerson;
    bool loading = false;
-   String lats ="";
-   String longs = "";
-   String toShowAddress = "";
+   double lats;
+   double longs ;
+   double toShowAddress;
   @override
   void initState() {
     super.initState();
@@ -157,13 +157,13 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
           // SizedBox(height: 10.0,),
           SizedBox(height: 15.0,),
           FutureBuilder(
-                  future: CoordinatesConverter().convert(toShowAddress),
+                  future: CoordinatesConverter().convert(lats,longs,),
                   builder: (con ,snaps){
                     if(snaps.data == null){
                      return  NCard(
                     active: false,
                     icon: Icons.my_location,
-                    label: toShowAddress ,
+                    label: lats.toString()+","+longs.toString(),
                     onTap: () => viewMapo(),
                   );
                     }else{
@@ -560,9 +560,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
     if(selectPerson == null){
 
     _showDistictWarning("Select Barangay");
-  }else if(toShowAddress.isEmpty){
-    _showDistictWarning("Please Put the Address.");
-    }else{
+  }else{
     if(formkey.currentState.validate()){
       formkey.currentState.save();
       var data = {
@@ -828,15 +826,15 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                       searchForInitialValue: true,
                       usePlaceDetailSearch: true,
                       onPlacePicked: (result) async {
-                        String lat = result.geometry.location.lat.toString();
-                        String lng = result.geometry.location.lng.toString();
+                        double lat = result.geometry.location.lat;
+                        double lng = result.geometry.location.lng;
                         print("the Bilat is $lat and Oten is $lng");
                         setState(() {
-                          toShowAddress = "$lat,$lng";
+                          // 
                         lats = lat;
                         longs = lng;
                         });
-                        print(lats+"-"+longs);
+                        // print(lats+"-"+longs);
                         Navigator.pop(context);
                         }
                     ),

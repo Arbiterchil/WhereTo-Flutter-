@@ -5,7 +5,10 @@ import 'package:WhereTo/Admin/A_Rider_Remain/rider_remainResponse.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_bottom.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_previous.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/view_MenuTransac.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:flutter/material.dart';
+
+import '../../styletext.dart';
 
 class RaminDataIndi extends StatefulWidget {
 
@@ -126,18 +129,39 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: 10,left: 10,right: 10),
-                    child: Customgettransac( image: "asset/img/logo.png",
-                                transacId: v[index].id.toString(),
-                                name: v[index].name,
-                                address: v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString(),
-                                deliveryAddress:v[index].transLatitude+","+v[index].transLongitude,
-                                restaurantName: v[index].restaurantName,
-                                onTap: () async {
+                    // child: Customgettransac( image: "asset/img/logo.png",
+                    //             transacId: v[index].id.toString(),
+                    //             name: v[index].name,
+                    //             address: v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString(),
+                    //             deliveryAddress:v[index].transLatitude+","+v[index].transLongitude,
+                    //             restaurantName: v[index].restaurantName,
+                    //             onTap: () async {
 
-                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                    //                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                    //                                     return Riderprevious(
+                    //                                       getID:v[index].id.toString(),
+                    //                                       deliverTo:v[index].transLatitude+","+v[index].transLongitude,
+                    //                                       restaurantName: v[index].restaurantName,
+                    //                                       deviceID: v[index].deviceId,
+                    //                                       riderID: v[index].riderId.toString(),
+                    //                                       deliveryCharge: v[index].deliveryCharge.toString(),
+                    //                                       nametran:  v[index].name,
+                    //                                       contactNumber : v[index].contactNumber.toString(),
+                    //                                       playerId: v[index].deviceId,
+                    //                                        user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
+                    //                                       );
+                    //                                   }));
+                    //             },
+                    // ),
+                    child:GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context){
                                                         return Riderprevious(
                                                           getID:v[index].id.toString(),
-                                                          deliverTo:v[index].transLatitude+","+v[index].transLongitude,
+                                                          reslats: v[index].restoLatitude,
+                                                          reslongs: v[index].restoLongitude,
+                                                          dellats: v[index].transLatitude,
+                                                          dellongs: v[index].transLongitude,
                                                           restaurantName: v[index].restaurantName,
                                                           deviceID: v[index].deviceId,
                                                           riderID: v[index].riderId.toString(),
@@ -145,11 +169,132 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
                                                           nametran:  v[index].name,
                                                           contactNumber : v[index].contactNumber.toString(),
                                                           playerId: v[index].deviceId,
-                                                           user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
+                                                          // user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
                                                           );
                                                       }));
-                                },
-                    ),
+      },
+      child:  Container(
+             height: 150,
+             width: MediaQuery.of(context).size.width,
+             decoration: BoxDecoration(
+               border: Border.all(
+                 width: 1,
+                 color: pureblue,
+               ),
+               borderRadius: BorderRadius.all(Radius.circular(20)),
+             ),
+             child: Stack(
+               children: <Widget>[
+                 Align(
+                   alignment: Alignment.centerLeft,
+                   child: Padding(
+                     padding: const EdgeInsets.only(left: 20),
+                     child: Container(
+                       height: 50,
+                       width: 50,
+                       decoration: BoxDecoration(
+                         shape: BoxShape.circle,
+                         image: DecorationImage(
+                           image: AssetImage("asset/img/logo.png") )
+                       ),
+                     
+                     ),
+                   ),
+                 ),
+                 Align(
+                   alignment: Alignment.centerRight,
+                   child: Padding(
+                     padding: const EdgeInsets.only(right: 20),
+                     child: Container(
+                        width: 190,
+                       child: Column(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: <Widget>[
+                          Text(v[index].name,
+                                                      style: TextStyle(
+                                                      color: pureblue,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18.0,
+                                                      fontFamily: 'Gilroy-ExtraBold'
+                                                    ),
+                                                      ),
+                                                      SizedBox(height: 7.0,),
+                                                      Text(v[index].restaurantName,
+                                                      style: TextStyle(
+                                                      color: pureblue,
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 11.0,
+                                                      fontFamily: 'Gilroy-light'
+                                                    ),
+                                                      ),
+                                                       SizedBox(height: 3.0,),
+                                                        FutureBuilder(
+                                                              future: CoordinatesConverter().convert(v[index].restoLatitude,v[index].restoLongitude),
+                                                              builder: (con ,snaps){
+                                                                if(snaps.data == null){
+                                                                  return Container();
+                                                                }else{
+                                                                  return Container(
+                                                              child: Text('From: ${snaps.data}',
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: TextStyle(
+                                                              color: pureblue,
+                                                              fontWeight: FontWeight.normal,
+                                                              fontSize: 11.0,
+                                                              fontFamily: 'Gilroy-light'
+                                                    ),
+                                                              ),
+                                                            );
+                                                                }
+                                                              },
+                                                            ),
+                                                    //    Text(,
+                                                    //       overflow: TextOverflow.ellipsis,
+                                                    //       style: TextStyle(
+                                                    //       color:pureblue,
+                                                    //       fontWeight: FontWeight.normal,
+                                                    //       fontSize: 11.0,
+                                                    //       fontFamily: 'Gilroy-light'
+                                                    // ),
+                                                    //       ),
+                                                      
+                                                      
+                                                      SizedBox(height: 3.0,), 
+                                                      Flexible(
+                                                            child: FutureBuilder(
+                                                              future: CoordinatesConverter().convert(v[index].transLatitude,v[index].transLongitude),
+                                                              builder: (con ,snaps){
+                                                                if(snaps.data == null){
+                                                                  return Container();
+                                                                }else{
+                                                                  return Container(
+                                                              child: Text('To: ${snaps.data}',
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: TextStyle(
+                                                              color: pureblue,
+                                                              fontWeight: FontWeight.normal,
+                                                              fontSize: 11.0,
+                                                              fontFamily: 'Gilroy-light'
+                                                    ),
+                                                              ),
+                                                            );
+                                                                }
+                                                              },
+                                                            ),
+                                                          ),
+                                                       
+                         ],
+                       ),
+                     ),
+                   ),
+                 ),
+               ],
+             ),
+
+                 
+                        ),
+    ) ,
                   ),
                 ],
               );

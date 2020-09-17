@@ -33,8 +33,12 @@ class ViewMenuOnTransac extends StatefulWidget {
   final String transacIDs;
   final String user_coor;
   final String contactNumber;
+  final double dellats;
+  final double dellongs;
+  final double reslats;
+  final double reslongs;
 
-  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor, this.contactNumber}) : super(key: key);
+  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor, this.contactNumber, this.dellats, this.dellongs, this.reslats, this.reslongs}) : super(key: key);
 
  
   @override
@@ -574,7 +578,7 @@ var checkVal = localStorage.getBool('check');
                                                   SizedBox(height: 10,),
 
                                                    FutureBuilder(
-                                                     future: CoordinatesConverter().convert(widget.deliverTo),
+                                                     future: CoordinatesConverter().convert(widget.dellats,widget.dellongs),
                                                     builder: (context,snaps){
                                                       if(snaps.data == null){
                                                         return Text("Data Error");

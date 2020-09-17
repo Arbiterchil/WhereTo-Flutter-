@@ -92,15 +92,9 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
                         ),
                         SizedBox(height: 5.0,),
                         
-                        FutureBuilder(
-                          future: CoordinatesConverter().convert(widget.address),
-                          builder: (cons,snaps){
-                            if(snaps.data ==null){
-                              return Container();
-                            }else{
-                              return  Flexible(
+                        Flexible(
                           child: Container(
-                            child: Text(snaps.data,
+                            child: Text(widget.address,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color:Colors.white,
@@ -109,9 +103,16 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
                                         fontFamily: 'Gilroy-light' 
                             ),),
                           ),
-                        );
-                            }
-                        }),
+                        )
+                        // FutureBuilder(
+                        //   future: CoordinatesConverter().convert(widget.address),
+                        //   builder: (cons,snaps){
+                        //     if(snaps.data ==null){
+                        //       return Container();
+                        //     }else{
+                        //       return  F;
+                        //     }
+                        // }),
                        
                       ],
                     ),
