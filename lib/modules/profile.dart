@@ -266,7 +266,7 @@ _onsSignal() async{
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Stack(
-                          
+                          overflow: Overflow.visible,
                           alignment: Alignment.topCenter,
                           children: <Widget>[
                             imageBack(),
@@ -356,6 +356,7 @@ _onsSignal() async{
                                                       ),
                                                  ), 
                                                     SizedBox(height: 40,),
+                                                    
                                                     Padding(
                                                       padding: const EdgeInsets.only(left: 20,right: 20),
                                                       child: FutureBuilder(

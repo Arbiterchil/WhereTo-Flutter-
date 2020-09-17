@@ -648,7 +648,7 @@ var checkVal = localStorage.getBool('check');
                                ),
                                color: pureblue,
                                onPressed: (){
-                                 RiderRoute().getRoute(widget.deliverTo);
+                                 RiderRoute().getRoute(widget.dellats.toString()+","+widget.dellongs.toString(),);
                                },
                                child:Center(
                                  child: Text("Location",
@@ -669,7 +669,7 @@ var checkVal = localStorage.getBool('check');
                                ),
                                color: pureblue,
                                onPressed: (){
-                                 RiderRoute().getRoute(widget.user_coor);
+                                 RiderRoute().getRoute(widget.reslats.toString()+","+widget.reslongs.toString());
                                },
                                child:Center(
                                  child: Text("Restaurant",
