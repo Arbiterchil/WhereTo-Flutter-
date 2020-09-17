@@ -214,12 +214,12 @@ class _ListStacticState extends State<ListStactic>
                                               image: snapshot.data[index].imagePath,
                                               menuName: snapshot.data[index].menuName,
                                               menuDescription: snapshot.data[index].description,
-                                              fixprice: double.parse(snapshot.data[index].price.toString()),
+                                              fixprice: double.parse(snapshot.data[index].totalPrice.toString()),
                                               onTap: (){
                                                 BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(
                                                   name: snapshot.data[index].menuName,
                                                   description: snapshot.data[index].description,
-                                                  price: double.parse(snapshot.data[index].price.toString()),
+                                                  price: double.parse(snapshot.data[index].totalPrice.toString()),
                                                   quantity: 1,
                                                   id: snapshot.data[index].menuId,
                                                   image: snapshot.data[index].imagePath,

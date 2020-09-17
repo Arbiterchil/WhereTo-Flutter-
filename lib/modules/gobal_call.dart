@@ -22,9 +22,9 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
   double longs;
 @override
   void initState() {
-    // TODO: implement initState
+     _getUserInfo();
     super.initState();
-    this._getUserInfo();
+    
   }
 
 
@@ -38,8 +38,6 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
       userData = user;
       lats = getThis;
       longs= thisOther;
-      // addre = user['latitude']+","+user['longitude'];
-      // print(addre);
     });
     if(userData['imagePath'] != null){
 
