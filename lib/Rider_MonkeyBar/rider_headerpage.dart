@@ -19,7 +19,7 @@ class _GlobalHeaderState extends State<GlobalHeader> {
   Widget build(BuildContext context) {
     return  Stack(
                       alignment: AlignmentDirectional.topCenter,
-                      overflow: Overflow.visible,
+                      
                       children: <Widget>[                      
                         Container(
                           height: 230.0,
