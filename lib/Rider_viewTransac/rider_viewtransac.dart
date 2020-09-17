@@ -235,23 +235,24 @@ List idsComming = [];
                     child: Customgettransac( image: "asset/img/logo.png",
                                 transacId: v[index].id.toString(),
                                 name: v[index].name,
-                                address: v[index].address,
-                                deliveryAddress:v[index].deliveryAddress,
+                                address: v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString(),
+                                deliveryAddress:v[index].transLatitude+","+v[index].transLongitude,
                                 restaurantName: v[index].restaurantName,
                                 onTap: () async {
 
                                      Navigator.push(context, MaterialPageRoute(builder: (context){
                                                         return ViewMenuOnTransac(
                                                           getID:v[index].id.toString(),
-                                                          deliverTo: v[index].deliveryAddress,
+                                                          deliverTo:v[index].transLatitude+","+v[index].transLongitude,
                                                           restaurantName: v[index].restaurantName,
                                                           deviceID: v[index].deviceId,
-                                                          riderID: v[index].riderId,
+                                                          riderID: v[index].riderId.toString(),
                                                           deliveryCharge: v[index].deliveryCharge.toString(),
                                                           nametran:  v[index].name,
                                                           contactNumber : v[index].contactNumber.toString(),
                                                           playerId: v[index].deviceId,
-                                                          user_coor : v[index].address);
+                                                          user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
+                                                          );
                                                       }));
                                 },
                     ),

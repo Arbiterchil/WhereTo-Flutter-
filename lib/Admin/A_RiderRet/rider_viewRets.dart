@@ -4,11 +4,13 @@ class RetieveAlltransac {
   String contactNumber;
   String barangayName;
   String restaurantName;
-  String address;
-  String deliveryAddress;
+  String restoLatitude;
+  String restoLongitude;
+  String transLatitude;
+  String transLongitude;
   String createdAt;
   String deviceId;
-  String riderId;
+  int riderId;
   int status;
   int deliveryCharge;
 
@@ -18,8 +20,10 @@ class RetieveAlltransac {
       this.contactNumber,
       this.barangayName,
       this.restaurantName,
-      this.address,
-      this.deliveryAddress,
+      this.restoLatitude,
+      this.restoLongitude,
+      this.transLatitude,
+      this.transLongitude,
       this.createdAt,
       this.deviceId,
       this.riderId,
@@ -32,8 +36,10 @@ class RetieveAlltransac {
     contactNumber = json['contactNumber'];
     barangayName = json['barangayName'];
     restaurantName = json['restaurantName'];
-    address = json['address'];
-    deliveryAddress = json['deliveryAddress'];
+    restoLatitude = json['restoLatitude'];
+    restoLongitude = json['restoLongitude'];
+    transLatitude = json['transLatitude'];
+    transLongitude = json['transLongitude'];
     createdAt = json['created_at'];
     deviceId = json['deviceId'];
     riderId = json['riderId'];
@@ -48,8 +54,10 @@ class RetieveAlltransac {
     data['contactNumber'] = this.contactNumber;
     data['barangayName'] = this.barangayName;
     data['restaurantName'] = this.restaurantName;
-    data['address'] = this.address;
-    data['deliveryAddress'] = this.deliveryAddress;
+    data['restoLatitude'] = this.restoLatitude;
+    data['restoLongitude'] = this.restoLongitude;
+    data['transLatitude'] = this.transLatitude;
+    data['transLongitude'] = this.transLongitude;
     data['created_at'] = this.createdAt;
     data['deviceId'] = this.deviceId;
     data['riderId'] = this.riderId;

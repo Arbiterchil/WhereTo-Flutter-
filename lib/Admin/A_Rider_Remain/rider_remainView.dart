@@ -129,15 +129,15 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
                     child: Customgettransac( image: "asset/img/logo.png",
                                 transacId: v[index].id.toString(),
                                 name: v[index].name,
-                                address: v[index].address,
-                                deliveryAddress: v[index].deliveryAddress,
+                                address: v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString(),
+                                deliveryAddress:v[index].transLatitude+","+v[index].transLongitude,
                                 restaurantName: v[index].restaurantName,
                                 onTap: () async {
 
                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                                                         return Riderprevious(
                                                           getID:v[index].id.toString(),
-                                                          deliverTo: v[index].deliveryAddress,
+                                                          deliverTo:v[index].transLatitude+","+v[index].transLongitude,
                                                           restaurantName: v[index].restaurantName,
                                                           deviceID: v[index].deviceId,
                                                           riderID: v[index].riderId.toString(),
@@ -145,7 +145,7 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
                                                           nametran:  v[index].name,
                                                           contactNumber : v[index].contactNumber.toString(),
                                                           playerId: v[index].deviceId,
-                                                          user_coor: v[index].address,
+                                                           user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
                                                           );
                                                       }));
                                 },

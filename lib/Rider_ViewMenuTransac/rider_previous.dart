@@ -82,6 +82,9 @@ var iderntify;
 
          if(userRider == widget.getID){
             print("Can Continue");
+            setState(() {
+              cancelOrder =true;
+            });
          }else{
            print("The Id is"+userRider + "="+"${widget.getID}");
                showDialog(context: context,
@@ -1357,7 +1360,7 @@ var checkVal = localStorage.getBool('check');
       available = !available;
       menuHide = !menuHide;
       backTF = !backTF;
-      cancelOrder = true;
+      // cancelOrder = true;
       riderCheck();
       });
                    Navigator.of(context).pop();

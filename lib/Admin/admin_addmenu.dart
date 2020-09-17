@@ -32,6 +32,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
     TextEditingController menuname  = TextEditingController();
     TextEditingController decription = TextEditingController();
     TextEditingController price = TextEditingController();
+    TextEditingController markprice = TextEditingController();
     int countname = 0;
     SharedPreferences prefs;
     bool loading = false;
@@ -281,6 +282,7 @@ void getAddMenu() async{
                                 "menuName" : menuname.text,
                                 "description" : decription.text,
                                 "price":price.text,
+                                "markUpPercentage": markprice.text, 
                                 "imagePath": thimagelink,
                                 "categoryId": selectPerson.toString()
                                 }]
@@ -291,6 +293,7 @@ void getAddMenu() async{
                           menuname.clear();
                           decription.clear();
                           price.clear();
+                          markprice.clear();
                           _showDone();
       }else{
 
@@ -519,7 +522,41 @@ void getAddMenu() async{
                     Icons.attach_money,
                     color: pureblue,
                   ),
-                  hintText: '0.00',
+                  hintText: 'Original Price',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+            // Text("Category",
+            //           style: eLabelStyle,
+            //           ),
+            SizedBox(height: 15.0,),
+
+             Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                cursorColor: pureblue,
+              keyboardType: TextInputType.number,
+                controller: markprice,
+                validator: (val) => val.isEmpty ? ' Please Put Your Price' : null,
+                    onSaved: (val) => markprice.text = val,
+                    
+                
+                style: TextStyle(
+                  color:pureblue,
+                  fontFamily: 'Gilroy-light',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.attach_money,
+                    color: pureblue,
+                  ),
+                  hintText: 'Mark-Up',
                   hintStyle: eHintStyle,
                 ),
               ),

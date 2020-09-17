@@ -21,12 +21,15 @@ class RemainApi {
         name: body['name'],
         contactNumber: body['contactNumber'],
         barangayName: body['barangayName'],
-        restaurantName: body['restaurantName'],
-        address: body['address'],
-        deliveryAddress: body['deliveryAddress'],
+       restaurantName: body['restaurantName'],
+        restoLatitude: body['restoLatitude'] ,
+        restoLongitude:body['restoLongitude'] ,
+        transLatitude: body['transLatitude'],
+        transLongitude: body['transLongitude'],
         createdAt: body['created_at'],
         deviceId: body['deviceId'],
         status: body['status'],
+        riderId: body['riderId'],
         deliveryCharge: body['deliveryCharge'],
             );
             res.add(retieveAlltransac);
