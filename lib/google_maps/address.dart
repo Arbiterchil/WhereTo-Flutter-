@@ -6,6 +6,7 @@ import 'package:WhereTo/google_maps/addressBloc.dart';
 import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:WhereTo/google_maps/googlemap_address.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -37,24 +38,12 @@ class _AddressLineState extends State<AddressLine> {
   void initState() {
     
     super.initState();
-    getAddress();
-    getCoordinates();
+    
   }
 
-getAddress() async{
-  var address =await ID().getaddress();
-  setState(() {
-    userData =address;
-  });
-}
-getCoordinates() async{
-  var coordinates =await ID().getCoordinates();
-  setState(() {
-    coordi=coordinates;
-  });
-}
 
-  
+
+
   @override
   Widget build(BuildContext context) {
     setState(() {

@@ -43,6 +43,8 @@ class _SignupPageState extends State<SignupPage> {
   var idbararangSaika;
   var addresses;
   String coordi;
+  double lat;
+  double lng;
   final formkey = GlobalKey<FormState>();
 
   TextEditingController fulname = TextEditingController();
@@ -432,7 +434,9 @@ Widget _view(BaranggayRespone respone){
                    Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                           final coordinates =new Coordinates(postion.latitude,postion.longitude);
                           setState(() {
-                            coordi ="${postion.latitude},${postion.longitude}";
+                            // coordi ="${postion.latitude},${postion.longitude}";
+                            lat =postion.latitude;
+                            lng =postion.longitude;
                           });
                           addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
                           var first =addresses.first;
@@ -1016,7 +1020,8 @@ getYourIdImage( ImageSource source) async{
           'name': fulname.text,
           'email': email.text,
           'contactNumber': ownNumber.text,
-          'address': coordinates,
+          'latitude': lat,
+          'longitude': lng,
           'password': ownpass.text,
           'barangayId': selectPerson.toString(),
           'imagePath': thimagelink         
@@ -1032,7 +1037,8 @@ getYourIdImage( ImageSource source) async{
             localStorage.setString('user', json.encode(body['user']));
             localStorage.setString("coordinates", coordi);
             localStorage.setString("userTYPO", body['userType'].toString());
-            localStorage.setString("address", coordinates);
+            localStorage.setDouble("latitude", lat);
+            localStorage.setDouble("longitude", lng);
             var valid = await ApiCall().getUserVerification('/submitVerification/${body['user']['id']}');
             print(valid.body);
             Navigator.pushReplacement(context,

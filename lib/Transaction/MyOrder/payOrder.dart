@@ -33,43 +33,30 @@ class _PayOrderState extends State<PayOrder> {
   var address;
   var newAddress;
   var add;
-  var coordinates;
+  double lat;
+  double lng;
   var newcoordinates;
   @override
   void initState() {
     super.initState();
-    getAddress();
-    getNewAd();
-    getCoordinates();
-    getnewCoordinates();
+    getLat();
+    getLng();
   }
 
 
-  getAddress() async{
-  var address =await ID().getaddress();
-  var converter =await CoordinatesConverter().convert(address);
-  setState(() {
-    userData =converter;
-  });
-}
-  getNewAd() async{
-    var newad =await ID().getnewAddress();
+  
+  
+  getLat() async{
+    var latittude =await ID().getLat();
     setState(() {
-      newAddress =newad;
+      lat =latittude;
     });
   }
-  getCoordinates() async{
-    var coordi =await ID().getCoordinates();
-    setState(() {
-      coordinates =coordi;
-    });
+  getLng() async{
+    var longitude =await ID().getLng();
+    lng =longitude;
   }
-  getnewCoordinates() async{
-    var newCoor =await ID().getnewCoordinates();
-    setState(() {
-      newcoordinates =newCoor;
-    });
-  }
+  
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -435,7 +422,8 @@ class _PayOrderState extends State<PayOrder> {
                                                   'restaurantId':
                                                       this.widget.restauID,
                                                   'order': result,
-                                                  "deliveryAddress": "${newcoordinates.toString().contains("null")?coordinates:newcoordinates}",
+                                                  "latitude": lat,
+                                                  "longitude":lng,
                                                   "deliveryCharge": "${widget.fee}",
                                                   "barangayId": user['barangayId'],
                                                 };

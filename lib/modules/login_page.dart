@@ -504,7 +504,8 @@ var coordinates =await ID().getPosition();
       localStorage.setString('trial','trialShow');
       localStorage.setString("address", body['user']['address']);
       localStorage.setString("userTYPO", body['userType'].toString());
-      localStorage.setString("coordinates", coordinates);
+      localStorage.setDouble("latitude", body['user']['latitude']);
+      localStorage.setDouble("longitude", body['user']['longitude']);
       print(body);
           if(body['user']['userType'] == 0){
         print('Customer');

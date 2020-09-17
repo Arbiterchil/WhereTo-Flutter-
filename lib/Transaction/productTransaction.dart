@@ -409,7 +409,7 @@ class _TransactionListState extends State<TransactionList> {
                                             builder: (con)=>SimpleAppLoader());
 
                                           var position =await ID().getPosition();
-                                          var newCoordinates =await ID().getnewCoordinates();
+                                          
                                           String splitNewCoordinatesLat;
                                           String splitNewCoordinatesLng; 
                                           String splitUserLat =position.split(',')[0].toString();

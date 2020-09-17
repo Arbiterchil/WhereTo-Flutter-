@@ -46,7 +46,7 @@ class _DirectionsState extends State<Directions> {
   }
 
   onMove(GoogleMapController controller) async{
-    var route =await ID().getCoordinatesFormat();
+    var route =await ID().getCoordinates();
     _controller.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(target: route, zoom: 17.0)));
   }

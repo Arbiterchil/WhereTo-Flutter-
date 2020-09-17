@@ -1,10 +1,7 @@
 import 'package:geocoder/geocoder.dart';
 
 class CoordinatesConverter{
-  Future<String> convert(String coord)async{
-    var split =coord.split(',');
-    double lat =double.parse(split[0].toString());
-    double lng =double.parse(split[1].toString());
+  Future<String> convert(double lat, double lng)async{
     final coordinates =Coordinates(lat,lng);
     var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first =addresses.first;

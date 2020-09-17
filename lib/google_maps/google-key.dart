@@ -15,45 +15,24 @@ class ID {
     var user = json.decode(userJson);
     return user['id'].toString();
   }
-  Future<String> getaddress() async {
+  Future<LatLng> getCoordinates() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var userJson = localStorage.getString('user');
-    var user = json.decode(userJson);
-    return user['address'].toString();
-  }
-  Future<String> getCoordinates() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var user= localStorage.getString('coordinates');
-    return user.toString();
-  }
-  Future<LatLng> getCoordinatesFormat() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    String user= localStorage.getString('coordinates');
-    var coordinates =user.split(',');
-    double lat =double.parse(coordinates[0].toString());
-    double lng =double.parse(coordinates[1].toString());
+    double lat = localStorage.getDouble('latitude');
+    double lng = localStorage.getDouble('longitude');
     LatLng latlng = new LatLng(lat,lng);
     return latlng;
   }
-  Future<PointLatLng> getCoordinatesPointLang() async {
+  Future<double> getLat() async{
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    String user= localStorage.getString('coordinates');
-    var coordinates =user.split(',');
-    double lat =double.parse(coordinates[0].toString());
-    double lng =double.parse(coordinates[1].toString());
-    PointLatLng latlng = new PointLatLng(lat,lng);
-    return latlng;
+    double lat = localStorage.getDouble('latitude');
+    return lat;
   }
-  Future<String> getnewCoordinates() async {
+  Future<double> getLng() async{
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var user= localStorage.getString('newCoordinates');
-    return user.toString();
+    double lng = localStorage.getDouble('longitude');
+    return lng;
   }
-  Future<String> getnewAddress() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var user= localStorage.getString('newAddress');
-    return user.toString();
-  }
+
   Future<bool> permissions() async{
     var permissions =await Permission.getPermissionsStatus([PermissionName.Location]);
     if(permissions[0].permissionStatus ==PermissionStatus.deny || permissions[0].permissionStatus ==PermissionStatus.notAgain){
