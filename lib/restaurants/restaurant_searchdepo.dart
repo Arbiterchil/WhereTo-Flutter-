@@ -680,33 +680,34 @@ class _SearchDepoState extends State<SearchDepo> {
             itemBuilder: (context, index) {
               return Column(
                 children: <Widget>[
-                  NewRestaurantBox(
+                  FutureBuilder(
+                    future: CoordinatesConverter().convert(nf[index].latitude, nf[index].longitude),
+                    builder: (context, datasnapshot){
+                      if(datasnapshot.data==null){
+                    return Container();
+                      }else{
+                    return NewRestaurantBox(
                     image: nf[index].imagePath,
                     restaurantName: nf[index].restaurantName,
-                    address: nf[index].latitude.toString() + "," + nf[index].longitude.toString(),
+                    address: datasnapshot.data,
                     onTap: () async {
-                      showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (con) => SimpleAppLoader());
-
-                      //  ProgressDialog featuredRestaurant = ProgressDialog(context);
-                      //     featuredRestaurant.style(
-                      //       message: "Loading Restaurant Please Wait..",
-                      //       borderRadius: 10.0,
-                      //       backgroundColor: Colors.white,
-                      //       progressWidget: CircularProgressIndicator(),
-                      //       elevation: 10.0,
-                      //       insetAnimCurve: Curves.fastLinearToSlowEaseIn,
-                      //       progressTextStyle: TextStyle(
-                      //           color: Colors.black,
-                      //           fontSize: 15.0,
-                      //           fontWeight: FontWeight.w300,
-                      //           fontFamily: "Gilroy-light"
-                      //       )
-                      //     );
-                      //     featuredRestaurant =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
-                      //     featuredRestaurant.show();
+                       ProgressDialog featuredRestaurant = ProgressDialog(context);
+                          featuredRestaurant.style(
+                            message: "Loading Restaurant Please Wait..",
+                            borderRadius: 10.0,
+                            backgroundColor: Colors.white,
+                            progressWidget: CircularProgressIndicator(),
+                            elevation: 10.0,
+                            insetAnimCurve: Curves.fastLinearToSlowEaseIn,
+                            progressTextStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w300,
+                                fontFamily: "Gilroy-light"
+                            )
+                          );
+                          featuredRestaurant =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
+                          await featuredRestaurant.show();
 
                       SharedPreferences local =
                           await SharedPreferences.getInstance();
@@ -761,7 +762,7 @@ class _SearchDepoState extends State<SearchDepo> {
                         //   if (int.parse(formatNow.split(":")[0]) >=
                         //       int.parse(formatOpen.split(":")[0])) {
 
-                        // await featured.hide();
+                        await featuredRestaurant.hide();
                         Navigator.push(
                             context,
                             new MaterialPageRoute(
@@ -777,7 +778,10 @@ class _SearchDepoState extends State<SearchDepo> {
                                     )));
                       }
                     },
-                  ),
+                  );
+                      }
+                    },
+                  )
                 ],
               );
             },

@@ -266,7 +266,7 @@ _onsSignal() async{
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Stack(
-                          overflow: Overflow.visible,
+                          // overflow: Overflow.visible,
                           alignment: Alignment.topCenter,
                           children: <Widget>[
                             imageBack(),

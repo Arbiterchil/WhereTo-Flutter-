@@ -388,44 +388,28 @@ class _TransactionListState extends State<TransactionList> {
                                       width: double.infinity,
                                       child: GestureDetector(
                                         onTap: () async {
-                                          // ProgressDialog _pr = ProgressDialog(context);
-                                          // _pr.style(
-                                          // message: "Calculating Please Wait a Moment..",
-                                          // borderRadius: 10.0,
-                                          // backgroundColor: Colors.white,
-                                          // progressWidget: CircularProgressIndicator(),
-                                          // elevation: 10.0,
-                                          // insetAnimCurve: Curves.easeInExpo,
-                                          // progressTextStyle: TextStyle(
-                                          //     color: Colors.black,
-                                          //     fontSize: 10.0,
-                                          //     fontWeight: FontWeight.w300,
-                                          //     fontFamily: "Gilroy-light"));
-                                          // _pr = ProgressDialog(context,
-                                          //  type: ProgressDialogType.Normal,
-                                          //  isDismissible: false);
-                                          //  _pr.show();
-                                           showDialog(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            builder: (con)=>SimpleAppLoader());
-
+                                          ProgressDialog _pr = ProgressDialog(context);
+                                          _pr.style(
+                                          message: "Calculating Please Wait a Moment..",
+                                          borderRadius: 10.0,
+                                          backgroundColor: Colors.white,
+                                          progressWidget: CircularProgressIndicator(),
+                                          elevation: 10.0,
+                                          insetAnimCurve: Curves.easeInExpo,
+                                          progressTextStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10.0,
+                                              fontWeight: FontWeight.w300,
+                                              fontFamily: "Gilroy-light"));
+                                          _pr = ProgressDialog(context,
+                                           type: ProgressDialogType.Normal,
+                                           isDismissible: false);
+                                           _pr.show();
                                           var userLat =await ID().getLat();
-                                          var userLng =await ID().getLng();
-
-                                          
-                                          double deliveryCharge;
-                                          
-                                         
-                                          if(snapshot.isEmpty){
-                                            print("No Order");
-                        
-                                          } else{
-                                          
-                                          deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(widget.restoLat, widget.restoLng) , LatLng(userLat, userLng)); 
-                                        }
-                                          if(deliveryCharge!=null){
-                                            
+                                          var userLng =await ID().getLng();    
+                                          double deliveryCharge;       
+                                          if(snapshot.length >0){
+                                            deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(widget.restoLat, widget.restoLng) , LatLng(userLat, userLng));      
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -434,18 +418,12 @@ class _TransactionListState extends State<TransactionList> {
                                                             fee: deliveryCharge,
                                                             restauID: widget
                                                                 .restauID)));
-                                          
-                                            
-                                            
-                                          }
-                                          // _pr.hide(); 
-                                          
-                                          // SharedPreferences localStorage = await SharedPreferences.getInstance();
-                                          // var userJson = localStorage.getString('user');
-                                          // var user = json.decode(userJson);
-                                          // print(fee);
-                                          // print(widget.barangay);
-                                          // print(user['barangayId']);
+                                             _pr.hide();                                             
+                                          } else{    
+                                            _pr.hide();
+                                            print("No Order");
+                                        }
+
                                         },
                                         child: Container(
                                           height: 60,

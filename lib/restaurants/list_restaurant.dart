@@ -14,11 +14,11 @@ import 'package:WhereTo/restaurants/New_ViewRestaurant/blocMenu.class.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/blocMenu.dart';
 import 'package:WhereTo/restaurants/card_menu.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
-import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:icon_badge/icon_badge.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -113,16 +113,14 @@ class _ListStacticState extends State<ListStactic>
                     child: Container(
                     child: BlocConsumer<OrderBloc, List<TransactionOrders>>(
                       builder: (context, snapshot) {
-                        return Badge(
-                          badgeContent: Text(snapshot.length.toString()),
-                          badgeColor: Colors.white,
-                          borderRadius: 20,
-                          position: BadgePosition.topLeft(),
-                          child: Container(
-                            child: IconButton(
-                                icon: Icon(Icons.add_shopping_cart),
-                                onPressed: () {
-                                  Navigator.push(
+                        return IconBadge(
+                          icon: Icon(Icons.add_shopping_cart),
+                          itemCount: snapshot.length,
+                          itemColor: Colors.white,
+                          badgeColor: Colors.blue,
+                          hideZero: true,
+                          onTap: (){
+                            Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => MyCart(
@@ -131,9 +129,10 @@ class _ListStacticState extends State<ListStactic>
                                                 restauID: widget.restauID.toString(),
                                                 nameRestau: widget.nameRestau,
                                               )));
-                                }),
-                          ),
-                        );
+                          },
+                          
+                          );
+                          
                       },
                       listener: (BuildContext context, order) {},
                     ),
@@ -211,9 +210,9 @@ class _ListStacticState extends State<ListStactic>
                                            if(snapshot.data.length >0){
                                              return Padding(padding: EdgeInsets.all(15),
                                               child: MenuBoxRestaurant(
-                                              image: snapshot.data[index].imagePath,
-                                              menuName: snapshot.data[index].menuName,
-                                              menuDescription: snapshot.data[index].description,
+                                              image: snapshot.data[index].imagePath.toString(),
+                                              menuName: snapshot.data[index].menuName.toString(),
+                                              menuDescription: snapshot.data[index].description.toString(),
                                               fixprice: double.parse(snapshot.data[index].totalPrice.toString()),
                                               onTap: (){
                                                 BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(

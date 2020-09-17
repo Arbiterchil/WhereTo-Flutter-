@@ -22,9 +22,9 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
   double longs;
 @override
   void initState() {
-     _getUserInfo();
+     
     super.initState();
-    
+    _getUserInfo();
   }
 
 

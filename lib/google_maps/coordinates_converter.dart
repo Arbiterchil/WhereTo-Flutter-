@@ -1,20 +1,11 @@
 import 'package:geocoder/geocoder.dart';
+import 'package:geocoding/geocoding.dart';
 
 class CoordinatesConverter{
-  Future<String> convert(double lat, double lng)async{
-    final coordinates =Coordinates(lat,lng);
-    var first;
-    try{
-    if(coordinates!=null){
-    var addresses =await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    first =addresses.first;
-    }
-    }catch(PlatformException){
-    return first.addressLine;
-    }
-    
-    
-  }
+  // Future<String> convert(double lat, double lng)async{
+  //   List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+  //   return placemarks.first.name;
+  // }
 
   Future<String> addressByCity(String coord) async{
     var split =coord.split(',');
