@@ -382,27 +382,27 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                 //     ),
                 //     SizedBox(height: 10.0,),
 
-                FutureBuilder(
-                  future: CoordinatesConverter().convert(lats,longs),
-                  builder: (con ,snaps){
-                    if(snaps.data == null){
-                     return  NCard(
-                    active: false,
-                    icon: Icons.my_location,
-                    label: toShowAddress ,
+                // FutureBuilder(
+                //   future: CoordinatesConverter().convert(lats,longs),
+                //   builder: (con ,snaps){
+                //     if(snaps.data == null){
+                //      return  NCard(
+                //     active: false,
+                //     icon: Icons.my_location,
+                //     label: toShowAddress ,
                     
-                    onTap: () => viewMapo(),
-                  );
-                    }else{
-                       return  NCard(
-                    active: false,
-                    icon: Icons.my_location,
-                    label: snaps.data ,
-                    onTap: () => viewMapo(),
-                  );
-                    }
-                  },
-                ),
+                //     onTap: () => viewMapo(),
+                //   );
+                //     }else{
+                //        return  NCard(
+                //     active: false,
+                //     icon: Icons.my_location,
+                //     label: snaps.data ,
+                //     onTap: () => viewMapo(),
+                //   );
+                //     }
+                //   },
+                // ),
             //         Container(
             //   width: MediaQuery.of(context).size.width,
             //   alignment: Alignment.centerLeft,

@@ -277,13 +277,13 @@ _onsSignal() async{
                       child: Column(
                         children: [
                           FutureBuilder(
-                            future: CoordinatesConverter().convert(double.parse(snapshot.data[index].restoLatitude), double.parse(snapshot.data[index].restoLongitude)),
+                            // future: CoordinatesConverter().convert(double.parse(snapshot.data[index].restoLatitude), double.parse(snapshot.data[index].restoLongitude)),
                             builder: (context, datasnapshot){
                               if(datasnapshot==null){
                                 return Container();
                               }else{
                                 return FutureBuilder(
-                                  future: CoordinatesConverter().convert(double.parse(snapshot.data[index].transLatitude), double.parse(snapshot.data[index].transLongitude)),
+                                  // future: CoordinatesConverter().convert(double.parse(snapshot.data[index].transLatitude), double.parse(snapshot.data[index].transLongitude)),
                                   builder: (context, datasnapshot1){
                                   if(datasnapshot1==null){
                                     return Container();

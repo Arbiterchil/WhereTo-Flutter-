@@ -361,28 +361,28 @@ List idsComming = [];
                                                       
                                                       
                                                       SizedBox(height: 3.0,), 
-                                                      Flexible(
-                                                            child: FutureBuilder(
-                                                              future: CoordinatesConverter().convert(v[index].transLatitude,v[index].transLongitude),
-                                                              builder: (con ,snaps){
-                                                                if(snaps.data == null){
-                                                                  return Container();
-                                                                }else{
-                                                                  return Container(
-                                                              child: Text('To: ${snaps.data}',
-                                                              overflow: TextOverflow.ellipsis,
-                                                              style: TextStyle(
-                                                              color: pureblue,
-                                                              fontWeight: FontWeight.normal,
-                                                              fontSize: 11.0,
-                                                              fontFamily: 'Gilroy-light'
-                                                    ),
-                                                              ),
-                                                            );
-                                                                }
-                                                              },
-                                                            ),
-                                                          ),
+                                                    //   Flexible(
+                                                    //         child: FutureBuilder(
+                                                    //           future: CoordinatesConverter().convert(v[index].transLatitude,v[index].transLongitude),
+                                                    //           builder: (con ,snaps){
+                                                    //             if(snaps.data == null){
+                                                    //               return Container();
+                                                    //             }else{
+                                                    //               return Container(
+                                                    //           child: Text('To: ${snaps.data}',
+                                                    //           overflow: TextOverflow.ellipsis,
+                                                    //           style: TextStyle(
+                                                    //           color: pureblue,
+                                                    //           fontWeight: FontWeight.normal,
+                                                    //           fontSize: 11.0,
+                                                    //           fontFamily: 'Gilroy-light'
+                                                    // ),
+                                                    //           ),
+                                                    //         );
+                                                    //             }
+                                                    //           },
+                                                    //         ),
+                                                    //       ),
                                                        
                          ],
                        ),

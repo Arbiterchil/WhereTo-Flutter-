@@ -681,7 +681,7 @@ class _SearchDepoState extends State<SearchDepo> {
               return Column(
                 children: <Widget>[
                   FutureBuilder(
-                    future: CoordinatesConverter().convert(nf[index].latitude, nf[index].longitude),
+                    // future: CoordinatesConverter().convert(nf[index].latitude, nf[index].longitude),
                     builder: (context, datasnapshot){
                       if(datasnapshot.data==null){
                     return Container();
@@ -689,12 +689,8 @@ class _SearchDepoState extends State<SearchDepo> {
                     return NewRestaurantBox(
                     image: nf[index].imagePath,
                     restaurantName: nf[index].restaurantName,
-<<<<<<< HEAD
-                    address: datasnapshot.data,
-=======
                     // address: nf[index].latitude,
                     // address1: nf[index].longitude,
->>>>>>> 2abcbde... chnage
                     onTap: () async {
                        ProgressDialog featuredRestaurant = ProgressDialog(context);
                           featuredRestaurant.style(
