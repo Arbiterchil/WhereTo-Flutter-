@@ -3,8 +3,8 @@ class NeWRestaurant {
   String restaurantName;
   String owner;
   String representative;
-  double latitude;
-  double longitude;
+  String latitude;
+  String longitude;
   int barangayId;
   String contactNumber;
   String openTime;

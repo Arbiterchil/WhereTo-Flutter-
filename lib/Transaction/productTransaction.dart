@@ -14,6 +14,7 @@ import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong/latlong.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -268,10 +269,10 @@ class _TransactionListState extends State<TransactionList> {
                                                   ),
                                                   Padding(
                                                       padding: EdgeInsets.only(
-                                                          top: 90, left: 170),
+                                                          top: 70, left: 10),
                                                       child: Align(
                                                         alignment:
-                                                            Alignment.bottomRight,
+                                                            Alignment.center,
                                                         child: Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -393,7 +394,7 @@ class _TransactionListState extends State<TransactionList> {
                                           message: "Calculating Please Wait a Moment..",
                                           borderRadius: 10.0,
                                           backgroundColor: Colors.white,
-                                          progressWidget: CircularProgressIndicator(),
+                                          progressWidget: SpinKitDoubleBounce(color:  Colors.blue),
                                           elevation: 10.0,
                                           insetAnimCurve: Curves.easeInExpo,
                                           progressTextStyle: TextStyle(
@@ -404,11 +405,11 @@ class _TransactionListState extends State<TransactionList> {
                                           _pr = ProgressDialog(context,
                                            type: ProgressDialogType.Normal,
                                            isDismissible: false);
-                                           _pr.show();
+                                           
                                           var userLat =await ID().getLat();
                                           var userLng =await ID().getLng();    
                                           double deliveryCharge;       
-                                          if(snapshot.length >0){
+                                         
                                             deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(widget.restoLat, widget.restoLng) , LatLng(userLat, userLng));      
                                             Navigator.push(
                                                 context,
@@ -418,16 +419,11 @@ class _TransactionListState extends State<TransactionList> {
                                                             fee: deliveryCharge,
                                                             restauID: widget
                                                                 .restauID)));
-                                             _pr.hide();                                             
-                                          } else{    
-                                            _pr.hide();
-                                            print("No Order");
-                                        }
 
                                         },
                                         child: Container(
-                                          height: 60,
-                                          width: 190,
+                                          height: 20,
+                                          width: 160,
                                           decoration: BoxDecoration(
                                             color: Color(0xFF0C375B),
                                             borderRadius: BorderRadius.all(

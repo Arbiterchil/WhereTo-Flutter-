@@ -17,6 +17,7 @@ import 'package:WhereTo/restaurants/new_Carousel.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
@@ -680,13 +681,7 @@ class _SearchDepoState extends State<SearchDepo> {
             itemBuilder: (context, index) {
               return Column(
                 children: <Widget>[
-                  FutureBuilder(
-                    // future: CoordinatesConverter().convert(nf[index].latitude, nf[index].longitude),
-                    builder: (context, datasnapshot){
-                      if(datasnapshot.data==null){
-                    return Container();
-                      }else{
-                    return NewRestaurantBox(
+                  NewRestaurantBox(
                     image: nf[index].imagePath,
                     restaurantName: nf[index].restaurantName,
                     // address: nf[index].latitude,
@@ -697,7 +692,7 @@ class _SearchDepoState extends State<SearchDepo> {
                             message: "Loading Restaurant Please Wait..",
                             borderRadius: 10.0,
                             backgroundColor: Colors.white,
-                            progressWidget: CircularProgressIndicator(),
+                            progressWidget:SpinKitWanderingCubes(color:  Colors.blue),
                             elevation: 10.0,
                             insetAnimCurve: Curves.fastLinearToSlowEaseIn,
                             progressTextStyle: TextStyle(
@@ -711,21 +706,20 @@ class _SearchDepoState extends State<SearchDepo> {
                           await featuredRestaurant.show();
 
                       SharedPreferences local =
-                          await SharedPreferences.getInstance();
+                      await SharedPreferences.getInstance();
                       var userjson = local.getString('user');
                       var user = json.decode(userjson);
                       var restaurant;
                       var status;
-                      var restoLat;
-                      var restoLng;
+                      String restoLat;
+                      String restoLng;
                       var insideResto = nf[index].restaurantName;
                       var insideLat = nf[index].latitude;
                       var insideLng = nf[index].longitude;
                       var isRead = false;
                       Map<String, dynamic> temp;
                       List<dynamic> converted = [];
-                      final response = await ApiCall()
-                          .getData('/viewUserOrders/${user['id']}');
+                      final response = await ApiCall().getData('/viewUserOrders/${user['id']}');
                       final List<ViewUserOrder> transaction =
                           viewUserOrderFromJson(response.body);
                       transaction.forEach((element) {
@@ -740,19 +734,18 @@ class _SearchDepoState extends State<SearchDepo> {
                           "restoLongitude": restoLng,
                         };
                         converted.add(temp);
+                       
                       });
                       for (var i = 0; i < converted.length; i++) {
-                        if (insideResto == converted[i]['restaurant'] &&
-                            insideLat == converted[i]['restolatitude'] &&
-                            insideLng == converted[i]['restoLongitude'] &&
-                            converted[i]['status'] < 4) {
+                        if (insideResto ==converted[i]['restaurant'] &&insideLat ==converted[i]['restolatitude'] && insideLng ==converted[i]['restoLongitude'] && converted[i]['status'] < 4) {
                           isRead = true;
                           break;
                         }
                       }
                       if (isRead) {
-                        // await featured.hide();
+                        featuredRestaurant.hide();
                         UserDialog_Help.restaurantDialog(context);
+                        
                       } else {
                         // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
                         //   print(
@@ -762,8 +755,8 @@ class _SearchDepoState extends State<SearchDepo> {
                         // } else {
                         //   if (int.parse(formatNow.split(":")[0]) >=
                         //       int.parse(formatOpen.split(":")[0])) {
-
-                        await featuredRestaurant.hide();
+                       
+                        featuredRestaurant.hide();
                         Navigator.push(
                             context,
                             new MaterialPageRoute(
@@ -773,16 +766,14 @@ class _SearchDepoState extends State<SearchDepo> {
                                           nf[index].restaurantName.toString(),
                                       baranggay:
                                           nf[index].barangayId.toString(),
-                                      lat: nf[index].latitude,
-                                      lng: nf[index].longitude,
+                                      lat: double.parse(nf[index].latitude),
+                                      lng: double.parse(nf[index].longitude),
                                       categID: categ,
                                     )));
+                        
                       }
                     },
-                  );
-                      }
-                    },
-                  )
+                  ),
                 ],
               );
             },

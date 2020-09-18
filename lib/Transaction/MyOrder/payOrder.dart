@@ -16,6 +16,7 @@ import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:location/location.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -62,50 +63,33 @@ class _PayOrderState extends State<PayOrder> {
     return WillPopScope(
       onWillPop: ()async=>false,
           child: Scaffold(
-          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.black,), 
+              onPressed: (){
+                Navigator.pop(context);
+              }),
+            title: Text('Checkout',softWrap: true, style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Gilroy-light',
+              fontSize: 20
+            ),)  
+            
+            ),
+
           body: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Stack(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 40, left: 15),
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              color: Color(0xFF0C375B), shape: BoxShape.circle),
-                          child: Center(
-                            child: Icon(
-                              Icons.clear,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      )),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20, left: 13, right: 13),
+                  padding: EdgeInsets.only(top: 1, left: 13, right: 13),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     child: BlocConsumer<OrderBloc, List<TransactionOrders>>(
                       builder: (context, snapshot) {
-                        // ProgressDialog orders= ProgressDialog(context);
-                        // orders.style(
-                        // message: "Notifying The Riders about the Order..",
-                        // borderRadius: 10.0,
-                        // backgroundColor: Colors.white,
-                        // progressWidget: CircularProgressIndicator(),
-                        // elevation: 10.0,
-                        // insetAnimCurve: Curves.easeInExpo,
-                        // progressTextStyle: TextStyle(
-                        // color: Colors.black,
-                        // fontSize: 10.0,
-                        // fontWeight: FontWeight.w300,
-                        // fontFamily: "Gilroy-light"));
+                        
                         return Builder(builder: (context) {
                           Map<String, dynamic> string;
                           Map<String, int> converted1 = {};
@@ -139,9 +123,11 @@ class _PayOrderState extends State<PayOrder> {
                           }
                           double totalOrder = widget.fee +double.parse(total.toString());
                           return Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(top: 80),
+                                padding: EdgeInsets.only(top: 10),
                                 child: SingleChildScrollView(
                                   child: Builder(builder: (context) {
                                     return Stack(
@@ -186,7 +172,11 @@ class _PayOrderState extends State<PayOrder> {
                                   child: Builder(builder: (context) {
                                     return Stack(
                                       children: [
-                                        Card(
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(10))
+                                          ),
+                                          child: Card(
                                           elevation: 15.5,
                                           color: Color(0xFF0C375B),
                                           child: Padding(
@@ -213,6 +203,7 @@ class _PayOrderState extends State<PayOrder> {
                                             )),
                                           ),
                                         ),
+                                        )
                                       ],
                                     );
                                   }),
@@ -294,80 +285,88 @@ class _PayOrderState extends State<PayOrder> {
                                   }),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 10),
-                                child: Container(
-                                  child: Builder(builder: (context) {
-                                    return Stack(
-                                      fit: StackFit.passthrough,
-                                      children: [
-                                        Card(
-                                          elevation: 15.5,
-                                          color: Color(0xFF0C375B),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(5),
-                                            child: Center(
-                                                child: Padding(
-                                              padding: EdgeInsets.all(5),
-                                              child: ListTile(
-                                                title: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                  "Delivery Address",
-                                                  style: TextStyle(
-                                                    fontFamily: "Gilroy-light",
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  " ${newAddress.toString().contains("null")?userData:newAddress}",
-                                                  style: TextStyle(
-                                                    fontFamily: "Gilroy-light",
-                                                    color: Colors.white,
-                                                    fontSize: 12
-                                                  ),
-                                                ),
-                                                  ],
-                                                )
+                              // Padding(
+                              //   padding: EdgeInsets.only(top: 10),
+                              //   child: Container(
+                              //     child: Builder(builder: (context) {
+                              //       return Stack(
+                              //         fit: StackFit.passthrough,
+                              //         children: [
+                              //           Card(
+                              //             elevation: 15.5,
+                              //             color: Color(0xFF0C375B),
+                              //             child: Padding(
+                              //               padding: EdgeInsets.all(5),
+                              //               child: Center(
+                              //                   child: Padding(
+                              //                 padding: EdgeInsets.all(5),
+                              //                 child: ListTile(
+                              //                   title: Column(
+                              //                     crossAxisAlignment: CrossAxisAlignment.start,
+                              //                     children: [
+                              //                       Text(
+                              //                     "Delivery Address",
+                              //                     style: TextStyle(
+                              //                       fontFamily: "Gilroy-light",
+                              //                       color: Colors.white,
+                              //                     ),
+                              //                   ),
+                              //                   SizedBox(
+                              //                     height: 10,
+                              //                   ),
+                              //                   Text(
+                              //                     " ${newAddress.toString().contains("null")?userData:newAddress}",
+                              //                     style: TextStyle(
+                              //                       fontFamily: "Gilroy-light",
+                              //                       color: Colors.white,
+                              //                       fontSize: 12
+                              //                     ),
+                              //                   ),
+                              //                     ],
+                              //                   )
                                                     
                                                  
-                                                  ),
+                              //                     ),
 
-                                            )),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }),
-                                ),
-                              ),
+                              //               )),
+                              //             ),
+                              //           ),
+                              //         ],
+                              //       );
+                              //     }),
+                              //   ),
+                              // ),
                               
                               Padding(
-                                padding: EdgeInsets.only(top: 50),
+                                padding: EdgeInsets.only(top: 100),
                                 child: Align(
-                                  alignment: Alignment.bottomRight,
+                                  alignment: Alignment.bottomCenter,
                                   child: Stack(
                                     children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.only(bottom: 5),
-                                        child: Container(
+                                     
+                                      Container(
                                           height: 55,
                                           width: double.infinity,
                                           child: GestureDetector(
                                             onTap: () async {
-                                              
-                                              // orders = ProgressDialog(context, type: ProgressDialogType.Normal,
-                                              // isDismissible: false);
-                                              // orders.show();
+                                              ProgressDialog orders= ProgressDialog(context);
+                                              orders.style(
+                                              message: "Notifying The Riders about the Order..",
+                                              borderRadius: 10.0,
+                                              backgroundColor: Colors.white,
+                                              progressWidget: SpinKitDoubleBounce(color:  Colors.blue),
+                                              elevation: 10.0,
+                                              insetAnimCurve: Curves.easeInExpo,
+                                              progressTextStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10.0,
+                                              fontWeight: FontWeight.w300,
+                                              fontFamily: "Gilroy-light"));
+                                              orders = ProgressDialog(context, type: ProgressDialogType.Normal,
+                                              isDismissible: false);
+                                              orders.show();
 
-                                                showDialog(
-                                                barrierDismissible: false,
-                                                context: context,
-                                                builder: (con)=>ForOrderLoading());
+                                            
 
                                               var location = Location();
                                               var userLocation =
@@ -440,12 +439,12 @@ class _PayOrderState extends State<PayOrder> {
                                                 });
                                                 print(data);
                                                 print("Success");
-                                                // orders.hide();
+                                                orders.hide();
                                                   DialogOrder().getDialog(context, "Order Succesfully Placed", "Order Success", Icons.check, Colors.black);
                                                   BlocProvider.of<OrderBloc>(context).add(Computation.deleteAll());
                                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>SearchDepo()));
                                               }else{
-                                              // orders.hide();
+                                              orders.hide();
                                                DialogOrder().getDialog(context, "Slow/No Internet Connection", "Order Failed", Icons.error, Color(0xFFFF3345));
                                               }
                                               final response = await ApiCall().getData('/getAllPlayerId');
@@ -545,7 +544,7 @@ class _PayOrderState extends State<PayOrder> {
                                             ),
                                           ),
                                         ),
-                                      ),
+                                      
                                     ],
                                   ),
                                 ),

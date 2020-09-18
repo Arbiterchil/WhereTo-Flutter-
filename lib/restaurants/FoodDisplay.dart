@@ -12,6 +12,7 @@ import 'package:WhereTo/restaurants/blocMenuFeatured.dart';
 import 'package:WhereTo/restaurants/list_restaurant.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -83,8 +84,8 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                           "Loading Restaurant Please Wait..",
                                       borderRadius: 10.0,
                                       backgroundColor: Colors.white,
-                                      progressWidget:
-                                          CircularProgressIndicator(),
+                                      progressWidget: SpinKitPumpingHeart(color: Colors.red)
+                                         ,
                                       elevation: 10.0,
                                       insetAnimCurve:
                                           Curves.fastLinearToSlowEaseIn,
@@ -134,8 +135,9 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                     }
                                   }
                                   if (isRead) {
-                                    // await featured.hide();
+                                    featured.hide();
                                     UserDialog_Help.restaurantDialog(context);
+                                   
                                   } else {
                                     
                                     // if (int.parse(formatNow.split(":")[0]) >=int.parse(formatClosing.split(":")[0]) ||int.parse(formatNow.split(":")[0]) >= 0 &&int.parse(formatNow.split(":")[0]) <08) {
@@ -147,8 +149,8 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                     //   if (int.parse(formatNow.split(":")[0]) >=
                                     //       int.parse(formatOpen.split(":")[0])) {
                                    
+                                      
                                     
-                                  
                                       featured.hide();
                                       Navigator.push(
                                           context,
