@@ -16,33 +16,33 @@ class NewRestaurantApi {
     try{  
 
         var response = await ApiCall().getRestarant('/getFeaturedRestaurant');
-        List<NeWRestaurant> restaurantnew = [];
+        // List<NeWRestaurant> restaurantnew = [];
 
         var body = json.decode(response.body);
-        for(var body in body){
-            NeWRestaurant neWRestaurant = NeWRestaurant(
-                id: body["id"],
-        restaurantName: body["restaurantName"],
-        owner: body["owner"],
-        representative: body["representative"] ,
-        latitude: body["latitude"],
-        longitude: body["longitude"],
-        barangayId: body["barangayId"],
-        contactNumber: body["contactNumber"],
-        openTime: body["openTime"],
-        closingTime: body["closingTime"],
-        closeOn: body["closeOn"],
-        isFeatured: body["isFeatured"],
-        status: body["status"],
-        imagePath: body["imagePath"],
-        isActive: body["isActive"],
-        createdAt: body["created_at"],
-        updatedAt: body["updated_at"],
-            );
-            restaurantnew.add(neWRestaurant);
-        }
+        // for(var body in body){
+        //     NeWRestaurant neWRestaurant = NeWRestaurant(
+        //         id: body["id"],
+        // restaurantName: body["restaurantName"],
+        // owner: body["owner"],
+        // representative: body["representative"] ,
+        // latitude: body["latitude"],
+        // longitude: body["longitude"],
+        // barangayId: body["barangayId"],
+        // contactNumber: body["contactNumber"],
+        // openTime: body["openTime"],
+        // closingTime: body["closingTime"],
+        // closeOn: body["closeOn"],
+        // isFeatured: body["isFeatured"],
+        // status: body["status"],
+        // imagePath: body["imagePath"],
+        // isActive: body["isActive"],
+        // createdAt: body["created_at"],
+        // updatedAt: body["updated_at"],
+        //     );
+        //     restaurantnew.add(neWRestaurant);
+        // }
 
-        return NewRestaurantResponse.fromJson(restaurantnew);  
+        return NewRestaurantResponse.fromJson(json.decode(response.body));  
         
     }catch(error,stacktrace){
           print("Error Occurence. $error and $stacktrace" );

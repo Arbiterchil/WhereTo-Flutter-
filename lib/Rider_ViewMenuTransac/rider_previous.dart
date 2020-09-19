@@ -316,7 +316,7 @@ var iderntify;
   notif2();
   }
   done() async{
-  await ApiCall().transactionComplete('/transactionComplete/${widget.getID}');
+  // await ApiCall().transactionComplete('/transactionComplete/${widget.getID}');
   notif3();
   }
 
@@ -843,6 +843,7 @@ var checkVal = localStorage.getBool('check');
                                       color: Colors.white,
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                                       onPressed: () async {
+                                         await ApiCall().transactionComplete('/transactionComplete/${widget.getID}');
                                         SharedPreferences localStorage = await SharedPreferences.getInstance();
                                         localStorage.remove('menuplustrans');
                                         localStorage.remove('playerIDS');

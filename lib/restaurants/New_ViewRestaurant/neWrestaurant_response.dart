@@ -9,8 +9,12 @@ class NewRestaurantResponse {
 
   NewRestaurantResponse(this.feature, this.error);
 
-  NewRestaurantResponse.fromJson(List<NeWRestaurant> json)
-  : feature = json,error = "" ;
+  NewRestaurantResponse.fromJson(List<dynamic>json)
+  : feature = 
+  json.cast<Map<String,dynamic>>()
+  .map((e) =>
+   new NeWRestaurant.fromJson(e))
+   .toList(),error = "" ;
     
 
   NewRestaurantResponse.withError(String errorvalue)

@@ -320,7 +320,7 @@ var iderntify;
   notif2();
   }
   done() async{
-  await ApiCall().transactionComplete('/transactionComplete/${widget.getID}');
+  // await ApiCall().transactionComplete('/transactionComplete/${widget.getID}');
   notif3();
   }
 
