@@ -14,7 +14,7 @@ ReceiptBloc(){
   receiptView;
 }
 
-Stream<> get receiptView async*{
+Stream get receiptView async*{
   yield await ReceiptService.getRecipt();
 }
 
