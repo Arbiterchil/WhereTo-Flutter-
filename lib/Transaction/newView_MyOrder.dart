@@ -425,8 +425,8 @@ _onsSignal() async{
                               // Navigator.push(context, MaterialPageRoute(builder: (context){
                               //   return StepperStatus(status: sunkist,);
                               // }));
-                                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return Receipt();
+                                Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return ReceiptWidget();
                               }));
                             },
                           );
