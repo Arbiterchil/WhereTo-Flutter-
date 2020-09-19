@@ -1,18 +1,25 @@
+import 'dart:convert';
+
+List<Barangays> barangaysFromJson(String str) => List<Barangays>.from(json.decode(str).map((x) => Barangays.fromJson(x)));
+
+String barangaysToJson(List<Barangays> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class Barangays {
-  int id;
-  String barangayName;
+    Barangays({
+        this.id,
+        this.barangayName,
+    });
 
-  Barangays({this.id, this.barangayName});
+    int id;
+    String barangayName;
 
-  Barangays.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    barangayName = json['barangayName'];
-  }
+    factory Barangays.fromJson(Map<String, dynamic> json) => Barangays(
+        id: json["id"],
+        barangayName: json["barangayName"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['barangayName'] = this.barangayName;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "barangayName": barangayName,
+    };
 }
