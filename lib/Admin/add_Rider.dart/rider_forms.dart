@@ -167,12 +167,14 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
           //           onTap: () => viewMapo(),
           //         );
           //           }else{
-          //              return  NCard(
-          //           active: false,
-          //           icon: Icons.my_location,
-          //           label: snaps.data ,
-          //           onTap: () => viewMapo(),
-          //         );
+          //              return  
+          NCard(
+                    active: false,
+                    icon: Icons.my_location,
+                    label: lats.toString()+","+longs.toString() ,
+                    onTap: () => viewMapo(),
+                  ),
+          //;
           //           }
           //         },
           //       ),
