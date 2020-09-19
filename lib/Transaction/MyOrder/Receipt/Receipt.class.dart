@@ -1,124 +1,136 @@
-// To parse this JSON data, do
-//
-//     final receipt = receiptFromJson(jsonString);
-
-
 class Receipt {
-    Receipt({
-        this.transactionDetails,
-        this.orders,
-        this.riderDetails,
-    });
+  List<TransactionDetails> transactionDetails;
+  List<Orders> orders;
+  List<RiderDetails> riderDetails;
 
-    final List<TransactionDetail> transactionDetails;
-    final List<Order> orders;
-    final List<RiderDetail> riderDetails;
+  Receipt({this.transactionDetails, this.orders, this.riderDetails});
 
-    factory Receipt.fromJson(Map<String, dynamic> json) => Receipt(
-        transactionDetails: json["transactionDetails"] == null ? null : List<TransactionDetail>.from(json["transactionDetails"].map((x) => TransactionDetail.fromJson(x))),
-        orders: json["orders"] == null ? null : List<Order>.from(json["orders"].map((x) => Order.fromJson(x))),
-        riderDetails: json["riderDetails"] == null ? null : List<RiderDetail>.from(json["riderDetails"].map((x) => RiderDetail.fromJson(x))),
-    );
+  Receipt.fromJson(Map<String, dynamic> json) {
+    if (json['transactionDetails'] != null) {
+      transactionDetails = new List<TransactionDetails>();
+      json['transactionDetails'].forEach((v) {
+        transactionDetails.add(new TransactionDetails.fromJson(v));
+      });
+    }
+    if (json['orders'] != null) {
+      orders = new List<Orders>();
+      json['orders'].forEach((v) {
+        orders.add(new Orders.fromJson(v));
+      });
+    }
+    if (json['riderDetails'] != null) {
+      riderDetails = new List<RiderDetails>();
+      json['riderDetails'].forEach((v) {
+        riderDetails.add(new RiderDetails.fromJson(v));
+      });
+    }
+  }
 
-    Map<String, dynamic> toJson() => {
-        "transactionDetails": transactionDetails == null ? null : List<dynamic>.from(transactionDetails.map((x) => x.toJson())),
-        "orders": orders == null ? null : List<dynamic>.from(orders.map((x) => x.toJson())),
-        "riderDetails": riderDetails == null ? null : List<dynamic>.from(riderDetails.map((x) => x.toJson())),
-    };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.transactionDetails != null) {
+      data['transactionDetails'] =
+          this.transactionDetails.map((v) => v.toJson()).toList();
+    }
+    if (this.orders != null) {
+      data['orders'] = this.orders.map((v) => v.toJson()).toList();
+    }
+    if (this.riderDetails != null) {
+      data['riderDetails'] = this.riderDetails.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Order {
-    Order({
-        this.menuName,
-        this.totalPrice,
-        this.quantity,
-        this.totalAmount,
-    });
+class TransactionDetails {
+  int id;
+  String name;
+  String contactNumber;
+  String barangayName;
+  String restaurantName;
+  String createdAt;
+  int deliveryCharge;
+  String latitude;
+  String longitude;
 
-    final String menuName;
-    final int totalPrice;
-    final int quantity;
-    final int totalAmount;
+  TransactionDetails(
+      {this.id,
+      this.name,
+      this.contactNumber,
+      this.barangayName,
+      this.restaurantName,
+      this.createdAt,
+      this.deliveryCharge,
+      this.latitude,
+      this.longitude});
 
-    factory Order.fromJson(Map<String, dynamic> json) => Order(
-        menuName: json["menuName"] == null ? null : json["menuName"],
-        totalPrice: json["totalPrice"] == null ? null : json["totalPrice"],
-        quantity: json["quantity"] == null ? null : json["quantity"],
-        totalAmount: json["totalAmount"] == null ? null : json["totalAmount"],
-    );
+  TransactionDetails.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    contactNumber = json['contactNumber'];
+    barangayName = json['barangayName'];
+    restaurantName = json['restaurantName'];
+    createdAt = json['created_at'];
+    deliveryCharge = json['deliveryCharge'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+  }
 
-    Map<String, dynamic> toJson() => {
-        "menuName": menuName == null ? null : menuName,
-        "totalPrice": totalPrice == null ? null : totalPrice,
-        "quantity": quantity == null ? null : quantity,
-        "totalAmount": totalAmount == null ? null : totalAmount,
-    };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['contactNumber'] = this.contactNumber;
+    data['barangayName'] = this.barangayName;
+    data['restaurantName'] = this.restaurantName;
+    data['created_at'] = this.createdAt;
+    data['deliveryCharge'] = this.deliveryCharge;
+    data['latitude'] = this.latitude;
+    data['longitude'] = this.longitude;
+    return data;
+  }
 }
 
-class RiderDetail {
-    RiderDetail({
-        this.name,
-        this.contactNumber,
-    });
+class Orders {
+  String menuName;
+  int totalPrice;
+  int quantity;
+  int totalAmount;
 
-    final String name;
-    final String contactNumber;
+  Orders({this.menuName, this.totalPrice, this.quantity, this.totalAmount});
 
-    factory RiderDetail.fromJson(Map<String, dynamic> json) => RiderDetail(
-        name: json["name"] == null ? null : json["name"],
-        contactNumber: json["contactNumber"] == null ? null : json["contactNumber"],
-    );
+  Orders.fromJson(Map<String, dynamic> json) {
+    menuName = json['menuName'];
+    totalPrice = json['totalPrice'];
+    quantity = json['quantity'];
+    totalAmount = json['totalAmount'];
+  }
 
-    Map<String, dynamic> toJson() => {
-        "name": name == null ? null : name,
-        "contactNumber": contactNumber == null ? null : contactNumber,
-    };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['menuName'] = this.menuName;
+    data['totalPrice'] = this.totalPrice;
+    data['quantity'] = this.quantity;
+    data['totalAmount'] = this.totalAmount;
+    return data;
+  }
 }
 
-class TransactionDetail {
-    TransactionDetail({
-        this.id,
-        this.name,
-        this.contactNumber,
-        this.barangayName,
-        this.restaurantName,
-        this.createdAt,
-        this.deliveryCharge,
-        this.latitude,
-        this.longitude,
-    });
+class RiderDetails {
+  String name;
+  String contactNumber;
 
-    final int id;
-    final String name;
-    final String contactNumber;
-    final String barangayName;
-    final String restaurantName;
-    final DateTime createdAt;
-    final int deliveryCharge;
-    final String latitude;
-    final String longitude;
+  RiderDetails({this.name, this.contactNumber});
 
-    factory TransactionDetail.fromJson(Map<String, dynamic> json) => TransactionDetail(
-        id: json["id"] == null ? null : json["id"],
-        name: json["name"] == null ? null : json["name"],
-        contactNumber: json["contactNumber"] == null ? null : json["contactNumber"],
-        barangayName: json["barangayName"] == null ? null : json["barangayName"],
-        restaurantName: json["restaurantName"] == null ? null : json["restaurantName"],
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        deliveryCharge: json["deliveryCharge"] == null ? null : json["deliveryCharge"],
-        latitude: json["latitude"] == null ? null : json["latitude"],
-        longitude: json["longitude"] == null ? null : json["longitude"],
-    );
+  RiderDetails.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    contactNumber = json['contactNumber'];
+  }
 
-    Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "name": name == null ? null : name,
-        "contactNumber": contactNumber == null ? null : contactNumber,
-        "barangayName": barangayName == null ? null : barangayName,
-        "restaurantName": restaurantName == null ? null : restaurantName,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "deliveryCharge": deliveryCharge == null ? null : deliveryCharge,
-        "latitude": latitude == null ? null : latitude,
-        "longitude": longitude == null ? null : longitude,
-    };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['contactNumber'] = this.contactNumber;
+    return data;
+  }
 }

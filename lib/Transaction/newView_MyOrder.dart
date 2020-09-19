@@ -13,6 +13,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'MyOrder/Receipt/Receipt.dart';
 import 'MyOrder/StatusStepper.dart';
 import 'MyOrder/bloc.dart';
 import 'MyOrder/getViewOrder.dart';
@@ -289,6 +290,7 @@ _onsSignal() async{
                                     return Container();
                                   }else{
                                     return XviewTransac(
+                                      
                             image: "asset/img/doneprocess.png",
                             deliveryAddress:
                             datasnapshot.data.toString(),
@@ -297,6 +299,7 @@ _onsSignal() async{
                             status: sunkist == null
                                 ? snapshot.data[index].status.toString()
                                 : sunkist.toString(),
+                                                    
                             onTapCancel: () {
                               if (snapshot.data[index].status ==0) {
                                 showDialog<void>(
@@ -422,6 +425,9 @@ _onsSignal() async{
                               // Navigator.push(context, MaterialPageRoute(builder: (context){
                               //   return StepperStatus(status: sunkist,);
                               // }));
+                                 Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return Receipt();
+                              }));
                             },
                           );
                                   }

@@ -18,7 +18,7 @@ Stream<List<ViewUserOrder>> get sinkMyOrder =>_publishSubject.stream;
     Future<void>getMenuTransaction() async{
     var id =await ID().getId();
     final response = await ApiCall().getData('/viewUserOrders/$id');
-    final List<ViewUserOrder> transaction = viewUserOrderFromJson(response.body);
+    final List<ViewUserOrder> transaction = viewUserOrderFromJson(response.body).toList();
     _publishSubject.sink.add(transaction);
   }
   
