@@ -402,11 +402,7 @@ final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/${widge
                                         totalAll = prices[i]*quans[x];
                                       List all =  [totalAll]; 
                                       for(var z = 0 ; z < all.length; z++){
-                                        
-                                            priceTotal = priceTotal+all[z];
-                                            
-                              
-                                            
+                                            priceTotal = priceTotal+all[z];                                           
                                       }
                                   }
                                   }           

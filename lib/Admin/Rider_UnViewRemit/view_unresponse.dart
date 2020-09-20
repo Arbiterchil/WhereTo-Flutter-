@@ -10,7 +10,12 @@ class UnRemitResponse {
   UnRemitResponse(this.viewRemit, this.error);
 
  UnRemitResponse.fromJson(List<dynamic> json)
-  : viewRemit = json,error = "" ;
+  : viewRemit = 
+  json
+  .cast<Map<String,dynamic>>()
+  .map((e) => new UnViewRemit.fromJson(e))
+  .toList()
+  ,error = "" ;
     
 
   UnRemitResponse.withError(String errorvalue)
