@@ -1,40 +1,45 @@
+import 'dart:convert';
+
+List<ViewRemit> viewRemitFromJson(String str) => List<ViewRemit>.from(json.decode(str).map((x) => ViewRemit.fromJson(x)));
+
+String viewRemitToJson(List<ViewRemit> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class ViewRemit {
-  int id;
-  int riderId;
-  String name;
-  int amount;
-  String imagePath;
-  int status;
-  String createdAt;
+    ViewRemit({
+        this.id,
+        this.riderId,
+        this.name,
+        this.amount,
+        this.imagePath,
+        this.status,
+        this.createdAt,
+    });
 
-  ViewRemit(
-      {this.id,
-      this.riderId,
-      this.name,
-      this.amount,
-      this.imagePath,
-      this.status,
-      this.createdAt});
+    int id;
+    int riderId;
+    String name;
+    double amount;
+    String imagePath;
+    int status;
+    String createdAt;
 
-  ViewRemit.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    riderId = json['riderId'];
-    name = json['name'];
-    amount = json['amount'];
-    imagePath = json['imagePath'];
-    status = json['status'];
-    createdAt = json['created_at'];
-  }
+    factory ViewRemit.fromJson(Map<String, dynamic> json) => ViewRemit(
+        id: json["id"],
+        riderId: json["riderId"],
+        name: json["name"],
+        amount: json["amount"].toDouble(),
+        imagePath: json["imagePath"],
+        status: json["status"],
+        createdAt: json["created_at"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['riderId'] = this.riderId;
-    data['name'] = this.name;
-    data['amount'] = this.amount;
-    data['imagePath'] = this.imagePath;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "riderId": riderId,
+        "name": name,
+        "amount": amount,
+        "imagePath": imagePath,
+        "status": status,
+        "created_at": createdAt,
+    };
 }

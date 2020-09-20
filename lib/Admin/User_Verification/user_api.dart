@@ -30,20 +30,20 @@ Future<UserVerified> getUserUnVerified() async {
   Future<RemitResponse> getRemitImages() async {
     try{
       var response = await ApiCall().getRemitImage('/viewRemittedList');
-      var bodies = json.decode(response.body);
-      List<ViewRemit> viewRet = [];
-      for(var bodies in bodies){
-        ViewRemit vr = ViewRemit(
-       riderId: bodies["riderId"],
-        name: bodies["name"],
-        amount: bodies["amount"],
-        imagePath: bodies["imagePath"],
-        status: bodies["status"],
-        createdAt: bodies["created_at"].toString(),
-        );
-        viewRet.add(vr);
-      }
-      return RemitResponse.fromJson(viewRet);
+      // var bodies = json.decode(response.body);
+      // List<ViewRemit> viewRet = [];
+      // for(var bodies in bodies){
+      //   ViewRemit vr = ViewRemit(
+      //  riderId: bodies["riderId"],
+      //   name: bodies["name"],
+      //   amount: bodies["amount"],
+      //   imagePath: bodies["imagePath"],
+      //   status: bodies["status"],
+      //   createdAt: bodies["created_at"].toString(),
+      //   );
+      //   viewRet.add(vr);
+      // }
+      return RemitResponse.fromJson(json.decode(response.body));
     }catch(stacktrace,error){
   print("Error Occurence. $error and $stacktrace" );
       return RemitResponse.withError("$error");
@@ -54,20 +54,20 @@ Future<UserVerified> getUserUnVerified() async {
 
     try{
         var response = await ApiCall().getRemitImage('/viewUnremittedList');
-      var bodies = json.decode(response.body);
-      List<UnViewRemit> unviewRet = [];
-      for(var bodies in bodies){
-        UnViewRemit vr = UnViewRemit(
-       riderId: bodies["riderId"],
-        name: bodies["name"],
-        amount: bodies["amount"],
-        imagePath: bodies["imagePath"],
-        status: bodies["status"],
-        createdAt: bodies["created_at"].toString(),
-        );
-        unviewRet.add(vr);
-      }
-      return UnRemitResponse.fromJson(unviewRet);
+      // var bodies = json.decode(response.body);
+      // List<UnViewRemit> unviewRet = [];
+      // for(var bodies in bodies){
+      //   UnViewRemit vr = UnViewRemit(
+      //  riderId: bodies["riderId"],
+      //   name: bodies["name"],
+      //   amount: bodies["amount"],
+      //   imagePath: bodies["imagePath"],
+      //   status: bodies["status"],
+      //   createdAt: bodies["created_at"].toString(),
+      //   );
+      //   unviewRet.add(vr);
+      // }
+      return UnRemitResponse.fromJson(json.decode(response.body));
     }catch(stacktrace, error){
       print("Error Occurence. $error and $stacktrace" );
       return UnRemitResponse.withError("$error");

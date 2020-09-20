@@ -10,7 +10,12 @@ class RemitResponse {
   RemitResponse(this.viewRemit, this.error);
 
  RemitResponse.fromJson(List<dynamic> json)
-  : viewRemit = json,error = "" ;
+  : viewRemit = 
+  json
+  .cast<Map<String,dynamic>>()
+  .map((e) => new ViewRemit.fromJson(e))
+  .toList()
+  ,error = "" ;
     
 
   RemitResponse.withError(String errorvalue)

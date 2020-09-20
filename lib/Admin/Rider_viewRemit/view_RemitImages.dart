@@ -246,7 +246,7 @@ bool lace =false;
         }
  }
 
-  void _showDial(String resources, int id ,String name, int amount, String createdAt,bool laso){
+  void _showDial(String resources, int id ,String name, double amount, String createdAt,bool laso){
     
     laso = false;
 
