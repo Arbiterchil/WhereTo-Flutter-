@@ -176,10 +176,10 @@ var response = await ApiCall().getRiderRemit('/getRiderRemit/${widget.idFromLog.
                                var res = await ApiCall().getData('/logout');
                             var body = json.decode(res.body);
                            print(body);
-                                Navigator.pushReplacement(
+                                Navigator.pushAndRemoveUntil(
                               context,
                               new MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
+                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
   _showDial("Send Done to the Admins.");
    }  
 }
