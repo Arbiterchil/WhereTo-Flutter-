@@ -426,7 +426,7 @@ _onsSignal() async{
                               //   return StepperStatus(status: sunkist,);
                               // }));
                                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return ReceiptWidget();
+                                return ReceiptWidget(transactID: snapshot.data[index].id.toString(),);
                               }));
                             },
                           );
