@@ -162,79 +162,107 @@ class _ShowtheResultsState extends State<ShowtheResults> {
                   return Padding(
                     padding: const EdgeInsets.only(left: 30,right: 30,top: 10),
                     child: Container(
-                      height: 130,
+                      height: 200,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        // border: Border.all(
-                        //   width: 1,
-                        //   color: pureblue
-                        // ),
-                        // borderRadius: BorderRadius.all(Radius.circular(20)),
-
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey[300],
+                            spreadRadius: 3.3,
+                            blurRadius: 3.3
+                          )
+                        ],
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Text(getale[index].deliveryAddress,
-                            style: TextStyle(
-                              color: pureblue,
-                              fontFamily: 'Gilory-light',
-                            ),
-                            ),
-                          ),
-                          SizedBox(height: 10,),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Flexible(
-                                  child: Text(getale[index].menuName,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: pureblue,
-                                    fontFamily: 'Gilroy-ExtraBold'
-                                  ),
-                                  ),
+                      child: Container(
+                        height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10,top: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Text(getale[index].menuName,
+                                style: TextStyle(
+                                  color: wheretoDark,
+                                  fontFamily: 'Gilory-light',
                                 ),
+                                ),
+                              ),
+                              SizedBox(height: 15,),
+                              Text("Price : ${getale[index].price.toString()}",
+                                style: TextStyle(
+                                  color: wheretoDark,
+                                  fontFamily: 'Gilory-light',
+                                ),
+                                ),
+                                SizedBox(height: 15,),
+                                Text("Quantity : ${getale[index].quantity.toString()}",
+                                style: TextStyle(
+                                  color: wheretoDark,
+                                  fontFamily: 'Gilory-light',
+                                ),
+                                ),
+                              // Container(
+                              //   width: MediaQuery.of(context).size.width,
+                              //   height: 50,
+                              //   child: Row(
+                              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              //     children: <Widget>[
+                              //       Flexible(
+                              //         child: Text(getale[index].menuName,
+                              //         overflow: TextOverflow.ellipsis,
+                              //         style: TextStyle(
+                              //           color: pureblue,
+                              //           fontFamily: 'Gilroy-ExtraBold'
+                              //         ),
+                              //         ),
+                              //       ),
 
-                                Text(getale[index].price.toString(),
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: pureblue,
-                                    fontFamily: 'Gilroy-light'
-                                  ),
-                                  ),
+                              //       Text(getale[index].price.toString(),
+                              //         overflow: TextOverflow.ellipsis,
+                              //         style: TextStyle(
+                              //           color: pureblue,
+                              //           fontFamily: 'Gilroy-light'
+                              //         ),
+                              //         ),
 
-                                Text(getale[index].quantity.toString(),
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: pureblue,
-                                    fontFamily: 'Gilroy-light'
-                                  ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20,),
-                          Text(getale[index].total.toString(),
-                            style: TextStyle(
-                              color: pureblue,
-                              fontFamily: 'Gilroy-ExtraBold',
-                            ),
-                            ),
-                          SizedBox(height: 5,),
-                        Divider(
+                              //       Text(getale[index].quantity.toString(),
+                              //         overflow: TextOverflow.ellipsis,
+                              //         style: TextStyle(
+                              //           color: pureblue,
+                              //           fontFamily: 'Gilroy-light'
+                              //         ),
+                              //         ),
+                              //     ],
+                              //   ),
+                              // ),
+                               SizedBox(height: 20,),
+                                       Divider(
                   height: 6.0,
                   thickness: 2,
-                  color: pureblue,
-                  indent: 10.0,
-                  endIndent: 10.0,
+                  color: wheretoDark,
+                  indent: 30.0,
+                  endIndent: 30.0,
                 ),  
-                        ],
+                              SizedBox(height: 10,),
+                              Text(getale[index].total.toString(),
+                                style: TextStyle(
+                                  color: pureblue,
+                                  fontFamily: 'Gilroy-ExtraBold',
+                                ),
+                                ),
+                              SizedBox(height: 5,),
+               
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   );

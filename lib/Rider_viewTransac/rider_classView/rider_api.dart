@@ -96,18 +96,18 @@ class RiderApi {
 
       var response = await ApiCall().getComment('/getRiderComments/${userData['id']}');
       
-      var body = json.decode(response.body);
-      List<RiderComments> comment = [];
-      print(response.body);
-      for(var body in body){
-          RiderComments riderComments = RiderComments(
-            comment: body['comment']
-          );
+      // var body = json.decode(response.body);
+      // List<RiderComments> comment = [];
+      // print(response.body);
+      // for(var body in body){
+      //     RiderComments riderComments = RiderComments(
+      //       comment: body['comment']
+      //     );
 
-          comment.add(riderComments);
-      }
+      //     comment.add(riderComments);
+      // }
 
-      return CommentResponse.fromJson(comment);
+      return CommentResponse.fromJson(json.decode(response.body));
 
     }catch(error,stacktrace){
       print("Error Occurence. $error and $stacktrace" );

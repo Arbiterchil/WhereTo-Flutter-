@@ -10,8 +10,12 @@ class CommentResponse {
 
   CommentResponse(this.riderview, this.error);
 
- CommentResponse.fromJson(List<RiderComments> json)
-  : riderview = json,error = "" ;
+ CommentResponse.fromJson(List<dynamic> json)
+  : riderview = 
+  json.cast<Map<String,dynamic>>()
+  .map((e) => new RiderComments.fromJson(e))
+  .toList()
+  ,error = "" ;
     
 
   CommentResponse.withError(String errorvalue)

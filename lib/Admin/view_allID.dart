@@ -198,7 +198,10 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                    
                   return   GestureDetector(
                     onTap:  () {
-                      _showDial(un[index].imagePath,un[index].userId,un[index].name);
+                      _showDial(
+                        un[index].imagePath ==null ? "asset/img/logo.png" :un[index].imagePath,
+                        un[index].userId,
+                        un[index].name);
                       }, 
                     child: Container(
                       decoration: BoxDecoration(
@@ -207,7 +210,11 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
-                        child: FadeInImage.memoryNetwork(
+                        child: 
+                        un[index].imagePath == null? 
+                         Image.asset("asset/img/logo.png")
+                        :
+                         FadeInImage.memoryNetwork(
                           // fadeInDuration: Duration(milliseconds: 1),
                           // fadeOutDuration: Duration(milliseconds: 1),
                           placeholder: kTransparentImage,
@@ -354,7 +361,9 @@ class _ViewAllImageIdState extends State<ViewAllImageId> {
                       topRight: Radius.circular(20)
                     ),
                     ),
-                    imageProvider: NetworkImage(resources)),
+                    imageProvider:
+                    resources ==null ? Image.asset(resources)
+                    :NetworkImage(resources)),
                 ),    
                 SizedBox(height: 20,),
                 Padding(

@@ -62,8 +62,8 @@ switchThis(){
 
 var totalAll;
 var deliverFee;
-var priceTotal = 0;
-var quantityTotal = 0;
+double priceTotal = 0;
+int quantityTotal = 0;
 var totals;
 var userData;
 var stepnumber;
@@ -218,7 +218,7 @@ var iderntify;
                                        MenuDesign(
                                          menuname: snapshot.data[index].menuName,
                                          description: snapshot.data[index].description,
-                                         price: snapshot.data[index].price.toString(),
+                                         price: snapshot.data[index].totalPrice.toString(),
                                          quantity: snapshot.data[index].quantity.toString(),
 
                                        ),
@@ -370,7 +370,8 @@ Future<List<RiverMenu>> getMenuTransac() async {
             RiverMenu riverMenu = RiverMenu(
               menuName: body["menuName"],
               description: body["description"],
-              price: body["price"],
+              totalPrice: body["totalPrice"].toDouble(),
+              id: body["id"],
               quantity: body["quantity"],
             );
            
@@ -392,12 +393,14 @@ final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/${widge
                                   RiverMenu riverMenu = RiverMenu(
                                     menuName: body["menuName"],
                               description: body["description"],
-                              price: body["price"],
+                              totalPrice: body["totalPrice"].toDouble(),
+                              id: body["id"],
                               quantity: body["quantity"],
                                   );
-                                  List prices =  [riverMenu.price] ;
+                                  List prices =  [riverMenu.totalPrice];
                                   List quans =  [riverMenu.quantity];
                                   for(var i = 0 ; i < prices.length; i++){
+                                    // double chan = i;
                                     for(var x = 0 ; x < quans.length ; x++){
                                         totalAll = prices[i]*quans[x];
                                       List all =  [totalAll]; 

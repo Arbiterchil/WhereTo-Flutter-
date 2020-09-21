@@ -18,21 +18,20 @@ class GetSaleApi {
         "dateTo": datexFrom
       };
           var response = await ApiCall().getRestaurantSalesReport(data,'/getRestaurantSalesReport');
-          List<GetSalerepo> saleas = [];
-          var body = json.decode(response.body);
-          for(var json in body){
-          GetSalerepo gets =  GetSalerepo(
-             id: json["id"],
-        deliveryAddress: json["deliveryAddress"],
-        menuName: json["menuName"],
-        price: json["price"],
-        quantity: json["quantity"],
-        total: json["total"],
-          );
-          saleas.add(gets);
-          }
+        //   List<GetSalerepo> saleas = [];
+        //   var body = json.decode(response.body);
+        //   for(var json in body){
+        //   GetSalerepo gets =  GetSalerepo(
+        //      id: json["id"],
+        // menuName: json["menuName"],
+        // price: json["price"],
+        // quantity: json["quantity"],
+        // total: json["total"],
+        //   );
+        //   saleas.add(gets);
+        //   }
                   
-       return GetSaleResponse.fromJson(saleas);  
+       return GetSaleResponse.fromJson( json.decode(response.body));  
 
     }catch(error,stacktrace){
           print("Error Occurence. $error and $stacktrace" );

@@ -1,21 +1,29 @@
+import 'dart:convert';
+
+List<RemittanceList> remittanceListFromJson(String str) => List<RemittanceList>.from(json.decode(str).map((x) => RemittanceList.fromJson(x)));
+
+String remittanceListToJson(List<RemittanceList> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class RemittanceList {
-  String name;
-  int amount;
-  String createdAt;
+    RemittanceList({
+        this.name,
+        this.amount,
+        this.createdAt,
+    });
 
-  RemittanceList({this.name, this.amount, this.createdAt});
+    String name;
+    double amount;
+    DateTime createdAt;
 
-  RemittanceList.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    amount = json['amount'];
-    createdAt = json['created_at'];
-  }
+    factory RemittanceList.fromJson(Map<String, dynamic> json) => RemittanceList(
+        name: json["name"],
+        amount: json["amount"].toDouble(),
+        createdAt: DateTime.parse(json["created_at"]),
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['amount'] = this.amount;
-    data['created_at'] = this.createdAt;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "amount": amount,
+        "created_at": createdAt.toIso8601String(),
+    };
 }

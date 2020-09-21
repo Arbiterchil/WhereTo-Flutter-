@@ -92,9 +92,10 @@ class _MShowStepState extends State<MShowStep> {
         var body = json.decode(response.body);
         for(var body in body){
             RiverMenu riverMenu = RiverMenu(
-              menuName: body["menuName"],
+             menuName: body["menuName"],
               description: body["description"],
-              price: body["price"],
+              totalPrice: body["totalPrice"].toDouble(),
+              id: body["id"],
               quantity: body["quantity"],
             );
            
@@ -149,7 +150,7 @@ class _MShowStepState extends State<MShowStep> {
                                      MenuDesign(
                                        menuname: snapshot.data[index].menuName,
                                        description: snapshot.data[index].description,
-                                       price: snapshot.data[index].price.toString(),
+                                       price: snapshot.data[index].totalPrice.toString(),
                                        quantity: snapshot.data[index].quantity.toString(),
 
                                      ),
