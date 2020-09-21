@@ -9,8 +9,12 @@ final List<GetSalerepo> getSale;
 
   GetSaleResponse(this.getSale, this.error);
 
-  GetSaleResponse.fromJson(json)
-  : getSale = json,error = "" ;
+  GetSaleResponse.fromJson( List<dynamic>json)
+  : getSale = 
+  json
+  .cast<Map<String,dynamic>>()
+  .map((e) => new GetSalerepo.fromJson(e))
+  .toList(),error = "" ;
     
 
   GetSaleResponse.withError(String errorvalue)

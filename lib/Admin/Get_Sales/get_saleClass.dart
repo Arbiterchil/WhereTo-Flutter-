@@ -11,7 +11,6 @@ String getSalerepoToJson(List<GetSalerepo> data) => json.encode(List<dynamic>.fr
 class GetSalerepo {
     GetSalerepo({
         this.id,
-        this.deliveryAddress,
         this.menuName,
         this.price,
         this.quantity,
@@ -19,7 +18,6 @@ class GetSalerepo {
     });
 
     int id;
-    String deliveryAddress;
     String menuName;
     int price;
     int quantity;
@@ -27,7 +25,6 @@ class GetSalerepo {
 
     factory GetSalerepo.fromJson(Map<String, dynamic> json) => GetSalerepo(
         id: json["id"],
-        deliveryAddress: json["deliveryAddress"],
         menuName: json["menuName"],
         price: json["price"],
         quantity: json["quantity"],
@@ -36,7 +33,6 @@ class GetSalerepo {
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "deliveryAddress": deliveryAddress,
         "menuName": menuName,
         "price": price,
         "quantity": quantity,

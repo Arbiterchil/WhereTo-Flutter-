@@ -366,7 +366,8 @@ Future<List<RiverMenu>> getMenuTransac() async {
             RiverMenu riverMenu = RiverMenu(
               menuName: body["menuName"],
               description: body["description"],
-              price: body["price"],
+              totalPrice: body["totalPrice"].toDouble(),
+              id: body["id"],
               quantity: body["quantity"],
             );
            
@@ -387,11 +388,12 @@ final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/${widge
                               for(var body in body){
                                   RiverMenu riverMenu = RiverMenu(
                                     menuName: body["menuName"],
-                              description: body["description"],
-                              price: body["price"],
-                              quantity: body["quantity"],
+              description: body["description"],
+              totalPrice: body["totalPrice"].toDouble(),
+              id: body["id"],
+              quantity: body["quantity"],
                                   );
-                                  List prices =  [riverMenu.price] ;
+                                  List prices =  [riverMenu.totalPrice] ;
                                   List quans =  [riverMenu.quantity];
                                   for(var i = 0 ; i < prices.length; i++){
                                     for(var x = 0 ; x < quans.length ; x++){

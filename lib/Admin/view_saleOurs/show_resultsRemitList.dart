@@ -155,6 +155,7 @@ class _ShowemitListResultState extends State<ShowemitListResult> {
                             pressed = true;
                             dateTo = DateFormat('yyyy-MM-dd').format(endDate).toString();
                             dateFrom =DateFormat('yyyy-MM-dd').format(startDate).toString();
+                            print(dateFrom+","+dateTo);
                           });
                         },
                         child: Container(
@@ -178,8 +179,8 @@ class _ShowemitListResultState extends State<ShowemitListResult> {
                 ),
                 SizedBox(height: 40,),
                 pressed ? RemitListByDateWithTotal(
-                  dateFrom: start,
-                  dateTo: end,
+                  dateFrom: dateFrom.toString(),
+                  dateTo:  dateTo.toString(),
                   lastresort : long
                 ) : Text("Nothing to Show"),
                 ],
