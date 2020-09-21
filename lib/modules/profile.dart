@@ -361,10 +361,7 @@ _onsSignal() async{
                                                       padding: const EdgeInsets.only(left: 20,right: 20),
                                                       child: FutureBuilder(
                                                      future: CoordinatesConverter()
-                                                     .getAddressByLocation(
-                                                       lats.toString()
-                                                       +","+
-                                                       longs.toString()),
+                                                     .getAddressByLocation(lats.toString()+","+longs.toString()),
                                                      builder: (context,snaps){
                                                       if(snaps.data ==null){
                                                         return Container();

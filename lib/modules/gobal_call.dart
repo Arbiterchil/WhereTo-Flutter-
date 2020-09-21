@@ -132,7 +132,10 @@ class _SharedPrefCallnameDataState extends State<SharedPrefCallnameData> {
                                                      NCard(
                                                         active: false,
                                    icon: Icons.phone_android,
-                                   label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
+                                   label:
+                                   userData!= null 
+                                   ? '${userData['contactNumber']}'
+                                    :  'Fail get data.',
                                                       ),
                                                    FutureBuilder(
                                                      future: CoordinatesConverter()

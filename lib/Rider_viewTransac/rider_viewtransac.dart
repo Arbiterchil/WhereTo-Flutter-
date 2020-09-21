@@ -340,7 +340,8 @@ List idsComming = [];
                                                                   return Container();
                                                                 }else{
                                                                   return Container(
-                                                              child: Text('From: ${snaps.data}',
+                                                              child: Text(
+                                                                'From: ${snaps.data}',
                                                               overflow: TextOverflow.ellipsis,
                                                               style: TextStyle(
                                                               color: pureblue,
@@ -353,16 +354,6 @@ List idsComming = [];
                                                                 }
                                                               },
                                                             ),
-                                                    //    Text(,
-                                                    //       overflow: TextOverflow.ellipsis,
-                                                    //       style: TextStyle(
-                                                    //       color:pureblue,
-                                                    //       fontWeight: FontWeight.normal,
-                                                    //       fontSize: 11.0,
-                                                    //       fontFamily: 'Gilroy-light'
-                                                    // ),
-                                                    //       ),
-                                                      
                                                       
                                                       SizedBox(height: 3.0,), 
                                                       Flexible(
@@ -376,7 +367,8 @@ List idsComming = [];
                                                                   return Container();
                                                                 }else{
                                                                   return Container(
-                                                              child: Text('To: ${snaps.data}',
+                                                              child: Text(
+                                                                'To: ${snaps.data}',
                                                               overflow: TextOverflow.ellipsis,
                                                               style: TextStyle(
                                                               color: pureblue,

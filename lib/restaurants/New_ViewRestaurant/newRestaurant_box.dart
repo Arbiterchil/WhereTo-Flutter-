@@ -106,7 +106,8 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
                         //   ),
                         // )
                         FutureBuilder(
-                          future: CoordinatesConverter().getAddressByLocation(widget.address),
+                          future: CoordinatesConverter()
+                          .getAddressByLocation(widget.address),
                           builder: (cons,snaps){
                             if(snaps.data ==null){
                               return Container();

@@ -9,10 +9,7 @@ final String error;
 
   CategoryResponseforMenu.fromJson(List<dynamic> json)
   : categs= 
-  json
-  .cast<Map<String,dynamic>>()
-  .map((e) => new Categories.fromJson(e))
-  .toList()
+  json.cast<Map<String,dynamic>>().map((e) => new Categories.fromJson(e)).toList()
   ,error ="";
   CategoryResponseforMenu.withError(String error)
   : categs = List(),

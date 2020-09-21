@@ -268,9 +268,7 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
                                                       Flexible(
                                                             child: FutureBuilder(
                                                               future: CoordinatesConverter().getAddressByLocation(
-                                                                v[index].transLatitude.toString()
-                                                                +","+
-                                                                v[index].transLongitude.toString()),
+                                                                v[index].transLatitude.toString()+","+v[index].transLongitude.toString()),
                                                               builder: (con ,snaps){
                                                                 if(snaps.data == null){
                                                                   return Container();

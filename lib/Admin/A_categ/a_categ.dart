@@ -12,12 +12,10 @@ class Categories {
 
     int id;
     String categoryName;
-
     factory Categories.fromJson(Map<String, dynamic> json) => Categories(
         id: json["id"],
         categoryName: json["categoryName"],
     );
-
     Map<String, dynamic> toJson() => {
         "id": id,
         "categoryName": categoryName,
