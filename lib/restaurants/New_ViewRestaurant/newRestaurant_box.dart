@@ -8,7 +8,7 @@ class NewRestaurantBox extends StatefulWidget {
   final Function onTap;
   final String restaurantName;
   final String address;
-  final String address1;
+  final double address1;
   final String image;
 
   const NewRestaurantBox({Key key, this.onTap, this.restaurantName, this.address, this.address1, this.image}) : super(key: key);
@@ -105,26 +105,27 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
                         //     ),),
                         //   ),
                         // )
-                        // FutureBuilder(
-                        //   future: CoordinatesConverter().convert(widget.address,widget.address1),
-                        //   builder: (cons,snaps){
-                        //     if(snaps.data ==null){
-                        //       return Container();
-                        //     }else{
-                        //       return  Flexible(
-                        //   child: Container(
-                        //     child: Text(snaps.data,
-                        //     overflow: TextOverflow.ellipsis,
-                        //     style: TextStyle(
-                        //         color:Colors.white,
-                        //             fontWeight: FontWeight.normal,
-                        //                 fontSize: 8.0,
-                        //                 fontFamily: 'Gilroy-light' 
-                        //     ),),
-                        //   ),
-                        // );
-                        //     }
-                        // }),
+                        FutureBuilder(
+                          future: CoordinatesConverter()
+                          .getAddressByLocation(widget.address),
+                          builder: (cons,snaps){
+                            if(snaps.data ==null){
+                              return Container();
+                            }else{
+                              return  Flexible(
+                          child: Container(
+                            child: Text(snaps.data,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color:Colors.white,
+                                    fontWeight: FontWeight.normal,
+                                        fontSize: 8.0,
+                                        fontFamily: 'Gilroy-light' 
+                            ),),
+                          ),
+                        );
+                            }
+                        }),
                        
                       ],
                     ),

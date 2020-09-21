@@ -11,16 +11,7 @@ Future<CategoryResponseforMenu> getMenuCategory() async{
   try{
 
      var respon = await ApiCall().getCategory('/getCategories');
-    var bararang = json.decode(respon.body);
-    List<Categories> categs = List();
-    for(var json in bararang){
-      Categories categories = Categories(
-        id: json['id'],
-        categoryName :json['categoryName']
-      );
-      categs.add(categories);
-    }
-    return CategoryResponseforMenu.fromJson(categs);
+    return CategoryResponseforMenu.fromJson(json.decode(respon.body));
   }catch(stacktrace,error){
       print("Error Occurence. $error and $stacktrace" );
       return CategoryResponseforMenu.withError("$error");

@@ -690,8 +690,9 @@ class _SearchDepoState extends State<SearchDepo> {
                       return NewRestaurantBox(
                     image: nf[index].imagePath,
                     restaurantName: nf[index].restaurantName,
-                    address: datasnapshot1.data==null ?"":datasnapshot1.data.toString(),
-                    address1: datasnapshot1.data==null ?"":datasnapshot1.data.toString(),
+                    address:
+                     nf[index].latitude.toString()+","+ nf[index].longitude.toString(),
+                    // address1: nf[index].longitude,
                     onTap: () async {
                        ProgressDialog featuredRestaurant = ProgressDialog(context);
                           featuredRestaurant.style(
