@@ -473,7 +473,10 @@ class _SearchDepoState extends State<SearchDepo> {
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Gilroy-ExtraBold'),
           ),
-          onTap: () {},
+          onTap: () {
+            // Navigator.push(context, new MaterialPageRoute(builder: (context) =>SearchDelegate(s)));
+            showSearch(context: context, delegate: CustomSearch());
+          },
         ));
   }
 
@@ -681,11 +684,14 @@ class _SearchDepoState extends State<SearchDepo> {
             itemBuilder: (context, index) {
               return Column(
                 children: <Widget>[
-                  NewRestaurantBox(
+                  FutureBuilder(
+                    future: CoordinatesConverter().getAddressByLocation("${nf[index].latitude},${nf[index].longitude}"),
+                    builder: (context, datasnapshot1){
+                      return NewRestaurantBox(
                     image: nf[index].imagePath,
                     restaurantName: nf[index].restaurantName,
-                    // address: nf[index].latitude,
-                    // address1: nf[index].longitude,
+                    address: datasnapshot1.data==null ?"":datasnapshot1.data.toString(),
+                    address1: datasnapshot1.data==null ?"":datasnapshot1.data.toString(),
                     onTap: () async {
                        ProgressDialog featuredRestaurant = ProgressDialog(context);
                           featuredRestaurant.style(
@@ -773,7 +779,9 @@ class _SearchDepoState extends State<SearchDepo> {
                         
                       }
                     },
-                  ),
+                  );
+                    },
+                  )
                 ],
               );
             },

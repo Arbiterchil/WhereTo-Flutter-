@@ -27,7 +27,7 @@ class CustomSearch extends SearchDelegate {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-          icon: Icon(Icons.clear),
+          icon: Icon(Icons.clear, color: Colors.black,),
           onPressed: () {
             query = "";
           }),
@@ -37,7 +37,7 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: Icon(Icons.arrow_back, color: Colors.black,),
       onPressed: () {
         close(context, null);
       },
@@ -61,22 +61,6 @@ class CustomSearch extends SearchDelegate {
         child: StreamBuilder<List<FilterRestaurant>>(
           stream: blocSearch.sinkSubjectFilter,
           builder: (context, snapshot){
-            ProgressDialog pr = ProgressDialog(context);
-              pr.style(
-                message: "Loading Please Wait..",
-                borderRadius: 10.0,
-                backgroundColor: Colors.white,
-                progressWidget: CircularProgressIndicator(),
-                elevation: 10.0,
-                insetAnimCurve: Curves.easeInExpo,
-                progressTextStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w300,
-                    fontFamily: "Gilroy-light"
-                )
-              );
-              pr =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
               if(snapshot.hasData){
               if(snapshot.data.length >0){
                   return new StaggeredGridView.countBuilder(
@@ -87,7 +71,23 @@ class CustomSearch extends SearchDelegate {
                          if(snapshot.data.length >0){
                             return GestureDetector(
                         onTap: () async{
-                               await pr.show();
+                          ProgressDialog featured_pr = ProgressDialog(context);
+                          featured_pr.style(
+                            message: "Loading Please Wait..",
+                            borderRadius: 10.0,
+                            backgroundColor: Colors.white,
+                            progressWidget: CircularProgressIndicator(),
+                            elevation: 10.0,
+                            insetAnimCurve: Curves.easeInExpo,
+                            progressTextStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w300,
+                                fontFamily: "Gilroy-light"
+                            )
+                          );
+                          featured_pr =ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false);
+                               featured_pr.show();
                                 SharedPreferences local =
                                 await SharedPreferences.getInstance();
                                 var userjson = local.getString('user');
@@ -125,7 +125,7 @@ class CustomSearch extends SearchDelegate {
                                     }
                                   }
                                   if (isRead) {
-                                    // await featured.hide();
+                                    featured_pr.hide();
                                     UserDialog_Help.restaurantDialog(context);
                                   } else {
                                     
@@ -140,7 +140,7 @@ class CustomSearch extends SearchDelegate {
                                    
                                     
                                   
-                                      // await featured.hide();
+                                      featured_pr.hide();
                                       Navigator.push(
                                           context,
                                           new MaterialPageRoute(

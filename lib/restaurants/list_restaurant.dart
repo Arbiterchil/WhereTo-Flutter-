@@ -88,7 +88,7 @@ class _ListStacticState extends State<ListStactic>
                     fontFamily: 'Gilroy-light'),
               ),
               FutureBuilder(
-                // future: CoordinatesConverter().convert(widget.lat, widget.lng),
+                future: CoordinatesConverter().getAddressByLocation("${widget.lat},${widget.lng}"),
                 builder: (context, snapshot){
                 if(snapshot.data==null){
                   return Container();

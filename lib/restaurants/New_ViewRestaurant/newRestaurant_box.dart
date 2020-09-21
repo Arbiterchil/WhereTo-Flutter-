@@ -7,8 +7,8 @@ class NewRestaurantBox extends StatefulWidget {
 
   final Function onTap;
   final String restaurantName;
-  final double address;
-  final double address1;
+  final String address;
+  final String address1;
   final String image;
 
   const NewRestaurantBox({Key key, this.onTap, this.restaurantName, this.address, this.address1, this.image}) : super(key: key);
