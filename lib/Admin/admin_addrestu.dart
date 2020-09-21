@@ -382,29 +382,28 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                 //     ),
                 //     SizedBox(height: 10.0,),
 
-                // FutureBuilder(
-                //   future: CoordinatesConverter().convert(lats,longs),
-                //   builder: (con ,snaps){
-                //     if(snaps.data == null){
-                //      return  NCard(
-                //     active: false,
-                //     icon: Icons.my_location,
-                //     label: toShowAddress ,
-                    
-                //     onTap: () => viewMapo(),
-                //   );
-                //     }else{
-                //        return 
+                FutureBuilder(
+                  future: CoordinatesConverter().getAddressByLocation(lats.toString()+","+longs.toString()),
+                  builder: (con ,snaps){
+                    if(snaps.data == null){
+                     return  NCard(
+                    active: false,
+                    icon: Icons.my_location,
+                    label: "Oke No View.",
+                    onTap: () => viewMapo(),
+                  );
+                    }else{
+                       return 
                  NCard(
                     active: false,
                     icon: Icons.my_location,
-                    label: lats.toString()+","+longs.toString() ,
+                    label: snaps.data,
                     onTap: () => viewMapo(),
-                  ),
-                //;
-                //     }
-                //   },
-                // ),
+                  )
+                ;
+                    }
+                  },
+                ),
             //         Container(
             //   width: MediaQuery.of(context).size.width,
             //   alignment: Alignment.centerLeft,
@@ -1325,11 +1324,9 @@ void viewMapo(){
                         double lng = result.geometry.location.lng;
                         print("the Bilat is $lat and Oten is $lng");
                         setState(() {
-                          // toShowAddress = "$lat,$lng";
                         lats = lat;
                         longs = lng;
                         });
-                        // print(lats+"-"+longs);
                         Navigator.pop(context);
                         }
                     ),

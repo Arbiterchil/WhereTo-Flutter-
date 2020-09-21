@@ -9,6 +9,7 @@ import 'package:WhereTo/Rider_ViewMenuTransac/button_OkAssign.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
 import 'package:WhereTo/google_maps/Rider_route.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/ridershowStep_Menu.dart';
@@ -565,30 +566,33 @@ var checkVal = localStorage.getBool('check');
                                                   SizedBox(height: 10,),
 
                                                    NCard(
-                                                    icon: Icons.confirmation_number,
+                                                    icon: Icons.phone_android,
                                                     label:widget.contactNumber,
                                                   ),
                                                   SizedBox(height: 10,),
 
                                                    NCard(
-                                                    icon: Icons.money_off,
+                                                    icon: EvaIcons.pricetags,
                                                     label: widget.deliveryCharge,
                                                   ),
                                                   SizedBox(height: 10,),
 
-                                                  //  FutureBuilder(
-                                                  //    future: CoordinatesConverter().convert(widget.dellats,widget.dellongs),
-                                                  //   builder: (context,snaps){
-                                                  //     if(snaps.data == null){
-                                                  //       return Text("Data Error");
-                                                  //     }else{
-                                                  //       return  NCard(
-                                                  //   icon: Icons.money_off,
-                                                  //   label:snaps.data
-                                                  // );
-                                                  //     }
-                                                  //   },
-                                                  //  ),
+                                                   FutureBuilder(
+                                                     future: CoordinatesConverter()
+                                                     .getAddressByLocation(
+                                                        widget.user_coor
+                                                     ),
+                                                    builder: (context,snaps){
+                                                      if(snaps.data == null){
+                                                        return Text("Data Error");
+                                                      }else{
+                                                        return  NCard(
+                                                    icon: Icons.my_location,
+                                                    label:snaps.data
+                                                  );
+                                                      }
+                                                    },
+                                                   ),
                                                   SizedBox(height: 10,),
                                                     
                                                       ],
@@ -601,7 +605,7 @@ var checkVal = localStorage.getBool('check');
                                               splashColor: pureblue,
                                               onTap: (){
                                                 xDilogAhow(context);
-                                                print(userData['id']);
+                                                // print(userData['id']);
                                               },
                                               child: Padding(
                                                 padding: const EdgeInsets.only(left: 20,right: 20),
@@ -1156,17 +1160,7 @@ void _showDistictWarning(String meesage) {
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: mCustom(context),
-    ); 
-
-
-      });
-
-
-  }
-  mCustom(BuildContext context){
-
-       return Container(
+      child:Container(
         height: 300.0,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
@@ -1256,11 +1250,10 @@ void _showDistictWarning(String meesage) {
                   color:Color(0xFF0C375B),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                   onPressed: () async{
-                     
       var riderId = userData['id'].toString();
       var data = {
         "transactionId" : "${widget.getID}",
-        "riderId" : riderId !=null ? riderId : userData['id'] ,
+        "riderId" :  userData['id'] ,
       };
 
       var response = await ApiCall().assignRiders(data, '/assignRider');
@@ -1271,9 +1264,8 @@ void _showDistictWarning(String meesage) {
         localStore.setString("menuplustrans", "${widget.getID}");
         localStore.setString("playerIDS", "${widget.playerId}");
       }else{
-print(body);
+          print(body);
       }
-       
         setState(() {
       available = !available;
       menuHide = !menuHide;
@@ -1296,9 +1288,15 @@ print(body);
               ],
           ),
         ),
-      );
+      ),
+    ); 
 
-    }
+
+      });
+
+
+  }
+
 }
 class NCard extends StatelessWidget {
   final bool active;

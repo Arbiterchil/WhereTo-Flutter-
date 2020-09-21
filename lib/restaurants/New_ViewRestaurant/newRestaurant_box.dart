@@ -7,7 +7,7 @@ class NewRestaurantBox extends StatefulWidget {
 
   final Function onTap;
   final String restaurantName;
-  final double address;
+  final String address;
   final double address1;
   final String image;
 
@@ -105,26 +105,26 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
                         //     ),),
                         //   ),
                         // )
-                        // FutureBuilder(
-                        //   future: CoordinatesConverter().convert(widget.address,widget.address1),
-                        //   builder: (cons,snaps){
-                        //     if(snaps.data ==null){
-                        //       return Container();
-                        //     }else{
-                        //       return  Flexible(
-                        //   child: Container(
-                        //     child: Text(snaps.data,
-                        //     overflow: TextOverflow.ellipsis,
-                        //     style: TextStyle(
-                        //         color:Colors.white,
-                        //             fontWeight: FontWeight.normal,
-                        //                 fontSize: 8.0,
-                        //                 fontFamily: 'Gilroy-light' 
-                        //     ),),
-                        //   ),
-                        // );
-                        //     }
-                        // }),
+                        FutureBuilder(
+                          future: CoordinatesConverter().getAddressByLocation(widget.address),
+                          builder: (cons,snaps){
+                            if(snaps.data ==null){
+                              return Container();
+                            }else{
+                              return  Flexible(
+                          child: Container(
+                            child: Text(snaps.data,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color:Colors.white,
+                                    fontWeight: FontWeight.normal,
+                                        fontSize: 8.0,
+                                        fontFamily: 'Gilroy-light' 
+                            ),),
+                          ),
+                        );
+                            }
+                        }),
                        
                       ],
                     ),

@@ -52,7 +52,7 @@ switchThis(){
 
 var totalAll;
 var deliverFee;
-var priceTotal = 0;
+double priceTotal = 0;
 var quantityTotal = 0;
 var totals;
 var userData;
@@ -1245,17 +1245,7 @@ var checkVal = localStorage.getBool('check');
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: mCustom(context),
-    ); 
-
-
-      });
-
-
-  }
-  mCustom(BuildContext context){
-
-       return Container(
+      child:Container(
         height: 300.0,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
@@ -1349,7 +1339,7 @@ var checkVal = localStorage.getBool('check');
       var idyours = userData['id'].toString();
       var data = {
         "transactionId" : '${widget.getID}',
-        "riderId" :  idyours,
+        "riderId" :  userData['id'],
       };
 
       var response = await ApiCall().assignRiders(data, '/assignRider');
@@ -1384,9 +1374,15 @@ var checkVal = localStorage.getBool('check');
               ],
           ),
         ),
-      );
+      ),
+    ); 
 
-    }
+
+      });
+
+
+  }
+ 
 }
 class NCard extends StatelessWidget {
   final bool active;
