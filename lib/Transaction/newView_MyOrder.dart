@@ -31,7 +31,9 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
   String statusExist;
   int sunkist;
   bool isExist = false;
-  final bloc =BlocAll();
+  var resto;
+  var userAddress;
+  final bloc = BlocAll();
   Future<void> getBloc() async {
     await bloc.getMenuTransaction();
   }
@@ -40,8 +42,6 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
     bloc.dispose();
   }
 
-  
-
   var userData;
   var userID;
   bool isTrue = false;
@@ -49,7 +49,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
   @override
   void initState() {
     getData();
-    
+
     super.initState();
     _onsSignal();
   }
@@ -75,111 +75,121 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
       });
     });
   }
-   String meesages = "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
+
+  String meesages =
+      "You have Violated the Terms and Condition that your Valid Id is not acceptable.";
   String datass = "";
-_onsSignal() async{
-  if(!mounted) return;
+  _onsSignal() async {
+    if (!mounted) return;
     await OneSignal.shared.setLocationShared(true);
     await OneSignal.shared.promptLocationPermission();
     await OneSignal.shared.setSubscription(true);
     await OneSignal.shared.getTags();
-   await OneSignal.shared.sendTags({'UR': 'TRUE'});  
-     OneSignal.shared
+    await OneSignal.shared.sendTags({'UR': 'TRUE'});
+    OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
     OneSignal.shared
-        .setNotificationReceivedHandler((OSNotification notification){
-        setState(() {
-           datass = notification.payload.additionalData["force"].toString();
-           print("$datass is you");
-          // if(data != null){
-            if(datass == "penalty"){
-               _showDone(meesages.toString());
-            }else{
-              print("None");
-            }
-          // }
-        });
-        
-    });                     
+        .setNotificationReceivedHandler((OSNotification notification) {
+      setState(() {
+        datass = notification.payload.additionalData["force"].toString();
+        print("$datass is you");
+        // if(data != null){
+        if (datass == "penalty") {
+          _showDone(meesages.toString());
+        } else {
+          print("None");
+        }
+        // }
+      });
+    });
   }
 
-  void _showDone(String message){
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context){
-      return Dialog(
-       
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child:Container(
-        height: 300.0,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-        color: Colors.white),
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-              children: <Widget>[
-                SizedBox(height: 20,),
-                Container(
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('asset/img/penalty.png'),
+  void _showDone(String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child: Container(
+            height: 300.0,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20), color: Colors.white),
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-                ),
-                SizedBox(height: 10,),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(message,
-                  style: TextStyle(
-                    color: Color(0xFF0C375B),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 11.0,
-                    fontFamily: 'Gilroy-light'
+                  Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('asset/img/penalty.png'),
+                      ),
+                    ),
                   ),
-                  
-                  ),),
-                  SizedBox(height: 25.0,),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      message,
+                      style: TextStyle(
+                          color: Color(0xFF0C375B),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 11.0,
+                          fontFamily: 'Gilroy-light'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25.0,
+                  ),
                   Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[         
-                RaisedButton(
-                  color:Color(0xFF0C375B),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: () async {
-                    
-                      SharedPreferences localStorage = await SharedPreferences.getInstance();
-                               localStorage.remove('user');
-                               localStorage.remove('token');
-                               localStorage.remove('menuplustrans');
-                              //  print(body);
-                                Navigator.pushAndRemoveUntil(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      RaisedButton(
+                        color: Color(0xFF0C375B),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                        onPressed: () async {
+                          SharedPreferences localStorage =
+                              await SharedPreferences.getInstance();
+                          localStorage.remove('user');
+                          localStorage.remove('token');
+                          localStorage.remove('menuplustrans');
+                          //  print(body);
+                          Navigator.pushAndRemoveUntil(
                               context,
                               new MaterialPageRoute(
-                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
-                      },   
-                      
-                  child: Text ( "OK",
-                   style :TextStyle(
-                  color: Colors.white,
+                                  builder: (context) => LoginPage()),
+                              ModalRoute.withName('/'));
+                        },
+                        child: Text(
+                          "OK",
+                          style: TextStyle(
+                              color: Colors.white,
                               fontWeight: FontWeight.w700,
                               fontSize: 12.0,
-                              fontFamily: 'OpenSans'
-                ),),),
-                  ],
-                ), 
-              ],
+                              fontFamily: 'OpenSans'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    ); 
-    },);
-}
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +255,7 @@ _onsSignal() async{
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.length > 0) {
-            bool isFind =false;
+            bool isFind = false;
             ProgressDialog _myOrder = ProgressDialog(context);
             _myOrder.style(
                 message: "Canceling Order..",
@@ -266,174 +276,201 @@ _onsSignal() async{
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   if (snapshot.data.length > 0) {
-                    if (transactID
-                        .toString()
-                        .contains(snapshot.data[index].id.toString())) {
-                      sunkist = int.parse(status);
-                    } else {
-                      sunkist = int.parse(snapshot.data[index].status.toString());
-                    }
                     return Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
                           FutureBuilder(
-                            // future: CoordinatesConverter().convert(double.parse(snapshot.data[index].restoLatitude), double.parse(snapshot.data[index].restoLongitude)),
-                            builder: (context, datasnapshot){
-                              if(datasnapshot==null){
-                                return Container();
-                              }else{
-                                return FutureBuilder(
-                                  // future: CoordinatesConverter().convert(double.parse(snapshot.data[index].transLatitude), double.parse(snapshot.data[index].transLongitude)),
-                                  builder: (context, datasnapshot1){
-                                  if(datasnapshot1==null){
-                                    return Container();
-                                  }else{
-                                    return XviewTransac(
-                                      
-                            image: "asset/img/doneprocess.png",
-                            deliveryAddress:
-                            datasnapshot.data.toString(),
-                            address: datasnapshot1.data.toString(),
-                            restaurantName: snapshot.data[index].restaurantName,
-                            status: sunkist == null
-                                ? snapshot.data[index].status.toString()
-                                : sunkist.toString(),
-                                                    
-                            onTapCancel: () {
-                              if (snapshot.data[index].status ==0) {
-                                showDialog<void>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return PlatformAlertDialog(
-                                        title: Text(
-                                          "Canceling Your Order will not be notified the Rider.",
-                                          style: TextStyle(
-                                              decoration: TextDecoration.none,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily: 'Gilroy-light'),
-                                        ),
-                                        content: SingleChildScrollView(
-                                          child: ListBody(
-                                            children: [
-                                              Text(
-                                                "Cancel Order?",
-                                                style: TextStyle(
-                                                    decoration:
-                                                        TextDecoration.none,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.black,
-                                                    fontFamily: 'Gilroy-light'),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        actions: [
-                                          PlatformDialogAction(
-                                              actionType: ActionType.Preferred,
-                                              child: Text(
-                                                "Yes",
-                                                style: TextStyle(
-                                                    decoration:
-                                                        TextDecoration.none,
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.white,
-                                                    fontFamily: 'Gilroy-light'),
-                                              ),
-                                              onPressed: () async {
-                                                List<dynamic> converted =[];
-                                                Map<String, dynamic> temp;
-                                                SharedPreferences local =
-                                                await SharedPreferences.getInstance();
-                                                var userjson = local.getString('user');
-                                                var user = json.decode(userjson);
-                                                _myOrder = ProgressDialog(context, type: ProgressDialogType.Normal,
-                                                isDismissible: false);
-                                                _myOrder.show();
-                                                
-                                                final response = await ApiCall().getData('/viewUserOrders/${user['id']}');
-                                                final List<ViewUserOrder> transaction =viewUserOrderFromJson(response.body);
-                                                int id;
-                                                transaction.forEach((element) {
-                                                id =element.id;
-                                                temp ={
-                                                  "id":id,
-                                                  "status": element.status
-                                                };
-                                                converted.add(temp);
-                                                });
-                                                for(int z=0;z<converted.length;z++){
-                                                  if(snapshot.data[index].id ==converted[z]['id']){
-                                                    if(converted[z]['status'] <=0){
-                                                      isFind =true;
-                                                      break;
-                                                    }else{
-                                                      isFind =false;
-                                                      break;
-                                                    }
-                                                  }
-                                                }
-                                                if(isFind){
-                                                  var res = await ApiCall().postCancelOrder('/cancelOrder/${snapshot.data[index].id}');
-                                                  if (res.statusCode == 200) {
-                                                  var data =json.decode(res.body);
-                                                    print(data);
-                                                    print("Success");
-                                                    _myOrder.hide();
-                                                    setState(() {
-                                                      snapshot.data.removeAt(index);
-                                                    });
-                                                    Navigator.of(context).pop();
-                                                  }else{
-                                                    _myOrder.hide();
-                                                  }
-                                              
-                                                } else {
-                                                  _myOrder.hide();
-                                                    DialogOrder().getDialog(context, "This Order is already Under Process", "Order Delayed", Icons.warning, Colors.red);
-                                                }
-                                               
-                                                
-                                              }),
-                                          PlatformDialogAction(
-                                              actionType: ActionType.Default,
-                                              child: Text(
-                                                "No",
-                                                style: TextStyle(
-                                                    decoration:
-                                                        TextDecoration.none,
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.black,
-                                                    fontFamily: 'Gilroy-light'),
-                                              ),
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              }),
-                                        ],
-                                      );
-                                    });
+                          future: CoordinatesConverter().getCoordinates(snapshot, index),
+                          builder: (context, datasnapshot) {
+                              if (transactID.toString().contains(
+                                  snapshot.data[index].id.toString())) {
+                                sunkist = int.parse(status);
                               } else {
-                                return;
+                                sunkist = int.parse(snapshot.data[index].status.toString());
                               }
-                            },
-                            onTap: () {
-                              // Navigator.push(context, MaterialPageRoute(builder: (context){
-                              //   return StepperStatus(status: sunkist,);
-                              // }));
-                                Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return ReceiptWidget(transactID: snapshot.data[index].id.toString(),);
-                              }));
-                            },
-                          );
+                              return XviewTransac(
+                                image: "asset/img/doneprocess.png",
+                                deliveryAddress: "",
+                                address: datasnapshot.data ==null ?"":datasnapshot.data,
+                                restaurantName:snapshot.data[index].restaurantName,
+                                status: sunkist == null
+                                    ? snapshot.data[index].status.toString()
+                                    : sunkist.toString(),
+                                onTapCancel: () {
+                                  if (snapshot.data[index].status == 0) {
+                                    showDialog<void>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return PlatformAlertDialog(
+                                            title: Text(
+                                              "Canceling Your Order will not be notified the Rider.",
+                                              style: TextStyle(
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black,
+                                                  fontFamily: 'Gilroy-light'),
+                                            ),
+                                            content: SingleChildScrollView(
+                                              child: ListBody(
+                                                children: [
+                                                  Text(
+                                                    "Cancel Order?",
+                                                    style: TextStyle(
+                                                        decoration:
+                                                            TextDecoration.none,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Colors.black,
+                                                        fontFamily:
+                                                            'Gilroy-light'),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            actions: [
+                                              PlatformDialogAction(
+                                                  actionType:
+                                                      ActionType.Preferred,
+                                                  child: Text(
+                                                    "Yes",
+                                                    style: TextStyle(
+                                                        decoration:
+                                                            TextDecoration.none,
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Colors.white,
+                                                        fontFamily:
+                                                            'Gilroy-light'),
+                                                  ),
+                                                  onPressed: () async {
+                                                    List<dynamic> converted =
+                                                        [];
+                                                    Map<String, dynamic> temp;
+                                                    SharedPreferences local =
+                                                        await SharedPreferences
+                                                            .getInstance();
+                                                    var userjson =
+                                                        local.getString('user');
+                                                    var user =
+                                                        json.decode(userjson);
+                                                    _myOrder = ProgressDialog(
+                                                        context,
+                                                        type: ProgressDialogType
+                                                            .Normal,
+                                                        isDismissible: false);
+                                                    _myOrder.show();
+
+                                                    final response =
+                                                        await ApiCall().getData(
+                                                            '/viewUserOrders/${user['id']}');
+                                                    final List<ViewUserOrder>
+                                                        transaction =
+                                                        viewUserOrderFromJson(
+                                                            response.body);
+                                                    int id;
+                                                    transaction
+                                                        .forEach((element) {
+                                                      id = element.id;
+                                                      temp = {
+                                                        "id": id,
+                                                        "status": element.status
+                                                      };
+                                                      converted.add(temp);
+                                                    });
+                                                    for (int z = 0;
+                                                        z < converted.length;
+                                                        z++) {
+                                                      if (snapshot
+                                                              .data[index].id ==
+                                                          converted[z]['id']) {
+                                                        if (converted[z]
+                                                                ['status'] <=
+                                                            0) {
+                                                          isFind = true;
+                                                          break;
+                                                        } else {
+                                                          isFind = false;
+                                                          break;
+                                                        }
+                                                      }
+                                                    }
+                                                    if (isFind) {
+                                                      var res = await ApiCall()
+                                                          .postCancelOrder(
+                                                              '/cancelOrder/${snapshot.data[index].id}');
+                                                      if (res.statusCode ==
+                                                          200) {
+                                                        var data = json
+                                                            .decode(res.body);
+                                                        print(data);
+                                                        print("Success");
+                                                        _myOrder.hide();
+                                                        setState(() {
+                                                          snapshot.data
+                                                              .removeAt(index);
+                                                        });
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      } else {
+                                                        _myOrder.hide();
+                                                      }
+                                                    } else {
+                                                      _myOrder.hide();
+                                                      DialogOrder().getDialog(
+                                                          context,
+                                                          "This Order is already Under Process",
+                                                          "Order Delayed",
+                                                          Icons.warning,
+                                                          Colors.red);
+                                                    }
+                                                  }),
+                                              PlatformDialogAction(
+                                                  actionType:
+                                                      ActionType.Default,
+                                                  child: Text(
+                                                    "No",
+                                                    style: TextStyle(
+                                                        decoration:
+                                                            TextDecoration.none,
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Colors.black,
+                                                        fontFamily:
+                                                            'Gilroy-light'),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  }),
+                                            ],
+                                          );
+                                        });
+                                  } else {
+                                    return;
                                   }
-                                });
-                              }
-                            })
+                                },
+                                onTap: () {
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context){
+                                  //   return StepperStatus(status: sunkist,);
+                                  // }));
+                                  if(snapshot.data[index].status ==4){
+                                    Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return ReceiptWidget(
+                                      transactID:
+                                          snapshot.data[index].id.toString(),
+                                    );
+                                  }));
+                                  }
+                                },
+                              );
+                            },
+                          ),
                         ],
                       ),
                     );
@@ -444,9 +481,7 @@ _onsSignal() async{
               ),
             );
           } else {
-            return Center(
-              child: Image.asset("asset/img/emptycart.png")
-            );
+            return Center(child: Image.asset("asset/img/emptycart.png"));
           }
         } else {
           return _load();
