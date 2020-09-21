@@ -163,7 +163,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                      return  NCard(
                     active: false,
                     icon: Icons.my_location,
-                    label: "Ok No View.",
+                    label: "Rider Address",
                     onTap: () => viewMapo(),
                   );
                     }else{

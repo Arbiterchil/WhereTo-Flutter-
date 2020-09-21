@@ -389,7 +389,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                      return  NCard(
                     active: false,
                     icon: Icons.my_location,
-                    label: "Oke No View.",
+                    label: "Restaurant Address",
                     onTap: () => viewMapo(),
                   );
                     }else{
