@@ -277,7 +277,10 @@ void onTabTapped(int index) {
       //     ],
       //   ),
 
-      child: _childs[_selectedIndex],
+      child: IndexedStack(
+        index: _selectedIndex,
+        children: <Widget>[..._childs],
+      ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: 
