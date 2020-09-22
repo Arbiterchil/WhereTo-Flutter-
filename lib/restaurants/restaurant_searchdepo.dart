@@ -59,104 +59,107 @@ class _SearchDepoState extends State<SearchDepo> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      body: SafeArea(
-          child: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 10.0, right: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    logoutIcon(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    cirlceLoaction(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(child: textbarSearch()),
-                    SizedBox(
-                      width: 10,
-                    ),
+      body: WillPopScope(
+        onWillPop: () async => false,
+        child: SafeArea(
+            child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 10.0, right: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      logoutIcon(),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      cirlceLoaction(),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(child: textbarSearch()),
+                      SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                Stack(
+                  children: <Widget>[
+                    NewCarousel(),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
-              Stack(
-                children: <Widget>[
-                  NewCarousel(),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              viewMenuFeaturedTitle(),
-              SizedBox(
-                height: 10,
-              ),
-              FoodDisplay(),
-              SizedBox(
-                height: 15,
-              ),
-              viewzRestaurantFeaturedTitle(),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                child: StreamBuilder<NewRestaurantResponse>(
-                  stream: streamRestaurantsFeatured.subject.stream,
-                  builder:
-                      (context, AsyncSnapshot<NewRestaurantResponse> snaphot) {
-                    if (snaphot.hasData) {
-                      if (snaphot.data.error != null &&
-                          snaphot.data.error.length > 0) {
-                        return _error(snaphot.data.error);
-                      }
-                      return _views(snaphot.data);
-                    } else if (snaphot.hasError) {
-                      return _error(snaphot.error);
-                    } else {
-                      return _load();
-                    }
-                  },
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              //   deliveryAdress(),
-              SizedBox(
-                height: 10,
-              ),
-              Divider(
-                height: 6.0,
-                thickness: 1,
-                color: wheretoDark,
-                indent: 60.0,
-                endIndent: 60.0,
-              ),
-              SizedBox(
-                height: 20,
-              ),
+                viewMenuFeaturedTitle(),
+                SizedBox(
+                  height: 10,
+                ),
+                FoodDisplay(),
+                SizedBox(
+                  height: 15,
+                ),
+                viewzRestaurantFeaturedTitle(),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                  child: StreamBuilder<NewRestaurantResponse>(
+                    stream: streamRestaurantsFeatured.subject.stream,
+                    builder:
+                        (context, AsyncSnapshot<NewRestaurantResponse> snaphot) {
+                      if (snaphot.hasData) {
+                        if (snaphot.data.error != null &&
+                            snaphot.data.error.length > 0) {
+                          return _error(snaphot.data.error);
+                        }
+                        return _views(snaphot.data);
+                      } else if (snaphot.hasError) {
+                        return _error(snaphot.error);
+                      } else {
+                        return _load();
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                //   deliveryAdress(),
+                SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  height: 6.0,
+                  thickness: 1,
+                  color: wheretoDark,
+                  indent: 60.0,
+                  endIndent: 60.0,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
 
-              SharedPrefCallnameData(),
-              SizedBox(
-                height: 10,
-              ),
-            ],
+                SharedPrefCallnameData(),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
           ),
-        ),
-      )),
+        )),
+      ),
     );
 
     // var connectionStatus =Provider.of<ConnectivityStatus>(context);
@@ -764,10 +767,22 @@ class _SearchDepoState extends State<SearchDepo> {
                         //       int.parse(formatOpen.split(":")[0])) {
                        
                         featuredRestaurant.hide();
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (context) => ListStactic(
+                        // Navigator.push(
+                        //     context,
+                        //     new MaterialPageRoute(
+                        //         builder: (context) => ListStactic(
+                        //               restauID: nf[index].id.toString(),
+                        //               nameRestau:
+                        //                   nf[index].restaurantName.toString(),
+                        //               baranggay:
+                        //                   nf[index].barangayId.toString(),
+                        //               lat: double.parse(nf[index].latitude),
+                        //               lng: double.parse(nf[index].longitude),
+                        //               categID: categ,
+                        //             )));
+                        Navigator.pushAndRemoveUntil(context,
+                        new MaterialPageRoute(builder: (context)
+                        => ListStactic(
                                       restauID: nf[index].id.toString(),
                                       nameRestau:
                                           nf[index].restaurantName.toString(),
@@ -776,8 +791,7 @@ class _SearchDepoState extends State<SearchDepo> {
                                       lat: double.parse(nf[index].latitude),
                                       lng: double.parse(nf[index].longitude),
                                       categID: categ,
-                                    )));
-                        
+                                    )),ModalRoute.withName('/'));
                       }
                     },
                   );

@@ -966,10 +966,12 @@ class _PayOrderState extends State<PayOrder> {
                                       Colors.black);
                                   BlocProvider.of<OrderBloc>(context)
                                       .add(Computation.deleteAll());
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SearchDepo()));
+                                  // Navigator.pushReplacement(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => SearchDepo()));
+                                  Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (context)
+                                  => HomePage()),ModalRoute.withName('/'));
                                 } else {
                                   orders.hide();
                                   DialogOrder().getDialog(
