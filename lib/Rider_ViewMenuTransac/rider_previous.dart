@@ -8,6 +8,7 @@ import 'package:WhereTo/Rider_ViewMenuTransac/ridershowStep_Menu.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/google_maps/Rider_route.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -593,7 +594,26 @@ var checkVal = localStorage.getBool('check');
                                                     label: widget.restaurantName,
                                                   ),
                                                   SizedBox(height: 10,),
-
+                                                  FutureBuilder(
+                                                     future: CoordinatesConverter()
+                                                     .getAddressByLocation(
+                                                        widget.reslats.toString()
+                                                         + "," +
+                                                         widget.reslongs.toString()
+                                                     ),
+                                                    builder: (context,snaps){
+                                                      if(snaps.data == null){
+                                                        return Text("Data Error");
+                                                      }else{
+                                                        return  NCard(
+                                                    icon: EvaIcons.map,
+                                                    label:snaps.data
+                                                  );
+                                                      }
+                                                    },
+                                                   ),
+                                                   SizedBox(height: 10,),
+                                                  
                                                    NCard(
                                                     icon: Icons.confirmation_number,
                                                     label:widget.contactNumber,
@@ -605,6 +625,25 @@ var checkVal = localStorage.getBool('check');
                                                     label: widget.deliveryCharge,
                                                   ),
                                                   SizedBox(height: 10,),
+                                                  FutureBuilder(
+                                                     future: CoordinatesConverter()
+                                                     .getAddressByLocation(
+                                                        widget.dellats.toString()
+                                                         + "," +
+                                                         widget.dellongs.toString()
+                                                     ),
+                                                    builder: (context,snaps){
+                                                      if(snaps.data == null){
+                                                        return Text("Data Error");
+                                                      }else{
+                                                        return  NCard(
+                                                    icon: Icons.my_location,
+                                                    label:snaps.data
+                                                  );
+                                                      }
+                                                    },
+                                                   ),
+                                                   SizedBox(height: 10,),
 
                                                   //  FutureBuilder(
                                                   //    future: CoordinatesConverter().convert(widget.dellats,widget.dellongs),
@@ -1236,6 +1275,7 @@ var checkVal = localStorage.getBool('check');
     );
   }
   void xDilogAhow(context){
+
       showDialog(context: context,
       barrierDismissible: true,
       builder: (BuildContext context){
@@ -1252,7 +1292,8 @@ var checkVal = localStorage.getBool('check');
         color: Colors.white),
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
+          child: 
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[

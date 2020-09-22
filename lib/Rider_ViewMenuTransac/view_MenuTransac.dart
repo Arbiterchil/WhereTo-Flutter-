@@ -10,6 +10,7 @@ import 'package:WhereTo/Rider_ViewMenuTransac/menudesign.dart';
 import 'package:WhereTo/google_maps/Rider_route.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:WhereTo/Rider_ViewMenuTransac/rider_classMenu.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/ridershowStep_Menu.dart';
@@ -76,6 +77,7 @@ bool stepTf = true;
 bool menuHide = true;
 bool backTF =true;
 bool cancelOrder = false;
+bool fuckme = false;
 var idgetter;
 var iderntify;
 @override
@@ -86,7 +88,6 @@ var iderntify;
     riderCheck();
     print(widget.getID);
     super.initState();
-    
   }
 
 
@@ -564,7 +565,25 @@ var checkVal = localStorage.getBool('check');
                                                     label: widget.restaurantName,
                                                   ),
                                                   SizedBox(height: 10,),
-
+                                                  FutureBuilder(
+                                                     future: CoordinatesConverter()
+                                                     .getAddressByLocation(
+                                                        widget.reslats.toString()
+                                                         + "," +
+                                                         widget.reslongs.toString()
+                                                     ),
+                                                    builder: (context,snaps){
+                                                      if(snaps.data == null){
+                                                        return Text("Data Error");
+                                                      }else{
+                                                        return  NCard(
+                                                    icon: EvaIcons.map,
+                                                    label:snaps.data
+                                                  );
+                                                      }
+                                                    },
+                                                   ),
+                                                   SizedBox(height: 10,),
                                                    NCard(
                                                     icon: Icons.phone_android,
                                                     label:widget.contactNumber,
@@ -580,7 +599,9 @@ var checkVal = localStorage.getBool('check');
                                                    FutureBuilder(
                                                      future: CoordinatesConverter()
                                                      .getAddressByLocation(
-                                                        widget.user_coor
+                                                        widget.dellats.toString()
+                                                        +","+
+                                                        widget.dellongs.toString()
                                                      ),
                                                     builder: (context,snaps){
                                                       if(snaps.data == null){
@@ -857,9 +878,23 @@ var checkVal = localStorage.getBool('check');
 
   }
 
- 
+ Widget springKling() {
+
+   return Container(
+     height: 80,
+     width: 80,
+     child: SpinKitDoubleBounce(
+       color: pureblue,
+       size: 60,
+     ),
+   );
+
+ }
 
   void cancelOrderS(String gettheID,String idNotif) async {
+
+
+
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -877,7 +912,9 @@ var checkVal = localStorage.getBool('check');
           borderRadius: BorderRadius.circular(20), color: Colors.white),
       child: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
-        child: Column(
+        child:
+        
+         Column(
           children: <Widget>[
             Stack(
               children: <Widget>[
@@ -1019,6 +1056,7 @@ var checkVal = localStorage.getBool('check');
     
   }
 void _showDistictWarning(String meesage) {
+
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -1151,6 +1189,9 @@ void _showDistictWarning(String meesage) {
 
   }
   void xDilogAhow(context){
+
+      
+
       showDialog(context: context,
       barrierDismissible: true,
       builder: (BuildContext context){
@@ -1167,7 +1208,8 @@ void _showDistictWarning(String meesage) {
         color: Colors.white),
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
+          child:
+         Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -1203,11 +1245,7 @@ void _showDistictWarning(String meesage) {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(45),
                             
-                            // border: Border.all(
-                            //   color: Colors.white,
-                            //   style: BorderStyle.solid,
-                            //   width: 2.0,
-                            // ),
+                    
                             image: DecorationImage(
                               image: AssetImage("asset/img/logo.png"),
                               fit: BoxFit.cover,
@@ -1250,6 +1288,8 @@ void _showDistictWarning(String meesage) {
                   color:Color(0xFF0C375B),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                   onPressed: () async{
+
+                
       var riderId = userData['id'].toString();
 
       var data = {
@@ -1262,11 +1302,13 @@ void _showDistictWarning(String meesage) {
       var body = json.decode(response.body);
       
       if(body == true){
+    
  SharedPreferences localStore = await SharedPreferences.getInstance();
         localStore.setString("menuplustrans", "${widget.getID}");
         localStore.setString("playerIDS", "${widget.playerId}");
       }else{
           print(body);
+          _showDistictWarning("The Order Is Accepted by another Rider.");
       }
         setState(() {
       available = !available;
