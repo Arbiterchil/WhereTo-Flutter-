@@ -18,7 +18,7 @@ class UnViewRemit {
     int id;
     int riderId;
     String name;
-    int amount;
+    double amount;
     dynamic imagePath;
     int status;
     String createdAt;
@@ -27,7 +27,7 @@ class UnViewRemit {
         id: json["id"],
         riderId: json["riderId"],
         name: json["name"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
         imagePath: json["imagePath"],
         status: json["status"],
         createdAt: json["created_at"],

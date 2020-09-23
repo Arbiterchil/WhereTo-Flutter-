@@ -240,7 +240,7 @@ Widget _views(UnRemitResponse remitResponse){
 
 
 }
-void _showDial( int id ,String name, int amount, String createdAt,bool laso){
+void _showDial( int id ,String name, double amount, String createdAt,bool laso){
     
     laso = false;
 

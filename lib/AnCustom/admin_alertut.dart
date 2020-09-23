@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/LoginBloc/loginBloc.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -80,7 +81,7 @@ class _AdminOutStageState extends State<AdminOutStage> {
                             fontFamily: 'OpenSans'
               ),),
                SizedBox(height:16.0 ,),
-              Text("Are You Sure Want to Log Out?",
+              Text("Are You Sure Want to Log Out Please Double Check the Remits?",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
@@ -108,13 +109,12 @@ class _AdminOutStageState extends State<AdminOutStage> {
                 color: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 onPressed: () async{
-                  // var res = await ApiCall().getData('/logout');
-                  //           var body = json.decode(res.body);
-                           
+                  
+                                await loginBloc.dispose();
                                SharedPreferences localStorage = await SharedPreferences.getInstance();
                                localStorage.remove('user');
                                localStorage.remove('token');
-                               localStorage.remove('userTYPO');
+                               localStorage.remove('type');
                                localStorage.remove('menuplustrans');
                               //  print(body);
                                 Navigator.pushAndRemoveUntil(

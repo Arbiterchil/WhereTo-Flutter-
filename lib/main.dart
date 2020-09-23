@@ -5,6 +5,7 @@ import 'package:WhereTo/Services/connectivity_service.dart';
 import 'package:WhereTo/Services/connectivity_status.dart';
 import 'package:WhereTo/Transaction/MyOrder/bloc.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 
 import 'package:WhereTo/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 import 'api_restaurant_bloc/orderblocdelegate.dart';
-void main() {
+void main() async{
   
   BlocSupervisor.delegate =OrderBlocDelegate();
+  WidgetsFlutterBinding.ensureInitialized();
+  await UserGetPref().init();
   runApp(MyApp());
 }
 class MyApp extends StatefulWidget {

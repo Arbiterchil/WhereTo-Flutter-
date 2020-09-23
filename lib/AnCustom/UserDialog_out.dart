@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/LoginBloc/loginBloc.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -111,11 +112,11 @@ var userData;
                 onPressed: () async{
                   // var res = await ApiCall().getData('/logout');
                   //           var body = json.decode(res.body);
-                           
+                              
                                SharedPreferences localStorage = await SharedPreferences.getInstance();
                                localStorage.remove('user');
                                localStorage.remove('token');
-                               localStorage.remove('userTYPO');
+                               localStorage.remove('type');
                                localStorage.remove('menuplustrans');
                               //  print(body);
                                 Navigator.pushAndRemoveUntil(

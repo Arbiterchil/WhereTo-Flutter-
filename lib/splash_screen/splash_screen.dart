@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:WhereTo/modules/Awalkthrough/walk_t.dart';
+import 'package:WhereTo/modules/OtherFeatures/Auth/auth_pref.dart';
 import 'package:WhereTo/path.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,36 +20,17 @@ class _SplashScreenState extends State<SplashScreen> {
   String hens;
     @override
   void initState() {
-    _getUserInfo();
+    authShared.getThos();
     super.initState();
     startTime();
-    
   }
-
-  
-
-  void _getUserInfo() async {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      var userJson = localStorage.getString('userTYPO'); 
-      setState(() {
-        userData = userJson;
-      });
-  }
-
-
-
   startTime(){
-    var duration = Duration(seconds: 5);
+    var duration = Duration(seconds: 4);
     return Timer(duration,route);
   }
   route(){
-   
-
-   
       Navigator.pushReplacement(context, MaterialPageRoute(
-      builder: (context) => PathWay( 
-        getStringthis: userData != null ? userData.toString() : "trialShow"  ,)));
-
+      builder: (context) => authShared.openSessionPages()));
   }
 
   @override
