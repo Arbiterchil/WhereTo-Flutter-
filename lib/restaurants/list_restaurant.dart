@@ -142,7 +142,7 @@ class _ListStacticState extends State<ListStactic>
               leading: IconButton(
                   icon: Icon(Icons.arrow_back_ios),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (context)=> HomePage()),ModalRoute.withName('/'));
                     BlocProvider.of<OrderBloc>(context)
                         .add(Computation.deleteAll());
                   }),

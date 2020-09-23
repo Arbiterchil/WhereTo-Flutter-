@@ -690,7 +690,7 @@ class _SearchDepoState extends State<SearchDepo> {
                   FutureBuilder(
                     future: CoordinatesConverter().getAddressByLocation("${nf[index].latitude},${nf[index].longitude}"),
                     builder: (context, datasnapshot1){
-                      return NewRestaurantBox(
+                    return NewRestaurantBox(
                     image: nf[index].imagePath,
                     restaurantName: nf[index].restaurantName,
                     address:

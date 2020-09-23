@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:WhereTo/Transaction/SearchMenu/FeaturedRestaurant.dart';
 import 'package:WhereTo/Transaction/SearchMenu/filteredMenu.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
+import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:rxdart/rxdart.dart';
 
 
@@ -29,9 +31,19 @@ _publishSubjectFeautured.sink.add(filter);
 Future<void> getmenu(String query) async {
 final response = await ApiCall().getRestarant('/getAllMenu');
 List<FilterRestaurant> search = filterRestaurantFromJson(response.body);
+String menuCoordinatesFromID;
+  String coordinates;
+  String userCoordinatesFromID;
+  String userCoordinates;
+  search.forEach((element) async{
+    menuCoordinatesFromID ="${element.latitude},${element.longitude}";
+    coordinates =await CoordinatesConverter().addressByCity(menuCoordinatesFromID);
+    userCoordinatesFromID =await ID().getPosition();
+    userCoordinates =await CoordinatesConverter().addressByCity(userCoordinatesFromID);
+  });
 var filter =search.where((element) =>  element.menuName.contains(query) || element.menuName.toLowerCase().contains(query) || element.menuName.toUpperCase().contains(query) ||
  element.restaurantName.contains(query) || element.restaurantName.toLowerCase().contains(query) || element.restaurantName.toUpperCase().contains(query) 
-|| element.categoryName.contains(query) || element.categoryName.toLowerCase().contains(query) || element.categoryName.toUpperCase().contains(query)).toList();
+|| element.categoryName.contains(query) || element.categoryName.toLowerCase().contains(query) || element.categoryName.toUpperCase().contains(query) && coordinates==userCoordinates).toList();
 _publishSubjectFilter.sink.add(filter);
 }
 

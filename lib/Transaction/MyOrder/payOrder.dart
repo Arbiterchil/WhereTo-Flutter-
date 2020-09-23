@@ -970,8 +970,7 @@ class _PayOrderState extends State<PayOrder> {
                                   //     context,
                                   //     MaterialPageRoute(
                                   //         builder: (context) => SearchDepo()));
-                                  Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (context)
-                                  => HomePage()),ModalRoute.withName('/'));
+                                  Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (context)=> HomePage()),ModalRoute.withName('/'));
                                 } else {
                                   orders.hide();
                                   DialogOrder().getDialog(

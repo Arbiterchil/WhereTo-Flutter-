@@ -179,14 +179,14 @@ class _FoodDisplayState extends State<FoodDisplay> {
                               ),
                             );
                           } else {
-                            return Container();
+                            return SpinKitPumpingHeart(color: Colors.red,);
                           }
                         });
                   } else {
-                    return Container();
+                    return SpinKitPumpingHeart(color: Colors.red,);
                   }
                 } else {
-                  return Container();
+                  return SpinKitPumpingHeart(color: Colors.red,);
                 }
               }),
         ),
