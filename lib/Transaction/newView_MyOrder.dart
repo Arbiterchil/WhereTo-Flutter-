@@ -240,10 +240,17 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
               ),
             ),
           ),
-          Padding(
+          RefreshIndicator(
+            color: Colors.blue,
+            
+            child: Padding(
             padding: EdgeInsets.only(top: 70),
             child: xStreamAsshole(),
-          ),
+          ), 
+            onRefresh: () async{
+                // Future.delayed(Duration(seconds: 2));
+                await bloc.getMenuTransaction();
+            })
         ],
       ),
     );

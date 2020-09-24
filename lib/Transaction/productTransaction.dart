@@ -408,17 +408,18 @@ class _TransactionListState extends State<TransactionList> {
                                            
                                           var userLat =await ID().getLat();
                                           var userLng =await ID().getLng();    
-                                          double deliveryCharge;       
-                                         
-                                            deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(widget.restoLat, widget.restoLng) , LatLng(userLat, userLng));      
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PayOrder(
-                                                            fee: deliveryCharge,
-                                                            restauID: widget
-                                                                .restauID)));
+                                          double deliveryCharge =0;       
+
+                                            deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(widget.restoLat, widget.restoLng) , LatLng(userLat, userLng));
+                                            print(deliveryCharge);      
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             PayOrder(
+                                            //                 fee: deliveryCharge,
+                                            //                 restauID: widget
+                                            //                     .restauID)));
 
                                         },
                                         child: Container(

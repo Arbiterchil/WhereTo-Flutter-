@@ -1,3 +1,5 @@
+
+
 import 'package:WhereTo/Transaction/MyOrder/Receipt/Receipt.bloc.dart';
 import 'package:WhereTo/Transaction/MyOrder/Receipt/Receipt.class.dart';
 import 'package:WhereTo/styletext.dart';
@@ -9,6 +11,7 @@ class ReceiptWidget extends StatelessWidget {
   ReceiptWidget({this.transactID});
   @override
   Widget build(BuildContext context) {
+    double total =0;
     final ReceiptBloc blocReceipt = ReceiptBloc(this.transactID);
     return Scaffold(
         appBar: AppBar(
@@ -44,47 +47,76 @@ class ReceiptWidget extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data.transactionDetails.length > 0) {
-
+                    snapshot.data.orders.forEach((element) {
+                     total +=element.totalAmount;
+                    });
                     return Container(
-                      height: 180,
+                      height: 210,
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(
                         itemCount: snapshot.data.transactionDetails.length,
                         itemBuilder: (cons, index){         
                           if(snapshot.data.transactionDetails.length > 0){
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 60,
-                            width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey[300],
-                            blurRadius: 3.3,
-                            spreadRadius: 3.3
-                          )
-                        ]
+                        return Column(
+                          children: [
+                            SizedBox(height: 30,),
+                            Container(
+                              height: 60,
+                              width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.white,
+                          
                       ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20,top: 20),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20,top: 20),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "Restaurant Name: " ,
+                                          style: TextStyle(
+                                            fontFamily: 'Gilroy-light',
+                                            color: wheretoDark,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: snapshot.data.transactionDetails[index].restaurantName,
+                                          style: TextStyle(
+                                            fontFamily: 'Gilroy-ExtraBold',
+                                            color: wheretoDark,
+                                          ),
+                                        ),
+                                      ]
+                                    )),
+                                ),
+                                ),
+                            ),
+                            SizedBox(height: 15,),
+                            Container(
+                              height: 60,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.white,
+                         
+                      ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20,top: 20),
                                 child: RichText(
                                   text: TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: "Restaurant Name: " ,
+                                        text: "Delivery Charge: ",
                                         style: TextStyle(
                                           fontFamily: 'Gilroy-light',
-                                          color: wheretoDark,
+                                          color:wheretoDark,
                                         ),
                                       ),
                                       TextSpan(
-                                        text: snapshot.data.transactionDetails[index].restaurantName,
+                                        text: snapshot.data.transactionDetails[index].deliveryCharge.toString(),
                                         style: TextStyle(
                                           fontFamily: 'Gilroy-ExtraBold',
                                           color: wheretoDark,
@@ -92,49 +124,43 @@ class ReceiptWidget extends StatelessWidget {
                                       ),
                                     ]
                                   )),
-                              ),
-                              ),
-                          ),
-                          SizedBox(height: 15,),
-                          Container(
-                            height: 60,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey[300],
-                            blurRadius: 3.3,
-                            spreadRadius: 3.3
-                          )
-                        ]
+                                ),
+                            ),
+                            SizedBox(height: 15,),
+                            Container(
+                              height: 60,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.white,
+                         
                       ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20,top: 20),
-                              child: RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "Delivery Charge: ",
-                                      style: TextStyle(
-                                        fontFamily: 'Gilroy-light',
-                                        color:wheretoDark,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20,top: 20),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: "Total: ",
+                                        style: TextStyle(
+                                          fontFamily: 'Gilroy-light',
+                                          color:wheretoDark,
+                                        ),
                                       ),
-                                    ),
-                                    TextSpan(
-                                      text: snapshot.data.transactionDetails[index].deliveryCharge.toString(),
-                                      style: TextStyle(
-                                        fontFamily: 'Gilroy-ExtraBold',
-                                        color: wheretoDark,
+                                      TextSpan(
+                                        text: "${total+=snapshot.data.transactionDetails[index].deliveryCharge}",
+                                        style: TextStyle(
+                                          fontFamily: 'Gilroy-ExtraBold',
+                                          color: wheretoDark,
+                                        ),
                                       ),
-                                    ),
-                                  ]
-                                )),
-                              ),
-                          ),
-                        ],
-                      );
+                                    ]
+                                  )),
+                                ),
+                            ),
+                          ],
+                      
+                        );
 
                           }else{
                             return Container();
@@ -150,7 +176,7 @@ class ReceiptWidget extends StatelessWidget {
               },
             ),
 
-                SizedBox(height: 18,),
+                SizedBox(height: 50,),
                 Stack(
                   children: [
                     StreamBuilder<ReceiptClass>(
@@ -256,7 +282,7 @@ class ReceiptWidget extends StatelessWidget {
                         itemBuilder: (cons, index){         
                           if(snapshot.data.transactionDetails.length > 0){
                             return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
                             height: 60,
@@ -412,7 +438,8 @@ class ReceiptWidget extends StatelessWidget {
                                             Column(
                                               children: [
                                                 Text("Rider Name: ${snapshot.data.riderDetails[index].name}"),
-                                                Text("Contact Number: ${snapshot.data.riderDetails[index].contactNumber}")
+                                                Text("Contact Number: ${snapshot.data.riderDetails[index].contactNumber}"),
+                                                
                                               ],
                                             )
                                           ],
