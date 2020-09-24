@@ -51,15 +51,13 @@ void getThos() async{
    var token = localStorage.getString('token');
    var type = localStorage.getString('type');
    var totoyBibo = localStorage.getString('trial');
-  if(token != null){
+   if(token != null){
     tokes = token;
     isLogged = true;
    vartype = type;
    }else if(totoyBibo != null){
       shown = true;
       walkth = totoyBibo;
-   }else{
-     print("No View");
    }
      
 }
@@ -99,7 +97,7 @@ void getThos() async{
    String  customer = "0";
       String  rider = "1";
       String  admin = "2";
-      
+      if(isLogged == true){
          if(customer.contains(vartype)){
        return isLogged ? HomePage() : LoginPage();
      }else if(admin.contains(vartype)){
@@ -107,7 +105,7 @@ void getThos() async{
      }else if(rider.contains(vartype)){
        return isLogged ? RiderProfile() : LoginPage();
      }
-      else{
+      }else{
        return shown ? LoginPage() : WalkThroughPage() ;
      }
 }
