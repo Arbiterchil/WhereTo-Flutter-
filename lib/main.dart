@@ -70,14 +70,12 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
       
-      child: StreamProvider<ConnectivityStatus>(
-        create: (context) =>ConnectivityService().controller.stream,
-        child:MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home:SplashScreen(),
         ), 
           
-        ),
+        
     );
   }
 }

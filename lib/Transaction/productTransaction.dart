@@ -407,19 +407,9 @@ class _TransactionListState extends State<TransactionList> {
                                            isDismissible: false);
                                            
                                           var userLat =await ID().getLat();
-                                          var userLng =await ID().getLng();    
-                                          double deliveryCharge =0;       
-
-                                            deliveryCharge =await DeliveryCharge().getDeliveryCharge(LatLng(widget.restoLat, widget.restoLng) , LatLng(userLat, userLng));
-                                            print(deliveryCharge);      
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             PayOrder(
-                                            //                 fee: deliveryCharge,
-                                            //                 restauID: widget
-                                            //                     .restauID)));
+                                          var userLng =await ID().getLng();      
+                                          await DeliveryCharge().getDeliveryCharge(LatLng(widget.restoLat, widget.restoLng) , LatLng(userLat, userLng), context, widget.restauID);
+                                            
 
                                         },
                                         child: Container(
