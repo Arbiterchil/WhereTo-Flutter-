@@ -1055,8 +1055,7 @@ class _PayOrderState extends State<PayOrder> {
                               child: Text("Place Order",
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 16,
-                                      fontFamily: 'Gilroy-ExtraBold')),
+                                      fontFamily: 'Gilroy-light')),
                             ),
                           ),
                         ),
