@@ -408,7 +408,7 @@ class _TransactionListState extends State<TransactionList> {
                                            
                                           var userLat =await ID().getLat();
                                           var userLng =await ID().getLng();      
-                                          await DeliveryCharge().getDeliveryCharge(LatLng(widget.restoLat, widget.restoLng) , LatLng(7.448058, 125.694797), context, widget.restauID);
+                                          await DeliveryCharge().getDeliveryCharge(LatLng(widget.restoLat, widget.restoLng) , LatLng(userLat, userLng), context, widget.restauID);
                                             
 
                                         },

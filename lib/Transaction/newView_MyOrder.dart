@@ -249,6 +249,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
           ), 
             onRefresh: () async{
                 // Future.delayed(Duration(seconds: 2));
+               
                 await bloc.getMenuTransaction();
             })
         ],
@@ -311,7 +312,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
                                         builder: (BuildContext context) {
                                           return PlatformAlertDialog(
                                             title: Text(
-                                              "Canceling Your Order will not be notified the Rider.",
+                                              "Canceling Your Order will not notified the Rider.",
                                               style: TextStyle(
                                                   decoration:
                                                       TextDecoration.none,

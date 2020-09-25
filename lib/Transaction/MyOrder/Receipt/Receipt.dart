@@ -11,8 +11,10 @@ class ReceiptWidget extends StatelessWidget {
   ReceiptWidget({this.transactID});
   @override
   Widget build(BuildContext context) {
+    
     double total =0;
     final ReceiptBloc blocReceipt = ReceiptBloc(this.transactID);
+    
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
