@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
 import 'package:WhereTo/A_loadingSimpe/simple_loading.dart';
 import 'package:WhereTo/Transaction/Barangay/Barangay.class.dart';
 import 'package:WhereTo/Transaction/MyOrder/ComputationFee.dart';
@@ -20,6 +21,8 @@ import 'package:latlong/latlong.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../styletext.dart';
+
 
 class TransactionList extends StatefulWidget {
   final String restaurantAddress;
@@ -39,6 +42,35 @@ class _TransactionListState extends State<TransactionList> {
   @override
   void setState(fn) async {
     super.setState(fn);
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    reminderShow();
+  }
+
+  void reminderShow(){
+    showDialog(
+      barrierDismissible: false,
+      context: (context),
+      builder: (context) 
+      =>
+       DialogForAll(
+        widgets: SpinKitRotatingCircle(color: wheretoDark,size: 80,),
+        labelHeader: "Reminder!",
+        message: "To remove order just long press the menu you want to remove.",
+        buttTitle1: "OK",
+        buttTitle2: "",
+        noFunc: null,
+        yesFunc: () =>Navigator.pop(context),
+        showorNot1: true,
+        showorNot2: false,
+      ),
+      
+      );
+
   }
 
   @override
