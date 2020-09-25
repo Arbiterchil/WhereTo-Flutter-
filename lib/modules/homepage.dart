@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:WhereTo/A1_NewSingleBottomNav/bottom_nav.dart';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/AnCustom/send_helpID.dart';
 import 'package:WhereTo/AnCustom/send_validId.dart';
@@ -11,6 +12,7 @@ import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:WhereTo/styletext.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -282,34 +284,62 @@ void onTabTapped(int index) {
         children: <Widget>[..._childs],
       ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: 
-        pureblue,
-        backgroundColor:
-        Colors.white, 
-        unselectedItemColor: 
-        Color(0xFF0C375B),
+      bottomNavigationBar: BottomNavBar(
+      
+        selectedIndex: _selectedIndex,
+          backColor: Colors.white,
+          containHieght: 60,
+          itemCorner: 40,
+          items: [
+            BottomBarItems(
+              icon: Icon(EvaIcons.heart), 
+              title: Text("Home"),
+              activeColor: Colors.indigo,
+              inActiveColor: wheretoDark
+              ),
+              BottomBarItems(
+              icon: Icon(EvaIcons.list), 
+              title: Text("My Order"),
+              activeColor: pureblue,
+               inActiveColor: wheretoDark
+              ),
+              BottomBarItems(
+              icon: Icon(EvaIcons.person), 
+              title: Text("Pofile"),
+              activeColor: Colors.deepOrange,
+               inActiveColor: wheretoDark
+              )
+          ],
+            showElavation: true,
+          onItemSelected: onTabTapped),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   selectedItemColor: 
+      //   pureblue,
+      //   backgroundColor:
+      //   Colors.white, 
+      //   unselectedItemColor: 
+      //   Color(0xFF0C375B),
 
-        currentIndex: _selectedIndex,
-        onTap: onTabTapped,
-        // currentIndex: _selectedIndex,
-        // onTap: (int index) { _selectTab(pageKeys[index], index); },
-        items: [
-              BottomNavigationBarItem(
-              icon: new Icon(Icons.view_list),
-              title: new Text('Search'),
-            ), 
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.list),
-              title: new Text('My Orders'),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.home),
-              title: new Text('Home'),
-            ),
-        ],
-        type: BottomNavigationBarType.fixed,
-        ),   
+      //   currentIndex: _selectedIndex,
+      //   onTap: onTabTapped,
+      //   // currentIndex: _selectedIndex,
+      //   // onTap: (int index) { _selectTab(pageKeys[index], index); },
+      //   items: [
+      //         BottomNavigationBarItem(
+      //         icon: new Icon(Icons.view_list),
+      //         title: new Text('Search'),
+      //       ), 
+      //       BottomNavigationBarItem(
+      //         icon: new Icon(Icons.list),
+      //         title: new Text('My Orders'),
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: new Icon(Icons.home),
+      //         title: new Text('Home'),
+      //       ),
+      //   ],
+      //   type: BottomNavigationBarType.fixed,
+      //   ),   
 
     );
   }

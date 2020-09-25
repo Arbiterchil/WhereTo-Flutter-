@@ -37,13 +37,18 @@ void removeAuthPref() async{
   localStorage.remove('menuplustrans');
 }
 
-void logRemoveAll() async{
+void logRemoveAll(context) async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('user');
   prefs.remove('token');
   prefs.remove('type');
   prefs.remove('latitude');
   prefs.remove('longitude');
+  prefs.remove('menuplustrans');
+  Navigator.pushAndRemoveUntil(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => LoginPage()),ModalRoute.withName('/'));
 }
 
 void getThos() async{

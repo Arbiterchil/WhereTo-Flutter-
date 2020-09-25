@@ -10,7 +10,7 @@ Future<BaranggayRespone> bararangHoudi() async {
 
 try{
   var response = await  ApiCall().getBararang('/getBarangayList');
-  // var body = json.decode(response.body);
+  var body = json.decode(response.body);
   // List<Barangays> bararang = [];
   // for(var json in body){
   //   Barangays barangays = Barangays(
@@ -18,7 +18,7 @@ try{
   //     barangayName : json["barangayName"]);
   //     bararang.add(barangays);
   // }
-  return BaranggayRespone.fromJson(json.decode(response.body));
+  return BaranggayRespone.fromJson(body);
   }catch(stacktrace,error){
   print("Error Occurence. $error and $stacktrace" );
   return BaranggayRespone.withError("$error");

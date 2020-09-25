@@ -2,6 +2,6 @@
 import 'package:WhereTo/AnCustom/admin_alertut.dart';
 import 'package:flutter/material.dart';
 
-class Admin_out {
+class Adminout {
   static exit(context) => showDialog(context: context,builder: (context) => AdminOutStage());
 }

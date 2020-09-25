@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
 import 'package:WhereTo/Admin/Restaurant.dart';
 import 'package:WhereTo/Admin/Rider_viewRemit/view_RemitImages.dart';
 import 'package:WhereTo/Admin/r_source.dart';
@@ -8,10 +9,13 @@ import 'package:WhereTo/Admin/view_allID.dart';
 import 'package:WhereTo/Admin/view_saleOurs/show_resultsRemitList.dart';
 import 'package:WhereTo/AnCustom/admin_help.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/OtherFeatures/Auth/auth_pref.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
+import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -380,7 +384,21 @@ class _AdminDashState extends State<AdminDash> {
                  color: Color(0xFF0C375B),
                   shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: () =>Admin_out.exit(context),
+                  onPressed: () =>showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => 
+          DialogForAll(
+        widgets: SpinKitDoubleBounce(color: wheretoDark,size: 80,),
+        labelHeader: "Do you want to exit app?",
+        message: "Please double check for the Remits of Riders before Exiting",
+        buttTitle1: "Yes",
+        buttTitle2: "No",
+        yesFunc: () => authShared.logRemoveAll(context),
+        noFunc: () async => Navigator.pop(context),
+        showorNot1: true,
+        showorNot2: true,
+      ),) ,
                   child: Text(
                       "Log Out",
                       style: TextStyle(
@@ -397,7 +415,21 @@ class _AdminDashState extends State<AdminDash> {
             ),
             ),
         
-       onWillPop:() async => Admin_out.exit(context)),
+       onWillPop:() async => showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => 
+          DialogForAll(
+        widgets: SpinKitDoubleBounce(color: wheretoDark,size: 80,),
+        labelHeader: "Do you want to exit app?",
+        message: "Please double check for the Remits of Riders before Exiting",
+        buttTitle1: "Yes",
+        buttTitle2: "No",
+        yesFunc: () =>authShared.logRemoveAll(context),
+        noFunc: () => Navigator.pop(context),
+        showorNot1: true,
+        showorNot2: true,
+      ),)),
     );
   }
 

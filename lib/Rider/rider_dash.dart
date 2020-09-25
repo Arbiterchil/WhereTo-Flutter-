@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
 import 'package:WhereTo/AnCustom/dialogHelp.dart';
 import 'package:WhereTo/Rider/rider_sendRem.dart';
 import 'package:WhereTo/Rider_viewTransac/DummyTesting/dummy_Card.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 import 'package:WhereTo/modules/gobal_call.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -449,7 +452,22 @@ void configSignal() async {
                  color: Color(0xFF0C375B),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: () =>Dialog_Helper.exit(context),
+                  onPressed: () =>showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => 
+          DialogForAll(
+        widgets: SpinKitDoubleBounce(color: wheretoDark,size: 80,),
+        labelHeader: "Do you want to exit app?",
+        message: "Please double check for the Remits of Riders before Exiting",
+        buttTitle1: "Yes",
+        buttTitle2: "No",
+        yesFunc: () =>Navigator.pushReplacement(context,
+                new MaterialPageRoute(builder: (context) => RiderRemit(idFromLog : UserGetPref().getUserDataJson['id'].toString()))),
+        noFunc: () => Navigator.pop(context),
+        showorNot1: true,
+        showorNot2: true,
+      ),),
                   child: Text(
                     "Log Out",
                     style: TextStyle(

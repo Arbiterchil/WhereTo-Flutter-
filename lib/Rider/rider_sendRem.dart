@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/Rider/rider_dash.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +109,7 @@ class _RiderRemitState extends State<RiderRemit> {
       getAmount();
     // _getUserInfo();
     getAdminDevices();
-      
+      print(UserGetPref().getUserDataJson['id'].toString());
     super.initState();
 
   } 
