@@ -138,6 +138,22 @@ class _PayOrderState extends State<PayOrder> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 15,top: 10),
+                                child: Container(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Center(
+                                    child: Text("Order Summary: ",
+                                    style: TextStyle(
+                                      color: wheretoDark,
+                                      fontFamily: 'Gilroy-ExtraBold',
+                                      fontSize: 20
+                                    ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 child: Builder(
