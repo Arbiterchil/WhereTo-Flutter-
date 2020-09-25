@@ -33,7 +33,7 @@ class _DialogForAllState extends State<DialogForAll> {
         backgroundColor: Colors.white,
         child: Stack(
           alignment: Alignment.topCenter,
-         
+          overflow: Overflow.visible,
           children: [
             Positioned(
               top: -50,
