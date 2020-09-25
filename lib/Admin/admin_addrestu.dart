@@ -8,6 +8,7 @@ import 'package:WhereTo/BarangaylocalList/barangay_response.dart';
 import 'package:WhereTo/BarangaylocalList/barangay_stream.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
+import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:WhereTo/modules/editProfileScreen.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -404,6 +405,34 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                     }
                   },
                 ),
+                // SizedBox(height: 15,),
+                // Container(
+                //   height: 50,
+                //   width: MediaQuery.of(context).size.width,
+                //   decoration: BoxDecoration(
+                //     color: pureblue,
+                //     borderRadius: BorderRadius.all(Radius.circular(50)),
+                //   ),
+                //   child: RaisedButton(
+                //     color: Colors.transparent,
+                //     splashColor: wheretoDark,
+                //     child: Center(
+                //       child: Text("Get Location",
+                //       style: TextStyle(
+                //         color: Colors.white,
+                //         fontFamily: 'Gilroy-light',
+                        
+                //       ),
+                //       ),
+                //     ),
+                //     onPressed: () async{
+                //       String ok = ID().getPosition().toString(); 
+                //       // print(ID().getLat());
+                //       // print(ID().getLng());
+                //       print(ok);
+                //     }),
+                // ),
+                // SizedBox(height: 15,),
             //         Container(
             //   width: MediaQuery.of(context).size.width,
             //   alignment: Alignment.centerLeft,
@@ -1034,7 +1063,7 @@ setState(() {
 
     //                          }
     if(selectPerson == null || opentimeString == null ||
-       closetimeString == null || datesofdays == null || toShowAddress.isEmpty){
+       closetimeString == null || datesofdays == null ){
          print('tan aw balik sa part');
          _showDial("Please Specify all empty Fields");
     }else if(_idPickerImage == null){
