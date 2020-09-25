@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final restaurantGets = restaurantGetsFromJson(jsonString);
+
 import 'dart:convert';
 
 RestaurantGets restaurantGetsFromJson(String str) => RestaurantGets.fromJson(json.decode(str));
@@ -10,7 +14,8 @@ class RestaurantGets {
         this.restaurantName,
         this.owner,
         this.representative,
-        this.address,
+        this.latitude,
+        this.longitude,
         this.barangayId,
         this.contactNumber,
         this.openTime,
@@ -26,9 +31,10 @@ class RestaurantGets {
 
     int id;
     String restaurantName;
-    dynamic owner;
-    dynamic representative;
-    String address;
+    String owner;
+    String representative;
+    double latitude;
+    double longitude;
     int barangayId;
     String contactNumber;
     String openTime;
@@ -46,7 +52,8 @@ class RestaurantGets {
         restaurantName: json["restaurantName"],
         owner: json["owner"],
         representative: json["representative"],
-        address: json["address"],
+        latitude: double.parse(json["latitude"]),
+        longitude: double.parse(json["longitude"]),
         barangayId: json["barangayId"],
         contactNumber: json["contactNumber"],
         openTime: json["openTime"],
@@ -65,7 +72,8 @@ class RestaurantGets {
         "restaurantName": restaurantName,
         "owner": owner,
         "representative": representative,
-        "address": address,
+        "latitude": latitude,
+        "longitude": longitude,
         "barangayId": barangayId,
         "contactNumber": contactNumber,
         "openTime": openTime,

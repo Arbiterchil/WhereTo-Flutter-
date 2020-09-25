@@ -62,7 +62,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
     List<dynamic> addfea = [];
     List finalres = [];
     Map<String,int> shithis ={};   
-
+    var ok;
     List<String> featuring =
     [
       "Not Featured",
@@ -174,6 +174,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
           }
 
     }   
+
 
 
     Widget _view(BaranggayRespone respone){
@@ -410,11 +411,14 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                 //   height: 50,
                 //   width: MediaQuery.of(context).size.width,
                 //   decoration: BoxDecoration(
-                //     color: pureblue,
+                    
                 //     borderRadius: BorderRadius.all(Radius.circular(50)),
                 //   ),
                 //   child: RaisedButton(
-                //     color: Colors.transparent,
+                //     shape: RoundedRectangleBorder(
+                //        borderRadius: BorderRadius.all(Radius.circular(50)),
+                //     ),
+                //     color: pureblue,
                 //     splashColor: wheretoDark,
                 //     child: Center(
                 //       child: Text("Get Location",
@@ -425,11 +429,8 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                 //       ),
                 //       ),
                 //     ),
-                //     onPressed: () async{
-                //       String ok = ID().getPosition().toString(); 
-                //       // print(ID().getLat());
-                //       // print(ID().getLng());
-                //       print(ok);
+                //     onPressed: () {
+                      
                 //     }),
                 // ),
                 // SizedBox(height: 15,),

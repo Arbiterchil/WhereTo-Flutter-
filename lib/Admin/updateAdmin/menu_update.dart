@@ -394,11 +394,11 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                      price.clear();
                    categoryId.clear();
                   } else{
-                    menuName.text = mems.menuName;
-                    description.text = mems.description;
-                    price.text = mems.price.toString();
+                    // menuName.text = mems.menuName;
+                    // description.text = mems.description;
+                    // price.text = mems.price.toString();
                     categoryId.text = mems.categoryId.toString();
-                      src = mems.imagePath;
+                      // src = mems.imagePath;
                   
                   }   
           return Form(
@@ -407,6 +407,67 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
               
               child: Column(
                       children: <Widget>[
+                         Padding(
+                                padding: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10,),
+                                child: Container(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 120,
+                                        child: RaisedButton(
+                                          child: Center(
+                                            child: Text("Show Data.",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Gilroy-light',
+
+                                            ),
+                                            ),
+                                          ),
+                                          color: pureblue,
+                                          splashColor: Colors.amberAccent,
+                                          onPressed: (){
+                                            setState(() {
+                                                  menuName.text = mems.menuName;
+                    description.text = mems.description;
+                    price.text = mems.price.toString();
+                    categoryId.text = mems.categoryId.toString();
+                      src = mems.imagePath;
+
+                                            });
+                                          }),
+                                      ),
+                                      Container(
+                                        height: 50,
+                                        width: 120,
+                                        child: RaisedButton(
+                                          child: Center(
+                                            child: Text("Clear Data.",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Gilroy-light',
+                                              
+                                            ),
+                                            ),
+                                          ),
+                                          color: pureblue,
+                                          splashColor: Colors.amberAccent,
+                                          onPressed: (){
+                                            setState(() {
+                                                 menuName.clear();
+                    description.clear();
+                    price.clear();
+                                            });
+                                          }),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
                           _getImage(),
                     SizedBox(height: 20,),
                      GestureDetector(

@@ -6,6 +6,7 @@ import 'package:WhereTo/Admin/updateAdmin/Get_Restaurant/get_RestaurantResponse.
 import 'package:WhereTo/Admin/updateAdmin/Get_Restaurant/get_RestaurantStream.dart';
 import 'package:WhereTo/Admin/updateAdmin/text_editor.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -80,10 +81,11 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
   
 
    String src;
+   double lats ;
+   double longs;
   TextEditingController retaurantname  = TextEditingController();
     TextEditingController owner = TextEditingController(); 
     TextEditingController representative  = TextEditingController();
-    TextEditingController address = TextEditingController();
     TextEditingController newAddre = TextEditingController();
     TextEditingController contactnumber = TextEditingController();
     TextEditingController barangayId  = TextEditingController();
@@ -265,6 +267,47 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
 
   }
 
+  
+void viewMapo(){
+
+  showModalBottomSheet(
+    isDismissible: true,
+    context: context, 
+  builder: (_){
+
+    return SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
+      child: Column(
+        children: [
+          Container(
+        height: 390,
+        width: MediaQuery.of(context).size.width,
+        child: PlacePicker(
+                      apiKey: googleKey,
+                      initialPosition: latlng,
+                      useCurrentLocation: true,
+                      searchForInitialValue: true,
+                      usePlaceDetailSearch: true,
+                      onPlacePicked: (result) async {
+                        double lat = result.geometry.location.lat;
+                        double lng = result.geometry.location.lng;
+                        print("the Bilat is $lat and Oten is $lng");
+                        setState(() {
+                        lats = lat;
+                        longs = lng;
+                        });
+                        Navigator.pop(context);
+                        }
+                    ),
+      ),
+        ],
+      ),
+    );
+
+  });
+  
+}
+
   getYourIdImage( ImageSource source) async{
 
     var imageIdValid = await pick.getImage(source: source); 
@@ -344,7 +387,9 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
           'restaurantName' : retaurantname.text,
           'owner' : owner.text,
           'representative' : representative.text,
-          'address' : newAddre.text != null ? newAddre.text : address.text,
+          // 'address' : newAddre.text != null ? newAddre.text : address.text,
+           'latitude': lats.toString(),
+          'longitude': longs.toString(),
           'barangayId' :  selectPerson == null ? barangayId.text : selectPerson.toString() ,
           'contactNumber' : contactnumber.text,
           'openTime' : opentimeString == null ?  openTimes.text :  opentimeString,
@@ -646,41 +691,134 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
             ),),
           );
         }else{
-            if(restaurantGets == null){
-     retaurantname.clear(); 
-    owner.clear();
-    representative.clear();
-    address.clear();
-     barangayId.clear();
-     contactnumber.clear();
-    //  openTimes.clear();
-    //  closingTimes.clear();
-     closeOn.clear();
+    //         if(restaurantGets == null){
+    //  retaurantname.clear(); 
+    // owner.clear();
+    // representative.clear();
+    //  barangayId.clear();
+    //  contactnumber.clear();
+    // //  openTimes.clear();
+    // //  closingTimes.clear();
+    //  closeOn.clear();
 
-                  } else{
-         
-                   retaurantname.text = restaurantGets.restaurantName;
-                  owner.text = restaurantGets.owner;
-                  representative.text = restaurantGets.representative;
-                  address.text = restaurantGets.address;
-                  contactnumber.text = restaurantGets.contactNumber.toString();
-
+    //               } else{
+                  //   retaurantname.text = restaurantGets.restaurantName;
+                  // owner.text = restaurantGets.owner;
+                  // representative.text = restaurantGets.representative;
+                  
+                  // contactnumber.text = restaurantGets.contactNumber.toString();
+                  // lats = restaurantGets.latitude;
+                  // longs = restaurantGets.longitude;
                   barangayId.text = restaurantGets.barangayId.toString();
                   openTimes.text = restaurantGets.openTime;
                   closingTimes.text = restaurantGets.closingTime;
                   closeOn.text = restaurantGets.closeOn.toString();
-                    src = restaurantGets.imagePath;
-                
+                  //   src = restaurantGets.imagePath;
+                  
 
                   featuredNow.text= restaurantGets.isFeatured.toString();
+                  //  retaurantname.text = restaurantGets.restaurantName;
+                  // owner.text = restaurantGets.owner;
+                  // representative.text = restaurantGets.representative;
+                  
+                  // contactnumber.text = restaurantGets.contactNumber.toString();
 
-                  } 
+                  // barangayId.text = restaurantGets.barangayId.toString();
+                  // openTimes.text = restaurantGets.openTime;
+                  // closingTimes.text = restaurantGets.closingTime;
+                  // closeOn.text = restaurantGets.closeOn.toString();
+                  //   src = restaurantGets.imagePath;
+                  
+
+                  // featuredNow.text= restaurantGets.isFeatured.toString();
+
+                  // } 
 
            return Form(
              key: formkey,
                       child: Container(
                         child: Column(
                           children: <Widget>[
+
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10,),
+                                child: Container(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 120,
+                                        child: RaisedButton(
+                                          child: Center(
+                                            child: Text("Show Data.",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Gilroy-light',
+
+                                            ),
+                                            ),
+                                          ),
+                                          color: pureblue,
+                                          splashColor: Colors.amberAccent,
+                                          onPressed: (){
+                                            setState(() {
+                                                retaurantname.text = restaurantGets.restaurantName;
+                  owner.text = restaurantGets.owner;
+                  representative.text = restaurantGets.representative;
+                  
+                  contactnumber.text = restaurantGets.contactNumber.toString();
+                  lats = restaurantGets.latitude;
+                  longs = restaurantGets.longitude;
+                  barangayId.text = restaurantGets.barangayId.toString();
+                  openTimes.text = restaurantGets.openTime;
+                  closingTimes.text = restaurantGets.closingTime;
+                  closeOn.text = restaurantGets.closeOn.toString();
+                    src = restaurantGets.imagePath;
+                  
+
+                  featuredNow.text= restaurantGets.isFeatured.toString();
+
+                                            });
+                                          }),
+                                      ),
+                                      Container(
+                                        height: 50,
+                                        width: 120,
+                                        child: RaisedButton(
+                                          child: Center(
+                                            child: Text("Clear Data.",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Gilroy-light',
+                                              
+                                            ),
+                                            ),
+                                          ),
+                                          color: pureblue,
+                                          splashColor: Colors.amberAccent,
+                                          onPressed: (){
+                                            setState(() {
+                                                retaurantname.text = restaurantGets.restaurantName;
+                  owner.clear();
+                  representative.clear();
+                  contactnumber.clear();
+                  barangayId.clear();
+                  openTimes.clear();
+                  closingTimes.clear();
+                  closeOn..clear();
+                  featuredNow.clear();
+
+                                            });
+                                          }),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+
                                _getImage(),
                                SizedBox(height: 10,),
                                  GestureDetector(
@@ -725,49 +863,71 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
            hint: "Restaurant Name",
          ),
          SizedBox(height: 15,),
-         TextEditGetter(
-             iconic: Icons.my_location,
-             validate: (val) => val.isEmpty ? ' Please Put The Address' : null,
-             control: him ? newAddre :address,
-             hint: "Address Name",
-             onTaps:  () {
-                showModalBottomSheet(
-    isDismissible: true,
-    context: context, 
-  builder: (_){
+         FutureBuilder(
+                  future: CoordinatesConverter().getAddressByLocation(lats.toString()+","+longs.toString()),
+                  builder: (con ,snaps){
+                    if(snaps.data == null){
+                     return  NCard(
+                    active: false,
+                    icon: Icons.my_location,
+                    label: "Restaurant Address or Place",
+                    onTap: () => viewMapo(),
+                  );
+                    }else{
+                       return 
+                 NCard(
+                    active: false,
+                    icon: Icons.my_location,
+                    label: snaps.data,
+                    onTap: () => viewMapo(),
+                  )
+                ;
+                    }
+                  },
+                ),
+  //        TextEditGetter(
+  //            iconic: Icons.my_location,
+  //            validate: (val) => val.isEmpty ? ' Please Put The Address' : null,
+  //            control: him ? newAddre :address,
+  //            hint: "Address Name",
+  //            onTaps:  () {
+  //               showModalBottomSheet(
+  //   isDismissible: true,
+  //   context: context, 
+  // builder: (_){
 
-    return SingleChildScrollView(
-      physics: AlwaysScrollableScrollPhysics(),
-      child: Column(
-        children: [
-          Container(
-        height: 390,
-        width: MediaQuery.of(context).size.width,
-        child: PlacePicker(
-                      apiKey: googleKey,
-                      initialPosition: latlng,
-                      useCurrentLocation: true,
-                      searchForInitialValue: true,
-                      usePlaceDetailSearch: true,
-                      onPlacePicked: (result) async {
-                        String lat = result.geometry.location.lat.toString();
-                        String lng = result.geometry.location.lng.toString();
-                        print("the Bilat is $lat and Oten is $lng");
-                        setState(() {
-                          him =true;
-                          newAddre.text = "$lat,$lng";
-                        });
-                        Navigator.pop(context);
-                        }
-                    ),
-      ),
-        ],
-      ),
-    );
+  //   return SingleChildScrollView(
+  //     physics: AlwaysScrollableScrollPhysics(),
+  //     child: Column(
+  //       children: [
+  //         Container(
+  //       height: 390,
+  //       width: MediaQuery.of(context).size.width,
+  //       child: PlacePicker(
+  //                     apiKey: googleKey,
+  //                     initialPosition: latlng,
+  //                     useCurrentLocation: true,
+  //                     searchForInitialValue: true,
+  //                     usePlaceDetailSearch: true,
+  //                     onPlacePicked: (result) async {
+  //                       double lat = result.geometry.location.lat;
+  //                       double lng = result.geometry.location.lng;
+  //                       print("the Bilat is $lat and Oten is $lng");
+  //                       setState(() {
+  //                          lats = lat;
+  //                       longs = lng;
+  //                       });
+  //                       Navigator.pop(context);
+  //                       }
+  //                   ),
+  //     ),
+  //       ],
+  //     ),
+  //   );
 
-  });
-             },
-         ),
+  // });
+  //            },
+  //        ),
           
          SizedBox(height: 15,),
           TextEditGetter(
@@ -1273,4 +1433,62 @@ void _showDialogDelete( String message){
     },);
 }
 
+}
+
+class NCard extends StatelessWidget {
+
+  final bool active;
+  final IconData icon;
+  final String label;
+  final Function onTap;
+  final String hint;
+  const NCard({this.active,this.icon,this.onTap,this.label,this.hint});
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+        onTap: onTap,
+      child: Container(
+        height: 50.0,
+        width: MediaQuery.of(context).size.width,
+        // decoration: BoxDecoration(
+        //   color: Color(0xFF0C375B),
+        //   borderRadius: BorderRadius.all(Radius.circular(40))
+        // ),
+        // padding: EdgeInsets.symmetric(horizontal: 15,vertical: 7),
+        // decoration: eBox,
+        decoration: eBoxDecorationStyle,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            children: <Widget>[
+              Icon(icon,color: pureblue,size: 15.0,),
+              SizedBox(width: 7.0,),
+
+               Flexible(
+                 flex: 1,
+                 child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      child: Container(
+                        child: Text(label,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: pureblue,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16.0,
+                          fontFamily: 'Gilroy-light'
+                        ),),
+                      ),
+                    ),
+               ),
+             
+              
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
