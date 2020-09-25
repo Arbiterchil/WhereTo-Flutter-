@@ -144,6 +144,7 @@ class _TransactionListState extends State<TransactionList> {
                                       padding: EdgeInsets.all(15),
                                       child: Stack(
                                         children: <Widget>[
+
                                           Container(
                                               child: Container(
                                             height: 120,
@@ -375,6 +376,7 @@ class _TransactionListState extends State<TransactionList> {
                                 ),
                               child: Stack(
                               children: [
+                                
                                 Align(
                               alignment: Alignment.bottomRight,
                               child: Stack(
