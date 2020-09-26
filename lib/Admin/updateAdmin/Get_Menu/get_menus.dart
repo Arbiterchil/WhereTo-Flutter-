@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final menuGet = menuGetFromJson(jsonString);
+
 import 'dart:convert';
 
 MenuGet menuGetFromJson(String str) => MenuGet.fromJson(json.decode(str));
@@ -12,6 +16,7 @@ class MenuGet {
         this.menuName,
         this.description,
         this.price,
+        this.markUpPercentage,
         this.timesBought,
         this.imagePath,
         this.isFeatured,
@@ -26,6 +31,7 @@ class MenuGet {
     String menuName;
     String description;
     int price;
+    double markUpPercentage;
     int timesBought;
     String imagePath;
     int isFeatured;
@@ -40,6 +46,7 @@ class MenuGet {
         menuName: json["menuName"],
         description: json["description"],
         price: json["price"],
+        markUpPercentage: double.parse(json["markUpPercentage"]),
         timesBought: json["timesBought"],
         imagePath: json["imagePath"],
         isFeatured: json["isFeatured"],
@@ -55,6 +62,7 @@ class MenuGet {
         "menuName": menuName,
         "description": description,
         "price": price,
+        "markUpPercentage": markUpPercentage,
         "timesBought": timesBought,
         "imagePath": imagePath,
         "isFeatured": isFeatured,

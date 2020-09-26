@@ -66,6 +66,7 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
   TextEditingController menuName = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController price = TextEditingController();
+  TextEditingController markup = TextEditingController();
   TextEditingController categoryId = TextEditingController();
 
   String src;
@@ -436,6 +437,7 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                     description.text = mems.description;
                     price.text = mems.price.toString();
                     categoryId.text = mems.categoryId.toString();
+                    markup.text = mems.markUpPercentage.toString();
                       src = mems.imagePath;
 
                                             });
@@ -461,6 +463,7 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                                                  menuName.clear();
                     description.clear();
                     price.clear();
+                    markup.clear();
                                             });
                                           }),
                                       )
@@ -510,6 +513,13 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                           validate: (val) => val.isEmpty ? ' Please Put The Price' : null,
                           control: price,
                           hint: "Price",
+                        ),
+                        SizedBox(height: 15,),
+                         TextEditGetter(
+                          iconic: Icons.menu,
+                          validate: (val) => val.isEmpty ? ' Please Put The Price' : null,
+                          control: markup,
+                          hint: "Mark-up percentage",
                         ),
                         SizedBox(height: 15,),
                          Container(
@@ -615,13 +625,14 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
         var data = {
           
 
-            'menuId': widget.menuId,
-            'restaurantId': widget.restaurantId,
+            'menuId': widget.menuId.toString(),
+            'restaurantId': widget.restaurantId.toString(),
             'menuName': menuName.text,
             'description' : description.text,
             'price' :price.text,
-            'imagePath': thimagelink == null ? src.toString()  : thimagelink,
-            'categoryId': toChoose == null ? categoryId.text : toChoose,
+            'markUpPercentage':markup.text,
+            'imagePath': thimagelink != null ?  thimagelink : src.toString(),
+            'categoryId': toChoose != null ?  toChoose: categoryId.text 
         };
         var updatemenu = await ApiCall().updateMenu(data, '/updateMenu');
         print(updatemenu.body);

@@ -9,6 +9,7 @@ import 'package:WhereTo/Admin/admin_trial.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -263,7 +264,7 @@ void getAddMenu() async{
     }else{
       if(formkey.currentState.validate()){
        formkey.currentState.save();
-           var viewthis = path.basename(_idPickerImage.path);
+        var viewthis = path.basename(_idPickerImage.path);
                             CloudinaryClient client = new CloudinaryClient(
                               "822285642732717",
                               "6k0dMMg3As30mPmjeWLeFL5-qQ4",
@@ -509,8 +510,7 @@ void getAddMenu() async{
                 controller: price,
                 validator: (val) => val.isEmpty ? ' Please Put Your Price' : null,
                     onSaved: (val) => price.text = val,
-                    
-                
+                  
                 style: TextStyle(
                   color:pureblue,
                   fontFamily: 'Gilroy-light',
