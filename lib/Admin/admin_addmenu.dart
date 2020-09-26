@@ -513,7 +513,7 @@ void getAddMenu() async{
                    double finalDouber = xx/100; 
                    setState(() {
                      print(finalDouber);
-                     markprice.text = xx.toString();
+                     markprice.text = finalDouber.toString();
                    });
                 },
               keyboardType: TextInputType.number,

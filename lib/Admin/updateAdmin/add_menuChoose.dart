@@ -234,7 +234,7 @@ class _AddMenuFromChooserState extends State<AddMenuFromChooser> {
                    double finalDouber = xx/100; 
                    setState(() {
                      print(finalDouber);
-                     markprice.text = xx.toString();
+                     markprice.text = finalDouber.toString();
                    });
                 },
                 
