@@ -62,7 +62,7 @@ class MenuGet {
         "menuName": menuName,
         "description": description,
         "price": price,
-        "markUpPercentage": markUpPercentage,
+        "markUpPercentage": markUpPercentage.toDouble(),
         "timesBought": timesBought,
         "imagePath": imagePath,
         "isFeatured": isFeatured,

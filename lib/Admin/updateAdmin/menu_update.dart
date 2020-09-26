@@ -513,12 +513,22 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                           validate: (val) => val.isEmpty ? ' Please Put The Price' : null,
                           control: price,
                           hint: "Price",
+                          subs: (){
+                            double x = 0.10;
+                               double m = double.parse(price.text);
+                                double xx = m*x;
+                                print(xx/100);
+                                setState(() {
+                                  markup.text = xx.toString();
+                                });
+                          },
                         ),
                         SizedBox(height: 15,),
                          TextEditGetter(
                           iconic: Icons.menu,
                           validate: (val) => val.isEmpty ? ' Please Put The Price' : null,
                           control: markup,
+                          
                           hint: "Mark-up percentage",
                         ),
                         SizedBox(height: 15,),

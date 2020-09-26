@@ -506,11 +506,21 @@ void getAddMenu() async{
               height: 50.0,
               child: TextFormField(
                 cursorColor: pureblue,
+                onEditingComplete: () {
+                  double x = 0.10;
+                   double m = double.parse(price.text);
+                   double xx = m*x;
+                   double finalDouber = xx/100; 
+                   setState(() {
+                     print(finalDouber);
+                     markprice.text = finalDouber.toString();
+                   });
+                },
               keyboardType: TextInputType.number,
                 controller: price,
                 validator: (val) => val.isEmpty ? ' Please Put Your Price' : null,
                     onSaved: (val) => price.text = val,
-                  
+                 
                 style: TextStyle(
                   color:pureblue,
                   fontFamily: 'Gilroy-light',
