@@ -513,7 +513,7 @@ void getAddMenu() async{
                    double finalDouber = xx/100; 
                    setState(() {
                      print(finalDouber);
-                     markprice.text = finalDouber.toString();
+                     markprice.text = xx.toString();
                    });
                 },
               keyboardType: TextInputType.number,
@@ -566,7 +566,7 @@ void getAddMenu() async{
                     Icons.attach_money,
                     color: pureblue,
                   ),
-                  hintText: 'Mark-Up',
+                  hintText: 'MarkUp',
                   hintStyle: eHintStyle,
                 ),
               ),

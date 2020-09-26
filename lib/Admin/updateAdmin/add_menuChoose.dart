@@ -227,7 +227,16 @@ class _AddMenuFromChooserState extends State<AddMenuFromChooser> {
                 controller: price,
                 validator: (val) => val.isEmpty ? ' Please Put Your Price' : null,
                     onSaved: (val) => price.text = val,
-                    
+                    onEditingComplete: () {
+                  double x = 0.10;
+                   double m = double.parse(price.text);
+                   double xx = m*x;
+                   double finalDouber = xx/100; 
+                   setState(() {
+                     print(finalDouber);
+                     markprice.text = xx.toString();
+                   });
+                },
                 
                 style: TextStyle(
                   color:pureblue,
@@ -270,7 +279,7 @@ class _AddMenuFromChooserState extends State<AddMenuFromChooser> {
                     Icons.attach_money,
                     color: pureblue,
                   ),
-                  hintText: 'Mark-Up',
+                  hintText: 'MarkUp',
                   hintStyle: eHintStyle,
                 ),
               ),

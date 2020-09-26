@@ -529,7 +529,7 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                           validate: (val) => val.isEmpty ? ' Please Put The Price' : null,
                           control: markup,
                           
-                          hint: "Mark-up percentage",
+                          hint: "MarkUp",
                         ),
                         SizedBox(height: 15,),
                          Container(
