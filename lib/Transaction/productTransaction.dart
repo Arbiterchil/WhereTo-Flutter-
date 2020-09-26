@@ -45,11 +45,7 @@ class _TransactionListState extends State<TransactionList> {
   }
 
 
-  @override
-  void initState() {
-    super.initState();
-    reminderShow();
-  }
+
 
   void reminderShow(){
     showDialog(
@@ -78,6 +74,30 @@ class _TransactionListState extends State<TransactionList> {
     return WillPopScope(
           onWillPop: ()async=> false,
           child: Scaffold(
+            bottomNavigationBar: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50)
+                    )
+                  ),
+                  splashColor: wheretoLight,
+                  color: pureblue,
+                  child: Center(
+                    child: Text("Click this to show how to remove a menu.",
+                    style: TextStyle(
+                      fontFamily: 'Gilroy-light',
+                      color: Colors.white
+                    ),
+                    ),
+                  ),
+                  onPressed: ()=> reminderShow()),
+              ),
+            ),
         body: Padding(
           padding: EdgeInsets.only(top: 40, left: 10, right: 10),
           child: Stack(
