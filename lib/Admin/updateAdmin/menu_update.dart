@@ -437,7 +437,7 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                     description.text = mems.description;
                     price.text = mems.price.toString();
                     categoryId.text = mems.categoryId.toString();
-                    markup.text = mems.markUpPercentage.toString();
+                    // markup.text = mems.markUpPercentage.toString();
                       src = mems.imagePath;
 
                                             });
@@ -463,7 +463,7 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                                                  menuName.clear();
                     description.clear();
                     price.clear();
-                    markup.clear();
+                    // markup.clear();
                                             });
                                           }),
                                       )
@@ -513,24 +513,24 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                           validate: (val) => val.isEmpty ? ' Please Put The Price' : null,
                           control: price,
                           hint: "Price",
-                          subs: (){
-                            double x = 0.10;
-                               double m = double.parse(price.text);
-                                double xx = m*x;
-                                print(xx/100);
-                                setState(() {
-                                  markup.text = xx.toString();
-                                });
-                          },
+                          // subs: (){
+                          //   double x = 0.10;
+                          //      double m = double.parse(price.text);
+                          //       double xx = m*x;
+                          //       print(xx/100);
+                          //       setState(() {
+                          //         markup.text = xx.toString();
+                          //       });
+                          // },
                         ),
                         SizedBox(height: 15,),
-                         TextEditGetter(
-                          iconic: Icons.menu,
-                          validate: (val) => val.isEmpty ? ' Please Put The Price' : null,
-                          control: markup,
+                        //  TextEditGetter(
+                        //   iconic: Icons.menu,
+                        //   validate: (val) => val.isEmpty ? ' Please Put The Price' : null,
+                        //   control: markup,
                           
-                          hint: "MarkUp",
-                        ),
+                        //   hint: "MarkUp",
+                        // ),
                         SizedBox(height: 15,),
                          Container(
               width: MediaQuery.of(context).size.width,
@@ -640,7 +640,6 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
             'menuName': menuName.text,
             'description' : description.text,
             'price' :price.text,
-            'markUpPercentage':markup.text,
             'imagePath': thimagelink != null ?  thimagelink : src.toString(),
             'categoryId': toChoose != null ?  toChoose: categoryId.text 
         };
