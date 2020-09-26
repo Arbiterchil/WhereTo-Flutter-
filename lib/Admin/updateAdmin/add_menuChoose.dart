@@ -28,6 +28,7 @@ class _AddMenuFromChooserState extends State<AddMenuFromChooser> {
     TextEditingController menuname  = TextEditingController();
     TextEditingController decription = TextEditingController();
     TextEditingController price = TextEditingController();
+     TextEditingController markprice = TextEditingController();
     int countname = 0;
     SharedPreferences prefs;
     bool loading = false;
@@ -244,6 +245,38 @@ class _AddMenuFromChooserState extends State<AddMenuFromChooser> {
                 ),
               ),
             ),
+             SizedBox(height: 15.0,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: TextFormField(
+                cursorColor: pureblue,
+              keyboardType: TextInputType.number,
+                controller: markprice,
+                validator: (val) => val.isEmpty ? ' Please Put Your Price' : null,
+                    onSaved: (val) => markprice.text = val,
+                    
+                
+                style: TextStyle(
+                  color:pureblue,
+                  fontFamily: 'Gilroy-light',
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top:14.0),
+                  prefixIcon: Icon(
+                    Icons.attach_money,
+                    color: pureblue,
+                  ),
+                  hintText: 'Mark-Up',
+                  hintStyle: eHintStyle,
+                ),
+              ),
+            ),
+           
+           
             // Text("Category",
             //           style: eLabelStyle,
             //           ),
@@ -652,6 +685,7 @@ void _showDone(){
                                 "menuName" : menuname.text,
                                 "description" : decription.text,
                                 "price":price.text,
+                                "markUpPercentage": markprice.text, 
                                 "imagePath": thimagelink,
                                 "categoryId": selectPerson.toString()
                                 }]
