@@ -283,7 +283,6 @@ void getAddMenu() async{
                                 "menuName" : menuname.text,
                                 "description" : decription.text,
                                 "price":price.text,
-                                "markUpPercentage": markprice.text, 
                                 "imagePath": thimagelink,
                                 "categoryId": selectPerson.toString()
                                 }]
@@ -506,16 +505,6 @@ void getAddMenu() async{
               height: 50.0,
               child: TextFormField(
                 cursorColor: pureblue,
-                onEditingComplete: () {
-                  double x = 0.10;
-                   double m = double.parse(price.text);
-                   double xx = m*x;
-                   double finalDouber = xx/100; 
-                   setState(() {
-                     print(finalDouber);
-                     markprice.text = finalDouber.toString();
-                   });
-                },
               keyboardType: TextInputType.number,
                 controller: price,
                 validator: (val) => val.isEmpty ? ' Please Put Your Price' : null,
@@ -542,39 +531,39 @@ void getAddMenu() async{
             //           ),
             SizedBox(height: 15.0,),
 
-             Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
-              decoration: eBoxDecorationStyle,
-              height: 50.0,
-              child: TextFormField(
-                cursorColor: pureblue,
-              keyboardType: TextInputType.number,
-                controller: markprice,
-                validator: (val) => val.isEmpty ? ' Please Put Your Price' : null,
-                    onSaved: (val) => markprice.text = val,
+            //  Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   alignment: Alignment.centerLeft,
+            //   decoration: eBoxDecorationStyle,
+            //   height: 50.0,
+            //   child: TextFormField(
+            //     cursorColor: pureblue,
+            //   keyboardType: TextInputType.number,
+            //     controller: markprice,
+            //     validator: (val) => val.isEmpty ? ' Please Put Your Price' : null,
+            //         onSaved: (val) => markprice.text = val,
                     
                 
-                style: TextStyle(
-                  color:pureblue,
-                  fontFamily: 'Gilroy-light',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top:14.0),
-                  prefixIcon: Icon(
-                    Icons.attach_money,
-                    color: pureblue,
-                  ),
-                  hintText: 'Mark-Up',
-                  hintStyle: eHintStyle,
-                ),
-              ),
-            ),
-            // Text("Category",
-            //           style: eLabelStyle,
-            //           ),
-            SizedBox(height: 15.0,),
+            //     style: TextStyle(
+            //       color:pureblue,
+            //       fontFamily: 'Gilroy-light',
+            //     ),
+            //     decoration: InputDecoration(
+            //       border: InputBorder.none,
+            //       contentPadding: EdgeInsets.only(top:14.0),
+            //       prefixIcon: Icon(
+            //         Icons.attach_money,
+            //         color: pureblue,
+            //       ),
+            //       hintText: 'MarkUp',
+            //       hintStyle: eHintStyle,
+            //     ),
+            //   ),
+            // ),
+            // // Text("Category",
+            // //           style: eLabelStyle,
+            // //           ),
+            // SizedBox(height: 15.0,),
 
              StreamBuilder<CategoryResponseforMenu>(
       stream: categorymenuStream.subject.stream,
