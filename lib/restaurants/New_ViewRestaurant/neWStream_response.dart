@@ -1,4 +1,5 @@
 
+import 'package:WhereTo/restaurants/New_ViewRestaurant/NewRestaurant_Provider.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_response.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/newRetaurant_api.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,11 +7,11 @@ import 'package:rxdart/rxdart.dart';
 
 class NewRestaurantStream {
 
- final NewRestaurantApi _api = NewRestaurantApi();
+ final NewRestaurantprovider newRes = NewRestaurantprovider();
   final BehaviorSubject<NewRestaurantResponse> _subject = BehaviorSubject<NewRestaurantResponse>();
 
   getFeaturedViewRestaurant() async{
-    NewRestaurantResponse riderresponse = await _api.getFeaturedRestaurant();
+    NewRestaurantResponse riderresponse = await newRes.getNewFeaturing();
     _subject.sink.add(riderresponse);
   }
 

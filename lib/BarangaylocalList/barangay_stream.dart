@@ -1,16 +1,17 @@
 import 'package:WhereTo/BarangaylocalList/barangay_api.dart';
+import 'package:WhereTo/BarangaylocalList/barangay_provider.dart';
 import 'package:WhereTo/BarangaylocalList/barangay_response.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BarangayStream{
 
-final BaranggayApi baranggayApi = BaranggayApi();
+final BarangayProvider _barangayProvider = BarangayProvider();
 final BehaviorSubject<BaranggayRespone> _behaviorSubject = BehaviorSubject<BaranggayRespone>();
 
 
 getBarangayListFormDb() async{
-  BaranggayRespone baranggayRespone = await baranggayApi.bararangHoudi();
+  BaranggayRespone baranggayRespone = await _barangayProvider.getBaararangSaifon();
   _behaviorSubject.sink.add(baranggayRespone);
 }
 
