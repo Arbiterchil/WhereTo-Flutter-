@@ -7,6 +7,7 @@ import 'package:WhereTo/AnCustom/send_validId.dart';
 import 'package:WhereTo/Rider/Tab_navi.dart';
 import 'package:WhereTo/Transaction/newView_MyOrder.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:WhereTo/modules/Tab_naviUser.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
@@ -54,19 +55,31 @@ class _HomePageState extends State<HomePage> {
   }
   var userData;
   String image;
+
   @override
   
   void initState() {
      getShared();
-     
-
+// getThis();
     super.initState();
     _onsSignal();
         //  configSignal();
     postuserId();
     
+    
   }
   var datapasser;
+var userLat;
+  var userLng ;
+  getThis() async{
+    userLat =await ID().getLat();
+  userLng =await ID().getLng();     
+   setState(() {
+      print(" okMother $userLat  $userLng");
+   });
+  }
+
+
 _onsSignal() async{
   if(!mounted) return;
     await OneSignal.shared.setLocationShared(true);

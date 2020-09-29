@@ -36,13 +36,30 @@ class _TransactionListState extends State<TransactionList> {
   String long;
   List<dynamic> summary = [];
   String displaytotal;
+
+  var userLat;
+  var userLng;
+  
   @override
   void initState() {
-   
     super.initState();
-    
+    // getThis();
+    StreamSubscription<Position> positionStream = getPositionStream().listen(
+    (Position position) {
+        print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
+    });
+    print(positionStream);
   }
 
+  
+  // void getThis() async{
+
+  //   userLat = await ID().getLat();
+  //   userLng = await ID().getLng();     
+  //  setState(() {
+  //     print("${userLat.toString()}  ${userLng.toString()}");
+  //  });
+  // }
   
 
   void reminderShow() {
@@ -466,24 +483,24 @@ class _TransactionListState extends State<TransactionList> {
                                                     width: double.infinity,
                                                     child: GestureDetector(
                                                       onTap: () async {
-                                                        var distance = new Distance();
-                                                        var userLat =await ID().getLat();
-                                                        var userLng =await ID().getLng();
-                                                        final double km = distance.as(LengthUnit.Kilometer, LatLng(widget.restoLat, widget.restoLng), LatLng(userLat,userLng));
-                                                        double charge = 30.0;
-                                                        for (int c = 4; c <= km; c++) {
-                                                        if (c > 4) {
-                                                        charge += 5;
-                                                        } else {
-                                                        charge += 0;
-                                                        }
-                                                        }
-                                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
-                                                          fee: charge,
-                                                          restauID:widget.restauID,
-                                                          userLat: userLat,
-                                                          userLng: userLng,
-                                                          )));
+                                                        // var distance = new Distance();
+                                                        
+                                                        // final double km = distance.as(LengthUnit.Kilometer, LatLng(widget.restoLat, widget.restoLng), LatLng(userLat,userLng));
+                                                        // double charge = 30.0;
+                                                        // for (int c = 4; c <= km; c++) {
+                                                        // if (c > 4) {
+                                                        // charge += 5;
+                                                        // } else {
+                                                        // charge += 0;
+                                                        // }
+                                                        // }
+                                                        // Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
+                                                        //   fee: charge,
+                                                        //   restauID:widget.restauID,
+                                                        //   userLat: userLat,
+                                                        //   userLng: userLng,
+                                                        //   )));
+                                                        print("$userLat $userLng");
                                                       //   Location location = new Location();
                                                       //   bool _serviceEnabled;
                                                       //   PermissionStatus _permissionGranted;

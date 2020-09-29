@@ -39,6 +39,8 @@ class _SearchDepoState extends State<SearchDepo> {
     streamRestaurantsFeatured..getFeaturedViewRestaurant();
   }
 
+  
+
   @override
   void dispose() {
     super.dispose();
