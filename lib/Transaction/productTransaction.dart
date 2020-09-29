@@ -1,16 +1,11 @@
+
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
-import 'package:WhereTo/A_loadingSimpe/simple_loading.dart';
-import 'package:WhereTo/Transaction/Barangay/Barangay.class.dart';
-import 'package:WhereTo/Transaction/MyOrder/ComputationFee.dart';
 import 'package:WhereTo/Transaction/MyOrder/payOrder.dart';
-import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
-import 'package:WhereTo/google_maps/address.dart';
-import 'package:WhereTo/google_maps/coordinates_converter.dart';
-import 'package:WhereTo/google_maps/deliveryCharge.dart';
 import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:latlong/latlong.dart';
 // import 'package:location/location.dart';
 
 import '../styletext.dart';
@@ -470,41 +466,52 @@ class _TransactionListState extends State<TransactionList> {
                                                     width: double.infinity,
                                                     child: GestureDetector(
                                                       onTap: () async {
-                                                        //  var distance = new Distance()
-                                                        // final double km = distance.as(LengthUnit.Kilometer, LatLng(widget.restoLat, widget.restoLng), LatLng(postion.latitude,postion.longitude));
-                                                        // double charge = 30.0;
-                                                        // for (int c = 4; c <= km; c++) {
-                                                        // if (c > 4) {
-                                                        // charge += 5;
-                                                        // } else {
-                                                        // charge += 0;
-                                                        // }
-                                                        // }
-                                                        // Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(fee: charge,restauID:widget.restauID)));
-                                                        // Location location = new Location();
-                                                        // bool _serviceEnabled;
-                                                        // PermissionStatus _permissionGranted;
-                                                        // LocationData locationData;
-                                                        // _serviceEnabled = await location.serviceEnabled();
-                                                        // if (!_serviceEnabled) {
-                                                        //   _serviceEnabled = await location.requestService();
-                                                        //   if (!_serviceEnabled) {
-                                                        //     return;
-                                                        //   }
-                                                        // }
+                                                        var distance = new Distance();
+                                                        var userLat =await ID().getLat();
+                                                        var userLng =await ID().getLng();
+                                                        final double km = distance.as(LengthUnit.Kilometer, LatLng(widget.restoLat, widget.restoLng), LatLng(userLat,userLng));
+                                                        double charge = 30.0;
+                                                        for (int c = 4; c <= km; c++) {
+                                                        if (c > 4) {
+                                                        charge += 5;
+                                                        } else {
+                                                        charge += 0;
+                                                        }
+                                                        }
+                                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
+                                                          fee: charge,
+                                                          restauID:widget.restauID,
+                                                          userLat: userLat,
+                                                          userLng: userLng,
+                                                          )));
+                                                      //   Location location = new Location();
+                                                      //   bool _serviceEnabled;
+                                                      //   PermissionStatus _permissionGranted;
+                                                      //   LocationData locationData;
+                                                      //   _serviceEnabled = await location.serviceEnabled();
+                                                      //   if (!_serviceEnabled) {
+                                                      //     _serviceEnabled = await location.requestService();
+                                                      //     if (!_serviceEnabled) {
+                                                      //       return;
+                                                      //     }
+                                                      //   }
 
-                                                        // _permissionGranted = await location.hasPermission();
-                                                        // if (_permissionGranted == PermissionStatus.denied) {
-                                                        //   _permissionGranted = await location.requestPermission();
-                                                        //   if (_permissionGranted != PermissionStatus.granted) {
-                                                        //     return;
-                                                        //   }
-                                                        // }
+                                                      //   _permissionGranted = await location.hasPermission();
+                                                      //   if (_permissionGranted == PermissionStatus.denied) {
+                                                      //     _permissionGranted = await location.requestPermission();
+                                                      //     if (_permissionGranted != PermissionStatus.granted) {
+                                                      //       return;
+                                                      //     }
+                                                      //   }
 
                                                       //  locationData = await location.getLocation(); 
                                                       //  print("${locationData.latitude}, ${locationData.longitude}");
-                                                      print(widget.userLat);
+                                                      // StreamSubscription<Position> positionStream = getPositionStream().listen((Position position) {
+                                                      // print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
                                                       
+                                                      // });
+                                                      // positionStream.cancel();
+                                                     
                                                       },
                                                       child: Container(
                                                         height: 20,

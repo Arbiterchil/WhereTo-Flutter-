@@ -26,7 +26,9 @@ import 'package:http/http.dart' as http;
 class PayOrder extends StatefulWidget {
   final double fee;
   final String restauID;
-  PayOrder({this.fee, this.restauID});
+  final double userLat;
+  final double userLng;
+  PayOrder({this.fee, this.restauID, this.userLat, this.userLng});
   @override
   _PayOrderState createState() => _PayOrderState();
 }
@@ -43,21 +45,10 @@ class _PayOrderState extends State<PayOrder> {
   @override
   void initState() {
     super.initState();
-    getLat();
-    getLng();
+   
   }
 
-  getLat() async {
-    var latittude = await ID().getLat();
-    setState(() {
-      lat = latittude;
-    });
-  }
-
-  getLng() async {
-    var longitude = await ID().getLng();
-    lng = longitude;
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -955,8 +946,8 @@ class _PayOrderState extends State<PayOrder> {
                                   'userId': user['id'],
                                   'restaurantId': this.widget.restauID,
                                   'order': result,
-                                  "latitude": lat,
-                                  "longitude": lng,
+                                  "latitude": widget.userLat,
+                                  "longitude": widget.userLng,
                                   "deliveryCharge": "${widget.fee}",
                                   "barangayId": user['barangayId'],
                                 };

@@ -121,14 +121,11 @@ class _ListStacticState extends State<ListStactic>
                           badgeColor: Colors.blue,
                           hideZero: true,
                           onTap: ()async{
-                            double userLat =await ID().getLat();
-                            double userLng =await ID().getLng();
                             Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => MyCart(
-                                                userLat: userLat,
-                                                userLng: userLng,
+                                               
                                                 restoLat: widget.lat.toDouble(),
                                                 restoLng: widget.lng.toDouble(),
                                                 restauID: widget.restauID.toString(),
