@@ -42,14 +42,38 @@ class _TransactionListState extends State<TransactionList> {
   
   @override
   void initState() {
+     //getThis();
     super.initState();
+    
     // getThis();
-    StreamSubscription<Position> positionStream = getPositionStream().listen(
-    (Position position) {
-        print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
-    });
-    print(positionStream);
+    // StreamSubscription<Position> positionStream = getPositionStream().listen(
+    // (Position position) {
+    //     print(position == null ? 'Unknown' : 
+    //     position.latitude.toString() + ', ' + position.longitude.toString());
+    // });
+    // print(positionStream);
   }
+
+//    getThis(){
+//     StreamSubscription<Position> positionStream = getPositionStream().listen(
+//     (Position position) {
+       
+//         if(position == null){
+//           print('DESOLE  wala jud');
+//         }else{
+//  String livin =  position.latitude.toString() + ', ' + position.longitude.toString();
+//  setState(() {
+//     userLat = position.latitude;
+//   userLng = position.longitude;
+//   print('DESOLE  $livin');
+//  });
+//         }
+//         // print(position == null ? 'Unknown' :
+//         // position.latitude.toString() + ', ' + position.longitude.toString());
+       
+//     });
+//     print(positionStream);
+//   }
 
   
   // void getThis() async{
@@ -482,24 +506,26 @@ class _TransactionListState extends State<TransactionList> {
                                                     height: 60,
                                                     width: double.infinity,
                                                     child: GestureDetector(
-                                                      onTap: () async {
-                                                        // var distance = new Distance();
+                                                      onTap: () {
+                                                        var distance = new Distance();
                                                         
-                                                        // final double km = distance.as(LengthUnit.Kilometer, LatLng(widget.restoLat, widget.restoLng), LatLng(userLat,userLng));
-                                                        // double charge = 30.0;
-                                                        // for (int c = 4; c <= km; c++) {
-                                                        // if (c > 4) {
-                                                        // charge += 5;
-                                                        // } else {
-                                                        // charge += 0;
-                                                        // }
-                                                        // }
-                                                        // Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
-                                                        //   fee: charge,
-                                                        //   restauID:widget.restauID,
-                                                        //   userLat: userLat,
-                                                        //   userLng: userLng,
-                                                        //   )));
+                                                        final double km = distance.as(LengthUnit.Kilometer,
+                                                         LatLng(widget.restoLat, widget.restoLng),
+                                                          LatLng(userLat,userLng));
+                                                        double charge = 30.0;
+                                                        for (int c = 4; c <= km; c++) {
+                                                        if (c > 4) {
+                                                        charge += 5;
+                                                        } else {
+                                                        charge += 0;
+                                                        }
+                                                        }
+                                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
+                                                          fee: charge,
+                                                          restauID:widget.restauID,
+                                                          userLat: userLat,
+                                                          userLng: userLng,
+                                                          )));
                                                         print("$userLat $userLng");
                                                       //   Location location = new Location();
                                                       //   bool _serviceEnabled;

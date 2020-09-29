@@ -8,6 +8,7 @@ import 'package:WhereTo/Rider/Tab_navi.dart';
 import 'package:WhereTo/Transaction/newView_MyOrder.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/google_maps/google-key.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 import 'package:WhereTo/modules/Tab_naviUser.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
@@ -65,19 +66,19 @@ class _HomePageState extends State<HomePage> {
     _onsSignal();
         //  configSignal();
     postuserId();
-    
+    print("Desole ${UserGetPref().getLocationTrial.toString()}");
     
   }
   var datapasser;
-var userLat;
-  var userLng ;
-  getThis() async{
-    userLat =await ID().getLat();
-  userLng =await ID().getLng();     
-   setState(() {
-      print(" okMother $userLat  $userLng");
-   });
-  }
+// var userLat;
+//   var userLng ;
+//   getThis() async{
+//     userLat =await ID().getLat();
+//   userLng =await ID().getLng();     
+//    setState(() {
+//       print(" okMother $userLat  $userLng");
+//    });
+//   }
 
 
 _onsSignal() async{

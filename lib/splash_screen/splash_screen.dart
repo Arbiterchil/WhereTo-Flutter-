@@ -8,6 +8,7 @@ import 'package:WhereTo/styletext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,9 +22,30 @@ class _SplashScreenState extends State<SplashScreen> {
     @override
   void initState() {
     authShared.getThos();
+   
     super.initState();
+    getThis();
     startTime();
+
   }
+
+  getThis(){
+    StreamSubscription<Position> positionStream = getPositionStream().listen(
+    (Position position) {
+       
+        if(position == null){
+          print('DESOLE  wala jud');
+        }else{
+ String livin =  position.latitude.toString() + ', ' + position.longitude.toString();
+  print('DESOLE  $livin');
+        }
+        // print(position == null ? 'Unknown' :
+        // position.latitude.toString() + ', ' + position.longitude.toString());
+       
+    });
+    print(positionStream);
+  }
+  
   startTime(){
     var duration = Duration(seconds: 4);
     return Timer(duration,route);

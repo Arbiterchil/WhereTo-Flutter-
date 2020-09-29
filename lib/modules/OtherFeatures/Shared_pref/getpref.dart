@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserGetPref{
@@ -22,4 +24,16 @@ Future setuserJson(String vals){
   return _prefs.setString('user', vals);
 }
 
+get getLocationTrial{
+  var livin;
+  StreamSubscription<Position> positionStream = getPositionStream().listen(
+    (Position position) {
+         livin = position.latitude;
+        print(position == null ? 'Unknown' :
+        position.latitude.toString() + ', ' + position.longitude.toString());
+        // print('DESOLE  $livin');
+    });
+    print(positionStream);
+    return livin;
+}
 }
