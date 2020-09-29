@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     authShared.getThos();
    
     super.initState();
-    getThis();
+     getThis();
     startTime();
 
   }
@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
           print('DESOLE  wala jud');
         }else{
  String livin =  position.latitude.toString() + ', ' + position.longitude.toString();
-  print('DESOLE  $livin');
+ print(livin);
         }
         // print(position == null ? 'Unknown' :
         // position.latitude.toString() + ', ' + position.longitude.toString());
