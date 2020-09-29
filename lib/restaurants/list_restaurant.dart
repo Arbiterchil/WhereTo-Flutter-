@@ -8,6 +8,7 @@ import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
+import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:WhereTo/modules/homepage.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/blocCategory.class.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/blocMenu.class.dart';
@@ -119,11 +120,15 @@ class _ListStacticState extends State<ListStactic>
                           itemColor: Colors.white,
                           badgeColor: Colors.blue,
                           hideZero: true,
-                          onTap: (){
+                          onTap: ()async{
+                            double userLat =await ID().getLat();
+                            double userLng =await ID().getLng();
                             Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => MyCart(
+                                                userLat: userLat,
+                                                userLng: userLng,
                                                 restoLat: widget.lat.toDouble(),
                                                 restoLng: widget.lng.toDouble(),
                                                 restauID: widget.restauID.toString(),

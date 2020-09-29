@@ -23,14 +23,15 @@ class ID {
     return latlng;
   }
   Future<double> getLat() async{
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    double lat = localStorage.getDouble('latitude');
-    return lat;
+     Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+     double coor =postion.latitude;
+     return coor;
   }
   Future<double> getLng() async{
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    double lng = localStorage.getDouble('longitude');
-    return lng;
+    Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    double coor =postion.longitude;
+    
+    return coor;
   }
 
   Future<bool> permissions() async{
@@ -47,6 +48,7 @@ class ID {
   String coor ="${postion.latitude},${postion.longitude}";
   return coor.toString();
   }
+  
  
   
 }
