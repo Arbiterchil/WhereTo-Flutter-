@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -389,7 +389,7 @@ class _PayOrderState extends State<PayOrder> {
                                                     Icons.house,
                                                     color: pureblue,
                                                   ),
-                                                  hintText: 'Delivery Address',
+                                                  hintText: 'Complete and Exact Delivery Address',
                                                   hintStyle: eHintStyle,
                                                 ),
                                               ),
@@ -494,8 +494,15 @@ class _PayOrderState extends State<PayOrder> {
                           child: RaisedButton(
                             color: Colors.transparent,
                             onPressed: () async {
-                              if(delivery.text!=null){
-                                ProgressDialog orders = ProgressDialog(context);
+                            if(delivery.text.isEmpty){
+                              DialogOrder().getDialog(
+                                    context,
+                                    "Empty Fields",
+                                    "Delivery Address Is a Must",
+                                    Icons.error,
+                                    Color(0xFFFF3345));
+                            }else{
+                              ProgressDialog orders = ProgressDialog(context);
                               orders.style(
                                   message:
                                       "Notifying The Riders about the Order..",
@@ -522,7 +529,6 @@ class _PayOrderState extends State<PayOrder> {
                               Map<String, int> converted = {};
                               List<dynamic> order = [];
                               List<dynamic> result = [];
-                             
                               SharedPreferences localStorage =
                                   await SharedPreferences.getInstance();
                               var userJson = localStorage.getString('user');
@@ -570,8 +576,7 @@ class _PayOrderState extends State<PayOrder> {
 
                              
                                 var res = await ApiCall().postOrder(post, '/putOrder');
-                                if (res.statusCode == 201) {
-                                  var data = json.decode(res.body);
+                                var data = json.decode(res.body);
                                   setState(() {
                                     transactID = data;
                                   });
@@ -586,96 +591,75 @@ class _PayOrderState extends State<PayOrder> {
                                       Colors.black);
                                   BlocProvider.of<OrderBloc>(context)
                                       .add(Computation.deleteAll());
-                                  // Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (context)=> HomePage()),ModalRoute.withName('/'));
+                                  Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (context)=> HomePage()),ModalRoute.withName('/'));
+                                   final response =
+                                    await ApiCall().getData('/getAllPlayerId');
+                                List<GetPlayerId> search =
+                                    getPlayerIdFromJson(response.body);
+                                List<dynamic> player = [];
+                                search.forEach((element) {
+                                  player.add(element.deviceId);
+                                  print(element.deviceId);
+                                });
+                                await OneSignal.shared.setLocationShared(true);
+                                await OneSignal.shared
+                                    .promptLocationPermission();
+                                await OneSignal.shared.init(
+                                    'f5091806-1654-435d-8799-0cbd5fc49280');
+                                OneSignal.shared.setInFocusDisplayType(
+                                    OSNotificationDisplayType.notification);
+                                OneSignal.shared.setNotificationReceivedHandler(
+                                    (OSNotification notification) {});
+
+                                await OneSignal.shared.setSubscription(true);
+                                await OneSignal.shared.getTags();
+                                var status = await OneSignal.shared
+                                    .getPermissionSubscriptionState();
+
+                                String url =
+                                    'https://onesignal.com/api/v1/notifications';
+                                var playerId = status.subscriptionStatus.userId;
+                                var contents = {
+                                  "include_player_ids": player,
+                                  "include_segments": ["All"],
+                                  "excluded_segments": [],
+                                  "contents": {"en": "A new Order!"},
+                                  "data": {
+                                    "id": user['id'].toString(),
+                                    "player_id": playerId.toString(),
+                                    "transact_id": transactID.toString(),
+                                    "user_coordinates":
+                                        "${0},${0}"
+                                  },
+                                  "headings": {"en": "New Order"},
+                                  "filter": [
+                                    {
+                                      "field": "tag",
+                                      "key": "UR",
+                                      "relation": "=",
+                                      "value": "TRUE"
+                                    },
+                                  ],
+                                  "app_id":
+                                      "f5091806-1654-435d-8799-0cbd5fc49280"
+                                };
+                                Map<String, String> headers = {
+                                  'Content-Type': 'application/json',
+                                  'authorization':
+                                      'Basic MGM5OTlmNzgtYzdlMi00NjUyLWFlOGEtZDYxZDM5YTUwNjll'
+                                };
+
+                                await http.post(url,
+                                    headers: headers,
+                                    body: json.encode(contents));
+                                print(playerId);
+                            }    
+                              
                                 
-                                } else {
-                                  orders.hide();
-                                  DialogOrder().getDialog(
-                                      context,
-                                      "Slow/No Internet Connection",
-                                      "Order Failed",
-                                      Icons.error,
-                                      Color(0xFFFF3345));
-                                }
-                              //   final response =
-                              //       await ApiCall().getData('/getAllPlayerId');
-                              //   List<GetPlayerId> search =
-                              //       getPlayerIdFromJson(response.body);
-                              //   List<dynamic> player = [];
-                              //   search.forEach((element) {
-                              //     player.add(element.deviceId);
-                              //     print(element.deviceId);
-                              //   });
-                              //   await OneSignal.shared.setLocationShared(true);
-                              //   await OneSignal.shared
-                              //       .promptLocationPermission();
-                              //   await OneSignal.shared.init(
-                              //       'f5091806-1654-435d-8799-0cbd5fc49280');
-                              //   OneSignal.shared.setInFocusDisplayType(
-                              //       OSNotificationDisplayType.notification);
-                              //   OneSignal.shared.setNotificationReceivedHandler(
-                              //       (OSNotification notification) {});
-
-                              //   await OneSignal.shared.setSubscription(true);
-                              //   await OneSignal.shared.getTags();
-                              //   var status = await OneSignal.shared
-                              //       .getPermissionSubscriptionState();
-
-                              //   String url =
-                              //       'https://onesignal.com/api/v1/notifications';
-                              //   var playerId = status.subscriptionStatus.userId;
-                              //   var contents = {
-                              //     "include_player_ids": player,
-                              //     "include_segments": ["All"],
-                              //     "excluded_segments": [],
-                              //     "contents": {"en": "A new Order!"},
-                              //     "data": {
-                              //       "id": user['id'].toString(),
-                              //       "player_id": playerId.toString(),
-                              //       "transact_id": transactID.toString(),
-                              //       "user_coordinates":
-                              //           "${0},${0}"
-                              //     },
-                              //     "headings": {"en": "New Order"},
-                              //     "filter": [
-                              //       {
-                              //         "field": "tag",
-                              //         "key": "UR",
-                              //         "relation": "=",
-                              //         "value": "TRUE"
-                              //       },
-                              //     ],
-                              //     "app_id":
-                              //         "f5091806-1654-435d-8799-0cbd5fc49280"
-                              //   };
-                              //   Map<String, String> headers = {
-                              //     'Content-Type': 'application/json',
-                              //     'authorization':
-                              //         'Basic MGM5OTlmNzgtYzdlMi00NjUyLWFlOGEtZDYxZDM5YTUwNjll'
-                              //   };
-
-                              //   await http.post(url,
-                              //       headers: headers,
-                              //       body: json.encode(contents));
-                              //   print(playerId);
-                              // } catch (e) {
-                              //   //  orders.hide();
-                              //   DialogOrder().getDialog(
-                              //       context,
-                              //       "Slow/No Internet Connection",
-                              //       "Order Failed",
-                              //       Icons.error,
-                              //       Color(0xFFFF3345));
-                              // }
-                              }else{
-                                DialogOrder().getDialog(
-                                    context,
-                                    "Empty Fields",
-                                    "Delivery Address Must be Inputed",
-                                    Icons.error,
-                                    Color(0xFFFF3345));
-                                    
-                              }
+                               
+                               
+                              
+                              
                             },
                             child: Center(
                               child: Text("Place Order",
