@@ -749,7 +749,7 @@ class _SearchDepoState extends State<SearchDepo> {
                        
                       });
                       for (var i = 0; i < converted.length; i++) {
-                        if (insideResto ==converted[i]['restaurant'] &&insideLat ==converted[i]['restolatitude'] && insideLng ==converted[i]['restoLongitude'] && converted[i]['status'] < 4) {
+                        if (insideResto ==converted[i]['restaurant'] && converted[i]['status'] < 4) {
                           isRead = true;
                           break;
                         }
@@ -782,10 +782,8 @@ class _SearchDepoState extends State<SearchDepo> {
                         //               lng: double.parse(nf[index].longitude),
                         //               categID: categ,
                         //             )));
-                        Navigator.pushAndRemoveUntil(context,
-                        new MaterialPageRoute(builder: (context)
-                        => ListStactic(
-                                      restauID: nf[index].id.toString(),
+                        Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (context)
+                        => ListStactic(restauID: nf[index].id.toString(),
                                       nameRestau:
                                           nf[index].restaurantName.toString(),
                                       baranggay:

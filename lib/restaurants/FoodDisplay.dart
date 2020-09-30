@@ -153,27 +153,27 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                       
                                     
                                       featured.hide();
-                                      // Navigator.push(
-                                      //     context,
-                                      //     new MaterialPageRoute(
-                                      //         builder: (context) => ListStactic(
-                                      //               restauID: snapshot
-                                      //                   .data[index]
-                                      //                   .restaurantId
-                                      //                   .toString(),
-                                      //               nameRestau: snapshot
-                                      //                   .data[index]
-                                      //                   .restaurantName
-                                      //                   .toString(),
-                                      //               baranggay: snapshot
-                                      //                   .data[index]
-                                      //                   .barangayName,
-                                      //               lat: double.parse(snapshot.data[index].latitude),
-                                      //               lng: double.parse(snapshot.data[index].longitude),
-                                      //               categID: snapshot
-                                      //                   .data[index].categoryId
-                                      //                   .toString(),
-                                      //             )));
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          new MaterialPageRoute(
+                                              builder: (context) => ListStactic(
+                                                    restauID: snapshot
+                                                        .data[index]
+                                                        .restaurantId
+                                                        .toString(),
+                                                    nameRestau: snapshot
+                                                        .data[index]
+                                                        .restaurantName
+                                                        .toString(),
+                                                    baranggay: snapshot
+                                                        .data[index]
+                                                        .barangayName,
+                                                    lat: double.parse(snapshot.data[index].latitude),
+                                                    lng: double.parse(snapshot.data[index].longitude),
+                                                    categID: snapshot
+                                                        .data[index].categoryId
+                                                        .toString(),
+                                                  )),ModalRoute.withName('/'));
                                     
                                   }
                                 },
