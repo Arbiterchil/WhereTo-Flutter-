@@ -167,7 +167,7 @@ class ApiCall{
     
   }
   postOrder(data ,api) async {
-    var fullurl = url+api+ await _getToken();
+    var fullurl = url+api;
     return http.post(fullurl,
     body: jsonEncode(data),
     headers: _setHeaders()
