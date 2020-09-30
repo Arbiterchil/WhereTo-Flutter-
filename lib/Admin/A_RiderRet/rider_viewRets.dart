@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final retieveAlltransac = retieveAlltransacFromJson(jsonString);
+
 import 'dart:convert';
 
 List<RetieveAlltransac> retieveAlltransacFromJson(String str) => List<RetieveAlltransac>.from(json.decode(str).map((x) => RetieveAlltransac.fromJson(x)));
@@ -11,10 +15,7 @@ class RetieveAlltransac {
         this.contactNumber,
         this.barangayName,
         this.restaurantName,
-        this.restoLatitude,
-        this.restoLongitude,
-        this.transLatitude,
-        this.transLongitude,
+        this.deliveryAddress,
         this.createdAt,
         this.deviceId,
         this.riderId,
@@ -27,11 +28,8 @@ class RetieveAlltransac {
     String contactNumber;
     String barangayName;
     String restaurantName;
-    double restoLatitude;
-    double restoLongitude;
-    double transLatitude;
-    double transLongitude;
-    String createdAt;
+    String deliveryAddress;
+    DateTime createdAt;
     String deviceId;
     dynamic riderId;
     int status;
@@ -43,11 +41,8 @@ class RetieveAlltransac {
         contactNumber: json["contactNumber"],
         barangayName: json["barangayName"],
         restaurantName: json["restaurantName"],
-        restoLatitude: double.parse(json["restoLatitude"]),
-        restoLongitude: double.parse(json["restoLongitude"]),
-        transLatitude: double.parse(json["transLatitude"]),
-        transLongitude: double.parse(json["transLongitude"]),
-        createdAt: json["created_at"],
+        deliveryAddress: json["deliveryAddress"],
+        createdAt: DateTime.parse(json["created_at"]),
         deviceId: json["deviceId"],
         riderId: json["riderId"],
         status: json["status"],
@@ -60,11 +55,8 @@ class RetieveAlltransac {
         "contactNumber": contactNumber,
         "barangayName": barangayName,
         "restaurantName": restaurantName,
-        "restoLatitude": restoLatitude,
-        "restoLongitude": restoLongitude,
-        "transLatitude": transLatitude,
-        "transLongitude": transLongitude,
-        "created_at": createdAt,
+        "deliveryAddress": deliveryAddress,
+        "created_at": createdAt.toIso8601String(),
         "deviceId": deviceId,
         "riderId": riderId,
         "status": status,
