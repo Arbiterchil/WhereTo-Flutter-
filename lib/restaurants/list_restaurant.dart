@@ -125,7 +125,7 @@ class _ListStacticState extends State<ListStactic>
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => MyCart(
-                                               
+                                                baranggay: widget.baranggay,
                                                 restoLat: widget.lat.toDouble(),
                                                 restoLng: widget.lng.toDouble(),
                                                 restauID: widget.restauID.toString(),

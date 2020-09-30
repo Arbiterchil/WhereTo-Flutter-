@@ -164,7 +164,17 @@ class ApiCall{
     body: jsonEncode(data),
     headers: _setHeaders()
     );
+    
   }
+  postOrder(data ,api) async {
+    var fullurl = url+api+ await _getToken();
+    return http.post(fullurl,
+    body: jsonEncode(data),
+    headers: _setHeaders()
+    );
+    
+  }
+  
   postCancelOrder(api) async {
     var fullurl = url+api+ await _getToken();
     return http.post(fullurl,

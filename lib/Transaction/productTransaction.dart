@@ -14,9 +14,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong/latlong.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 // import 'package:location/location.dart';
 
 import '../styletext.dart';
+import 'MyOrder/ComputationFee.dart';
 
 class TransactionList extends StatefulWidget {
   final String restaurantAddress;
@@ -25,8 +27,9 @@ class TransactionList extends StatefulWidget {
   final double restoLng;
   final double userLat;
   final double userLng;
+  final String baranggay;
   TransactionList(
-      {this.restauID, this.restaurantAddress, this.restoLat, this.restoLng, this.userLat, this.userLng});
+      {this.restauID, this.restaurantAddress, this.restoLat, this.restoLng, this.userLat, this.userLng, this.baranggay});
   @override
   _TransactionListState createState() => _TransactionListState();
 }
@@ -520,14 +523,35 @@ class _TransactionListState extends State<TransactionList> {
                                                         // charge += 0;
                                                         // }
                                                         // }
-                                                        // Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
-                                                        //   fee: charge,
-                                                        //   restauID:widget.restauID,
-                                                        //   userLat: userLat,
-                                                        //   userLng: userLng,
-                                                        //   )));
-                                                       Position position = await getLastKnownPosition();
-                                                       print(position.latitude);
+                                                        ProgressDialog computation = ProgressDialog(context);
+                                                        computation.style(
+                                                            message:
+                                                                "Calculating..",
+                                                            borderRadius: 10.0,
+                                                            backgroundColor: Colors.white,
+                                                            progressWidget:
+                                                                SpinKitDoubleBounce(color: Colors.blue),
+                                                            elevation: 10.0,
+                                                            insetAnimCurve: Curves.easeInExpo,
+                                                            progressTextStyle: TextStyle(
+                                                                color: Colors.black,
+                                                                fontSize: 10.0,
+                                                                fontWeight: FontWeight.w300,
+                                                                fontFamily: "Gilroy-light"));
+                                                        computation = ProgressDialog(context,
+                                                            type: ProgressDialogType.Normal,
+                                                            isDismissible: false);
+                                                        computation.show();
+                                                       double fee =await ComputationFee().getFee(widget.baranggay);
+                                                       if(fee!=null){
+                                                         computation.hide();
+                                                         Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
+                                                          fee: fee,
+                                                          restauID:widget.restauID,
+                                                          userLat: userLat,
+                                                          userLng: userLng,
+                                                          )));
+                                                       }
 
                                                       },
                                                       child: Container(
@@ -548,7 +572,7 @@ class _TransactionListState extends State<TransactionList> {
                                                             future: ID().getPosition(),
                                                             builder: (context, datasnapshot1){
                                                               return Text(
-                                                            "View Place Orders ${datasnapshot1.data}",
+                                                            "View Place Orders",
                                                             style: TextStyle(
                                                                 fontSize: 25,
                                                                 fontWeight:

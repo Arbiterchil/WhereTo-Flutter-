@@ -8,7 +8,8 @@ class MyCart extends StatefulWidget {
   final String restauID;
   final double restoLat;
   final double restoLng;
-  MyCart({this.nameRestau, this.restauID, this.restoLat, this.restoLng});
+  final String baranggay;
+  MyCart({this.nameRestau, this.restauID, this.restoLat, this.restoLng, this.baranggay});
   @override
   _MyCartState createState() => _MyCartState();
 }
@@ -20,6 +21,7 @@ class _MyCartState extends State<MyCart> {
       onWillPop: ()async=> false,
           child: Scaffold(
         body: TransactionList(
+            baranggay: widget.baranggay,
             restoLat: widget.restoLat,
             restoLng: widget.restoLng,
             restauID: widget.restauID,
