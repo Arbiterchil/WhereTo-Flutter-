@@ -7,7 +7,6 @@ import 'package:WhereTo/Transaction/MyOrder/payOrder.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/google_maps/google-key.dart';
-import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -507,56 +506,29 @@ class _TransactionListState extends State<TransactionList> {
                                                     height: 60,
                                                     width: double.infinity,
                                                     child: GestureDetector(
-                                                      onTap: () {
-                                                        var distance = new Distance();
-                                                        var usersLats = UserGetPref().latsdaw;
-                                                        var userLongs  = UserGetPref().lngsdaw;
-                                                        final double km = distance.as(LengthUnit.Kilometer,
-                                                         LatLng(widget.restoLat, widget.restoLng),
-                                                          LatLng(usersLats,userLongs));
-                                                        double charge = 30.0;
-                                                        for (int c = 4; c <= km; c++) {
-                                                        if (c > 4) {
-                                                        charge += 5;
-                                                        } else {
-                                                        charge += 0;
-                                                        }
-                                                        }
-                                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
-                                                          fee: charge,
-                                                          restauID:widget.restauID,
-                                                          userLat: usersLats,
-                                                          userLng: userLongs,
-                                                          )));
-                                                        print("$userLat $userLng");
-                                                      //   Location location = new Location();
-                                                      //   bool _serviceEnabled;
-                                                      //   PermissionStatus _permissionGranted;
-                                                      //   LocationData locationData;
-                                                      //   _serviceEnabled = await location.serviceEnabled();
-                                                      //   if (!_serviceEnabled) {
-                                                      //     _serviceEnabled = await location.requestService();
-                                                      //     if (!_serviceEnabled) {
-                                                      //       return;
-                                                      //     }
-                                                      //   }
+                                                      onTap: () async{
+                                                        // var distance = new Distance();
+                                                        
+                                                        // final double km = distance.as(LengthUnit.Kilometer,
+                                                        //  LatLng(widget.restoLat, widget.restoLng),
+                                                        //   LatLng(userLat,userLng));
+                                                        // double charge = 30.0;
+                                                        // for (int c = 4; c <= km; c++) {
+                                                        // if (c > 4) {
+                                                        // charge += 5;
+                                                        // } else {
+                                                        // charge += 0;
+                                                        // }
+                                                        // }
+                                                        // Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
+                                                        //   fee: charge,
+                                                        //   restauID:widget.restauID,
+                                                        //   userLat: userLat,
+                                                        //   userLng: userLng,
+                                                        //   )));
+                                                       Position position = await getLastKnownPosition();
+                                                       print(position.latitude);
 
-                                                      //   _permissionGranted = await location.hasPermission();
-                                                      //   if (_permissionGranted == PermissionStatus.denied) {
-                                                      //     _permissionGranted = await location.requestPermission();
-                                                      //     if (_permissionGranted != PermissionStatus.granted) {
-                                                      //       return;
-                                                      //     }
-                                                      //   }
-
-                                                      //  locationData = await location.getLocation(); 
-                                                      //  print("${locationData.latitude}, ${locationData.longitude}");
-                                                      // StreamSubscription<Position> positionStream = getPositionStream().listen((Position position) {
-                                                      // print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
-                                                      
-                                                      // });
-                                                      // positionStream.cancel();
-                                                     
                                                       },
                                                       child: Container(
                                                         height: 20,
@@ -572,8 +544,11 @@ class _TransactionListState extends State<TransactionList> {
                                                                           10)),
                                                         ),
                                                         child: Center(
-                                                          child: Text(
-                                                            "View Place Orders ",
+                                                          child: FutureBuilder(
+                                                            future: ID().getPosition(),
+                                                            builder: (context, datasnapshot1){
+                                                              return Text(
+                                                            "View Place Orders ${datasnapshot1.data}",
                                                             style: TextStyle(
                                                                 fontSize: 25,
                                                                 fontWeight:
@@ -583,6 +558,8 @@ class _TransactionListState extends State<TransactionList> {
                                                                     .white,
                                                                 fontFamily:
                                                                     'Gilroy-light'),
+                                                          );
+                                                            },
                                                           ),
                                                         ),
                                                       ),

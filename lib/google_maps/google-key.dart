@@ -23,14 +23,13 @@ class ID {
     return latlng;
   }
   Future<double> getLat() async{
-     Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+     Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
      double coor =postion.latitude;
      return coor;
   }
   Future<double> getLng() async{
-    Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
     double coor =postion.longitude;
-    
     return coor;
   }
 
@@ -44,7 +43,16 @@ class ID {
     }
   }
   Future<String> getPosition()async{
-  Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    // var permissions =await Permission.getPermissionsStatus([PermissionName.Location]);
+    // if(permissions[0].permissionStatus ==PermissionStatus.deny || permissions[0].permissionStatus ==PermissionStatus.notAgain){
+    //   await Permission.requestPermissions([PermissionName.Location]);
+    //   return "ass";
+    // }else{
+    //   Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    //   String coor ="${postion.latitude},${postion.longitude}";
+    //   return coor.toString();
+    // }
+  Position postion =await getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
   String coor ="${postion.latitude},${postion.longitude}";
   return coor.toString();
   }
