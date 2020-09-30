@@ -158,10 +158,10 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
         Navigator.push(context, MaterialPageRoute(builder: (context){
                                                         return Riderprevious(
                                                           getID:v[index].id.toString(),
-                                                          reslats: v[index].restoLatitude,
-                                                          reslongs: v[index].restoLongitude,
-                                                          dellats: v[index].transLatitude,
-                                                          dellongs: v[index].transLongitude,
+                                                          // reslats: v[index].restoLatitude,
+                                                          // reslongs: v[index].restoLongitude,
+                                                          // dellats: v[index].transLatitude,
+                                                          // dellongs: v[index].transLongitude,
                                                           restaurantName: v[index].restaurantName,
                                                           deviceID: v[index].deviceId,
                                                           riderID: v[index].riderId.toString(),
@@ -169,7 +169,8 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
                                                           nametran:  v[index].name,
                                                           contactNumber : v[index].contactNumber.toString(),
                                                           playerId: v[index].deviceId,
-                                                          user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
+                                                          user_coor: v[index].deliveryAddress,
+                                                          // user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
                                                           );
                                                       }));
       },
@@ -228,66 +229,66 @@ class _RaminDataIndiState extends State<RaminDataIndi> {
                                                       fontFamily: 'Gilroy-light'
                                                     ),
                                                       ),
-                                                       SizedBox(height: 3.0,),
-                                                        FutureBuilder(
-                                                              future: CoordinatesConverter()
-                                                              .getAddressByLocation(
-                                                                v[index].restoLatitude.toString()
-                                                                +","+
-                                                                v[index].restoLongitude.toString()),
-                                                              builder: (con ,snaps){
-                                                                if(snaps.data == null){
-                                                                  return Container();
-                                                                }else{
-                                                                  return Container(
-                                                              child: Text('From: ${snaps.data}',
-                                                              overflow: TextOverflow.ellipsis,
-                                                              style: TextStyle(
-                                                              color: pureblue,
-                                                              fontWeight: FontWeight.normal,
-                                                              fontSize: 11.0,
-                                                              fontFamily: 'Gilroy-light'
-                                                    ),
-                                                              ),
-                                                            );
-                                                                }
-                                                              },
-                                                            ),
-                                                    //    Text(,
-                                                    //       overflow: TextOverflow.ellipsis,
-                                                    //       style: TextStyle(
-                                                    //       color:pureblue,
-                                                    //       fontWeight: FontWeight.normal,
-                                                    //       fontSize: 11.0,
-                                                    //       fontFamily: 'Gilroy-light'
+                                                    //    SizedBox(height: 3.0,),
+                                                    //     FutureBuilder(
+                                                    //           future: CoordinatesConverter()
+                                                    //           .getAddressByLocation(
+                                                    //             v[index].restoLatitude.toString()
+                                                    //             +","+
+                                                    //             v[index].restoLongitude.toString()),
+                                                    //           builder: (con ,snaps){
+                                                    //             if(snaps.data == null){
+                                                    //               return Container();
+                                                    //             }else{
+                                                    //               return Container(
+                                                    //           child: Text('From: ${snaps.data}',
+                                                    //           overflow: TextOverflow.ellipsis,
+                                                    //           style: TextStyle(
+                                                    //           color: pureblue,
+                                                    //           fontWeight: FontWeight.normal,
+                                                    //           fontSize: 11.0,
+                                                    //           fontFamily: 'Gilroy-light'
                                                     // ),
+                                                    //           ),
+                                                    //         );
+                                                    //             }
+                                                    //           },
+                                                    //         ),
+                                                    // //    Text(,
+                                                    // //       overflow: TextOverflow.ellipsis,
+                                                    // //       style: TextStyle(
+                                                    // //       color:pureblue,
+                                                    // //       fontWeight: FontWeight.normal,
+                                                    // //       fontSize: 11.0,
+                                                    // //       fontFamily: 'Gilroy-light'
+                                                    // // ),
+                                                    // //       ),
+                                                      
+                                                      
+                                                    //   SizedBox(height: 3.0,), 
+                                                    //   Flexible(
+                                                    //         child: FutureBuilder(
+                                                    //           future: CoordinatesConverter().getAddressByLocation(
+                                                    //             v[index].transLatitude.toString()+","+v[index].transLongitude.toString()),
+                                                    //           builder: (con ,snaps){
+                                                    //             if(snaps.data == null){
+                                                    //               return Container();
+                                                    //             }else{
+                                                    //               return Container(
+                                                    //           child: Text('To: ${snaps.data}',
+                                                    //           overflow: TextOverflow.ellipsis,
+                                                    //           style: TextStyle(
+                                                    //           color: pureblue,
+                                                    //           fontWeight: FontWeight.normal,
+                                                    //           fontSize: 11.0,
+                                                    //           fontFamily: 'Gilroy-light'
+                                                    // ),
+                                                    //           ),
+                                                    //         );
+                                                    //             }
+                                                    //           },
+                                                    //         ),
                                                     //       ),
-                                                      
-                                                      
-                                                      SizedBox(height: 3.0,), 
-                                                      Flexible(
-                                                            child: FutureBuilder(
-                                                              future: CoordinatesConverter().getAddressByLocation(
-                                                                v[index].transLatitude.toString()+","+v[index].transLongitude.toString()),
-                                                              builder: (con ,snaps){
-                                                                if(snaps.data == null){
-                                                                  return Container();
-                                                                }else{
-                                                                  return Container(
-                                                              child: Text('To: ${snaps.data}',
-                                                              overflow: TextOverflow.ellipsis,
-                                                              style: TextStyle(
-                                                              color: pureblue,
-                                                              fontWeight: FontWeight.normal,
-                                                              fontSize: 11.0,
-                                                              fontFamily: 'Gilroy-light'
-                                                    ),
-                                                              ),
-                                                            );
-                                                                }
-                                                              },
-                                                            ),
-                                                          ),
                                                        
                          ],
                        ),

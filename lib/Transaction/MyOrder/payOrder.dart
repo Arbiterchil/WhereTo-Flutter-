@@ -386,7 +386,7 @@ class _PayOrderState extends State<PayOrder> {
                                                   border: InputBorder.none,
                                                   contentPadding: EdgeInsets.only(top: 14.0),
                                                   prefixIcon: Icon(
-                                                    Icons.house,
+                                                    Icons.my_location,
                                                     color: pureblue,
                                                   ),
                                                   hintText: 'Complete and Exact Delivery Address',

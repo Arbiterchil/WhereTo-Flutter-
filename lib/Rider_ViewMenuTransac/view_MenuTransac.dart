@@ -35,12 +35,12 @@ class ViewMenuOnTransac extends StatefulWidget {
   final String transacIDs;
   final String user_coor;
   final String contactNumber;
-  final double dellats;
-  final double dellongs;
-  final double reslats;
-  final double reslongs;
 
-  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor, this.contactNumber, this.dellats, this.dellongs, this.reslats, this.reslongs}) : super(key: key);
+  const ViewMenuOnTransac({Key key, this.getID, this.gotTotal, this.deliverTo, this.restaurantName, this.riderID, this.deviceID, this.deliveryCharge, this.nametran, this.playerId, this.transacIDs, this.user_coor, this.contactNumber}) : super(key: key);
+  // final double dellats;
+  // final double dellongs;
+  // final double reslats;
+  // final double reslongs;
 
  
   @override
@@ -565,25 +565,25 @@ var checkVal = localStorage.getBool('check');
                                                     label: widget.restaurantName,
                                                   ),
                                                   SizedBox(height: 10,),
-                                                  FutureBuilder(
-                                                     future: CoordinatesConverter()
-                                                     .getAddressByLocation(
-                                                        widget.reslats.toString()
-                                                         + "," +
-                                                         widget.reslongs.toString()
-                                                     ),
-                                                    builder: (context,snaps){
-                                                      if(snaps.data == null){
-                                                        return Text("Data Error");
-                                                      }else{
-                                                        return  NCard(
-                                                    icon: EvaIcons.map,
-                                                    label:snaps.data
-                                                  );
-                                                      }
-                                                    },
-                                                   ),
-                                                   SizedBox(height: 10,),
+                                                  // FutureBuilder(
+                                                  //    future: CoordinatesConverter()
+                                                  //    .getAddressByLocation(
+                                                  //       widget.reslats.toString()
+                                                  //        + "," +
+                                                  //        widget.reslongs.toString()
+                                                  //    ),
+                                                  //   builder: (context,snaps){
+                                                  //     if(snaps.data == null){
+                                                  //       return Text("Data Error");
+                                                  //     }else{
+                                                  //       return  NCard(
+                                                  //   icon: EvaIcons.map,
+                                                  //   label:snaps.data
+                                                  // );
+                                                  //     }
+                                                  //   },
+                                                  //  ),
+                                                  //  SizedBox(height: 10,),
                                                    NCard(
                                                     icon: Icons.phone_android,
                                                     label:widget.contactNumber,
@@ -596,24 +596,24 @@ var checkVal = localStorage.getBool('check');
                                                   ),
                                                   SizedBox(height: 10,),
 
-                                                   FutureBuilder(
-                                                     future: CoordinatesConverter()
-                                                     .getAddressByLocation(
-                                                        widget.dellats.toString()
-                                                        +","+
-                                                        widget.dellongs.toString()
-                                                     ),
-                                                    builder: (context,snaps){
-                                                      if(snaps.data == null){
-                                                        return Text("Data Error");
-                                                      }else{
-                                                        return  NCard(
-                                                    icon: Icons.my_location,
-                                                    label:snaps.data
-                                                  );
-                                                      }
-                                                    },
-                                                   ),
+                                                  //  FutureBuilder(
+                                                  //    future: CoordinatesConverter()
+                                                  //    .getAddressByLocation(
+                                                  //       widget.dellats.toString()
+                                                  //       +","+
+                                                  //       widget.dellongs.toString()
+                                                  //    ),
+                                                  //   builder: (context,snaps){
+                                                  //     if(snaps.data == null){
+                                                  //       return Text("Data Error");
+                                                  //     }else{
+                                                  //       return  NCard(
+                                                  //   icon: Icons.my_location,
+                                                  //   label:snaps.data
+                                                  // );
+                                                  //     }
+                                                  //   },
+                                                  //  ),
                                                   SizedBox(height: 10,),
                                                     
                                                       ],
@@ -658,56 +658,56 @@ var checkVal = localStorage.getBool('check');
                                           ),     
                           SizedBox(height: 20,),
 
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                 Container(
-                             width: 110,
-                             height: 50,
-                             child: RaisedButton(
-                               shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.all(Radius.circular(50)),
-                               ),
-                               color: pureblue,
-                               onPressed: (){
-                                 RiderRoute().getRoute(widget.dellats.toString()+","+widget.dellongs.toString(),);
-                               },
-                               child:Center(
-                                 child: Text("Location",
-                                 style: TextStyle(
-                                   color: Colors.white,
-                                   fontFamily: 'Gilroy-light'
-                                 ),
-                                 ),
-                               ) 
-                               ,),
-                           ),
-                           Container(
-                             width: 110,
-                             height: 50,
-                             child: RaisedButton(
-                               shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.all(Radius.circular(50)),
-                               ),
-                               color: pureblue,
-                               onPressed: (){
-                                 RiderRoute().getRoute(widget.reslats.toString()+","+widget.reslongs.toString());
-                               },
-                               child:Center(
-                                 child: Text("Restaurant",
-                                 style: TextStyle(
-                                   color: Colors.white,
-                                   fontFamily: 'Gilroy-light'
-                                 ),
-                                 ),
-                               ) 
-                               ,),
-                           ),
-                              ],
-                            ),
-                          ),
+                          // Container(
+                          //   width: MediaQuery.of(context).size.width,
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: [
+                          //        Container(
+                          //    width: 110,
+                          //    height: 50,
+                          //    child: RaisedButton(
+                          //      shape: RoundedRectangleBorder(
+                          //        borderRadius: BorderRadius.all(Radius.circular(50)),
+                          //      ),
+                          //      color: pureblue,
+                          //      onPressed: (){
+                          //        RiderRoute().getRoute(widget.dellats.toString()+","+widget.dellongs.toString(),);
+                          //      },
+                          //      child:Center(
+                          //        child: Text("Location",
+                          //        style: TextStyle(
+                          //          color: Colors.white,
+                          //          fontFamily: 'Gilroy-light'
+                          //        ),
+                          //        ),
+                          //      ) 
+                          //      ,),
+                          //  ),
+                          //  Container(
+                          //    width: 110,
+                          //    height: 50,
+                          //    child: RaisedButton(
+                          //      shape: RoundedRectangleBorder(
+                          //        borderRadius: BorderRadius.all(Radius.circular(50)),
+                          //      ),
+                          //      color: pureblue,
+                          //      onPressed: (){
+                          //        RiderRoute().getRoute(widget.reslats.toString()+","+widget.reslongs.toString());
+                          //      },
+                          //      child:Center(
+                          //        child: Text("Restaurant",
+                          //        style: TextStyle(
+                          //          color: Colors.white,
+                          //          fontFamily: 'Gilroy-light'
+                          //        ),
+                          //        ),
+                          //      ) 
+                          //      ,),
+                          //  ),
+                          //     ],
+                          //   ),
+                          // ),
                              SizedBox(height: 20,),
                              Container(
                              height: 50.0,
