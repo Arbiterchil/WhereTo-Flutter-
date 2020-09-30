@@ -91,6 +91,8 @@ var iderntify;
             print("Can Continue");
             setState(() {
               cancelOrder =true;
+              menuHide = false;
+              backTF = false;
             });
          }else{
            print("The Id is"+userRider + "="+"${widget.getID}");
@@ -217,7 +219,7 @@ var iderntify;
                                        MenuDesign(
                                          menuname: snapshot.data[index].menuName,
                                          description: snapshot.data[index].description,
-                                         price: snapshot.data[index].price.toString(),
+                                         price: snapshot.data[index].totalPrice.toString(),
                                          quantity: snapshot.data[index].quantity.toString(),
 
                                        ),
