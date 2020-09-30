@@ -128,8 +128,9 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                     };
                                     converted.add(temp);
                                   });
+                                  
                                   for (var i = 0; i < converted.length; i++) {
-                                    if (insideResto ==converted[i]['restaurant'] &&insideLat ==converted[i]['restolatitude'] && insideLng ==converted[i]['restoLongitude'] && converted[i]['status'] < 4) {
+                                    if (insideResto ==converted[i]['restaurant'] && converted[i]['status'] < 4) {
                                       isRead = true;
                                       break;
                                     }
@@ -152,27 +153,27 @@ class _FoodDisplayState extends State<FoodDisplay> {
                                       
                                     
                                       featured.hide();
-                                      Navigator.push(
-                                          context,
-                                          new MaterialPageRoute(
-                                              builder: (context) => ListStactic(
-                                                    restauID: snapshot
-                                                        .data[index]
-                                                        .restaurantId
-                                                        .toString(),
-                                                    nameRestau: snapshot
-                                                        .data[index]
-                                                        .restaurantName
-                                                        .toString(),
-                                                    baranggay: snapshot
-                                                        .data[index]
-                                                        .barangayName,
-                                                    lat: double.parse(snapshot.data[index].latitude),
-                                                    lng: double.parse(snapshot.data[index].longitude),
-                                                    categID: snapshot
-                                                        .data[index].categoryId
-                                                        .toString(),
-                                                  )));
+                                      // Navigator.push(
+                                      //     context,
+                                      //     new MaterialPageRoute(
+                                      //         builder: (context) => ListStactic(
+                                      //               restauID: snapshot
+                                      //                   .data[index]
+                                      //                   .restaurantId
+                                      //                   .toString(),
+                                      //               nameRestau: snapshot
+                                      //                   .data[index]
+                                      //                   .restaurantName
+                                      //                   .toString(),
+                                      //               baranggay: snapshot
+                                      //                   .data[index]
+                                      //                   .barangayName,
+                                      //               lat: double.parse(snapshot.data[index].latitude),
+                                      //               lng: double.parse(snapshot.data[index].longitude),
+                                      //               categID: snapshot
+                                      //                   .data[index].categoryId
+                                      //                   .toString(),
+                                      //             )));
                                     
                                   }
                                 },

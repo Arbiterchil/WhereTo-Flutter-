@@ -31,19 +31,9 @@ _publishSubjectFeautured.sink.add(filter);
 Future<void> getmenu(String query) async {
 final response = await ApiCall().getRestarant('/getAllMenu');
 List<FilterRestaurant> search = filterRestaurantFromJson(response.body);
-String menuCoordinatesFromID;
-  String coordinates;
-  String userCoordinatesFromID;
-  String userCoordinates;
-  search.forEach((element) async{
-    menuCoordinatesFromID ="${element.latitude},${element.longitude}";
-    coordinates =await CoordinatesConverter().addressByCity(menuCoordinatesFromID);
-    userCoordinatesFromID =await ID().getPosition();
-    userCoordinates =await CoordinatesConverter().addressByCity(userCoordinatesFromID);
-  });
 var filter =search.where((element) =>  element.menuName.contains(query) || element.menuName.toLowerCase().contains(query) || element.menuName.toUpperCase().contains(query) ||
  element.restaurantName.contains(query) || element.restaurantName.toLowerCase().contains(query) || element.restaurantName.toUpperCase().contains(query) 
-|| element.categoryName.contains(query) || element.categoryName.toLowerCase().contains(query) || element.categoryName.toUpperCase().contains(query) && coordinates==userCoordinates).toList();
+|| element.categoryName.contains(query) || element.categoryName.toLowerCase().contains(query) || element.categoryName.toUpperCase().contains(query)).toList();
 _publishSubjectFilter.sink.add(filter);
 }
 
