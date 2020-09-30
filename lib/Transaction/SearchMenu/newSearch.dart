@@ -119,7 +119,7 @@ class CustomSearch extends SearchDelegate {
                                     converted.add(temp);
                                   });
                                   for (var i = 0; i < converted.length; i++) {
-                                    if (insideResto ==converted[i]['restaurant'] &&insideLat ==converted[i]['restolatitude'] && insideLng ==converted[i]['restoLongitude'] && converted[i]['status'] < 4) {
+                                    if (insideResto ==converted[i]['restaurant'] && converted[i]['status'] < 4) {
                                       isRead = true;
                                       break;
                                     }
