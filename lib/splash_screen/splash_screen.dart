@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:WhereTo/modules/Awalkthrough/walk_t.dart';
 import 'package:WhereTo/modules/OtherFeatures/Auth/auth_pref.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 import 'package:WhereTo/path.dart';
 import 'package:WhereTo/styletext.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,27 +25,29 @@ class _SplashScreenState extends State<SplashScreen> {
     authShared.getThos();
    
     super.initState();
-     getThis();
+    //  getThis();
     startTime();
 
   }
 
-  getThis(){
-    StreamSubscription<Position> positionStream = getPositionStream().listen(
-    (Position position) {
+//   getThis(){
+//     StreamSubscription<Position> positionStream = getPositionStream().listen(
+//     (Position position) {
        
-        if(position == null){
-          print('DESOLE  wala jud');
-        }else{
- String livin =  position.latitude.toString() + ', ' + position.longitude.toString();
- print(livin);
-        }
-        // print(position == null ? 'Unknown' :
-        // position.latitude.toString() + ', ' + position.longitude.toString());
+//         if(position == null){
+//           print('DESOLE  wala jud');
+//         }else{
+//  String livin =  position.latitude.toString() + ', ' + position.longitude.toString();
+//  print("Desole $livin");
+//         UserGetPref().lat(double.parse(position.latitude.toString()));
+//         UserGetPref().lng(double.parse(position.longitude.toString()));
+//         }
+//         // print(position == null ? 'Unknown' :
+//         // position.latitude.toString() + ', ' + position.longitude.toString());
        
-    });
-    print(positionStream);
-  }
+//     });
+//     print(positionStream);
+//   }
   
   startTime(){
     var duration = Duration(seconds: 4);

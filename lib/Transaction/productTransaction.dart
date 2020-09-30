@@ -7,6 +7,7 @@ import 'package:WhereTo/Transaction/MyOrder/payOrder.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/google_maps/google-key.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -508,10 +509,11 @@ class _TransactionListState extends State<TransactionList> {
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         var distance = new Distance();
-                                                        
+                                                        var usersLats = UserGetPref().latsdaw;
+                                                        var userLongs  = UserGetPref().lngsdaw;
                                                         final double km = distance.as(LengthUnit.Kilometer,
                                                          LatLng(widget.restoLat, widget.restoLng),
-                                                          LatLng(userLat,userLng));
+                                                          LatLng(usersLats,userLongs));
                                                         double charge = 30.0;
                                                         for (int c = 4; c <= km; c++) {
                                                         if (c > 4) {
@@ -523,8 +525,8 @@ class _TransactionListState extends State<TransactionList> {
                                                         Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
                                                           fee: charge,
                                                           restauID:widget.restauID,
-                                                          userLat: userLat,
-                                                          userLng: userLng,
+                                                          userLat: usersLats,
+                                                          userLng: userLongs,
                                                           )));
                                                         print("$userLat $userLng");
                                                       //   Location location = new Location();

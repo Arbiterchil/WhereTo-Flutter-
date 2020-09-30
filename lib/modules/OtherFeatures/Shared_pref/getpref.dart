@@ -24,16 +24,20 @@ Future setuserJson(String vals){
   return _prefs.setString('user', vals);
 }
 
-get getLocationTrial{
-  var livin;
-  StreamSubscription<Position> positionStream = getPositionStream().listen(
-    (Position position) {
-         livin = position.latitude;
-        print(position == null ? 'Unknown' :
-        position.latitude.toString() + ', ' + position.longitude.toString());
-        // print('DESOLE  $livin');
-    });
-    print(positionStream);
-    return livin;
+Future lat(double lat){
+  return _prefs.setDouble('Lats', lat);
 }
+Future lng(double lng){
+  return _prefs.setDouble('Longs',lng);
+}
+
+get latsdaw{
+  var lats = _prefs.getDouble('Lats') ?? '';
+  return lats;
+}
+get lngsdaw{
+  var longs = _prefs.getDouble('Longs') ?? '';
+  return longs;
+}
+
 }

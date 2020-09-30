@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
     _onsSignal();
         //  configSignal();
     postuserId();
-    print("Desole ${UserGetPref().getLocationTrial.toString()}");
+    // print("Desole ${UserGetPref().getLocationTrial.toString()}");
     
   }
   var datapasser;
