@@ -15,10 +15,12 @@ import 'package:WhereTo/restaurants/New_ViewRestaurant/blocMenu.class.dart';
 import 'package:WhereTo/restaurants/New_ViewRestaurant/blocMenu.dart';
 import 'package:WhereTo/restaurants/card_menu.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
+import 'package:WhereTo/styletext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:icon_badge/icon_badge.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -160,7 +162,6 @@ class _ListStacticState extends State<ListStactic>
                       return DefaultTabController(
                         length: datasnapshot.data.length, 
                         child: Scaffold(
-                          backgroundColor: Color(0xFF0C375B),
                           appBar: PreferredSize(
                             preferredSize: Size.fromHeight(50.5),
                             child: AppBar(
@@ -168,7 +169,8 @@ class _ListStacticState extends State<ListStactic>
                               excludeHeaderSemantics: true,
                               // toolbarHeight: 50.5,
                               automaticallyImplyLeading: false,
-                              backgroundColor: Color(0xFF0C375B),
+                              // backgroundColor: Color(0xFF0C375B),
+                              backgroundColor: Colors.white,
                               bottom: TabBar(
                                 controller: tabController,
                                 indicatorSize: TabBarIndicatorSize.label,
@@ -176,16 +178,17 @@ class _ListStacticState extends State<ListStactic>
                                 unselectedLabelColor:Colors.transparent,
                                 indicator: MD2Indicator(
                                   indicatorHeight: 5, 
-                                  indicatorColor: Colors.blue, 
+                                  indicatorColor: wheretoDark, 
                                   indicatorSize:MD2IndicatorSize.normal),
                                 isScrollable: true,
                                 tabs: datasnapshot.data.map<Widget>((Category category){
                                   return Container(
                                     width: 100,
                                     child: Tab(
+                                      
                                       child: Text(category.categoryName, style: TextStyle(
                                       letterSpacing: 2.0,
-                                      color: Colors.white,
+                                      color: wheretoDark,
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Gilroy-light'),),
@@ -197,6 +200,7 @@ class _ListStacticState extends State<ListStactic>
                           ),
                             body: TabBarView(
                                 controller: tabController,
+                                
                                 children: datasnapshot.data.map<Widget>((Category category){
                                 return Padding(padding: EdgeInsets.only(top: 10),
                                 child: Container(
@@ -210,14 +214,151 @@ class _ListStacticState extends State<ListStactic>
                                           itemCount: snapshot.data.length,
                                           itemBuilder: (context, index){
                                            if(snapshot.data.length >0){
-                                             return Padding(padding: EdgeInsets.all(15),
-                                              child: MenuBoxRestaurant(
-                                              image: snapshot.data[index].imagePath.toString(),
-                                              menuName: snapshot.data[index].menuName.toString(),
-                                              menuDescription: snapshot.data[index].description.toString(),
-                                              fixprice: double.parse(snapshot.data[index].totalPrice.toString()),
-                                              onTap: (){
-                                                BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(
+                                             return Padding(padding: EdgeInsets.only(top:35,bottom: 10,left: 40,right: 40),
+                                            //   child: MenuBoxRestaurant(
+                                            //   image: snapshot.data[index].imagePath.toString(),
+                                            //   menuName: snapshot.data[index].menuName.toString(),
+                                            //   menuDescription: snapshot.data[index].description.toString(),
+                                            //   fixprice: double.parse(snapshot.data[index].totalPrice.toString()),
+                                            //   onTap: (){
+                                            //     BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(
+                                            //       name: snapshot.data[index].menuName,
+                                            //       description: snapshot.data[index].description,
+                                            //       price: double.parse(snapshot.data[index].totalPrice.toString()),
+                                            //       quantity: 1,
+                                            //       id: snapshot.data[index].menuId,
+                                            //       image: snapshot.data[index].imagePath,
+                                            //     )));
+                                            //   },
+                                            // ),
+                                            child: Container(
+                                              width: MediaQuery.of(context).size.width,
+                                              height: 150,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(15),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    spreadRadius: 3.3,
+                                                    blurRadius: 3.3,
+                                                    color: Colors.grey[300]
+                                                  )
+                                                ],
+                                              ),
+                                              child: Stack(
+                                                overflow: Overflow.visible,
+                                                children: [
+                                                  Positioned(
+              top: -30,
+              right: 10,
+              child: Container(
+              
+              height: 80,
+              width: 80,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(70)),
+                border: Border.all(
+                  width: 1,
+                  color: wheretoDark,
+                )
+                // boxShadow: [
+                //   BoxShadow(
+                //     spreadRadius: 3.3,
+                //     blurRadius: 3.3,
+                //     color: Colors.grey[300],
+                //   ),
+                //   BoxShadow(
+                //     spreadRadius: 3.3,
+                //     blurRadius: 3.3,
+                //     color: Colors.white,
+                //   ),
+                // ]
+              ),
+              child: Center(
+                child: SpinKitPumpingHeart(
+                  color: Colors.red[300],
+                  size: 40,
+                ),
+              ),
+            )),
+                                                  Align(
+                                                    alignment: Alignment.topLeft,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(left: 10,top:15),
+                                                    child: Text(snapshot.data[index].menuName.toString(),
+                                                    maxLines: 3,
+                                                    style: TextStyle(
+                                                      color: wheretoDark,
+                                                      fontFamily: 'Gilroy-ExtraBold'
+                                                    ),
+                                                    ),
+                                                    ),
+                                                    
+                                                  ),
+                                                 Align(
+                                                    alignment: Alignment.topLeft,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(left: 10,top:45),
+                                                    child: Text(snapshot.data[index].description.toString(),
+                                                    maxLines: 7,
+                                                    style: TextStyle(
+                                                      color: wheretoDark,
+                                                      fontFamily: 'Gilroy-light'
+                                                    ),
+                                                    ),
+                                                    ),
+                                                    
+                                                  ),
+                                                  Align(
+                                                    alignment: Alignment.bottomLeft,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(bottom: 10,left: 15),
+                                                      child: Container(
+                                                        width: 100,
+                                                        height: 40,
+                                                        decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                            width: 1,
+                                                            color: wheretoDark
+                                                          ),
+                                                          borderRadius: BorderRadius.circular(40), 
+                                                        ),
+                                                        child: Center(
+                                                        child: Text("${double.parse(snapshot.data[index].totalPrice.toString())}",
+                                                    maxLines: 3,
+                                                    style: TextStyle(
+                                                      color: wheretoDark,
+                                                      fontFamily: 'Gilroy-ExtraBold'
+                                                    ),
+                                                        ),
+                                                    ),
+                                                      ),
+                                                      ),
+                                                  ),
+                                                  Align(
+                                                    alignment: Alignment.bottomRight,
+                                                    child: Padding(padding: const EdgeInsets.only(bottom: 10,right: 15),
+                                                    child: Container(
+                                                      height: 40,
+                                                      width: 120,
+                                                      child: RaisedButton(
+                                                        child: Center(
+                                                          child: Text("Add to Cart",
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontFamily: 'Gilroy-light',
+                                                          
+                                                          ),
+                                                          ),
+                                                        ),
+                                                        splashColor: Colors.white,
+                                                        color: wheretoDark,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(40),
+                                                        ),
+                                                        onPressed: (){
+                                                           BlocProvider.of<OrderBloc>(context).add(Computation.add(TransactionOrders(
                                                   name: snapshot.data[index].menuName,
                                                   description: snapshot.data[index].description,
                                                   price: double.parse(snapshot.data[index].totalPrice.toString()),
@@ -225,7 +366,12 @@ class _ListStacticState extends State<ListStactic>
                                                   id: snapshot.data[index].menuId,
                                                   image: snapshot.data[index].imagePath,
                                                 )));
-                                              },
+                                                        }),
+                                                    ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           );
                                            }else{ 

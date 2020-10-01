@@ -377,7 +377,7 @@ Future<List<RiverMenu>> getMenuTransac() async {
               quantity: body["quantity"],
             );
            
-           
+
             ridermenu.add(riverMenu);          
         }
 
@@ -590,7 +590,11 @@ var checkVal = localStorage.getBool('check');
                                                     label:widget.contactNumber,
                                                   ),
                                                   SizedBox(height: 10,),
-
+                                                    NCard(
+                                                    icon: EvaIcons.pricetags,
+                                                    label: widget.user_coor,
+                                                  ),
+                                                  SizedBox(height: 10,),
                                                    NCard(
                                                     icon: EvaIcons.pricetags,
                                                     label: widget.deliveryCharge,
