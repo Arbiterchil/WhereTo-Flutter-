@@ -624,10 +624,10 @@ var checkVal = localStorage.getBool('check');
                                                   ),
                                                   SizedBox(height: 10,),
                                                    NCard(
-                                                    icon: EvaIcons.pricetags,
+                                                    icon: EvaIcons.mapOutline,
                                                     label: widget.user_coor,
                                                   ),
-                                                  
+
                                                    NCard(
                                                     icon: Icons.money_off,
                                                     label: widget.deliveryCharge,
