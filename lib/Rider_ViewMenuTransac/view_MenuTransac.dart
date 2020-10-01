@@ -594,6 +594,7 @@ var checkVal = localStorage.getBool('check');
                                                     icon: EvaIcons.pricetags,
                                                     label: widget.user_coor,
                                                   ),
+                                                  
                                                   SizedBox(height: 10,),
                                                    NCard(
                                                     icon: EvaIcons.pricetags,

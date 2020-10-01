@@ -627,6 +627,7 @@ var checkVal = localStorage.getBool('check');
                                                     icon: EvaIcons.pricetags,
                                                     label: widget.user_coor,
                                                   ),
+                                                  
                                                    NCard(
                                                     icon: Icons.money_off,
                                                     label: widget.deliveryCharge,
