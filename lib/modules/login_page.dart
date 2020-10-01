@@ -69,6 +69,7 @@ Widget spinKitDots(){
       iconText: Icons.person,
       type: TextInputType.number,
       hintTxt: "09XXXXXXXXX",
+      labelText: "Contact Number",
       nodes: contactNumber,
       actions: TextInputAction.next,
       submit: (_) => FocusScope.of(context).requestFocus(password),
@@ -84,13 +85,14 @@ Widget spinKitDots(){
       iconText: Icons.lock,
       hintTxt: "Password",
       nodes: password,
+      labelText: "Password",
       actions: TextInputAction.done,
       submit: (_) => FocusScope.of(context).requestFocus(FocusNode()),
     ),
          Align(
                     alignment: Alignment.centerRight,
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 30,top: 9),
+                      padding: const EdgeInsets.only(right: 25,top: 15),
                       child: GestureDetector(
                         onTap: () => setState(() => show = !show),
                         child: Icon(
