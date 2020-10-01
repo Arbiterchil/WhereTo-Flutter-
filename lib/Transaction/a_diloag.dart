@@ -258,7 +258,10 @@ Widget _view(BaranggayRespone respone){
                                  borderRadius: BorderRadius.all(Radius.circular(40)), 
                               ),
                               onPressed:() async{
-                                if(formkey.currentState.validate()){
+                                if(selectPerson == null){
+                                  print("stop");
+                                }else{
+                                  if(formkey.currentState.validate()){
                                   formkey.currentState.save();
                                   double fee =await ComputationFee().getFee(selectPerson);
                                                        if(fee!=null){
@@ -270,6 +273,7 @@ Widget _view(BaranggayRespone respone){
                                                           deliveryTypedaw: address,
                                                           )));
                                                        }
+                                }
                                 }
                               }),
                           ),
