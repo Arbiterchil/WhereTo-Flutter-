@@ -28,7 +28,10 @@ class PayOrder extends StatefulWidget {
   final String restauID;
   final double userLat;
   final double userLng;
-  PayOrder({this.fee, this.restauID, this.userLat, this.userLng});
+  final TextEditingController deliveryTypedaw;
+
+  const PayOrder({ this.fee, this.restauID, this.userLat, this.userLng, this.deliveryTypedaw});
+  
   @override
   _PayOrderState createState() => _PayOrderState();
 }

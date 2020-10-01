@@ -1,9 +1,14 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
+import 'package:WhereTo/BarangaylocalList/barangay_class.dart';
+import 'package:WhereTo/BarangaylocalList/barangay_response.dart';
+import 'package:WhereTo/BarangaylocalList/barangay_stream.dart';
 import 'package:WhereTo/Transaction/MyOrder/payOrder.dart';
+import 'package:WhereTo/Transaction/a_diloag.dart';
 import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/google_maps/google-key.dart';
@@ -39,55 +44,20 @@ class _TransactionListState extends State<TransactionList> {
   String long;
   List<dynamic> summary = [];
   String displaytotal;
-
+  String selectPerson;
   var userLat;
   var userLng;
   
   @override
   void initState() {
-     //getThis();
+
     super.initState();
-    
-    // getThis();
-    // StreamSubscription<Position> positionStream = getPositionStream().listen(
-    // (Position position) {
-    //     print(position == null ? 'Unknown' : 
-    //     position.latitude.toString() + ', ' + position.longitude.toString());
-    // });
-    // print(positionStream);
   }
-
-//    getThis(){
-//     StreamSubscription<Position> positionStream = getPositionStream().listen(
-//     (Position position) {
-       
-//         if(position == null){
-//           print('DESOLE  wala jud');
-//         }else{
-//  String livin =  position.latitude.toString() + ', ' + position.longitude.toString();
-//  setState(() {
-//     userLat = position.latitude;
-//   userLng = position.longitude;
-//   print('DESOLE  $livin');
-//  });
-//         }
-//         // print(position == null ? 'Unknown' :
-//         // position.latitude.toString() + ', ' + position.longitude.toString());
-       
-//     });
-//     print(positionStream);
-//   }
-
   
-  // void getThis() async{
-
-  //   userLat = await ID().getLat();
-  //   userLng = await ID().getLng();     
-  //  setState(() {
-  //     print("${userLat.toString()}  ${userLng.toString()}");
-  //  });
-  // }
-  
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   void reminderShow() {
     showDialog(
@@ -134,6 +104,8 @@ class _TransactionListState extends State<TransactionList> {
                   ),
                 ),
                 onPressed: () => reminderShow()),
+                
+          
           ),
         ),
         body: Padding(
@@ -510,6 +482,16 @@ class _TransactionListState extends State<TransactionList> {
                                                     width: double.infinity,
                                                     child: GestureDetector(
                                                       onTap: () async{
+
+                                                         showDialog(
+                                                    context: context,
+                                                    barrierDismissible: true,
+                                                    builder: (context){
+                                                        return DialogForMico(
+                                                          restaurantId: widget.restauID,
+                                                        );
+                                                    }
+                                                    ); 
                                                         // var distance = new Distance();
                                                         
                                                         // final double km = distance.as(LengthUnit.Kilometer,
@@ -523,35 +505,35 @@ class _TransactionListState extends State<TransactionList> {
                                                         // charge += 0;
                                                         // }
                                                         // }
-                                                        ProgressDialog computation = ProgressDialog(context);
-                                                        computation.style(
-                                                            message:
-                                                                "Calculating..",
-                                                            borderRadius: 10.0,
-                                                            backgroundColor: Colors.white,
-                                                            progressWidget:
-                                                                SpinKitDoubleBounce(color: Colors.blue),
-                                                            elevation: 10.0,
-                                                            insetAnimCurve: Curves.easeInExpo,
-                                                            progressTextStyle: TextStyle(
-                                                                color: Colors.black,
-                                                                fontSize: 10.0,
-                                                                fontWeight: FontWeight.w300,
-                                                                fontFamily: "Gilroy-light"));
-                                                        computation = ProgressDialog(context,
-                                                            type: ProgressDialogType.Normal,
-                                                            isDismissible: false);
-                                                        computation.show();
-                                                       double fee =await ComputationFee().getFee(widget.baranggay);
-                                                       if(fee!=null){
-                                                         computation.hide();
-                                                         Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
-                                                          fee: fee,
-                                                          restauID:widget.restauID,
-                                                          userLat: userLat,
-                                                          userLng: userLng,
-                                                          )));
-                                                       }
+                                                        // ProgressDialog computation = ProgressDialog(context);
+                                                        // computation.style(
+                                                        //     message:
+                                                        //         "Calculating..",
+                                                        //     borderRadius: 10.0,
+                                                        //     backgroundColor: Colors.white,
+                                                        //     progressWidget:
+                                                        //         SpinKitDoubleBounce(color: Colors.blue),
+                                                        //     elevation: 10.0,
+                                                        //     insetAnimCurve: Curves.easeInExpo,
+                                                        //     progressTextStyle: TextStyle(
+                                                        //         color: Colors.black,
+                                                        //         fontSize: 10.0,
+                                                        //         fontWeight: FontWeight.w300,
+                                                        //         fontFamily: "Gilroy-light"));
+                                                        // computation = ProgressDialog(context,
+                                                        //     type: ProgressDialogType.Normal,
+                                                        //     isDismissible: false);
+                                                        // computation.show();
+                                                      //  double fee =await ComputationFee().getFee(widget.baranggay);
+                                                      //  if(fee!=null){
+                                                      //   //  computation.hide();
+                                                      //    Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
+                                                      //     fee: fee,
+                                                      //     restauID:widget.restauID,
+                                                      //     userLat: userLat,
+                                                      //     userLng: userLng,
+                                                      //     )));
+                                                      //  }
 
                                                       },
                                                       child: Container(
@@ -672,6 +654,7 @@ class _TransactionListState extends State<TransactionList> {
                       listener: (BuildContext context, orderList) {}),
                 ),
               ),
+
             ],
           ),
         ),
@@ -722,4 +705,8 @@ class _TransactionListState extends State<TransactionList> {
   //       await http.post(url, headers: headers, body: json.encode(contents));
   //   print(repo.body);
   // }
+
+
+
+ 
 }
