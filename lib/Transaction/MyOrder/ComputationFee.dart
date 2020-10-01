@@ -8,7 +8,7 @@ import 'package:WhereTo/api/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ComputationFee{
-  Future<double> getFee(String barangayWidget) async {
+  Future<double> getFee(String barangayWidget, String barangayUser) async {
     double restoCharge = 0;
     double userCharge = 0;
     double totalOrder = 0;
@@ -21,7 +21,7 @@ class ComputationFee{
     var istrue = false;
     for (int z = 0; z < barangayResponse.length; z++) {
       if (barangayResponse[z].id.toString().contains(user['barangayId'].toString())) {
-        barangayname = barangayResponse[z].barangayName;
+        barangayname = barangayUser;
         istrue = true;
         break;
       }

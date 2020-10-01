@@ -28,7 +28,7 @@ class PayOrder extends StatefulWidget {
   final String restauID;
   final double userLat;
   final double userLng;
-  final TextEditingController deliveryTypedaw;
+  final String deliveryTypedaw;
 
   const PayOrder({ this.fee, this.restauID, this.userLat, this.userLng, this.deliveryTypedaw});
   
@@ -365,38 +365,7 @@ class _PayOrderState extends State<PayOrder> {
                                 ),
                               ),
                              
-                             Container(
-                               margin: EdgeInsets.only(bottom: 50),
-                                      width: MediaQuery.of(context).size.width,
-                                      alignment: Alignment.centerLeft,
-                                      decoration: eBoxDecorationStyle,
-                                      height: 50.0,
-                                      child: TextFormField(
-                                                cursorColor: pureblue,
-                                                keyboardType: TextInputType.text,
-                                                keyboardAppearance: Brightness.dark,
-                                                textInputAction: TextInputAction.done,
-                                                controller: delivery,
-                                                validator: (val) {
-
-
-                                                },
-                                                style: TextStyle(
-                                                  color: pureblue,
-                                                  fontFamily: 'Gilroy-light',
-                                                ),
-                                                decoration: InputDecoration(
-                                                  border: InputBorder.none,
-                                                  contentPadding: EdgeInsets.only(top: 14.0),
-                                                  prefixIcon: Icon(
-                                                    Icons.my_location,
-                                                    color: pureblue,
-                                                  ),
-                                                  hintText: 'Complete and Exact Delivery Address',
-                                                  hintStyle: eHintStyle,
-                                                ),
-                                              ),
-                                            ),
+                             
                                               
                              
                             ],
@@ -497,14 +466,7 @@ class _PayOrderState extends State<PayOrder> {
                           child: RaisedButton(
                             color: Colors.transparent,
                             onPressed: () async {
-                            if(delivery.text.isEmpty){
-                              DialogOrder().getDialog(
-                                    context,
-                                    "Empty Fields",
-                                    "Delivery Address Is a Must",
-                                    Icons.error,
-                                    Color(0xFFFF3345));
-                            }else{
+                             
                               ProgressDialog orders = ProgressDialog(context);
                               orders.style(
                                   message:
@@ -570,7 +532,7 @@ class _PayOrderState extends State<PayOrder> {
                                   'userId': user['id'],
                                   'restaurantId': this.widget.restauID,
                                   'order': result,
-                                  "deliveryAddress":delivery.text,
+                                  "deliveryAddress":widget.deliveryTypedaw,
                                   "deliveryCharge": "${widget.fee}",
                                   "barangayId": user['barangayId'],
                                 };
@@ -656,7 +618,7 @@ class _PayOrderState extends State<PayOrder> {
                                     headers: headers,
                                     body: json.encode(contents));
                                 print(playerId);
-                            }    
+                            
                               
                                 
                                

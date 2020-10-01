@@ -13,8 +13,8 @@ import 'MyOrder/payOrder.dart';
 class DialogForMico extends StatefulWidget {
 
   final String restaurantId;
-
-  const DialogForMico({this.restaurantId});
+  final String baranggayResto;
+  const DialogForMico({this.restaurantId, this.baranggayResto});
 
   
 
@@ -263,14 +263,13 @@ Widget _view(BaranggayRespone respone){
                                 }else{
                                   if(formkey.currentState.validate()){
                                   formkey.currentState.save();
-                                  double fee =await ComputationFee().getFee(selectPerson);
+                                  double fee =await ComputationFee().getFee(widget.baranggayResto,selectPerson);
                                                        if(fee!=null){
-                                                        
                                                          Navigator.push(context, MaterialPageRoute(builder: (context) =>
                                                          PayOrder(
                                                           fee: fee,
                                                           restauID:widget.restaurantId,
-                                                          deliveryTypedaw: address,
+                                                          deliveryTypedaw: address.text,
                                                           )));
                                                        }
                                 }

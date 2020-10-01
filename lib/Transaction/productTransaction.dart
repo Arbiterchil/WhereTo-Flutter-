@@ -488,6 +488,7 @@ class _TransactionListState extends State<TransactionList> {
                                                     barrierDismissible: true,
                                                     builder: (context){
                                                         return DialogForMico(
+                                                          baranggayResto: widget.baranggay,
                                                           restaurantId: widget.restauID,
                                                         );
                                                     }
