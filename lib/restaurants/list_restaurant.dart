@@ -282,7 +282,6 @@ class _ListStacticState extends State<ListStactic>
                 ),
               ),
             )),
-            
                                                   Align(
                                                     alignment: Alignment.topLeft,
                                                     child: Padding(
@@ -302,7 +301,7 @@ class _ListStacticState extends State<ListStactic>
                                                     child: Padding(
                                                       padding: const EdgeInsets.only(left: 10,top:45),
                                                     child: Text(snapshot.data[index].description.toString(),
-                                                    maxLines: 7,
+                                                    maxLines: 8,
                                                     style: TextStyle(
                                                       color: wheretoDark,
                                                       fontFamily: 'Gilroy-light'
@@ -376,7 +375,9 @@ class _ListStacticState extends State<ListStactic>
                                             ),
                                           );
                                            }else{ 
+
                                              return Container();
+                                           
                                            }
                                         });
                                       }else{
