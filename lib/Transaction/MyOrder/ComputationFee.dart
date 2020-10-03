@@ -1,36 +1,29 @@
 
 
 
-import 'dart:convert';
-
 import 'package:WhereTo/Transaction/Barangay/Barangay.class.dart';
 import 'package:WhereTo/api/api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 class ComputationFee{
-  Future<double> getFee(String barangayWidget, String barangayUser) async {
+  Future<double> getFee(String barangayWidget, String barangayID) async {
     double restoCharge = 0;
     double userCharge = 0;
     double totalOrder = 0;
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var userJson = localStorage.getString('user');
-    var user = json.decode(userJson);
     final barangay = await ApiCall().getData('/getBarangayList');
     List<BarangayList> barangayResponse = barangayListFromJson(barangay.body);
     String barangayname;
     var istrue = false;
     for (int z = 0; z < barangayResponse.length; z++) {
-      if (barangayResponse[z].id.toString().contains(user['barangayId'].toString())) {
-        barangayname = barangayUser;
+      if (barangayResponse[z].id.toString().contains(barangayID)) {
+        barangayname = barangayResponse[z].barangayName;
         istrue = true;
         break;
       }
       
     }
     if (istrue) {
-      if (barangayWidget.isNotEmpty) {
+      if (barangayWidget.isNotEmpty) { 
         if (barangayWidget.contains("Magugpo")) {
-            restoCharge = 40;
+            restoCharge = 30;
         } else if (barangayWidget.contains("Apokon")) {
             restoCharge = 15;
         } else if (barangayWidget.contains("Bingcungan")) {
@@ -102,7 +95,7 @@ class ComputationFee{
       if (barangayname.isNotEmpty) {
         if (barangayname.contains("Magugpo")) {
          
-            userCharge = 40;
+            userCharge = 30;
          
         } else if (barangayname.contains("Apokon")) {
           
@@ -180,11 +173,12 @@ class ComputationFee{
         totalOrder = 30;
     } else if (barangayWidget.contains("Magugpo") &&barangayname != "Magugpo" || barangayWidget!="Magugpo" &&barangayname.contains("Magugpo")) {
         totalOrder = restoCharge + userCharge;
-    } else if (barangayWidget != "Magugpo" && barangayname != "Magugpo") {
-        totalOrder = 30 + restoCharge + userCharge; 
-    }else if(barangayWidget.contains(barangayname)){
-        totalOrder =30;
+    } else if (barangayWidget.contains(barangayname)) {
+      totalOrder =30; 
+    }else if(barangayWidget != "Magugpo" && barangayname != "Magugpo"){
+       totalOrder = 30 + restoCharge + userCharge; 
     }
+    print(barangayname);
     return totalOrder;
     
   }

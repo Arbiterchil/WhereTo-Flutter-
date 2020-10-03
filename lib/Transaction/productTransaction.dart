@@ -481,9 +481,9 @@ class _TransactionListState extends State<TransactionList> {
                                                     height: 60,
                                                     width: double.infinity,
                                                     child: GestureDetector(
-                                                      onTap: () async{
+                                                      onTap: () {
 
-                                                         showDialog(
+                                                    showDialog(
                                                     context: context,
                                                     barrierDismissible: true,
                                                     builder: (context){
@@ -493,6 +493,7 @@ class _TransactionListState extends State<TransactionList> {
                                                         );
                                                     }
                                                     ); 
+                                                    
                                                         // var distance = new Distance();
                                                         
                                                         // final double km = distance.as(LengthUnit.Kilometer,
