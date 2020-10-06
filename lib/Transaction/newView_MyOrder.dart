@@ -463,10 +463,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
                                   }
                                 },
                                 onTap: () {
-                                  // Navigator.push(context, MaterialPageRoute(builder: (context){
-                                  //   return StepperStatus(status: sunkist,);
-                                  // }));
-                                  if(snapshot.data[index].status ==4){
+                                  
                                     Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return ReceiptWidget(
@@ -474,7 +471,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
                                           snapshot.data[index].id.toString(),
                                     );
                                   }));
-                                  }
+                                  
                                 },
                               );
                             },
