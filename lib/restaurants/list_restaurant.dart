@@ -248,40 +248,7 @@ class _ListStacticState extends State<ListStactic>
                                               child: Stack(
                                                 overflow: Overflow.visible,
                                                 children: [
-                                                  Positioned(
-              top: -30,
-              right: 10,
-              child: Container(
-              
-              height: 80,
-              width: 80,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(70)),
-                border: Border.all(
-                  width: 1,
-                  color: wheretoDark,
-                )
-                // boxShadow: [
-                //   BoxShadow(
-                //     spreadRadius: 3.3,
-                //     blurRadius: 3.3,
-                //     color: Colors.grey[300],
-                //   ),
-                //   BoxShadow(
-                //     spreadRadius: 3.3,
-                //     blurRadius: 3.3,
-                //     color: Colors.white,
-                //   ),
-                // ]
-              ),
-              child: Center(
-                child: SpinKitPumpingHeart(
-                  color: Colors.red[300],
-                  size: 40,
-                ),
-              ),
-            )),
+
                                                   Align(
                                                     alignment: Alignment.topLeft,
                                                     child: Padding(

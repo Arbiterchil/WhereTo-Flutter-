@@ -237,7 +237,7 @@ builder: (context) => ValidIds(id: message,));
   [
     SearchDepo(),
     MyNewViewOrder(),
-    Profile(),
+    // Profile(),
   ];
 
 
@@ -319,7 +319,7 @@ void onTabTapped(int index) {
               ),
               BottomBarItems(
               icon: Icon(EvaIcons.person), 
-              title: Text("Pofile"),
+              title: Text("Profile"),
               activeColor: Colors.deepOrange,
                inActiveColor: wheretoDark
               )

@@ -42,11 +42,11 @@ class _FoodDisplayState extends State<FoodDisplay> {
           .writeState(context, "Load!", identifier: ValueKey(key));
     });
     return Container(
-      height: 220,
+      height: 290,
       child: Padding(
         padding: const EdgeInsets.only(left: 0, right: 0),
         child: Container(
-          height: 200,
+          height: 290,
           width: MediaQuery.of(context).size.width,
           child: StreamBuilder<List<IsFeatured>>(
               stream: blocFeatured.sinkAllMenu,

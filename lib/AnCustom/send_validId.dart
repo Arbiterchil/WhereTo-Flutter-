@@ -103,13 +103,13 @@ class _ValidIdsState extends State<ValidIds> {
         height: 80,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: pureblue
+            color: Colors.white
           ),
           child: Center(
             child: Icon(
               Icons.person,
               size: 40,
-              color: Colors.white,
+              color: wheretoDark,
             ),
           ),
         );
@@ -161,58 +161,67 @@ Widget loadingSpring() {
                       SizedBox(height: 15,),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      child: Stack(
-                        children: <Widget>
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: 
                         [
-                           Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 70),
-                              child: GestureDetector(
+                          //  Align(
+                          //   alignment: Alignment.topLeft,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(left: 70),
+                          //     child: 
+                              GestureDetector(
                                 onTap: (){
                                   getYourIdImage(ImageSource.camera);
                                 }, 
                                 child: Container(
                                   height: 40,
-                                  width: 40,
+                                  width: 90,
                                   decoration: BoxDecoration(
-                                    color: pureblue,
+                                    color: Colors.white,
                                     borderRadius: BorderRadius.all(Radius.circular(100)),
                                   ),
                                   child: Center(
-                                   child: Icon(Icons.camera,
-                                   size: 20,
-                                   color: Colors.white
+                                   child: Text("Camera",
+                                   style: TextStyle(
+                                     fontFamily: 'Gilroy-light',
+                                     fontWeight: FontWeight.bold,
+                                     color: wheretoDark
+                                   ),
                                    ),
                                   ),
                                 ),
                               ),
-                              ),
-                          ),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 70),
-                              child: GestureDetector(
+                          //     ),
+                          // ),
+                          // Align(
+                          //   alignment: Alignment.topRight,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(right: 70),
+                          //     child: 
+                              GestureDetector(
                                 onTap: (){
                                   getYourIdImage(ImageSource.gallery);
                                 }, 
                                 child: Container(
                                   height: 40,
-                                  width: 40,
+                                  width: 90,
                                   decoration: BoxDecoration(
-                                    color: pureblue,
+                                    color: Colors.white,
                                     borderRadius: BorderRadius.all(Radius.circular(100)),
                                   ),
                                   child: Center(
-                                   child: Icon(Icons.picture_in_picture,
-                                   size: 20,
-                                   color: Colors.white
+                                   child:Text("Gallery",
+                                   style: TextStyle(
+                                     fontFamily: 'Gilroy-light',
+                                     fontWeight: FontWeight.bold,
+                                     color: wheretoDark
+                                   ),
                                    ),
                                   ),
                                 ),
-                              ),
-                              ),
+                              // ),
+                              // ),
                           )
                         ],
                       ),
@@ -264,13 +273,13 @@ Widget loadingSpring() {
                                   height: 40,
                                   width: 120,
                                   decoration: BoxDecoration(
-                                    color: pureblue,
+                                    color: Colors.white,
                                     borderRadius: BorderRadius.all(Radius.circular(100)),
                                   ),
                                   child: Center(
                                    child: Text("Send",
                                    style: TextStyle(
-                                     color: Colors.white,
+                                     color:wheretoDark,
                                      fontFamily: 'Gilroy-light'
                                    ),
                                    )
