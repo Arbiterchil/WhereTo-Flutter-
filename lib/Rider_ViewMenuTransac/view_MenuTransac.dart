@@ -1308,14 +1308,10 @@ void _showDistictWarning(String meesage) {
       var body = json.decode(response.body);
       
       if(body == true){
-    
+        
  SharedPreferences localStore = await SharedPreferences.getInstance();
         localStore.setString("menuplustrans", "${widget.getID}");
         localStore.setString("playerIDS", "${widget.playerId}");
-      }else{
-          print(body);
-          _showDistictWarning("The Order Is Accepted by another Rider.");
-      }
         setState(() {
       available = !available;
       menuHide = !menuHide;
@@ -1323,6 +1319,11 @@ void _showDistictWarning(String meesage) {
       cancelOrder = true;
       riderCheck();
       });
+      }else{
+          print(body);
+          _showDistictWarning("The Order Is Accepted by another Rider.");
+      }
+        
      
                    Navigator.of(context).pop();
                       },   

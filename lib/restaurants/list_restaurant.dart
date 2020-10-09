@@ -249,6 +249,27 @@ class _ListStacticState extends State<ListStactic>
                                                 overflow: Overflow.visible,
                                                 children: [
 
+                                                  Positioned(
+                                                    top: -35,
+                                                    right: -20,
+                                                    child: Container(
+                                                      height: 80,
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          width: 3,
+                                                          color: wheretoDark
+                                                        ),
+                                                        borderRadius: BorderRadius.circular(5),
+                                                        image: DecorationImage(
+                                                          image: NetworkImage(snapshot.data[index].imagePath),
+                                                          fit: BoxFit.cover
+                                                          )
+                                                      ),
+                                                    )
+                                                    
+                                                    ),
+
                                                   Align(
                                                     alignment: Alignment.topLeft,
                                                     child: Padding(

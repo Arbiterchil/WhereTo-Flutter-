@@ -29,6 +29,7 @@ class _RiderRemitState extends State<RiderRemit> {
 
 
   File _idPickerImage;
+  String namedRider= "";
   final pick = ImagePicker();
   var thimagelink;
   // var userData;
@@ -109,7 +110,8 @@ class _RiderRemitState extends State<RiderRemit> {
       getAmount();
     // _getUserInfo();
     getAdminDevices();
-      print(UserGetPref().getUserDataJson['id'].toString());
+      print(UserGetPref().getUserDataJson['name'].toString());
+      namedRider = UserGetPref().getUserDataJson['name'].toString();
     super.initState();
 
   } 
@@ -200,7 +202,7 @@ void sendToAdmin() async{
       "include_player_ids": allresult,
       "include_segments": ["Users Notif"],
       "excluded_segments": [],
-      "contents": {"en": "A Rider Made a remit Please Check for the Amount."},
+      "contents": {"en": "$namedRider Send a Remit For This Day."},
       "data": 
         {
         "force": "penalty"

@@ -10,6 +10,7 @@ import 'package:WhereTo/api_restaurant_bloc/computation.dart';
 import 'package:WhereTo/api_restaurant_bloc/orderbloc.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/google_maps/google-key.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 import 'package:WhereTo/modules/homepage.dart';
 import 'package:WhereTo/restaurants/restaurant_searchdepo.dart';
 import 'package:WhereTo/styletext.dart';
@@ -44,10 +45,12 @@ class _PayOrderState extends State<PayOrder> {
   double lat;
   double lng;
   double passtotal;
+  String nameuser = "";
   TextEditingController delivery = new TextEditingController();
   var newcoordinates;
   @override
   void initState() {
+    nameuser = UserGetPref().getUserDataJson['name'].toString();
     super.initState();
    
   }
@@ -588,7 +591,8 @@ class _PayOrderState extends State<PayOrder> {
                                   "include_player_ids": player,
                                   "include_segments": ["All"],
                                   "excluded_segments": [],
-                                  "contents": {"en": "A new Order!"},
+                                   "large_icon": "https://res.cloudinary.com/amadpogi/image/upload/v1600008167/logo_nh4bpx.png",
+                                  "contents": {"en": "$nameuser Place a Order. Thank You and have a Nice Day!"},
                                   "data": {
                                     "id": user['id'].toString(),
                                     "player_id": playerId.toString(),
@@ -596,7 +600,7 @@ class _PayOrderState extends State<PayOrder> {
                                     "user_coordinates":
                                         "${0},${0}"
                                   },
-                                  "headings": {"en": "New Order"},
+                                  "headings": {"en": "A New Order Recieve"},
                                   "filter": [
                                     {
                                       "field": "tag",
