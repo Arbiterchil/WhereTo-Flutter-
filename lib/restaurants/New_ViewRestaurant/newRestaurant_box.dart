@@ -26,110 +26,86 @@ class _NewRestaurantBoxState extends State<NewRestaurantBox> {
       child: GestureDetector(
         onTap: widget.onTap,
         child: Container(
-          height: 195,
-          width: 145,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-            image: DecorationImage(
+          height: 260,
+          child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                alignment: Alignment.topCenter,
+                children: <Widget>[
+                   Container(
+                    height: 160,
+              width: 160,
+                    decoration: BoxDecoration(
+                       image: DecorationImage(
               image: NetworkImage(widget.image),
               fit: BoxFit.cover
               ),
-               boxShadow: [
+                       borderRadius: BorderRadius.circular(20.0),
+                        boxShadow: [
                              BoxShadow(
                                color: Colors.black12,
-                               spreadRadius: 3.3,
-                               blurRadius: 3.3
+                               spreadRadius: 2.2,
+                               blurRadius: 2.2
                              ),
                            ],
-          ),
-          child: Stack(
-            children: <Widget>[
-               Container(
-                height: 195,
-          width: 145,
-                decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(20.0),
-                   gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topRight,
-                      colors: [
-                       Colors.black.withOpacity(.5),
-                        Colors.white.withOpacity(.0),
+                       gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topRight,
+                          colors: [
+                           Colors.black.withOpacity(.5),
+                            Colors.white.withOpacity(.0),
 
-                      ],
-                      stops: [0.3,2.5],
-                      )
-                      ,
-                ),
-                ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.only(
-                    //   topRight: Radius.circular(50),
-                    //   bottomLeft: Radius.circular(20),
-                    //   bottomRight: Radius.circular(20),),
-                    // color: pureblue,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Flexible(
-                          child: Container(
-                            child: Text(widget.restaurantName,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color:Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                        fontSize: 14.0,
-                                        fontFamily: 'Gilroy-ExtraBold' 
-                            ),),
-                          ),
-                        ),
-                        SizedBox(height: 5.0,),
-                        
-                        // Flexible(
-                        //   child: Container(
-                        //     child: Text(widget.address,
-                        //     overflow: TextOverflow.ellipsis,
-                        //     style: TextStyle(
-                        //         color:Colors.white,
-                        //             fontWeight: FontWeight.normal,
-                        //                 fontSize: 8.0,
-                        //                 fontFamily: 'Gilroy-light' 
-                        //     ),),
-                        //   ),
-                        // )
-                        FutureBuilder(
-                          future: CoordinatesConverter()
-                          .getAddressByLocation(widget.address),
-                          builder: (cons,snaps){
-                            if(snaps.data ==null){
-                              return Container();
-                            }else{
-                              return  Flexible(
-                          child: Container(
-                            child: Text(snaps.data,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color:Colors.white,
-                                    fontWeight: FontWeight.normal,
-                                        fontSize: 8.0,
-                                        fontFamily: 'Gilroy-light' 
-                            ),),
-                          ),
-                        );
-                            }
-                        }),
-                       
-                      ],
+                          ],
+                          stops: [0.3,2.5],
+                          )
+                          ,
                     ),
-                  ),
+                    ),
+                ],
+              ),
+              SizedBox(height: 12,),
+              Container(
+                width: 140,
+                height: 80,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                      Flexible(
+                              child: Container(
+                                child: Text(widget.restaurantName,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color:wheretoDark,
+                                        fontWeight: FontWeight.bold,
+                                            fontSize: 14.0,
+                                            fontFamily: 'Brandon_Grotesque' 
+                                ),),
+                              ),
+                            ),
+                            SizedBox(height: 5.0,),
+                            FutureBuilder(
+                              future: CoordinatesConverter()
+                              .getAddressByLocation(widget.address),
+                              builder: (cons,snaps){
+                                if(snaps.data ==null){
+                                  return Container();
+                                }else{
+                                  return  Flexible(
+                              child: Container(
+                                child: Text(snaps.data,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color:wheretoDark,
+                                        fontWeight: FontWeight.bold,
+                                            fontSize: 12.0,
+                                            fontFamily: 'Brandon_Grotesque_light' 
+                                ),),
+                              ),
+                            );
+                                }
+                            }),
+                  ],
                 ),
               ),
             ],

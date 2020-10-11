@@ -13,8 +13,9 @@ Color wheretoDark = Color(0xFF0C375B);
 Color wheretoLight =   Color(0xFF176DB5);                          
 Color white = Colors.white70.withOpacity(0.050);
 Color pureblue = Color(0xFF0F75BB);
-
-
+Color skintone = Color(0xFFF1C3A9);
+Color skintonex = Color(0xFFF5E8DF);
+Color skintoneZ = Color(0xFFFFA87D);
 
 
 BoxDecoration eBox1 = BoxDecoration(

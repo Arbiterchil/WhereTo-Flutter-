@@ -43,6 +43,10 @@ class BottomNavBar extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           color: bgColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
           boxShadow: [
             if(showElavation)
             const BoxShadow(

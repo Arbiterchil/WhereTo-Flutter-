@@ -1,61 +1,4 @@
-import 'dart:convert';
-import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
-import 'package:WhereTo/A_loadingSimpe/simple_loading.dart';
-import 'package:WhereTo/AnCustom/UserDialog_help.dart';
-import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
-import 'package:WhereTo/Transaction/SearchMenu/newSearch.dart';
-import 'package:WhereTo/api/api.dart';
-import 'package:WhereTo/google_maps/coordinates_converter.dart';
-import 'package:WhereTo/google_maps/google-key.dart';
-import 'package:WhereTo/google_maps/googlemap_address.dart';
-import 'package:WhereTo/modules/OtherFeatures/Auth/auth_pref.dart';
-import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
-import 'package:WhereTo/modules/gobal_call.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/neWStream_response.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_class.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/neWrestaurant_response.dart';
-import 'package:WhereTo/restaurants/New_ViewRestaurant/newRestaurant_box.dart';
-import 'package:WhereTo/restaurants/list_restaurant.dart';
-import 'package:WhereTo/restaurants/new_Carousel.dart';
-import 'package:WhereTo/styletext.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:latlong/latlong.dart';
-import 'package:progress_dialog/progress_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'FoodDisplay.dart';
-
-class SearchDepo extends StatefulWidget {
-  @override
-  _SearchDepoState createState() => _SearchDepoState();
-}
-
-class _SearchDepoState extends State<SearchDepo> {
-  String categ = "0";
-  String imagpth;
-  String lat ;
-  String long;
-  ScrollController scrollcont;
-  @override
-  void initState() {
-    super.initState();
-    imagpth = UserGetPref().getUserDataJson['imagePath'];
-    streamRestaurantsFeatured..getFeaturedViewRestaurant();
-  }
-
-  
-
-  @override
-  void dispose() {
-    super.dispose();
-    streamRestaurantsFeatured..drainStream();
-  }
-
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
+final scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController search = new TextEditingController();
   String searchit;
   var userData;
@@ -67,170 +10,62 @@ class _SearchDepoState extends State<SearchDepo> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      backgroundColor: Colors.grey[50],
       body: WillPopScope(
+        onWillPop: () async => false,
         child: SafeArea(
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 10.0, right: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: 
-              [
+              children: [
                 Container(
-                  height: 230,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20)
-                    ),
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topRight,
-                      colors: [
-                       Colors.black.withOpacity(.7),
-                        Colors.white.withOpacity(.0),
-
-                      ],
-                      stops: [0.5,2.2],
-                      ),
-                    image: DecorationImage(
-                      image: AssetImage("asset/img/bannertop.jpg"),
-                      fit: BoxFit.cover
-                      ),
-                  ),
-                  child: Stack(
-                    overflow: Overflow.visible,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-
-                   Align(
-                     alignment: Alignment.bottomRight,
-                     child: Padding(
-                       padding: const EdgeInsets.only(right: 10,bottom: 5),
-                       child: Container(
-                         height: 50,
-                         width: 50,
-                         decoration: BoxDecoration(
-                           shape: BoxShape.circle
-                         ),
-                         child: RaisedButton(
-                           splashColor: skintone,
-                           color: Colors.white,
-                           shape: RoundedRectangleBorder(
-                             borderRadius: BorderRadius.circular(100)
-                           ),
-                           child: Center(
-                             child: Icon(
-                              Icons.exit_to_app,
-                               color: wheretoDark,
-                               size: 24,
-                             ),
-                           ),
-                           onPressed: () =>  showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (context) => 
-          DialogForAll(
-        widgets: SpinKitDoubleBounce(color: wheretoDark,size: 80,),
-        labelHeader: "Do you want to exit app?",
-        message: "Please double Check you unfinished orders.",
-        buttTitle1: "Yes",
-        buttTitle2: "No",
-        yesFunc: () =>authShared.logRemoveAll(context),
-        noFunc: () => Navigator.pop(context),
-        showorNot1: true,
-        showorNot2: true,
-      ),)),
-                       ),
-                       ),
-                   ),   
-
-                   Align(
-                     alignment: Alignment.topCenter,
-                     child: Padding(
-                       padding: const EdgeInsets.only(top:18.0,),
-                       child: GestureDetector(
-                         onTap: () => showSearch(context: context, delegate: CustomSearch()),
-                         child: Container(
-                              height: 40,
-                              width: 260,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.9),
-                                borderRadius: BorderRadius.circular(50)
-                              ),
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 9),
-                                      child: Icon(
-                                        EvaIcons.search,
-                                        size: 25,
-                                        color: Colors.indigo,
-                                      ),
-                                    ),
-                                  ),
-                                   Align(
-                                    alignment: Alignment.center,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 9),
-                                      child: Text("Search Now...",
-                                      style: TextStyle(
-                                        color: Colors.indigo,
-                                        fontFamily: 'Brandon_Grotesque_light',
-                                        fontSize: 20
-                                      ),
-                                      )
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                       ),
-                     ),
-                   ),
-                    Positioned(
-                      top: 150,
-                      left: 10,
-                      child:  Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Discover New Food",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Brandon_Grotesque_light',
-                              fontSize: 18,
-                            ),
-                            ),
-                            Text("Browse now!",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Brandon_Grotesque',
-                              fontSize: 28,
-                            ),
-                            )
-                          ],
-                        ),),
-                  
+                      logoutIcon(),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      cirlceLoaction(),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(child: textbarSearch()),
+                      SizedBox(
+                        width: 10,
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(height: 12,),
+                SizedBox(
+                  height: 20,
+                ),
+
+                Stack(
+                  children: <Widget>[
+                    NewCarousel(),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 viewMenuFeaturedTitle(),
+                SizedBox(
+                  height: 10,
+                ),
                 FoodDisplay(),
-                SizedBox(height: 10,),
-                // Stack(
-                //   children: <Widget>[
-                //     Padding(
-                //       padding: const EdgeInsets.only(left: 15,right: 15),
-                //       child: NewCarousel(),
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(height: 10,),
+                SizedBox(
+                  height: 15,
+                ),
                 viewzRestaurantFeaturedTitle(),
+                SizedBox(
+                  height: 10,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                   child: StreamBuilder<NewRestaurantResponse>(
@@ -251,118 +86,262 @@ class _SearchDepoState extends State<SearchDepo> {
                     },
                   ),
                 ),
+                SizedBox(
+                  height: 15,
+                ),
+                //   deliveryAdress(),
+                SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  height: 6.0,
+                  thickness: 1,
+                  color: wheretoDark,
+                  indent: 60.0,
+                  endIndent: 60.0,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                SharedPrefCallnameData(),
+                SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           ),
-          ),
-      onWillPop: () async => false),
+        )),
+      ),
     );
 
+    // var connectionStatus =Provider.of<ConnectivityStatus>(context);
+    // if(connectionStatus ==ConnectivityStatus.Wifi){
+    //   asuka.showSnackBar(SnackBar(content: Text("Connected",style: TextStyle(
+    //     color: Colors.green
+    //   ),)));
+    // }
+    // if(connectionStatus ==ConnectivityStatus.Offline){
+    //   asuka.showSnackBar(SnackBar(content: Text("No Internet",style: TextStyle(
+    //     color: Colors.red
+    //   ),)));
+    // }
+    // if(connectionStatus ==ConnectivityStatus.Cellular){
+    //   asuka.showSnackBar(SnackBar(content: Text("Mobile Data",style: TextStyle(
+    //     color: Colors.orange
+    //   ),)));
+    // }
     // return Scaffold(
-    //   backgroundColor: Colors.grey[50],
+    //   appBar: AppBar(
+    //     backgroundColor: pureblue,
+    //     title: Padding(
+    //       padding: EdgeInsets.only(left: 0),
+    //       child: Container(
+    //         width: MediaQuery.of(context).size.width*0.8,
+    //         child: GestureDetector(
+    //             child: Column(
+    //               children: [
+    //               Text(
+    //             "Delivery Address",
+    //             style: TextStyle(
+    //                 color: Colors.white,
+    //                 fontSize: 12,
+    //                 fontFamily: "Gilroy-light",
+    //                 fontWeight: FontWeight.bold),
+    //               ),
+    //               Text(address ?? "" , style: TextStyle(
+    //             color: Colors.white,
+    //             fontSize: 10,
+    //             fontFamily: "Gilroy-light",
+    //             fontWeight: FontWeight.bold
+    //           ),),
+    //               ],
+    //             ),
+    //           onTap: (){
+    //             setState(() {
+    //               isLoc=false;
+    //             });
+    //             // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressLine()));
+    //           },
+    //           ),
+
+    //       ),
+    //     ),
+    //     leading: Padding(
+    //       padding: EdgeInsets.only(left: 0),
+    //       child: IconButton(icon: Icon(Icons.location_on), onPressed: (){
+    //         setState(() {
+    //           isLoc =true;
+    //         });
+    //       }),
+    //     ),
+    //     actions: [
+    //       Padding(
+    //         padding: const EdgeInsets.only(right: 10),
+    //         child: GestureDetector(
+    //           onTap: () => UserDialog_Help.exit(context),
+    //           child: Container(
+    //             height: 30,
+    //             width: 30,
+    //             decoration: BoxDecoration(
+    //               shape: BoxShape.circle,
+    //               color: Colors.white,
+    //             ),
+    //             child: Center(
+    //               child: Icon(
+    //                 Icons.exit_to_app,
+    //                 color: Color(0xFF0C375B),
+    //                 size: 20,
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    //   key: scaffoldKey,
     //   body: WillPopScope(
     //     onWillPop: () async => false,
     //     child: SafeArea(
-    //         child: SingleChildScrollView(
-    //       physics: AlwaysScrollableScrollPhysics(),
-    //       child: Padding(
-    //         padding: const EdgeInsets.only(top: 8.0, left: 10.0, right: 10.0),
+    //       child: SingleChildScrollView(
+    //         physics: AlwaysScrollableScrollPhysics(),
     //         child: Column(
     //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: [
-    //             Container(
-    //               width: MediaQuery.of(context).size.width,
-    //               child: Row(
-    //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //                 children: [
-    //                   logoutIcon(),
-    //                   SizedBox(
-    //                     width: 10,
-    //                   ),
-    //                   cirlceLoaction(),
-    //                   SizedBox(
-    //                     width: 10,
-    //                   ),
-    //                   Expanded(child: textbarSearch()),
-    //                   SizedBox(
-    //                     width: 10,
-    //                   ),
-    //                 ],
-    //               ),
-    //             ),
-    //             SizedBox(
-    //               height: 20,
-    //             ),
-
+    //           children: <Widget>[
     //             Stack(
     //               children: <Widget>[
     //                 NewCarousel(),
     //               ],
     //             ),
-    //             SizedBox(
-    //               height: 10,
+    //             // SizedBox(height: 20,),
+    //             Padding(
+    //               padding: const EdgeInsets.only(left: 0,right: 0),
+    //               child: Container(
+    //                           height: 50.0,
+    //                           decoration: BoxDecoration(
+    //                             color: pureblue,
+    //                             // Colors.white.withOpacity(0.80),
+    //                             // borderRadius: BorderRadius.circular(30.0),
+    //                           ),
+    //                           alignment: Alignment.centerLeft,
+    //                           child: TextField(
+    //                             readOnly: true,
+    //                             showCursor: false,
+    //                             style: TextStyle(
+    //                                 color: Colors.white,
+    //                                 fontWeight: FontWeight.bold,
+    //                                 fontFamily: 'Gilroy-light'),
+    //                             decoration: InputDecoration(
+    //                               border: InputBorder.none,
+    //                               contentPadding: const EdgeInsets.only(
+    //                                 top: 15.0,
+    //                               ),
+    //                               prefixIcon: Icon(
+    //                                 Icons.search,
+    //                                 color:  Colors.white,
+    //                               ),
+    //                               hintText: "Search for Food",
+    //                               hintStyle: TextStyle(
+    //                                 color: Colors.white,
+    //                                 fontWeight: FontWeight.bold,
+    //                                 fontFamily: 'Gilroy-light'),
+    //                             ),
+    //                             onTap: () {
+    //                               if(userData['address'].toString().contains("Tagum")){
+    //                               //   Navigator.push(context,
+    //                               //     MaterialPageRoute(builder: (context) {
+    //                               //   return SearchResto();
+    //                               // }));
+    //                               showSearch(context: context, delegate: CustomSearch());
+    //                               }else{
+    //                               AwesomeDialog(
+    //                               context: context,
+    //                               headerAnimationLoop: false,
+    //                               animType: AnimType.SCALE,
+    //                               dialogType: DialogType.INFO,
+    //                               title: "Location Not Available",
+    //                               desc: "This app is only available in Tagum City for the meantime",
+    //                               btnOkText: "Comeback Later",
+    //                               btnOkColor: Color(0xFF0C375B),
+    //                               btnOkOnPress: () async {
+    //                               Navigator.pop(context);
+    //                               }).show();
+    //                               }
+
+    //                             },
+    //                           )),
     //             ),
-    //             viewMenuFeaturedTitle(),
+    //             SizedBox(height: 20,),
+    //             Padding(
+    //               padding: const EdgeInsets.only(left: 10,right: 10,),
+    //               child: SharedPrefCallnameData(),
+    //             ),
+
+    //             SizedBox(height: 40,),
+    //             Padding(
+    //               padding: const EdgeInsets.only(left: 20, right: 20),
+    //               child: Container(
+    //                 width: 300,
+    //                 height: 20,
+    //                 child: Text(
+    //                   "Featured Food in Restaurants",
+    //                   style: TextStyle(
+    //                       color: pureblue,
+    //                       fontWeight: FontWeight.bold,
+    //                       fontSize: 16.0,
+    //                       fontFamily: 'Gilroy-light'),
+    //                 ),
+    //               ),
+    //             ),
     //             SizedBox(
     //               height: 10,
     //             ),
     //             FoodDisplay(),
     //             SizedBox(
-    //               height: 15,
-    //             ),
-    //             viewzRestaurantFeaturedTitle(),
-    //             SizedBox(
-    //               height: 10,
+    //               height: 30,
     //             ),
     //             Padding(
-    //               padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-    //               child: StreamBuilder<NewRestaurantResponse>(
-    //                 stream: streamRestaurantsFeatured.subject.stream,
-    //                 builder:
-    //                     (context, AsyncSnapshot<NewRestaurantResponse> snaphot) {
-    //                   if (snaphot.hasData) {
-    //                     if (snaphot.data.error != null &&
-    //                         snaphot.data.error.length > 0) {
-    //                       return _error(snaphot.data.error);
-    //                     }
-    //                     return _views(snaphot.data);
-    //                   } else if (snaphot.hasError) {
-    //                     return _error(snaphot.error);
-    //                   } else {
-    //                     return _load();
-    //                   }
-    //                 },
+    //               padding: const EdgeInsets.only(left: 20, right: 20),
+    //               child: Container(
+    //                 width: 200,
+    //                 height: 20,
+    //                 child: Text(
+    //                   "Featured Restaurants",
+    //                   style: TextStyle(
+    //                       color:pureblue,
+    //                       fontWeight: FontWeight.bold,
+    //                       fontSize: 16.0,
+    //                       fontFamily: 'Gilroy-light'),
+    //                 ),
     //               ),
     //             ),
     //             SizedBox(
-    //               height: 15,
+    //               height: 5.0,
     //             ),
-    //             //   deliveryAdress(),
-    //             SizedBox(
-    //               height: 10,
+    //             Padding(
+    //               padding: const EdgeInsets.only(left: 10, right: 10),
+    //               child: StreamBuilder<NewRestaurantResponse>(
+    //   stream: streamRestaurantsFeatured.subject.stream,
+    //   builder: (context , AsyncSnapshot<NewRestaurantResponse> snaphot){
+    //     if(snaphot.hasData){
+    //         if(snaphot.data.error !=null && snaphot.data.error.length > 0){
+    //             return _error(snaphot.data.error);
+    //         }
+    //           return _views(snaphot.data);
+    //     }else if(snaphot.hasError){
+    //           return _error(snaphot.error);
+    //     }else{
+    //           return _load();
+    //     }
+    //   },
     //             ),
-    //             Divider(
-    //               height: 6.0,
-    //               thickness: 1,
-    //               color: wheretoDark,
-    //               indent: 60.0,
-    //               endIndent: 60.0,
-    //             ),
-    //             SizedBox(
-    //               height: 20,
-    //             ),
-
-    //             SharedPrefCallnameData(),
-    //             SizedBox(
-    //               height: 10,
     //             ),
     //           ],
     //         ),
     //       ),
-    //     )),
+    //     ),
     //   ),
     // );
-
   }
 
   Widget viewMenuFeaturedTitle() {
@@ -381,8 +360,8 @@ class _SearchDepoState extends State<SearchDepo> {
           style: TextStyle(
               color: wheretoDark,
               fontWeight: FontWeight.bold,
-              fontSize: 18.0,
-              fontFamily: 'Brandon_Grotesque_light'),
+              fontSize: 16.0,
+              fontFamily: 'Gilroy-ExtraBold'),
         ),
       ),
     );
@@ -404,8 +383,8 @@ class _SearchDepoState extends State<SearchDepo> {
           style: TextStyle(
               color: wheretoDark,
               fontWeight: FontWeight.bold,
-              fontSize: 18.0,
-              fontFamily: 'Brandon_Grotesque_light'),
+              fontSize: 16.0,
+              fontFamily: 'Gilroy-ExtraBold'),
         ),
       ),
     );
@@ -617,10 +596,10 @@ class _SearchDepoState extends State<SearchDepo> {
           SizedBox(
             height: 25.0,
             width: 25.0,
-            child: SpinKitChasingDots(
-              color: Colors.indigo,
-              size: 40,
-            )
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+              strokeWidth: 4.0,
+            ),
           ),
         ],
       ),
@@ -654,7 +633,7 @@ class _SearchDepoState extends State<SearchDepo> {
         physics: AlwaysScrollableScrollPhysics(),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: 280.0,
+          height: 210.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: nf.length,
@@ -777,4 +756,3 @@ class _SearchDepoState extends State<SearchDepo> {
       );
     }
   }
-}

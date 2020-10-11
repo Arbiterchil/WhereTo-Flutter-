@@ -36,10 +36,9 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
             bucket: _bucket,
             key: key,
             child: Container(
-            height: 215,
-            width: 235,
+            height: 250,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
+              // borderRadius: BorderRadius.circular(20.0),
 
                     // gradient: LinearGradient(
                     //   begin: Alignment.bottomCenter,
@@ -48,122 +47,170 @@ class _StaticFoodDisplayState extends State<StaticFoodDisplay> {
                     //     Colors.grey.withOpacity(.0)
                     //   ]),
                   
-              image: DecorationImage(
+              // image: DecorationImage(
+              //   image: NetworkImage(widget.image),
+              //   fit: BoxFit.cover
+              //   ),
+                // boxShadow: [
+                //                BoxShadow(
+                //                  color: Colors.grey[300],
+                //                  spreadRadius: 2.2,
+                //                  blurRadius: 2.2
+                //                ),
+                //              ],
+           
+            ),
+            child: Column(
+              
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  alignment: Alignment.topCenter,
+              children: <Widget>[
+                Container(
+                  height: 170,
+                width: 170,
+                decoration: BoxDecoration(
+                   borderRadius: BorderRadius.circular(20.0),
+                    image: DecorationImage(
                 image: NetworkImage(widget.image),
                 fit: BoxFit.cover
                 ),
-                boxShadow: [
-                               BoxShadow(
-                                 color: Colors.black12,
-                                 spreadRadius: 3.3,
-                                 blurRadius: 3.3
-                               ),
-                             ],
-           
-            ),
-            child: Stack(
-              children: <Widget>[
-               
-                Container(
-                  height: 215,
-                width: 235,
-                decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(20.0),
                   gradient: LinearGradient(
                       begin: Alignment.bottomCenter,
                       end: Alignment.topRight,
                       colors: [
-                       Colors.black.withOpacity(.5),
+                       Colors.black.withOpacity(.3),
                         Colors.white.withOpacity(.0),
-
                       ],
                       stops: [0.3,2.5],
-                      )
-                      ,
-                ),
-                ),
-                 Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(padding: const EdgeInsets.only(bottom: 10,right: 10),
-                  child: Text(widget.pricetag.toString(),
-                   style: TextStyle(
-                              color:Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                      fontSize: 24.0,
-                                      fontFamily: 'Gilroy-ExtraBold' 
-                          ),
-                  ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10 ,top: 10),
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white
-                        // image: DecorationImage(
-                        //   image: AssetImage("asset/img/heartIcon.jpg")
-                        // ),
                       ),
-                      child: Center(
-                        child: SpinKitPumpingHeart(
-                          color: Colors.redAccent,
-                          size: 25,
-                        ),
-                      ),
-                    ),
-                    ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: 80,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      // borderRadius: BorderRadius.only(
-                      //   topRight: Radius.circular(50),
-                      //   bottomLeft: Radius.circular(20),
-                      //   bottomRight: Radius.circular(20),),
-                      // color: pureblue,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(widget.foodname,
+                ),
+                //  Align(
+                //   alignment: Alignment.bottomRight,
+                //   child: Padding(padding: const EdgeInsets.only(bottom: 10,right: 10),
+                //   child: Text(widget.pricetag.toString(),
+                //    style: TextStyle(
+                //               color:Colors.white,
+                //                   fontWeight: FontWeight.bold,
+                //                       fontSize: 24.0,
+                //                       fontFamily: 'Gilroy-ExtraBold' 
+                //           ),
+                //   ),
+                //   ),
+                // ),
+                // Align(
+                //   alignment: Alignment.topRight,
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(right: 10 ,top: 10),
+                //     child: Container(
+                //       height: 50,
+                //       width: 50,
+                //       decoration: BoxDecoration(
+                //         shape: BoxShape.circle,
+                //         color: Colors.white
+                //         // image: DecorationImage(
+                //         //   image: AssetImage("asset/img/heartIcon.jpg")
+                //         // ),
+                //       ),
+                //       child: Center(
+                //         child: SpinKitPumpingHeart(
+                //           color: Colors.redAccent,
+                //           size: 25,
+                //         ),
+                //       ),
+                //     ),
+                //     ),
+                // ),
+                // Align(
+                //   alignment: Alignment.bottomCenter,
+                //   child: Container(
+                //     height: 80,
+                //     width: MediaQuery.of(context).size.width,
+                //     decoration: BoxDecoration(
+                //       // borderRadius: BorderRadius.only(
+                //       //   topRight: Radius.circular(50),
+                //       //   bottomLeft: Radius.circular(20),
+                //       //   bottomRight: Radius.circular(20),),
+                //       // color: pureblue,
+                //     ),
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(10.0),
+                //       child: Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: <Widget>[
+                //           Text(widget.foodname,
+                //           overflow: TextOverflow.ellipsis,
+                //           style: TextStyle(
+                //               color:Colors.white,
+                //                   fontWeight: FontWeight.bold,
+                //                       fontSize: 17.0,
+                //                       fontFamily: 'Gilroy-ExtraBold' 
+                //           ),),
+                //           SizedBox(height: 5.0,),
+                //           Text(widget.description,
+                //           overflow: TextOverflow.ellipsis,
+                //           style: TextStyle(
+                //               color:Colors.white,
+                //                   fontWeight: FontWeight.bold,
+                //                       fontSize: 10.0,
+                //                       fontFamily: 'Gilroy-ExtraBold' 
+                //           ),),
+                //            SizedBox(height: 5.0,),
+                //           Text(widget.restaurantname,
+                //           overflow: TextOverflow.ellipsis,
+                //           style: TextStyle(
+                //               color:Colors.white,
+                //                   fontWeight: FontWeight.bold,
+                //                       fontSize: 10.0,
+                //                       fontFamily: 'Gilroy-light' 
+                //           ),),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+                SizedBox(height: 10,),
+                Container(
+                  width: 150,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [ 
+                      Text(widget.foodname,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color:Colors.white,
-                                  fontWeight: FontWeight.bold,
+                              color:wheretoDark,
                                       fontSize: 17.0,
-                                      fontFamily: 'Gilroy-ExtraBold' 
+                                      fontFamily: 'Brandon_Grotesque' 
                           ),),
                           SizedBox(height: 5.0,),
                           Text(widget.description,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color:Colors.white,
-                                  fontWeight: FontWeight.bold,
+                              color:wheretoDark,
                                       fontSize: 10.0,
-                                      fontFamily: 'Gilroy-ExtraBold' 
+                                      fontFamily: 'Brandon_Grotesque_light' 
                           ),),
                            SizedBox(height: 5.0,),
                           Text(widget.restaurantname,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color:Colors.white,
-                                  fontWeight: FontWeight.bold,
+                              color:wheretoDark,
                                       fontSize: 10.0,
                                       fontFamily: 'Gilroy-light' 
                           ),),
-                        ],
-                      ),
-                    ),
+                          SizedBox(height: 8,),
+                          Text(widget.pricetag.toString(),
+                   style: TextStyle(
+                              color:wheretoDark,
+                                      fontSize: 12.0,
+                                      fontFamily: 'Brandon_Grotesque' 
+                          ),
+                  ),
+                    ],
                   ),
                 ),
               ],

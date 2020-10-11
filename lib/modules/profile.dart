@@ -1,14 +1,17 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/designbuttons.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 
 import 'package:WhereTo/modules/OtherFeatures/trans_port.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/restaurants/searchRestaurant.dart';
 import 'package:WhereTo/styletext.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:location/location.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
@@ -16,6 +19,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'OtherFeatures/Auth/auth_pref.dart';
 
 // class Profile extends StatefulWidget with NavigationStates{
 //   @override
@@ -228,7 +233,7 @@ _onsSignal() async{
                                  image: NetworkImage(getImage),
                                  fit: BoxFit.cover),
                              ),
-                             child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5,sigmaY: 5),
+                         
                              child: Container(
                                height: 350,
                                width: MediaQuery.of(context).size.width,
@@ -236,7 +241,7 @@ _onsSignal() async{
                                  color: Colors.white.withOpacity(0.0)
                                ),
                              ),
-                             ),
+                            
                            );
     }else{
       return  Container(
@@ -257,154 +262,296 @@ _onsSignal() async{
   Widget build(BuildContext context) {
   return Scaffold(
       key: scaffoldKey,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          scrollDirection: Axis.vertical,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Stack(
-                          // overflow: Overflow.visible,
-                          alignment: Alignment.topCenter,
-                          children: <Widget>[
-                            imageBack(),
-                        //     Container(
-                        //   height: 330.0,
-                        //   decoration: BoxDecoration(
-                        //     // color: pureblue.withOpacity(.79),
-                        //     // borderRadius: BorderRadius.only(
-                        //     //   bottomRight: Radius.circular(290),
-                        //     // ),
+      backgroundColor: Color(0xFFF7F7F7),
+      body: Container(
+        height: double.infinity,
+        width: MediaQuery.of(context).size.width,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.vertical,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Stack(
+                            overflow: Overflow.visible,
+                            alignment: Alignment.topCenter,
+                            children:[
+                              Container(
+                    height: 150,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20)
+                      ),
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topRight,
+                        colors: [
+                         Colors.black.withOpacity(.7),
+                          Colors.white.withOpacity(.0),
 
-                        //   ),
-
-                        // ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(padding: const EdgeInsets.only(left: 30,top: 40),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                textDirection: TextDirection.ltr,
-                                children: <Widget>[
-                                    imagesget(),
-                                SizedBox(height: 10,),
-                                Text(userData!= null ? '${userData['name']}':  'Fail get data.',
-                                                  style: TextStyle(
-                                                  color: pureblue,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 30.0,
-                                                  fontFamily: 'Gilroy-ExtraBold'
-                                                ),
-                                                  ),
-                                                  SizedBox(height: 10,),
-                                                  Text(userData!= null ? '${userData['email']}' :  'Fail get data.',
-                                                  style: TextStyle(
-                                                  color: pureblue,
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 20.0,
-                                                  fontFamily: 'Gilroy-light'
-                                                ),
-                                                  ),
-                                               SizedBox(height: 10,),
-                              GestureDetector(
-
-                                onTap: (){
-                                    print(userData['id'].toString());
-                                    showDialogFam(userData['id'].toString());
-
-
-                                },
-                                child: Container(
-                                  height: 50,
-                                  width: 140,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(Radius.circular(40)),
-                                  ),
-                                  child: Center(
-                                    child: Text("Change Password",
-                                    style: TextStyle(
-                                      color: pureblue,
-                                      fontSize: 14,
-                                      fontFamily: 'Gilroy-light'
-                                    ),
-                                    ),
-                                  ),
-                                ),
-
-                              ),
-
-
-                                ],
-                              ),
-                              ),
-                            ),
-                          
-                          ],
+                        ],
+                        stops: [0.5,2.2],
                         ),
-                           
-                         
-                                                  SizedBox(height: 40,),
-                                                 Padding(
-                                                   padding: const EdgeInsets.only(left: 20,right: 20),
-                                                   child: NCard(
-                                                        active: false,
-                                 icon: Icons.phone_android,
-                                 label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
-                                                      ),
-                                                 ), 
-                                                    SizedBox(height: 40,),
-
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(left: 20,right: 20),
-                                                      child: FutureBuilder(
-                                                     future: CoordinatesConverter()
-                                                     .getAddressByLocation(lats.toString()+","+longs.toString()),
-                                                     builder: (context,snaps){
-                                                      if(snaps.data ==null){
-                                                        return Container();
-                                                      }else{
-                                                         return    NCard(
-                                                        active: false,
-                                   icon: Icons.my_location,
-                                   label: snaps.data != null ? '${snaps.data}' :  'Fail get data.',
-                                                      );
-                                                      }
-                                                     }),
+                      image: DecorationImage(
+                        image: AssetImage("asset/img/bannertop.jpg"),
+                        fit: BoxFit.cover
+                        ),
+                    ),
+                    ), 
+                            
+                            ],
+                          ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 40,right: 20),
+                                  child: Container(
+                                    height: 400,
+                                    width: 250,
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey[300],
+                                          spreadRadius: 2.2,
+                                          blurRadius: 2.2
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(30),
+                                      color: Colors.white
+                                    ),
+                                    child:  Stack(
+                                          overflow: Overflow.visible,
+                                          children: [
+                                            Positioned(
+                                              top: -80,
+                                              left: 65,
+                                              child: Container(
+                                                height: 130,
+                                                width:130,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.white
+                                                ),
+                                                child: Center(
+                                                  child: imagesget(),
+                                                ),
+                                              ), 
+                                              ),
+                                            Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(top: 60),
+                                                child: Column(
+                                                  children: [
+                                                    Text(UserGetPref().getUserDataJson['name'],
+                                                   overflow: TextOverflow.ellipsis,
+                                                   style: TextStyle(
+                                        color: wheretoDark,
+                                        fontFamily: 'Brandon_Grotesque',
+                                        fontSize: 28
+                                      ),
                                                     ),
-                      SizedBox(height: 40,),
-                      GestureDetector(
-                            onTap: (){
-                               UserDialog_Help.exit(context);
-                            },
-                            child: Container(
-                              height: 50,
-                              width: 140,
-                              decoration: BoxDecoration(
-                                color: pureblue,
-                                borderRadius: BorderRadius.all(Radius.circular(100)),
-                              ),
-                              child: Center(
-                                child: Text('Logout X',
-                                style: TextStyle(
-                                  fontFamily: 'Gilroy-ExtraBold',
-                                  fontSize: 18,
-                                  color: Colors.white
+                                                    SizedBox(height: 5,),
+                                                     Text(UserGetPref().getUserDataJson['email'],
+                                                   overflow: TextOverflow.ellipsis,
+                                                   style: TextStyle(
+                                        color: wheretoDark,
+                                        fontFamily: 'Brandon_Grotesque_light',
+                                        fontSize: 18
+                                      ),
+                                                    ),
+                                                    SizedBox(height: 25,),
+                                          Container(
+                                            height: 90,
+                                            width: MediaQuery.of(context).size.width,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                   Padding(
+                                                     padding: const EdgeInsets.only(left: 10),
+                                                     child: Text("Address",
+                                                     overflow: TextOverflow.ellipsis,
+                                                     style: TextStyle(
+                                        color: wheretoDark,
+                                        fontFamily: 'Brandon_Grotesque_light',
+                                        fontSize: 12
+                                      ),
+                                                      ),
+                                                   ),
+                                                   SizedBox(height: 9,),
+                                                   FutureBuilder(
+                          future: CoordinatesConverter().getAddressByLocation(UserGetPref().getUserDataJson['latitude']+","+ UserGetPref().getUserDataJson['longitude']),
+                          builder: (con,snaps){
+                            if(snaps.data == null){
+                              return Container();
+                            }else{
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Container(
+                                  width: 290,
+                                  child: Text(snaps.data.toString(),
+                                  
+                                                         overflow: TextOverflow.ellipsis,
+                                                         style: TextStyle(
+                                            color: wheretoDark,
+                                            fontFamily: 'Brandon_Grotesque',
+                                            fontSize: 16
+                                          ),
+                                                          ),
                                 ),
-                                ),
-                              ),
-                            ),
-                          ),              
-                                             
-                                      
+                              );
+                            }
+                          },
+                         
+                        ),
+                                                   
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 90,
+                                            width: MediaQuery.of(context).size.width,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                   Padding(
+                                                     padding: const EdgeInsets.only(left: 10),
+                                                     child: Text("Contact Number:",
+                                                     overflow: TextOverflow.ellipsis,
+                                                     style: TextStyle(
+                                        color: wheretoDark,
+                                        fontFamily: 'Brandon_Grotesque_light',
+                                        fontSize: 12
+                                      ),
+                                                      ),
+                                                   ),
+                                                   SizedBox(height: 9,),
+                                                  Padding(
+                                                     padding: const EdgeInsets.only(left: 10),
+                                                     child: Text(UserGetPref().getUserDataJson['contactNumber'],
+                                                     overflow: TextOverflow.ellipsis,
+                                                     style: TextStyle(
+                                        color: wheretoDark,
+                                        fontFamily: 'Brandon_Grotesque',
+                                        fontSize: 16
+                                      ),
+                                                      ),
+                                                   ), 
+                                                   
+                                              ],
+                                            ),
+                                          ),
 
-                      ],
-              
+
+                                          Container(
+                            height: 40,
+                            width: 100,
+                            child: RaisedButton(
+                              color: wheretoDark,
+                              splashColor: skintone,
+                              child: Center(
+                                child: Text("Log Out",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Brandon_Grotesque_light',
+                                      fontSize: 18
+                                    ),
+                                    ),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.all(Radius.circular(40)), 
+                              ),
+                              onPressed:(){
+                                showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => 
+          DialogForAll(
+        widgets: SpinKitDoubleBounce(color: wheretoDark,size: 80,),
+        labelHeader: "Do you want to exit app?",
+        message: "Please double Check you unfinished orders.",
+        buttTitle1: "Yes",
+        buttTitle2: "No",
+        yesFunc: () =>authShared.logRemoveAll(context),
+        noFunc: () => Navigator.pop(context),
+        showorNot1: true,
+        showorNot2: true,
+      ),);
+                              }),
+                          ),
+
+                                                  ],
+                                                ),
+                                                ),
+                                            ),
+                                          ],
+                                        ),
+                                  ),
+                                ),
+                              
+                           
+                        //                             SizedBox(height: 40,),
+                        //                            Padding(
+                        //                              padding: const EdgeInsets.only(left: 20,right: 20),
+                        //                              child: NCard(
+                        //                                   active: false,
+                        //            icon: Icons.phone_android,
+                        //            label: userData!= null ? '${userData['contactNumber']}' :  'Fail get data.',
+                        //                                 ),
+                        //                            ), 
+                        //                               SizedBox(height: 40,),
+
+                        //                               Padding(
+                        //                                 padding: const EdgeInsets.only(left: 20,right: 20),
+                        //                                 child: FutureBuilder(
+                        //                                future: CoordinatesConverter()
+                        //                                .getAddressByLocation(lats.toString()+","+longs.toString()),
+                        //                                builder: (context,snaps){
+                        //                                 if(snaps.data ==null){
+                        //                                   return Container();
+                        //                                 }else{
+                        //                                    return    NCard(
+                        //                                   active: false,
+                        //              icon: Icons.my_location,
+                        //              label: snaps.data != null ? '${snaps.data}' :  'Fail get data.',
+                        //                                 );
+                        //                                 }
+                        //                                }),
+                        //                               ),
+                        // SizedBox(height: 40,),
+                        // GestureDetector(
+                        //       onTap: (){
+                        //          UserDialog_Help.exit(context);
+                        //       },
+                        //       child: Container(
+                        //         height: 50,
+                        //         width: 140,
+                        //         decoration: BoxDecoration(
+                        //           color: pureblue,
+                        //           borderRadius: BorderRadius.all(Radius.circular(100)),
+                        //         ),
+                        //         child: Center(
+                        //           child: Text('Logout X',
+                        //           style: TextStyle(
+                        //             fontFamily: 'Gilroy-ExtraBold',
+                        //             fontSize: 18,
+                        //             color: Colors.white
+                        //           ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),              
+                                               
+                                        
+
+                        ],
+                
+                  ),
                 ),
               ),
-            ),
+      ),
         
     
   );
