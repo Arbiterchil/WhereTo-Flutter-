@@ -20,6 +20,7 @@ PublishSubject<List<FilterRestaurant>> _publishSubjectFilter =PublishSubject();
 Stream<List<FilterRestaurant>> get sinkSubjectFilter =>_publishSubjectFilter.stream;
 
 
+
 Future<void> getRest(String query) async {
 final response = await ApiCall().getRestarant('/getFeaturedRestaurant');
 List<FeaturedRestaurant> search = featuredRestaurantFromJson(response.body);

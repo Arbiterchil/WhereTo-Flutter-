@@ -1705,7 +1705,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
       body: WillPopScope(
           child: SafeArea(
             child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(left: 40,right: 40,top: 20),
                 child: Column(
