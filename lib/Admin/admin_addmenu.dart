@@ -7,6 +7,8 @@ import 'package:WhereTo/Admin/A_categ/a_categStream.dart';
 import 'package:WhereTo/Admin/admin_addrestu.dart';
 import 'package:WhereTo/Admin/admin_trial.dart';
 import 'package:WhereTo/api/api.dart';
+import 'package:WhereTo/modules/OtherFeatures/Auth/auth_pref.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -151,6 +153,18 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 50,
+        automaticallyImplyLeading: false,
+        backgroundColor: pureblue,
+        title: Text(UserGetPref().restuNamed,
+        style: TextStyle(
+          color: Colors.white,
+          fontFamily: 'Gilroy-light'
+        ),
+        ),
+        
+      ),
       body: WillPopScope(
                     child: SafeArea(
                       child: SingleChildScrollView(
@@ -192,6 +206,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                                     alignment: Alignment.centerLeft,
                                     child: GestureDetector(
                                       onTap: (){
+                                        authShared.removeIt();
                                         Navigator.pushAndRemoveUntil(
                                 context,
                                 new MaterialPageRoute(

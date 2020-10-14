@@ -11,11 +11,11 @@ class NewRestaurantApi {
 
 
 
-  Future<NewRestaurantResponse> getFeaturedRestaurant() async {
+  Future<NewRestaurantResponse> getFeaturedRestaurant(String idCity) async {
       
     try{  
 
-        var response = await ApiCall().getRestarant('/getFeaturedRestaurant');
+        var response = await ApiCall().getRestarant('/getFeaturedRestaurant/$idCity');
         // List<NeWRestaurant> restaurantnew = [];
 
         var body = json.decode(response.body);

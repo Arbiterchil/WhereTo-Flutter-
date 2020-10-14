@@ -5,8 +5,8 @@ class NewRestaurantprovider{
 
 NewRestaurantApi newRestaurantApi = NewRestaurantApi();
 
- Future<NewRestaurantResponse> getNewFeaturing(){
-   return newRestaurantApi.getFeaturedRestaurant();
+ Future<NewRestaurantResponse> getNewFeaturing(String cityId){
+   return newRestaurantApi.getFeaturedRestaurant(cityId);
  } 
 
 

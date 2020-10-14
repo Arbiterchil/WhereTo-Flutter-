@@ -41,7 +41,10 @@ final validTextinput =
 
 final validatePhoneNumberuser = 
   StreamTransformer<String,String>.fromHandlers(handleData: (number,sink){
-    RegExp regExp = new RegExp(r'^([+0]9)?[0-9]{11,11}$');
+    String pattern  = r'^\+?09[0-9]{9}$';
+     RegExp regExp = new RegExp(pattern);
+    // RegExp regExp = new RegExp(r'^(?:[+0]9)?[0-9]{11,11}$');
+    // RegExp regExp = new RegExp(r'^(?:[+0]9)?[0-10]{11}$');
     if(regExp.hasMatch(number)){
       sink.add(number);
     }else if(number.runes.length > 10){
@@ -49,7 +52,7 @@ final validatePhoneNumberuser =
     }else if(number.runes.length < 10){
       sink.addError('Maximum is only 11');
     }else{
-      sink.addError("Empty Field");
+      sink.addError("it Start in 09 and have 11 Digits");
     }
   });
 
@@ -70,7 +73,7 @@ final validatePhoneNumberuser =
   }
 
   bool isValidPhoneNumber(String inputNumber){
-    final RegExp regExp = new RegExp(r'^([+0]9)?[0-9]{10,11}$');
+    final RegExp regExp = new RegExp(r'^\+?09([+0]9)?[0-9]{10,11}$');
     return regExp.hasMatch(inputNumber);
     }
 

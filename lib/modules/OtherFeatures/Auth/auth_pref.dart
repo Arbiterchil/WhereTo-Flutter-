@@ -4,6 +4,7 @@ import 'package:WhereTo/Admin/navbottom_admin.dart';
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/modules/A_RiderLog/rider_logPen.dart';
 import 'package:WhereTo/modules/Awalkthrough/walk_t.dart';
+import 'package:WhereTo/modules/categoryCAB/cab.dart';
 import 'package:WhereTo/modules/homepage.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
@@ -18,9 +19,19 @@ class AuthSharedBloc{
   String tokes="";
   String vartype = "";
   String walkth = "";
+  String paginguser = "";
   bool isLogged = false;
   bool shown = false;
-  
+
+Future forUsersOnly(String doneChanging,String cityId, String barangayId, String deliveryAddress) async{
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setString("paging", doneChanging);
+      localStorage.setString("city", cityId);
+      localStorage.setString("baranggay", barangayId);
+      localStorage.setString("delAdd", deliveryAddress);
+      
+  }  
+
 Future saveDataAccount(String token,String type,String lat ,String long) async{
  SharedPreferences localStorage = await SharedPreferences.getInstance();
             localStorage.setString("token", token);
@@ -35,6 +46,12 @@ void removeAuthPref() async{
   localStorage.remove('user');
   localStorage.remove('token');
   localStorage.remove('menuplustrans');
+}
+
+void removeIt() async{
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.remove('AdminRes');
+    localStorage.remove('restuname');
 }
 
 void logRemoveAll(context) async{
@@ -55,11 +72,13 @@ void getThos() async{
   SharedPreferences localStorage = await SharedPreferences.getInstance();
    var token = localStorage.getString('token');
    var type = localStorage.getString('type');
+   var usershowpage = localStorage.getString('paging');
    var totoyBibo = localStorage.getString('trial');
    if(token != null){
-    tokes = token;
-    isLogged = true;
+     paginguser = usershowpage;
+     isLogged = true;
    vartype = type;
+    tokes = token;
    }else if(totoyBibo != null){
       shown = true;
       walkth = totoyBibo;
@@ -67,9 +86,16 @@ void getThos() async{
      
 }
   userTypeScreen(BuildContext context,int type){
+    
     if(type == 0){
-      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
+      if(paginguser.isNotEmpty){
+        Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
       => HomePage()));
+      }else{
+        Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
+      => FirstPageForRegUser()));
+      }
+      
     }else if(type == 1){
       Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
       => RiderProfile()));
@@ -98,18 +124,34 @@ void getThos() async{
     }
   }
 
+  
+
   openSessionPages() {
    String  customer = "0";
       String  rider = "1";
       String  admin = "2";
+      String userpage = "paging";
       if(isLogged == true){
+
          if(customer.contains(vartype)){
-       return isLogged ? HomePage() : LoginPage();
+
+           if(paginguser !=null){
+             if(userpage.contains(paginguser)){
+                 return isLogged ? HomePage() : LoginPage();
+             }else{
+               return isLogged ? FirstPageForRegUser() : LoginPage();
+             }
+           }else{
+             return isLogged ? FirstPageForRegUser() : LoginPage();
+           }
+
+       
      }else if(admin.contains(vartype)){
        return isLogged ? AdminHomeDash() : LoginPage();
      }else if(rider.contains(vartype)){
        return isLogged ? RiderProfile() : LoginPage();
      }
+     
       }else{
        return shown ? LoginPage() : WalkThroughPage() ;
      }

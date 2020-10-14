@@ -75,6 +75,7 @@ Widget spinKitDots(){
       submit: (_) => FocusScope.of(context).requestFocus(password),
     );
   }
+  
    Widget _password(LoginBloc loginBloc){
     return Stack(
       children: [

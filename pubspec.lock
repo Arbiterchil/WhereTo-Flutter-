@@ -1056,11 +1056,7 @@ packages:
       name: stack_trace
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.10.0-nullsafety.2"
-=======
     version: "1.9.5"
->>>>>>> 7177b3c5eb8039e15c8773309b2ebd4aa462faf3
   stepper_counter_swipe:
     dependency: "direct main"
     description:
@@ -1251,9 +1247,5 @@ packages:
     source: hosted
     version: "0.1.2"
 sdks:
-<<<<<<< HEAD
-  dart: ">=2.10.0-110 <=2.11.0-185.0.dev"
-=======
   dart: ">=2.9.0-14.0.dev <3.0.0"
->>>>>>> 7177b3c5eb8039e15c8773309b2ebd4aa462faf3
   flutter: ">=1.17.0 <2.0.0"

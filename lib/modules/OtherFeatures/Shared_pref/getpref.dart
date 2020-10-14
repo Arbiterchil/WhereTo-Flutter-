@@ -31,6 +31,29 @@ Future lng(double lng){
   return _prefs.setDouble('Longs',lng);
 }
 
+Future cityId(String id){
+  return _prefs.setString("citys", id);
+}
+Future restuaddForAdmin(String id){
+  return _prefs.setString("AdminRes", id);
+}
+Future restuNameExtra(String name){
+  return _prefs.setString("restuname", name);
+}
+
+get restuNamed{
+  var getname = _prefs.getString("restuname");
+  return getname;
+}
+
+get adminEmergergency{
+  var idformAdd = _prefs.getString("AdminRes");
+  return idformAdd;
+}
+get citygetId{
+  var city = _prefs.getString("citys");
+  return city;
+}
 get latsdaw{
   var lats = _prefs.getDouble('Lats') ?? '';
   return lats;

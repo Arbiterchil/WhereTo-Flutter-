@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final neWRestaurant = neWRestaurantFromJson(jsonString);
+
 import 'dart:convert';
 
 List<NeWRestaurant> neWRestaurantFromJson(String str) => List<NeWRestaurant>.from(json.decode(str).map((x) => NeWRestaurant.fromJson(x)));
@@ -13,6 +17,7 @@ class NeWRestaurant {
         this.latitude,
         this.longitude,
         this.barangayId,
+        this.cityId,
         this.contactNumber,
         this.openTime,
         this.closingTime,
@@ -32,6 +37,7 @@ class NeWRestaurant {
     String latitude;
     String longitude;
     int barangayId;
+    int cityId;
     String contactNumber;
     String openTime;
     String closingTime;
@@ -51,6 +57,7 @@ class NeWRestaurant {
         latitude: json["latitude"],
         longitude: json["longitude"],
         barangayId: json["barangayId"],
+        cityId: json["cityId"],
         contactNumber: json["contactNumber"],
         openTime: json["openTime"],
         closingTime: json["closingTime"],
@@ -59,7 +66,7 @@ class NeWRestaurant {
         status: json["status"],
         imagePath: json["imagePath"],
         isActive: json["isActive"],
-        createdAt: json["created_at"],
+        createdAt:json["created_at"],
         updatedAt: json["updated_at"],
     );
 
@@ -71,6 +78,7 @@ class NeWRestaurant {
         "latitude": latitude,
         "longitude": longitude,
         "barangayId": barangayId,
+        "cityId": cityId,
         "contactNumber": contactNumber,
         "openTime": openTime,
         "closingTime": closingTime,

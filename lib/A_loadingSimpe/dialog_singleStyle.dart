@@ -52,93 +52,96 @@ class _DialogForAllState extends State<DialogForAll> {
             Container(
               height: 270,
               padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(padding: const EdgeInsets.only(top: 50),
-                  child: Text(widget.labelHeader,
-                  style: TextStyle(
-                    color: wheretoDark,
-                    fontFamily: 'Gilroy-ExtraBold',
-                    fontSize: 18
-                  ),
-                  ),
-                  ),
-                  SizedBox(height: 20,),
-                  Text(widget.message,
-                  style: TextStyle(
-                    color: wheretoDark,
-                    fontFamily: 'Gilroy-light',
-                    fontSize: 14
-                  ),
-                  ),
-                  SizedBox(height: 35,),
-                  Container(
-                    height: 40,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Visibility(
-                          visible: widget.showorNot2,
-                          child: Container(
-                            height: 40,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: wheretoDark,
-                                width: 1
-                              ),
-                               borderRadius: BorderRadius.all(Radius.circular(40)), 
-                            ),
-                            child: RaisedButton(
-                              color: Colors.white,
-                              splashColor: wheretoDark,
-                              child: Center(
-                                child: Text(widget.buttTitle2,
-                                    style: TextStyle(
-                                      color: wheretoDark,
-                                      fontFamily: 'Gilroy-ExtraBold',
-                                      fontSize: 12
-                                    ),
-                                    ),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.all(Radius.circular(40)), 
-                              ),
-                              onPressed: widget.noFunc),
-                          ),
-                        ),
-                        Visibility(
-                          visible: widget.showorNot1,
-                          child: Container(
-                            height: 40,
-                            width: 100,
-                            decoration: BoxDecoration(
-                               borderRadius: BorderRadius.all(Radius.circular(40)), 
-                            ),
-                            child: RaisedButton(
-                              color: pureblue,
-                              splashColor: wheretoDark,
-                              child: Center(
-                                child: Text(widget.buttTitle1,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Gilroy-ExtraBold',
-                                      fontSize: 12
-                                    ),
-                                    ),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.all(Radius.circular(40)), 
-                              ),
-                              onPressed: widget.yesFunc),
-                          ),
-                        )
-                      ],
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(padding: const EdgeInsets.only(top: 50),
+                    child: Text(widget.labelHeader,
+                    style: TextStyle(
+                      color: wheretoDark,
+                      fontFamily: 'Gilroy-ExtraBold',
+                      fontSize: 18
                     ),
-                  )
-                ],
+                    ),
+                    ),
+                    SizedBox(height: 20,),
+                    Text(widget.message,
+                    style: TextStyle(
+                      color: wheretoDark,
+                      fontFamily: 'Gilroy-light',
+                      fontSize: 14
+                    ),
+                    ),
+                    SizedBox(height: 35,),
+                    Container(
+                      height: 40,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Visibility(
+                            visible: widget.showorNot2,
+                            child: Container(
+                              height: 40,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: wheretoDark,
+                                  width: 1
+                                ),
+                                 borderRadius: BorderRadius.all(Radius.circular(40)), 
+                              ),
+                              child: RaisedButton(
+                                color: Colors.white,
+                                splashColor: wheretoDark,
+                                child: Center(
+                                  child: Text(widget.buttTitle2,
+                                      style: TextStyle(
+                                        color: wheretoDark,
+                                        fontFamily: 'Gilroy-ExtraBold',
+                                        fontSize: 12
+                                      ),
+                                      ),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                   borderRadius: BorderRadius.all(Radius.circular(40)), 
+                                ),
+                                onPressed: widget.noFunc),
+                            ),
+                          ),
+                          Visibility(
+                            visible: widget.showorNot1,
+                            child: Container(
+                              height: 40,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.all(Radius.circular(40)), 
+                              ),
+                              child: RaisedButton(
+                                color: pureblue,
+                                splashColor: wheretoDark,
+                                child: Center(
+                                  child: Text(widget.buttTitle1,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Gilroy-ExtraBold',
+                                        fontSize: 12
+                                      ),
+                                      ),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                   borderRadius: BorderRadius.all(Radius.circular(40)), 
+                                ),
+                                onPressed: widget.yesFunc),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             )
           ],

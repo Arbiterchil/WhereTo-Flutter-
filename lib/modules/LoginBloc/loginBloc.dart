@@ -35,6 +35,7 @@ loginUser(BuildContext context) async{
        'contactNumber': numberUser,
        'password': passwordUser
     };
+
     var response = await ApiCall().postData(data,'/login');
     var resultBody = json.decode(response.body);
     if(resultBody['success'] == true){
@@ -59,7 +60,7 @@ loginUser(BuildContext context) async{
       
       );
       }else{
-      
+        
         UserGetPref().setuserJson(json.encode(resultBody['user']));
         authShared.saveDataAccount(
           resultBody['token'],
@@ -67,7 +68,7 @@ loginUser(BuildContext context) async{
           resultBody['user']['latitude'].toString(),
           resultBody['user']['longitude'].toString());
         authShared.userTypeScreen(context,
-        resultBody['user']['userType'],);
+        resultBody['user']['userType']);
       }
     }else if(resultBody['remitPending'] == true){
       showDialog(

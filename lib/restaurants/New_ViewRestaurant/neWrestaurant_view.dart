@@ -27,7 +27,7 @@ String categ ="0";
   void initState() {
     
     super.initState();
-    streamRestaurantsFeatured..getFeaturedViewRestaurant();
+    streamRestaurantsFeatured..getFeaturedViewRestaurant(categ);
   }
   // @override
   // void dispose() {

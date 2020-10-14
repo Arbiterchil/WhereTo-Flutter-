@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
+import 'package:WhereTo/A_loadingSimpe/locationchanges.dart';
 import 'package:WhereTo/A_loadingSimpe/simple_loading.dart';
 import 'package:WhereTo/AnCustom/UserDialog_help.dart';
 import 'package:WhereTo/Transaction/MyOrder/getViewOrder.dart';
@@ -40,11 +41,12 @@ class _SearchDepoState extends State<SearchDepo> {
   String lat ;
   String long;
   ScrollController scrollcont;
+  
   @override
   void initState() {
     super.initState();
     imagpth = UserGetPref().getUserDataJson['imagePath'];
-    streamRestaurantsFeatured..getFeaturedViewRestaurant();
+    streamRestaurantsFeatured..getFeaturedViewRestaurant(UserGetPref().citygetId);
   }
 
   
@@ -103,6 +105,42 @@ class _SearchDepoState extends State<SearchDepo> {
                   child: Stack(
                     overflow: Overflow.visible,
                     children: [
+
+                    Align(
+                     alignment: Alignment.bottomRight,
+                     child: Padding(
+                       padding: const EdgeInsets.only(right: 70,bottom: 5),
+                       child: Container(
+                         height: 50,
+                         width: 50,
+                         decoration: BoxDecoration(
+                           shape: BoxShape.circle
+                         ),
+                         child: RaisedButton(
+                           splashColor: wheretoDark,
+                           color: Colors.white,
+                           shape: RoundedRectangleBorder(
+                             borderRadius: BorderRadius.circular(100)
+                           ),
+                           child: Center(
+                             child: Icon(
+                              Icons.location_city,
+                               color: wheretoDark,
+                               size: 24,
+                             ),
+                           ),
+                           onPressed: () => showDialog(
+                            barrierDismissible: true,
+                            context: (context),
+                            builder: (context) =>
+                            LocationChangeforUsers(),
+                             ),
+            
+      ),
+                       ),
+                       ),
+                   ),      
+
 
                    Align(
                      alignment: Alignment.bottomRight,

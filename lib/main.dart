@@ -38,27 +38,27 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _initOneSignal().then((value) => print('Ready To get Notif'));
-    getThis().then((value) => print('Start Getting Location'));
+    // getThis().then((value) => print('Start Getting Location'));
   }
 
- Future<void> getThis() async{
-    StreamSubscription<Position> positionStream = getPositionStream().listen(
-    (Position position) {
+//  Future<void> getThis() async{
+//     StreamSubscription<Position> positionStream = getPositionStream().listen(
+//     (Position position) {
        
-        if(position == null){
-          print('DESOLE  wala jud');
-        }else{
- String livin =  position.latitude.toString() + ', ' + position.longitude.toString();
- print("Desole $livin");
-        UserGetPref().lat(double.parse(position.latitude.toString()));
-        UserGetPref().lng(double.parse(position.longitude.toString()));
-        }
-        // print(position == null ? 'Unknown' :
-        // position.latitude.toString() + ', ' + position.longitude.toString());
+//         if(position == null){
+//           print('DESOLE  wala jud');
+//         }else{
+//  String livin =  position.latitude.toString() + ', ' + position.longitude.toString();
+//  print("Desole $livin");
+//         UserGetPref().lat(double.parse(position.latitude.toString()));
+//         UserGetPref().lng(double.parse(position.longitude.toString()));
+//         }
+//         // print(position == null ? 'Unknown' :
+//         // position.latitude.toString() + ', ' + position.longitude.toString());
        
-    });
-    print(positionStream);
-  }
+//     });
+//     print(positionStream);
+//   }
   Future<void> _initOneSignal() async{
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   await OneSignal.shared.setLocationShared(true);

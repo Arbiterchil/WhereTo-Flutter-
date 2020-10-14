@@ -382,7 +382,9 @@ _onsSignal() async{
                                                    ),
                                                    SizedBox(height: 9,),
                                                    FutureBuilder(
-                          future: CoordinatesConverter().getAddressByLocation(UserGetPref().getUserDataJson['latitude']+","+ UserGetPref().getUserDataJson['longitude']),
+                          future: CoordinatesConverter().getAddressByLocation(
+                            UserGetPref().getUserDataJson['latitude'].toString()
+                            +","+ UserGetPref().getUserDataJson['longitude'].toString()),
                           builder: (con,snaps){
                             if(snaps.data == null){
                               return Container();

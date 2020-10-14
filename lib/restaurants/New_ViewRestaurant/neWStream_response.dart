@@ -10,8 +10,8 @@ class NewRestaurantStream {
  final NewRestaurantprovider newRes = NewRestaurantprovider();
   final BehaviorSubject<NewRestaurantResponse> _subject = BehaviorSubject<NewRestaurantResponse>();
 
-  getFeaturedViewRestaurant() async{
-    NewRestaurantResponse riderresponse = await newRes.getNewFeaturing();
+  getFeaturedViewRestaurant(String cityId) async{
+    NewRestaurantResponse riderresponse = await newRes.getNewFeaturing(cityId);
     _subject.sink.add(riderresponse);
   }
 
