@@ -35,7 +35,7 @@ class FilteringMenuTrial {
     int isFeatured;
     String categoryName;
     String imagePath;
-    int totalPrice;
+    double totalPrice;
 
     factory FilteringMenuTrial.fromJson(Map<String, dynamic> json) => FilteringMenuTrial(
         menuId: json["menuId"],
@@ -49,7 +49,7 @@ class FilteringMenuTrial {
         isFeatured: json["isFeatured"],
         categoryName: json["categoryName"],
         imagePath: json["imagePath"],
-        totalPrice: json["totalPrice"],
+        totalPrice: json["totalPrice"].toDouble(),
     );
 
     Map<String, dynamic> toJson() => {

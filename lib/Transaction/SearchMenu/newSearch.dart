@@ -16,6 +16,7 @@ class CustomSearch extends SearchDelegate {
  final blocSearch = BlocSearch();
    Future<void>getBloc(var id) async {
     await blocSearch.getmenu(id);
+    
   }
 
   Future<void> disposeBloc() async {

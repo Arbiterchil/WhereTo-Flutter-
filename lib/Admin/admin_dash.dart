@@ -5,6 +5,7 @@ import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
 import 'package:WhereTo/Admin/Restaurant.dart';
 import 'package:WhereTo/Admin/Rider_viewRemit/view_RemitImages.dart';
 import 'package:WhereTo/Admin/r_source.dart';
+import 'package:WhereTo/Admin/trialSearch/enter.dart';
 import 'package:WhereTo/Admin/view_allID.dart';
 import 'package:WhereTo/Admin/view_saleOurs/show_resultsRemitList.dart';
 import 'package:WhereTo/AnCustom/admin_help.dart';
@@ -352,7 +353,8 @@ class _AdminDashState extends State<AdminDash> {
                       child: GestureDetector(
 
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  EditRestaurant()));
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context) =>  EditRestaurant()));
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  EnterChoseFirst() ));
                                   },
                                   child: Container(
                                     height: 50,

@@ -40,6 +40,14 @@ Future restuaddForAdmin(String id){
 Future restuNameExtra(String name){
   return _prefs.setString("restuname", name);
 }
+Future chosenCityAdmin(String id){
+  return _prefs.setString("idSearch", id);
+}
+
+get idSearch {
+  var fin = _prefs.getString("idSearch");
+  return fin;
+}
 
 get restuNamed{
   var getname = _prefs.getString("restuname");

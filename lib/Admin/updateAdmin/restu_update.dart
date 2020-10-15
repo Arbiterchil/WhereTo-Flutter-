@@ -72,6 +72,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
   void initState() {
     print(widget.restaurantId);
     callBarangay();
+    callCity();
     weekdays();
     _featured();
     super.initState();
@@ -83,12 +84,14 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
    String src;
    double lats ;
    double longs;
+   String choseFrom;
   TextEditingController retaurantname  = TextEditingController();
     TextEditingController owner = TextEditingController(); 
     TextEditingController representative  = TextEditingController();
     TextEditingController newAddre = TextEditingController();
     TextEditingController contactnumber = TextEditingController();
     TextEditingController barangayId  = TextEditingController();
+    TextEditingController cityId  = TextEditingController();
     TextEditingController openTimes  = TextEditingController();
     TextEditingController closingTimes = TextEditingController();
     TextEditingController closeOn = TextEditingController();
@@ -104,6 +107,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
     String datesofdays;
     String features;
     List dataBarangay = List();
+     List citys = List();
     bool him = false;
     bool loading = false;
     bool loading1 = false;
@@ -197,6 +201,18 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
     print(bararang);
 
   }
+
+  callCity() async{
+    var respon = await ApiCall().getBararang('/getCity');
+    var bararang = json.decode(respon.body);
+  
+    setState(() {
+      citys = bararang;
+    });
+    print(bararang);
+
+  }
+
     phoneValidate(String val){
           Pattern pattern = r'^([+0]9)?[0-9]{10,11}$';
           RegExp regExp = new RegExp(pattern);
@@ -391,6 +407,7 @@ void viewMapo(){
            'latitude': lats.toString(),
           'longitude': longs.toString(),
           'barangayId' :  selectPerson == null ? barangayId.text : selectPerson.toString() ,
+          'cityId' :  choseFrom == null ? cityId.text : choseFrom.toString() ,
           'contactNumber' : contactnumber.text,
           'openTime' : opentimeString == null ?  openTimes.text :  opentimeString,
           'closingTime' :closetimeString == null ? closingTimes.text   :  closetimeString.toString(),
@@ -710,6 +727,7 @@ void viewMapo(){
                   // lats = restaurantGets.latitude;
                   // longs = restaurantGets.longitude;
                   barangayId.text = restaurantGets.barangayId.toString();
+                  cityId.text = restaurantGets.cityId.toString();
                   openTimes.text = restaurantGets.openTime;
                   closingTimes.text = restaurantGets.closingTime;
                   closeOn.text = restaurantGets.closeOn.toString();
@@ -773,6 +791,7 @@ void viewMapo(){
                   lats = restaurantGets.latitude;
                   longs = restaurantGets.longitude;
                   barangayId.text = restaurantGets.barangayId.toString();
+                  cityId.text = restaurantGets.cityId.toString();
                   openTimes.text = restaurantGets.openTime;
                   closingTimes.text = restaurantGets.closingTime;
                   closeOn.text = restaurantGets.closeOn.toString();
@@ -805,7 +824,9 @@ void viewMapo(){
                   owner.clear();
                   representative.clear();
                   contactnumber.clear();
+                  retaurantname.clear();
                   barangayId.clear();
+                  cityId.clear();
                   openTimes.clear();
                   closingTimes.clear();
                   closeOn..clear();
@@ -984,6 +1005,64 @@ void viewMapo(){
                                   onChanged: (item){
                                     setState(() {
                                       selectPerson = item;
+                                      print(item);
+                                    });
+                                  }
+                                  ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  
+              )
+            ),  
+            SizedBox(height: 15,),
+          Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: eBoxDecorationStyle,
+              height: 50.0,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: DropdownButtonHideUnderline(
+                      child:
+            Stack(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Icon(Icons.place,color: pureblue,)),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child:
+                            
+                            
+                             DropdownButton(
+                                  isExpanded: true ,
+                                  hint: Text( "Select City",
+                                  style: TextStyle(
+                                      
+                                      color:pureblue,
+                                      fontFamily: 'Gilroy-light'
+                                    ),),
+                                  dropdownColor: Colors.white,
+                                  icon: Icon(Icons.arrow_drop_down,color: pureblue,),
+                                  
+                                  value: choseFrom == null ? cityId.text : choseFrom,
+                                  items: citys.map((item) {
+                                  return new DropdownMenuItem(
+                                    child: Text(item['cityName'],
+                                    style: TextStyle(
+                                      
+                                      color: pureblue,
+                                      fontFamily: 'Gilroy-light'
+                                    ),
+                                    ),
+                                    value: item['id'].toString(),
+                                  );
+                                }).toList(),
+                                  onChanged: (item){
+                                    setState(() {
+                                      choseFrom = item;
                                       print(item);
                                     });
                                   }
