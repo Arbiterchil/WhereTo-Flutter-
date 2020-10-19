@@ -6,6 +6,8 @@ import 'package:WhereTo/Admin/User_Verification/user_getterres.dart';
 import 'package:WhereTo/Admin/User_Verification/user_verifyclass.dart';
 import 'package:WhereTo/api/api.dart';
 import 'dart:convert';
+
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 class UserApi{
 
 Future<UserVerified> getUserUnVerified() async {
@@ -28,8 +30,11 @@ Future<UserVerified> getUserUnVerified() async {
   }
 }
   Future<RemitResponse> getRemitImages() async {
+
+    var id = UserGetPref().idSearch;
+
     try{
-      var response = await ApiCall().getRemitImage('/viewRemittedList');
+      var response = await ApiCall().getRemitImage('/viewRemittedList/$id');
       // var bodies = json.decode(response.body);
       // List<ViewRemit> viewRet = [];
       // for(var bodies in bodies){
@@ -51,9 +56,9 @@ Future<UserVerified> getUserUnVerified() async {
   }
 
   Future<UnRemitResponse> getUnRemitImages() async{
-
+    var id = UserGetPref().idSearch;
     try{
-        var response = await ApiCall().getRemitImage('/viewUnremittedList');
+        var response = await ApiCall().getRemitImage('/viewUnremittedList/$id');
       // var bodies = json.decode(response.body);
       // List<UnViewRemit> unviewRet = [];
       // for(var bodies in bodies){

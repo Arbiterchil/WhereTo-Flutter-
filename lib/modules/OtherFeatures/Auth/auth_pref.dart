@@ -88,6 +88,7 @@ void getThos() async{
   userTypeScreen(BuildContext context,int type){
     
     if(type == 0){
+      getThos();
       if(paginguser.isNotEmpty){
         Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
       => HomePage()));

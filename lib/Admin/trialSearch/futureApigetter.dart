@@ -18,7 +18,7 @@ _pub.sink.add(filterMenu);
 }
 
 void dispose(){
-  _pub?.close();
+  _pub.close();
 }
 
 }

@@ -161,6 +161,12 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
   }
 
 
+  delteMenu() async{
+    await ApiCall().makeMenuFeatured('/deleteMenu/${widget.menuId}');
+    print("delete Success");
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,7 +203,7 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                                         ),
                                         child: Center(
                                           child: Icon(
-                                            Icons.backspace,
+                                            Icons.clear,
                                             color: Colors.white,
                                             size: 30,
                                           ),
@@ -205,6 +211,31 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                                       ),
                                     ),
                                   ),
+
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: GestureDetector(
+                                      onTap: () => delteMenu(),
+                                      child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          color: pureblue,
+                                          borderRadius: BorderRadius.all(Radius.circular(50))
+                                        ),
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.delete,
+                                            color: Colors.white,
+                                            size: 30,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+
+
                                 ],
                               ),
                             ),  

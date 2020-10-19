@@ -1179,6 +1179,9 @@ getYourIdImage( ImageSource source) async{
        loadingShow = false;
      }); 
     }
+    setState(() {
+       loadingShow = false;
+     }); 
   }
 
 Widget spinKitDots(){

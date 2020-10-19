@@ -21,7 +21,8 @@ class RemitViewImagesAdmin extends StatefulWidget {
 }
 class _RemitViewImagesAdminState extends State<RemitViewImagesAdmin> {
 
- 
+  String city = "";
+
   @override
   void initState() {
     

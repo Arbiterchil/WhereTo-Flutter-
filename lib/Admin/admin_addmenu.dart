@@ -6,6 +6,7 @@ import 'package:WhereTo/Admin/A_categ/a_categ.dart';
 import 'package:WhereTo/Admin/A_categ/a_categStream.dart';
 import 'package:WhereTo/Admin/admin_addrestu.dart';
 import 'package:WhereTo/Admin/admin_trial.dart';
+import 'package:WhereTo/Admin/navbottom_admin.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/modules/OtherFeatures/Auth/auth_pref.dart';
 import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
@@ -210,7 +211,7 @@ class _AddmenuAdminState extends State<AddmenuAdmin> {
                                         Navigator.pushAndRemoveUntil(
                                 context,
                                 new MaterialPageRoute(
-                                    builder: (context) => AdminAddRestaurant()),ModalRoute.withName('/'));
+                                    builder: (context) => AdminHomeDash()),ModalRoute.withName('/'));
                                       },
                                       child: Container(
                                         height: 50,
