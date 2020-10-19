@@ -8,19 +8,20 @@ class ComputationFee{
     double restoCharge = 0;
     double userCharge = 0;
     double totalOrder = 0;
-    final barangay = await ApiCall().getData('/getBarangayList');
-    List<BarangayList> barangayResponse = barangayListFromJson(barangay.body);
-    String barangayname;
-    var istrue = false;
-    for (int z = 0; z < barangayResponse.length; z++) {
-      if (barangayResponse[z].id.toString().contains(barangayID)) {
-        barangayname = barangayResponse[z].barangayName;
-        istrue = true;
-        break;
-      }
+    // final barangay = await ApiCall().getData('/getBarangayList');
+    // List<BarangayList> barangayResponse = barangayListFromJson(barangay.body);
+    // String barangayname;
+    // var istrue = false;
+    // for (int z = 0; z < barangayResponse.length; z++) {
+    //   if (barangayResponse[z].id.toString().contains(barangayID)) {
+    //     barangayname = barangayResponse[z].barangayName;
+    //     istrue = true;
+    //     break;
+    //   }
       
-    }
-    if (istrue) {
+    // }
+    String barangayname =barangayID;
+    // if (istrue) {
       if (barangayWidget.isNotEmpty) { 
         if (barangayWidget.contains("Magugpo")) {
             restoCharge = 30;
@@ -167,7 +168,7 @@ class ComputationFee{
          
         }
       }
-    }
+    // }
     if (barangayWidget.contains("Magugpo") &&
         barangayname.contains("Magugpo")) {
         totalOrder = 30;

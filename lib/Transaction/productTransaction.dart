@@ -20,6 +20,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong/latlong.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:location/location.dart';
 
 import '../styletext.dart';
@@ -481,19 +482,31 @@ class _TransactionListState extends State<TransactionList> {
                                                     height: 60,
                                                     width: double.infinity,
                                                     child: GestureDetector(
-                                                      onTap: () {
+                                                      onTap: () async{
 
-                                                    showDialog(
-                                                    context: context,
-                                                    barrierDismissible: true,
-                                                    builder: (context){
-                                                        return DialogForMico(
-                                                          baranggayResto: widget.baranggay,
-                                                          restaurantId: widget.restauID,
-                                                        );
-                                                    }
-                                                    ); 
-                                                    
+                                                    // showDialog(
+                                                    // context: context,
+                                                    // barrierDismissible: true,
+                                                    // builder: (context){
+                                                    //     return DialogForMico(
+                                                    //       baranggayResto: widget.baranggay,
+                                                    //       restaurantId: widget.restauID,
+                                                    //     );
+                                                    // }
+                                                    // ); 
+                                                   SharedPreferences localStorage =await SharedPreferences.getInstance();
+                                                   String userBaranggay = localStorage.getString('baranggay');
+                                                   String delAdd = localStorage.getString('delAdd');
+                                                   double fee =await ComputationFee().getFee(widget.baranggay, userBaranggay);
+                                                   if(fee!=null){
+                                                        Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
+                                                          deliveryTypedaw: delAdd,
+                                                          fee: fee,
+                                                          restauID:widget.restauID,
+                                                          userLat: userLat,
+                                                          userLng: userLng,
+                                                          )));
+                                                   }
                                                         // var distance = new Distance();
                                                         
                                                         // final double km = distance.as(LengthUnit.Kilometer,

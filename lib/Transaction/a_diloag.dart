@@ -137,7 +137,8 @@ Widget _view(BaranggayRespone respone){
                               setState(() {
                                 selectPerson = val;
                                 print(val);
-                              });
+                              }
+                              );
                              },
                              )
                        ),
