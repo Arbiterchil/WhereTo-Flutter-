@@ -499,6 +499,7 @@ class _TransactionListState extends State<TransactionList> {
                                                    String delAdd = localStorage.getString('delAdd');
                                                    double fee =await ComputationFee().getFee(widget.baranggay, userBaranggay);
                                                    if(fee!=null){
+                                                     print(fee);
                                                         Navigator.push(context, MaterialPageRoute(builder: (context) =>PayOrder(
                                                           deliveryTypedaw: delAdd,
                                                           fee: fee,

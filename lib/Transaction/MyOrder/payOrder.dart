@@ -497,6 +497,8 @@ class _PayOrderState extends State<PayOrder> {
                               Map<String, int> converted = {};
                               List<dynamic> order = [];
                               List<dynamic> result = [];
+                              SharedPreferences localStorageg = await SharedPreferences.getInstance();
+                                    var fin = localStorageg.getString('city');
                               SharedPreferences localStorage =
                                   await SharedPreferences.getInstance();
                               var userJson = localStorage.getString('user');
@@ -538,6 +540,7 @@ class _PayOrderState extends State<PayOrder> {
                                   "deliveryAddress":widget.deliveryTypedaw,
                                   "deliveryCharge": "${widget.fee}",
                                   "barangayId": user['barangayId'],
+                                  "cityId": fin
                                 };
                                 print(post);
                               });
@@ -560,8 +563,9 @@ class _PayOrderState extends State<PayOrder> {
                                   BlocProvider.of<OrderBloc>(context)
                                       .add(Computation.deleteAll());
                                   Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (context)=> HomePage()),ModalRoute.withName('/'));
+                                  
                                    final response =
-                                    await ApiCall().getData('/getAllPlayerId');
+                                    await ApiCall().getData('/getAllPlayerId/$fin');
                                 List<GetPlayerId> search =
                                     getPlayerIdFromJson(response.body);
                                 List<dynamic> player = [];

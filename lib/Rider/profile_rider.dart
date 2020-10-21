@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:WhereTo/A1_NewSingleBottomNav/bottom_nav.dart';
 import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
 import 'package:WhereTo/Rider/Tab_navi.dart';
+import 'package:WhereTo/Rider/adCityRider.dart';
 import 'package:WhereTo/Rider/rider_dash.dart';
 import 'package:WhereTo/Rider/rider_inbox.dart';
 import 'package:WhereTo/Rider/rider_sendRem.dart';
@@ -58,6 +59,7 @@ class _RiderProfileState extends State<RiderProfile> {
     configSignal();
 
     super.initState();
+    
   }
 
 
@@ -170,19 +172,19 @@ class _RiderProfileState extends State<RiderProfile> {
           [
              BottomBarItems(
               icon: Icon(EvaIcons.personDone), 
-              title: Text("DashBoard"),
+              title: Text("Rider"),
               activeColor: Colors.indigo,
               inActiveColor: wheretoDark
               ),
               BottomBarItems(
               icon: Icon(EvaIcons.folderAdd), 
-              title: Text("Transactions"),
+              title: Text("Orders"),
               activeColor: pureblue,
                inActiveColor: wheretoDark
               ),
               BottomBarItems(
               icon: Icon(EvaIcons.fileAdd), 
-              title: Text("Comments"),
+              title: Text("Reply"),
               activeColor: Colors.deepOrange,
                inActiveColor: wheretoDark
               )

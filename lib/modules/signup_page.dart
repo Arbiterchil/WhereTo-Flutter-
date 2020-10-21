@@ -57,6 +57,7 @@ class _SignupPageState extends State<SignupPage> {
   FocusNode conpasswords;
   FocusNode barangaySelect;
   bool loadingShow= false;
+  
   // final formkey = GlobalKey<FormState>();
 
   // TextEditingController fulname = TextEditingController();

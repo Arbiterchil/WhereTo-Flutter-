@@ -33,6 +33,7 @@ class SignUpBlocDick extends Object with Validators{
      confirmpassword.addError('Password Not Match');
    }
   });
+  
  Stream<String> get barangayId => getBarangayId.stream;
  Stream<String> get xcontactNumber => contactNumberControlDicky.stream.transform(validatePhoneNumberuser);
  Stream<bool> get submiited => Rx.combineLatest6(

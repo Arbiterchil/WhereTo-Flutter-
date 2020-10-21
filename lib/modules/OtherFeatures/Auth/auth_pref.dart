@@ -1,11 +1,14 @@
 
 import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
 import 'package:WhereTo/Admin/navbottom_admin.dart';
+import 'package:WhereTo/Rider/adCityRider.dart';
 import 'package:WhereTo/Rider/profile_rider.dart';
 import 'package:WhereTo/modules/A_RiderLog/rider_logPen.dart';
 import 'package:WhereTo/modules/Awalkthrough/walk_t.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 import 'package:WhereTo/modules/categoryCAB/cab.dart';
 import 'package:WhereTo/modules/homepage.dart';
+import 'package:WhereTo/modules/locationIden.dart';
 import 'package:WhereTo/modules/login_page.dart';
 import 'package:WhereTo/modules/profile.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +22,13 @@ class AuthSharedBloc{
   String tokes="";
   String vartype = "";
   String walkth = "";
-  String paginguser = "";
+  String paginguser = UserGetPref().userGetPage;
   bool isLogged = false;
   bool shown = false;
 
-Future forUsersOnly(String doneChanging,String cityId, String barangayId, String deliveryAddress) async{
+Future forUsersOnly(String cityId, String barangayId, String deliveryAddress) async{
       SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString("paging", doneChanging);
+      // localStorage.setString("paging", doneChanging);
       localStorage.setString("city", cityId);
       localStorage.setString("baranggay", barangayId);
       localStorage.setString("delAdd", deliveryAddress);
@@ -56,12 +59,15 @@ void removeIt() async{
 
 void logRemoveAll(context) async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove('riderSend');
   prefs.remove('user');
   prefs.remove('token');
   prefs.remove('type');
   prefs.remove('latitude');
   prefs.remove('longitude');
   prefs.remove('menuplustrans');
+  prefs.remove('userTYPO');
+  prefs.remove('cityRider');
   Navigator.pushAndRemoveUntil(
                               context,
                               new MaterialPageRoute(
@@ -72,10 +78,10 @@ void getThos() async{
   SharedPreferences localStorage = await SharedPreferences.getInstance();
    var token = localStorage.getString('token');
    var type = localStorage.getString('type');
-   var usershowpage = localStorage.getString('paging');
+  //  var usershowpage = localStorage.getString('paging');
    var totoyBibo = localStorage.getString('trial');
    if(token != null){
-     paginguser = usershowpage;
+    //  paginguser = usershowpage;
      isLogged = true;
    vartype = type;
     tokes = token;
@@ -88,18 +94,17 @@ void getThos() async{
   userTypeScreen(BuildContext context,int type){
     
     if(type == 0){
-      getThos();
-      if(paginguser.isNotEmpty){
-        Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
-      => HomePage()));
-      }else{
-        Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
-      => FirstPageForRegUser()));
-      }
-      
+      // getThos();
+      // if(paginguser.isNotEmpty){
+      //   Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
+      // => HomePage()));
+      // }else{
+      //   Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
+      // => FirstPageForRegUser()));
+      // }
+      locateUserPage..plums(context);
     }else if(type == 1){
-      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
-      => RiderProfile()));
+      addCityRider..plumming(context);
     }else if(type == 2){
       Navigator.pushReplacement(context, new MaterialPageRoute(builder: (_)
       => AdminHomeDash()));
@@ -131,7 +136,7 @@ void getThos() async{
    String  customer = "0";
       String  rider = "1";
       String  admin = "2";
-      String userpage = "paging";
+      String userpage = "page";
       if(isLogged == true){
 
          if(customer.contains(vartype)){

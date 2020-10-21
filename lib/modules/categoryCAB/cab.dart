@@ -422,7 +422,8 @@ class _FirstPageForRegUserState extends State<FirstPageForRegUser> {
 
         print("Sulod");
         UserGetPref().cityId(selectedCity);
-        await authShared.forUsersOnly("paging", selectedCity, selectedbaranggayTagum, delAdd.text);
+        UserGetPref().userDataSave("page");
+        await authShared.forUsersOnly( selectedCity, selectedbaranggayTagum, delAdd.text);
         Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context)=> HomePage() ));
       }  
 

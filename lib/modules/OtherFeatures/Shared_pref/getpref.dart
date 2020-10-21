@@ -43,6 +43,41 @@ Future restuNameExtra(String name){
 Future chosenCityAdmin(String id){
   return _prefs.setString("idSearch", id);
 }
+
+Future savePassforAll(String passwords){
+  return _prefs.setString('passwordRight', passwords);
+}
+Future saveforRider(String ride){
+  return _prefs.setString('riderSend',ride );
+}
+
+Future riderSaveCity(String city){
+  return  _prefs.setString('cityRider', city);
+}
+
+Future userDataSave(String paging){
+  return _prefs.setString('page', paging);
+}
+
+get userGetPage{
+  var page = _prefs.getString('page');
+  return page;
+}
+
+get riderSaveCitys{
+  var cit = _prefs.getString('cityRider');
+  return cit;
+}
+
+get riderSend{
+  var duck = _prefs.getString('riderSend');
+  return duck;
+}
+
+get getSavePass{
+  var pass = _prefs.getString('passwordRight');
+  return pass;
+}
 get idSearch {
   var fin = _prefs.getString("idSearch");
   return fin;

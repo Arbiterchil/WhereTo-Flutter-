@@ -90,15 +90,12 @@ List idsComming = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    backgroundColor: Color(0xFFF2F2F2),
+    // backgroundColor: Color(0xFFF2F2F2),
     // Color(0xFF398AE5),
     body: WillPopScope(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
         child: SafeArea(
             child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
@@ -147,7 +144,8 @@ List idsComming = [];
                   //  _viewRider(),
                   // RiderViewing()
                   Container(
-                    height: 600,
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
                     child: StreamBuilder<RetrievResponse>(
                       stream: retriveStream.subject.stream,
                       builder: (context, AsyncSnapshot<RetrievResponse> asyncSnapshot){
@@ -163,14 +161,15 @@ List idsComming = [];
                         }
                       },
                     ),
-                  )
+                  ),
+                  SizedBox(height: 30,),
                   ],
                 ),
               ),
             ),
          
         ),
-      ),
+    
       onWillPop: () async => false),
     );
   }
@@ -228,31 +227,8 @@ List idsComming = [];
               return Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    // child: Customgettransac( image: "asset/img/logo.png",
-                    //             transacId: v[index].id.toString(),
-                    //             name: v[index].name,
-                    //             address: v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString(),
-                    //             deliveryAddress:v[index].transLatitude+","+v[index].transLongitude,
-                    //             restaurantName: v[index].restaurantName,
-                    //             onTap: () async {
-
-                    //                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                    //                                     return ViewMenuOnTransac(
-                    //                                       getID:v[index].id.toString(),
-                    //                                       deliverTo:v[index].transLatitude+","+v[index].transLongitude,
-                    //                                       restaurantName: v[index].restaurantName,
-                    //                                       deviceID: v[index].deviceId,
-                    //                                       riderID: v[index].riderId.toString(),
-                    //                                       deliveryCharge: v[index].deliveryCharge.toString(),
-                    //                                       nametran:  v[index].name,
-                    //                                       contactNumber : v[index].contactNumber.toString(),
-                    //                                       playerId: v[index].deviceId,
-                    //                                       user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
-                    //                                       );
-                    //                                   }));
-                    //             },
-                    // ),
+                    padding: const EdgeInsets.only(top: 20,left: 20,right: 20),
+          
                     child: GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context){
@@ -274,126 +250,181 @@ List idsComming = [];
                                                           );
                                                       }));
       },
-      child:  Container(
-             height: 150,
-             width: MediaQuery.of(context).size.width,
-             decoration: BoxDecoration(
-               border: Border.all(
-                 width: 1,
-                 color: pureblue,
+      child:  Banner(
+        message: "New Order",
+        location: BannerLocation.topEnd,
+        color: wheretoDark,
+        child: Container(
+               height: 140,
+               width: MediaQuery.of(context).size.width,
+               decoration: BoxDecoration(
+                color: Color(0xFFF7F7F7),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 2.2,
+                          blurRadius: 3.3,
+                          color: wheretoDark.withOpacity(0.3)
+                  ),
+                ],
+                 borderRadius: BorderRadius.all(Radius.circular(5)),
                ),
-               borderRadius: BorderRadius.all(Radius.circular(20)),
-             ),
-             child: Stack(
-               children: <Widget>[
-                 Align(
-                   alignment: Alignment.centerLeft,
-                   child: Padding(
-                     padding: const EdgeInsets.only(left: 20),
-                     child: Container(
-                       height: 50,
-                       width: 50,
-                       decoration: BoxDecoration(
-                         shape: BoxShape.circle,
-                         image: DecorationImage(
-                           image: AssetImage("asset/img/logo.png") )
-                       ),
-                     
-                     ),
-                   ),
+               child: Padding(
+                 padding: const EdgeInsets.only(left: 20),
+                 child: Column(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                      Text(v[index].name,
+                      style: TextStyle(
+                      color: wheretoDark,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                      fontFamily: 'Gilroy-ExtraBold'
+                      ),
+                      ),
+                      SizedBox(height: 7.0,),
+                      Text(v[index].restaurantName,
+                      style: TextStyle(
+                      color: wheretoDark,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 11.0,
+                      fontFamily: 'Gilroy-light'
+                      ),
+                      ),
+                      SizedBox(height: 7.0,),
+                      Text(v[index].deliveryAddress,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                      color: wheretoDark,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 11.0,
+                      fontFamily: 'Gilroy-light'
+                      ),
+                      ),
+                      SizedBox(height: 7.0,),
+                      Text(v[index].deliveryCharge.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                      color: wheretoDark,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 11.0,
+                      fontFamily: 'Gilroy-light'
+                      ),
+                      ),
+                   ],
                  ),
-                 Align(
-                   alignment: Alignment.centerRight,
-                   child: Padding(
-                     padding: const EdgeInsets.only(right: 20),
-                     child: Container(
-                        width: 190,
-                       child: Column(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children: <Widget>[
-                          Text(v[index].name,
-                                                      style: TextStyle(
-                                                      color: pureblue,
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 18.0,
-                                                      fontFamily: 'Gilroy-ExtraBold'
-                                                    ),
-                                                      ),
-                                                      SizedBox(height: 7.0,),
-                                                      Text(v[index].restaurantName,
-                                                      style: TextStyle(
-                                                      color: pureblue,
-                                                      fontWeight: FontWeight.normal,
-                                                      fontSize: 11.0,
-                                                      fontFamily: 'Gilroy-light'
-                                                    ),
-                                                      ),
-                                                       SizedBox(height: 3.0,),
-                                                    //     FutureBuilder(
-                                                    //           future: CoordinatesConverter()
-                                                    //           .getAddressByLocation(
-                                                    //             v[index].restoLatitude.toString()
-                                                    //             +","+
-                                                    //             v[index].restoLongitude.toString()),
-                                                    //           builder: (con ,snaps){
-                                                    //             if(snaps.data == null){
-                                                    //               return Container();
-                                                    //             }else{
-                                                    //               return Container(
-                                                    //           child: Text(
-                                                    //             'From: ${snaps.data}',
-                                                    //           overflow: TextOverflow.ellipsis,
-                                                    //           style: TextStyle(
-                                                    //           color: pureblue,
-                                                    //           fontWeight: FontWeight.normal,
-                                                    //           fontSize: 11.0,
-                                                    //           fontFamily: 'Gilroy-light'
-                                                    // ),
-                                                    //           ),
-                                                    //         );
-                                                    //             }
-                                                    //           },
-                                                    //         ),
-                                                      
-                                                    //   SizedBox(height: 3.0,), 
-                                                    //   Flexible(
-                                                    //         child: FutureBuilder(
-                                                    //           future: CoordinatesConverter().getAddressByLocation(
-                                                    //             v[index].transLatitude.toString()
-                                                    //             +","+
-                                                    //             v[index].transLongitude.toString()),
-                                                    //           builder: (con ,snaps){
-                                                    //             if(snaps.data == null){
-                                                    //               return Container();
-                                                    //             }else{
-                                                    //               return Container(
-                                                    //           child: Text(
-                                                    //             'To: ${snaps.data}',
-                                                    //           overflow: TextOverflow.ellipsis,
-                                                    //           style: TextStyle(
-                                                    //           color: pureblue,
-                                                    //           fontWeight: FontWeight.normal,
-                                                    //           fontSize: 11.0,
-                                                    //           fontFamily: 'Gilroy-light'
-                                                    // ),
-                                                    //           ),
-                                                    //         );
-                                                    //             }
-                                                    //           },
-                                                    //         ),
-                                                    //       ),
-                                                       
-                         ],
-                       ),
-                     ),
-                   ),
-                 ),
-               ],
-             ),
+               ),
+              //  child: Stack(
+              //    children: <Widget>[
+              //      Align(
+              //        alignment: Alignment.centerLeft,
+              //        child: Padding(
+              //          padding: const EdgeInsets.only(left: 20),
+              //          child: Container(
+              //            height: 50,
+              //            width: 50,
+              //            decoration: BoxDecoration(
+              //              shape: BoxShape.circle,
+              //              image: DecorationImage(
+              //                image: AssetImage("asset/img/logo.png") )
+              //            ),
+                       
+              //          ),
+              //        ),
+              //      ),
+              //      Align(
+              //        alignment: Alignment.centerRight,
+              //        child: Padding(
+              //          padding: const EdgeInsets.only(right: 20),
+              //          child: Container(
+              //             width: 190,
+              //            child: Column(
+              //              mainAxisAlignment: MainAxisAlignment.center,
+              //              crossAxisAlignment: CrossAxisAlignment.start,
+              //              children: <Widget>[
+              //               Text(v[index].name,
+              //                                           style: TextStyle(
+              //                                           color: pureblue,
+              //                                           fontWeight: FontWeight.bold,
+              //                                           fontSize: 18.0,
+              //                                           fontFamily: 'Gilroy-ExtraBold'
+              //                                         ),
+              //                                           ),
+              //                                           SizedBox(height: 7.0,),
+              //                                           Text(v[index].restaurantName,
+              //                                           style: TextStyle(
+              //                                           color: pureblue,
+              //                                           fontWeight: FontWeight.normal,
+              //                                           fontSize: 11.0,
+              //                                           fontFamily: 'Gilroy-light'
+              //                                         ),
+              //                                           ),
+              //                                            SizedBox(height: 3.0,),
+              //                                         //     FutureBuilder(
+              //                                         //           future: CoordinatesConverter()
+              //                                         //           .getAddressByLocation(
+              //                                         //             v[index].restoLatitude.toString()
+              //                                         //             +","+
+              //                                         //             v[index].restoLongitude.toString()),
+              //                                         //           builder: (con ,snaps){
+              //                                         //             if(snaps.data == null){
+              //                                         //               return Container();
+              //                                         //             }else{
+              //                                         //               return Container(
+              //                                         //           child: Text(
+              //                                         //             'From: ${snaps.data}',
+              //                                         //           overflow: TextOverflow.ellipsis,
+              //                                         //           style: TextStyle(
+              //                                         //           color: pureblue,
+              //                                         //           fontWeight: FontWeight.normal,
+              //                                         //           fontSize: 11.0,
+              //                                         //           fontFamily: 'Gilroy-light'
+              //                                         // ),
+              //                                         //           ),
+              //                                         //         );
+              //                                         //             }
+              //                                         //           },
+              //                                         //         ),
+                                                        
+              //                                         //   SizedBox(height: 3.0,), 
+              //                                         //   Flexible(
+              //                                         //         child: FutureBuilder(
+              //                                         //           future: CoordinatesConverter().getAddressByLocation(
+              //                                         //             v[index].transLatitude.toString()
+              //                                         //             +","+
+              //                                         //             v[index].transLongitude.toString()),
+              //                                         //           builder: (con ,snaps){
+              //                                         //             if(snaps.data == null){
+              //                                         //               return Container();
+              //                                         //             }else{
+              //                                         //               return Container(
+              //                                         //           child: Text(
+              //                                         //             'To: ${snaps.data}',
+              //                                         //           overflow: TextOverflow.ellipsis,
+              //                                         //           style: TextStyle(
+              //                                         //           color: pureblue,
+              //                                         //           fontWeight: FontWeight.normal,
+              //                                         //           fontSize: 11.0,
+              //                                         //           fontFamily: 'Gilroy-light'
+              //                                         // ),
+              //                                         //           ),
+              //                                         //         );
+              //                                         //             }
+              //                                         //           },
+              //                                         //         ),
+              //                                         //       ),
+                                                         
+              //              ],
+              //            ),
+              //          ),
+              //        ),
+              //      ),
+              //    ],
+              //  ),
 
-                 
-                        ),
+                   
+                          ),
+      ),
     ),
 
                   ),

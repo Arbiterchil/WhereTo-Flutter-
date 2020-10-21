@@ -79,7 +79,7 @@ Widget getCity() {
                 decoration:BoxDecoration(
                 color: Colors.white,
             borderRadius: BorderRadius.circular(100.0),
-            border: Border.all(width: 1, color: Color(0xFF0F75BB) ),
+            border: Border.all(width: 1, color: wheretoDark ),
               ),
               child: Padding(
                padding: const EdgeInsets.only(left: 10),
@@ -92,7 +92,7 @@ Widget getCity() {
                               padding: const EdgeInsets.only(top:10.0),
                               child: Icon(
                                 Icons.place,
-                                color: Color(0xFF0F75BB),
+                                color: wheretoDark,
                               ),
                             )),
                     Padding(
@@ -104,20 +104,20 @@ Widget getCity() {
                              hint:  Text(
                                     "Select City",
                                     style: TextStyle(
-                                        color: Color(0xFF0F75BB),
+                                        color: wheretoDark,
                                         fontFamily: 'Gilroy-light'),
                                   ),
                                    dropdownColor: Colors.white,
                                    icon: Icon(
                                     Icons.arrow_drop_down,
-                                    color:Color(0xFF0F75BB),
+                                    color:wheretoDark,
                                   ),
                                 
                              items: cl.map((e) {
                                 return new DropdownMenuItem(
                                   child: Text(e.cityName,
                                   style: TextStyle(
-                                            color: Color(0xFF0F75BB),
+                                            color: wheretoDark,
                                             fontFamily: 'Gilroy-light'),),
                                             value: e.id.toString(),
                                 );
@@ -215,7 +215,7 @@ Widget getCity() {
                 decoration:BoxDecoration(
                 color: Colors.white,
             borderRadius: BorderRadius.circular(100.0),
-            border: Border.all(width: 1, color: Color(0xFF0F75BB) ),
+            border: Border.all(width: 1, color: wheretoDark ),
               ),
               child: Padding(
                padding: const EdgeInsets.only(left: 10),
@@ -228,7 +228,7 @@ Widget getCity() {
                               padding: const EdgeInsets.only(top:10.0),
                               child: Icon(
                                 Icons.place,
-                                color: Color(0xFF0F75BB),
+                                color: wheretoDark,
                               ),
                             )),
                     Padding(
@@ -240,20 +240,20 @@ Widget getCity() {
                              hint:  Text(
                                     "Select Barangay",
                                     style: TextStyle(
-                                        color: Color(0xFF0F75BB),
+                                        color: wheretoDark,
                                         fontFamily: 'Gilroy-light'),
                                   ),
                                    dropdownColor: Colors.white,
                                    icon: Icon(
                                     Icons.arrow_drop_down,
-                                    color:Color(0xFF0F75BB),
+                                    color:wheretoDark,
                                   ),
                                 
                              items: bl.map((e) {
                                 return new DropdownMenuItem(
                                   child: Text(e.barangayName,
                                   style: TextStyle(
-                                            color: Color(0xFF0F75BB),
+                                            color: wheretoDark,
                                             fontFamily: 'Gilroy-light'),),
                                             value: e.id.toString(),
                                 );
@@ -329,14 +329,18 @@ Widget getCity() {
                       Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
-              decoration: eBoxDecorationStyle,
+               decoration:BoxDecoration(
+                color: Colors.white,
+            borderRadius: BorderRadius.circular(100.0),
+            border: Border.all(width: 1, color: wheretoDark ),
+              ),
               height: 50.0,
               child: TextFormField(
-                cursorColor: pureblue,
+                cursorColor: wheretoDark,
                 controller: delAdd,
                 validator: (val) => val.isEmpty ? ' Please Put Delivery Address' : null,
                 style: TextStyle(
-                  color: pureblue,
+                  color: wheretoDark,
                   fontFamily: 'Gilroy-light',
                 ),
                 decoration: InputDecoration(
@@ -344,10 +348,13 @@ Widget getCity() {
                   contentPadding: EdgeInsets.only(top:14.0),
                   prefixIcon: Icon(
                     EvaIcons.map,
-                    color: pureblue,
+                    color: wheretoDark,
                   ),
                   hintText: 'Delivery Address',
-                  hintStyle: eHintStyle,
+                  hintStyle: TextStyle(
+                  color: wheretoDark,
+                  fontFamily: 'Gilroy-light',
+                ),
                 ),
               ),
             ),
@@ -368,7 +375,7 @@ Widget getCity() {
                         ),
                       ),
                       splashColor: wheretoDark,
-                      color: pureblue,
+                      color: wheretoDark,
                       onPressed: ()=>navigatepage()),
                   ),
                     ],
@@ -448,7 +455,8 @@ Widget getCity() {
 
         print("Sulod");
         UserGetPref().cityId(selectedCity);
-        await authShared.forUsersOnly("paging", selectedCity, selectedbaranggayTagum, delAdd.text);
+        UserGetPref().userDataSave("page");
+        await authShared.forUsersOnly( selectedCity, selectedbaranggayTagum, delAdd.text);
         Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context)=> HomePage() ));
       }  
 

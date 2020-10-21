@@ -62,6 +62,7 @@ loginUser(BuildContext context) async{
       }else{
         
         UserGetPref().setuserJson(json.encode(resultBody['user']));
+        UserGetPref().savePassforAll(passwordUser);
         authShared.saveDataAccount(
           resultBody['token'],
           resultBody['user']['userType'].toString(),
@@ -69,6 +70,7 @@ loginUser(BuildContext context) async{
           resultBody['user']['longitude'].toString());
         authShared.userTypeScreen(context,
         resultBody['user']['userType']);
+
       }
     }else if(resultBody['remitPending'] == true){
       showDialog(

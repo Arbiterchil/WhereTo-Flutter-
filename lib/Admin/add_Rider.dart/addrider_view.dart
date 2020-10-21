@@ -8,10 +8,7 @@ class AddRiderAccount extends StatelessWidget {
       body: WillPopScope(
           child: SafeArea(
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                         horizontal: 40.0,
-                         vertical: 80.0,
-                       ),
+             physics: BouncingScrollPhysics(),
                        child: Column(
                          children: <Widget>[
                            RiderForms(),

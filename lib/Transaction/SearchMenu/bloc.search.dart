@@ -6,6 +6,7 @@ import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:WhereTo/google_maps/google-key.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class BlocSearch{
@@ -30,7 +31,9 @@ _publishSubjectFeautured.sink.add(filter);
 }
 
 Future<void> getmenu(String query) async {
-final response = await ApiCall().getRestarant('/getAllMenu');
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
+  var fin = localStorage.getString('city');
+final response = await ApiCall().getRestarant('/getAllMenu/$fin');
 List<FilterRestaurant> search = filterRestaurantFromJson(response.body);
 var filter =search.where((element) =>  element.menuName.contains(query) || element.menuName.toLowerCase().contains(query) || element.menuName.toUpperCase().contains(query) ||
  element.restaurantName.contains(query) || element.restaurantName.toLowerCase().contains(query) || element.restaurantName.toUpperCase().contains(query) 

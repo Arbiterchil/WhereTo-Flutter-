@@ -1,12 +1,15 @@
-import 'dart:convert';
 
+
+import 'package:WhereTo/A1_NewSingleBottomNav/Single_customfield/single.customField.dart';
+import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
+import 'package:WhereTo/Admin/add_Rider.dart/riderbloc.dart';
 import 'package:WhereTo/BarangaylocalList/barangay_class.dart';
 import 'package:WhereTo/BarangaylocalList/barangay_response.dart';
 import 'package:WhereTo/BarangaylocalList/barangay_stream.dart';
-import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
-import 'package:WhereTo/modules/editProfileScreen.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'dart:ui';
@@ -18,13 +21,6 @@ class RiderForms extends StatefulWidget {
 }
 
 class _RiderFormsState extends State<RiderForms> {
-
-    TextEditingController fullanme  = TextEditingController();
-    TextEditingController addressmadafa = TextEditingController();
-    TextEditingController contactnumber = TextEditingController();
-    TextEditingController email = TextEditingController();
-    TextEditingController licensenumber = TextEditingController();
-    TextEditingController plateNumber = TextEditingController();
     LatLng latlng = new LatLng(12.8797,121.7740);
 String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
     final formkey = GlobalKey<FormState>();
@@ -33,131 +29,224 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
    double lats;
    double longs ;
    double toShowAddress;
+
+
+  FocusNode fullname;
+  FocusNode email;
+  FocusNode contacts;
+  FocusNode license;
+  FocusNode palte;
+ 
+
+
   @override
   void initState() {
     super.initState();
     bararangStream..getBarangayListFormDb();
-    // callBarangay();
+     fullname = FocusNode();
+   email = FocusNode();
+   contacts = FocusNode();
+   license = FocusNode();
+   palte = FocusNode();
   }
 
-  // List<dynamic> dataBarangay = List();
-  // void callBarangay() async{
-
-  //   var respon = await ApiCall().getBararang('/getBarangayList');
-  //   var bararang = json.decode(respon.body);
-  
-  //   setState(() {
-  //     dataBarangay = bararang;
-  //   });
-  //   // print(bararang);
-  // }
-  phoneValidate(String val){
-          Pattern pattern = r'^([+0]9)?[0-9]{10,11}$';
-          RegExp regExp = new RegExp(pattern);
-          if (val.length == 0 ){
-            return 'Please enter your number';
-          }else if (val.length < 11){
-            return 'Mobile Number Consist of 11 Digits';
-          }
-          else if(!regExp.hasMatch(val)){
-            return 'Enter A Valid Contact Number';
-          }
-          else{
-            return null;
-          }
-
-    }     
-  emailValidate(String value){
-      Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value))
-      return 'Enter Valid Email';
-    else
-      return null;
-    }
-  
   @override
   void dispose() {
     super.dispose();
     bararangStream..drainStreamData();
   }
+
+
+  Widget fullRN(RiderBloc riderBloc){
+     return CustomTextFieldFixStyle(
+      stream: riderBloc.fr,
+      obsecure: false,
+      onchangeTxt: riderBloc.cfr,
+      iconText: EvaIcons.person,
+      type: TextInputType.name,
+      hintTxt: "Full Name",
+      labelText: "Full Name",
+      nodes: fullname ,
+      actions: TextInputAction.next,
+      submit: (_)=>FocusScope.of(context).requestFocus(email),
+    );
+  }
+  Widget emailRn(RiderBloc riderBloc){
+    return CustomTextFieldFixStyle(
+      stream: riderBloc.em,
+      obsecure: false,
+      onchangeTxt: riderBloc.cem,
+      iconText: EvaIcons.email,
+      type: TextInputType.emailAddress,
+      hintTxt: "whereto@example.com",
+      labelText: "Email",
+      nodes: email,
+      actions: TextInputAction.next,
+      submit: (_)=>FocusScope.of(context).requestFocus(contacts),
+    );
+  }
+   Widget phone(RiderBloc riderBloc){
+    return CustomTextFieldFixStyle(
+      stream: riderBloc.cr,
+      obsecure: false,
+      onchangeTxt: riderBloc.ccr,
+      iconText: EvaIcons.phone,
+      type: TextInputType.number,
+      hintTxt: "09XXXXXXXXX",
+      labelText: "Contact Number",
+      nodes: contacts ,
+      actions: TextInputAction.next,
+      submit: (_)=>FocusScope.of(context).requestFocus(license),
+    );
+  }
+  Widget licenRn(RiderBloc riderBloc){
+     return CustomTextFieldFixStyle(
+      stream: riderBloc.lr,
+      obsecure: false,
+      onchangeTxt: riderBloc.clr,
+      iconText: EvaIcons.creditCard,
+      type: TextInputType.name,
+      hintTxt: "License",
+      labelText: "License",
+      nodes: license,
+      actions: TextInputAction.next,
+      submit: (_)=>FocusScope.of(context).requestFocus(palte),
+    );
+  }
+
+  Widget plateRn(RiderBloc riderBloc){
+     return CustomTextFieldFixStyle(
+      stream: riderBloc.pr,
+      obsecure: false,
+      onchangeTxt: riderBloc.cpr,
+      iconText: EvaIcons.colorPalette,
+      type: TextInputType.name,
+      hintTxt: "Plate Number",
+      labelText: "Plate Number",
+      nodes: palte,
+      actions: TextInputAction.done,
+      submit: (_)=>FocusScope.of(context).requestFocus(FocusNode()),
+    );
+  }
+   Widget barangay(){   
+    return StreamBuilder<BaranggayRespone>(
+      stream: bararangStream.subject.stream,
+      builder: (context,AsyncSnapshot<BaranggayRespone> snaphot){
+         if(snaphot.hasData){
+            if(snaphot.data.error !=null && snaphot.data.error.length > 0){
+                return _errorTempMessage(snaphot.data.error);
+            }
+              return _view(snaphot.data,riderBloc);
+        }else if(snaphot.hasError){
+              return _errorTempMessage(snaphot.error);
+        }else{
+              return _loading();
+        }
+      
+      });
+  }
+
+  Widget formSub(RiderBloc riderBloc){
+     return StreamBuilder(
+      stream: riderBloc.subs,
+      builder: (context, snaps) 
+      => Container(
+        height: 50,
+        width: 150,
+        child: RaisedButton(
+          color: pureblue,
+          splashColor: wheretoDark,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(60)
+          ),
+          child:Center(
+                            child: Text("Add Rider",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Gilroy-light'
+                            ),
+                            ), 
+                        ),
+          onPressed: snaps.hasData
+          ?() => navigatepage(riderBloc):null),
+      ));
+  }
+
+  void navigatepage(RiderBloc riderBloc) async{
+
+    if(lats == null && longs == null){
+      showDialog(
+      barrierDismissible: false,
+      context: (context),
+      builder: (context) 
+      =>
+       DialogForAll(
+        widgets: SpinKitPulse(color: wheretoDark,size: 80,),
+        labelHeader: "Notice:",
+        message: "Please Select The Restaurant Address.",
+        buttTitle1: "OK",
+        buttTitle2: "",
+        noFunc: null,
+        yesFunc: () =>Navigator.pop(context),
+        showorNot1: true,
+        showorNot2: false,
+      ),
+      
+      );
+    }else{
+      setState(() {
+        loading = true;
+      });
+      await riderBloc.signUpRider(lats, longs, context);
+      setState(() {
+        loading = false;
+      });
+
+    }
+
+  }
+
+  Widget spinKitDots(){
+  return Container(
+    height: 40,
+    width: 60,
+    child: SpinKitThreeBounce(
+      color: pureblue,
+      size: 30,
+    ),
+  );
+}
+
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formkey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        textDirection: TextDirection.ltr,
-        children: <Widget>[
-          // SizedBox(height: 10.0,),
-          // Text('Full Name',
-          //           style: eLabelStyle,
-          //           ),
-          SizedBox(height: 10.0,),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
-              decoration: eBoxDecorationStyle,
-              height: 50.0,
-              child: TextFormField(
-                cursorColor: pureblue,
-                controller: fullanme,
-                validator: (val) => val.isEmpty ? ' Please Put Your Restaurant Name' : null,
-                style: TextStyle(
-                  color: pureblue,
-                  fontFamily: 'Gilroy-light',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top:14.0),
-                  prefixIcon: Icon(
-                    Icons.shop,
-                    color: pureblue,
-                  ),
-                  hintText: 'Full Name',
-                  hintStyle: eHintStyle,
-                ),
-              ),
-            ),
-          SizedBox(height: 15.0,),
-          // Text('Email',
-          //           style: eLabelStyle,
-          //           ),
-          // SizedBox(height: 10.0,),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
-              decoration: eBoxDecorationStyle,
-              height: 50.0,
-              child: TextFormField(
-                cursorColor: pureblue,
-                controller: email,
-                validator: (val)=> emailValidate(email.text = val),
-                    onSaved: (val) => email.text = val,
-                style: TextStyle(
-                  color: pureblue,
-                  fontFamily: 'Gilroy-light',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top:14.0),
-                  prefixIcon: Icon(
-                    Icons.email,
-                    color: pureblue,
-                  ),
-                  hintText: 'Email',
-                  hintStyle: eHintStyle,
-                ),
-              ),
-            ),
-          // Text('Address',
-          //           style: eLabelStyle,
-          //           ),
-          // SizedBox(height: 10.0,),
-          SizedBox(height: 15.0,),
-          FutureBuilder(
-                  future: CoordinatesConverter().getAddressByLocation(lats.toString()+","+longs.toString(),),
+
+    return SafeArea(
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30,right: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  fullRN(riderBloc),
+                  SizedBox(height: 12,),
+                  emailRn(riderBloc),
+                  SizedBox(height: 12,),
+                  phone(riderBloc),
+                  SizedBox(height: 12,),
+                  licenRn(riderBloc),
+                  SizedBox(height: 12,),
+                  plateRn(riderBloc),
+                  SizedBox(height: 12,),
+                  barangay(),
+                  SizedBox(height: 12,),
+                  FutureBuilder(
+                  future: CoordinatesConverter().getAddressByLocation(
+                    lats.toString()+","+longs.toString(),),
                   builder: (con ,snaps){
                     if(snaps.data == null){
                      return  NCard(
@@ -177,272 +266,23 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                     }
                   },
                 ),
-          // Container(
-          //     width: MediaQuery.of(context).size.width,
-          //     alignment: Alignment.centerLeft,
-          //     decoration: eBoxDecorationStyle,
-          //     height: 50.0,
-          //     child: TextFormField(
-          //       cursorColor: pureblue,
-          //       controller: addressmadafa, 
-          //       validator: (val) => val.isEmpty ? ' Please Put A Address Name' : null,
-          //       style: TextStyle(
-          //         color: pureblue,
-          //         fontFamily: 'Gilroy-light',
-          //       ),
-          //       decoration: InputDecoration(
-          //         border: InputBorder.none,
-          //         contentPadding: EdgeInsets.only(top:14.0),
-          //         prefixIcon: Icon(
-          //           Icons.my_location,
-          //           color: pureblue,
-          //         ),
-          //         hintText: 'Address',
-          //         hintStyle: eHintStyle,
-          //       ),
-          //     ),
-          //   ),
-          SizedBox(height: 15.0,),
-          // Text('Contact Number',
-          //           style: eLabelStyle,
-          //           ),
-          // SizedBox(height: 10.0,),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
-              decoration: eBoxDecorationStyle,
-              height: 50.0,
-              child: TextFormField(
-                cursorColor:pureblue,
-              keyboardType: TextInputType.number,
-                controller: contactnumber,
-                validator: (val)=> phoneValidate(contactnumber.text = val),
-                onSaved: (val) => contactnumber.text = val,    
-                style: TextStyle(
-                  color: pureblue,
-                  fontFamily: 'Gilroy-light',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top:14.0),
-                  prefixIcon: Icon(
-                    Icons.phone_android,
-                    color: pureblue,
-                  ),
-                  hintText: '09**********',
-                  hintStyle: eHintStyle,
-                ),
+                  SizedBox(height: 22,),
+                  loading ? spinKitDots():
+                  formSub(riderBloc),
+                ],
               ),
             ),
-          SizedBox(height: 15.0,),
-          // Text("Barangay",
-          //           style: eLabelStyle,
-          //           ),
-          // SizedBox(height: 10.0,),
-          // Container(
-          //     width: MediaQuery.of(context).size.width,
-          //     alignment: Alignment.centerLeft,
-          //     decoration: eBoxDecorationStyle,
-          //     height: 50.0,
-          //     child: Padding(
-          //       padding: const EdgeInsets.only(left: 10),
-          //       child: DropdownButtonHideUnderline(
-          //             child:
-          //   Stack(
-          //               children: <Widget>[
-          //                 Align(
-          //                   alignment: Alignment.centerLeft,
-          //                   child: Icon(Icons.place,color: pureblue)),
-          //                 Padding(
-          //                   padding: const EdgeInsets.only(left: 30),
-          //                   child:
-                            
-                            
-          //                    DropdownButton(
-          //                         isExpanded: true ,
-          //                         hint: Text( "Select Barangay",
-          //                         style: TextStyle(
-                                      
-          //                             color: pureblue,
-          //                             fontFamily: 'Gilroy-light'
-          //                           ),),
-          //                         dropdownColor:  Colors.white,
-          //                         icon: Icon(Icons.arrow_drop_down,color: pureblue,),
-                                  
-          //                         value: selectPerson,
-          //                         items: dataBarangay.map((item) {
-          //                         return new DropdownMenuItem(
-          //                           child: Text(item['barangayName'],
-          //                           style: TextStyle(
-                                      
-          //                             color: pureblue,
-          //                             fontFamily: 'Gilroy-light'
-          //                           ),
-          //                           ),
-          //                           value: item['id'].toString(),
-          //                         );
-          //                       }).toList(),
-          //                         onChanged: (item){
-          //                           setState(() {
-          //                             selectPerson = item;
-          //                             print(item);
-          //                           });
-          //                         }
-          //                         ),
-          //                 ),
-          //               ],
-          //             ),
-          //           ),
-                  
-          //     )
-          //   ),
-           StreamBuilder<BaranggayRespone>(
-      stream: bararangStream.subject.stream,
-      builder: (context,AsyncSnapshot<BaranggayRespone> snaphot){
-         if(snaphot.hasData){
-            if(snaphot.data.error !=null && snaphot.data.error.length > 0){
-                return _errorTempMessage(snaphot.data.error);
-            }
-              return _view(snaphot.data);
-        }else if(snaphot.hasError){
-              return _errorTempMessage(snaphot.error);
-        }else{
-              return _loading();
-        }
-      
-      }),
-          SizedBox(height: 15.0,),
-          // Text('License Number',
-          //           style: eLabelStyle,
-          //           ),
-          // SizedBox(height: 10.0,),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
-              decoration: eBoxDecorationStyle,
-              height: 50.0,
-              child: TextFormField(
-                cursorColor: pureblue,
-                controller: licensenumber,
-                validator: (val) => val.isEmpty ? ' Please Put A License Number' : null,
-                style: TextStyle(
-                  color: pureblue,
-                  fontFamily: 'Gilroy-light',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top:14.0),
-                  prefixIcon: Icon(
-                    Icons.confirmation_number,
-                    color: pureblue,
-                  ),
-                  hintText: 'License Number',
-                  hintStyle: eHintStyle,
-                ),
-              ),
-            ),
-          SizedBox(height: 15.0,),
-          // Text('Plate Name',
-          //           style: eLabelStyle,
-          //           ),
-          // SizedBox(height: 10.0,),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
-              decoration: eBoxDecorationStyle,
-              height: 50.0,
-              child: TextFormField(
-                cursorColor: pureblue,
-                controller: plateNumber,
-                validator: (val) => val.isEmpty ? ' Please Put A Plate Number' : null,
-                style: TextStyle(
-                  color: pureblue,
-                  fontFamily: 'Gilroy-light',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top:14.0),
-                  prefixIcon: Icon(
-                    Icons.details,
-                    color: pureblue,
-                  ),
-                  hintText: 'Plate Number',
-                  hintStyle: eHintStyle,
-                ),
-              ),
-            ),
-          SizedBox(height: 15.0,),
-        //  Container(
-        //         width: MediaQuery.of(context).size.width,
-        //         padding: EdgeInsets.symmetric(vertical: 25.0),
-        //         child: RaisedButton(
-        //           onPressed: (){
+          ),
+        ),
+        );
 
-        //          saveForm();
-        //           },
-        //           elevation: 5.0,
-        //           padding: EdgeInsets.all(8.0),
-        //           shape: RoundedRectangleBorder(
-        //             borderRadius: BorderRadius.circular(30.0),
-        //           ),
-        //           color: Colors.white,
-        //           child: Text(  loading ? 'Loading....' : 'Register',
-        //           style: TextStyle(
-        //             color: Color(0xFF527DAA),
-        //             letterSpacing: 1.5,
-        //             fontSize: 16.0,
-        //             fontWeight: FontWeight.bold,
-        //             fontFamily: 'Gilroy-light',
-        //           ),),
-        //           ),
-        //       ),  
-        Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Stack(
-                    children: <Widget>
-                    [
-                      Align(
-                        alignment: Alignment.topRight,
-                          child: GestureDetector(
-                            onTap: 
-                            // (){
-                            //   Navigator.pushReplacement(  
-                            // context,
-                            // new MaterialPageRoute(
-                            //     builder: (context) => AddmenuAdmin()));
-                            // },
-                            saveForm,
-                            child: Container(
-                              height: 50,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                color: pureblue,
-                                borderRadius: BorderRadius.all(Radius.circular(100)),
-                              ),
-                              child: Center(
-                                child: Text( loading ? '....' : 'Register <',
-                                style: TextStyle(
-                                  fontFamily: 'Gilroy-ExtraBold',
-                                  fontSize: 18,
-                                  color: Colors.white
-                                ),
-                                ),
-                              ),
-                            
-                          ),
-                          ),
-                      ),
-                    ],
-                  ),
-                       ),
-        ],
-      ),
-      
-    );
+   
+          
+   
   }
 
-   Widget _view(BaranggayRespone respone){
-    List<Barangays> bararangs = respone.bararangSaika;
+   Widget _view(BaranggayRespone respone,RiderBloc ric){
+     List<Barangays> bararangs = respone.bararangSaika;
     if(bararangs.length == 0 ){
           return Container(
             child: Text('Come Back Later.',
@@ -453,15 +293,14 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
               fontWeight: FontWeight.normal
             ),),
           );
-        }else{
-
-             
-                return Container(
+        }else{ 
+             return Container(
+                    height: 55,
                     width: MediaQuery.of(context).size.width,
                 alignment: Alignment.centerLeft,
                 decoration:BoxDecoration(
                 color: Colors.white,
-            borderRadius: BorderRadius.circular(100.0),
+            borderRadius: BorderRadius.circular(25.0),
             border: Border.all(width: 1, color: Color(0xFF0F75BB) ),
               ),
               child: Padding(
@@ -472,7 +311,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                      Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: const EdgeInsets.only(top:10.0),
+                              padding: const EdgeInsets.only(top:0.0),
                               child: Icon(
                                 Icons.place,
                                 color: Color(0xFF0F75BB),
@@ -482,7 +321,10 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                        padding: const EdgeInsets.only(left: 30),
                        child: ButtonTheme(
                          alignedDropdown: true,
-                         child: DropdownButton<String>(
+                         child: StreamBuilder(
+                           stream: ric.br,
+                           builder: (context, snaps){
+                             return   DropdownButton<String>(
                              isExpanded: true,
                              hint:  Text(
                                     "Select Barangay",
@@ -505,12 +347,15 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                                             value: e.id.toString(),
                                 );
                              }).toList(),
-                               value:selectPerson,
+                               value:snaps.data,
                                
                              onChanged: (val){
-                               setState(()=>selectPerson = val);
+                               ric.cbr(val);
                              },
-                             )
+                             );
+                           },
+                          
+                         ),
                        ),
                       ),        
                    ],
@@ -551,262 +396,8 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
       );
     }
 
-  void saveForm() async {
 
-    setState(() {
-    loading = true;
-  });
-
-
-    if(selectPerson == null){
-
-    _showDistictWarning("Select Barangay");
-  }else{
-    if(formkey.currentState.validate()){
-      formkey.currentState.save();
-      var data = {
-            "name" : fullanme.text,
-            "email" : email.text,
-            "contactNumber" : contactnumber.text,
-            "latitude": lats.toString(),
-            "longitude": longs.toString(),
-            "barangayId": selectPerson.toString(),
-            "licenseNumber": licensenumber.text,
-            "plateNumber": plateNumber.text
-    };
-
-    await ApiCall().addRider(data, '/addRider');
-    fullanme.clear();
-    email.clear();
-    address.clear();
-    contactnumber.clear();
-    licensenumber.clear();
-    plateNumber.clear();
-    _showDone();
-    }
-
-  }
-
-    
-
-
-    setState(() {
-    loading = false;
-  });
-  }
-  void _showDistictWarning(String message){
-  showDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: (BuildContext context){
-      return Dialog(
-             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: Container(
-        height: 300.0,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-        color: Colors.white),
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Container(
-                      height: 150.0,
-                    ),
-                    Container(
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
-                         gradient: LinearGradient(
-                              stops: [0.2,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft),),
-
-                    ),
-                    Positioned(
-                      top: 50.0,
-                      left: 94.0,
-                      child: Container(
-                        height: 90,
-                        width: 90,
-                        padding: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(45),
-                          
-                          // border: Border.all(
-                          //   color: Colors.white,
-                          //   style: BorderStyle.solid,
-                          //   width: 2.0,
-                          // ),
-                          image: DecorationImage(
-                            image: AssetImage("asset/img/logo.png"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(message,
-                  style: TextStyle(
-                    color: Color(0xFF0C375B),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20.0,
-                    fontFamily: 'Gilroy-light'
-                  ),
-                  
-                  ),),
-                  SizedBox(height: 25.0,),
-                  Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[         
-                RaisedButton(
-                  color:Color(0xFF0C375B),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: () {
-                      Navigator.of(context).pop();
-                      },   
-                      
-                  child: Text ( "Yes", style :TextStyle(
-                  color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12.0,
-                              fontFamily: 'OpenSans'
-                ),),),
-                  ],
-                ), 
-              ],
-          ),
-        ),
-      ),
-    ); 
-    },);
-}
-  void _showDone(){
-  showDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: (BuildContext context){
-      return Dialog(
-             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: mCustomDOne(context),
-    ); 
-    },);
-}
- mCustomDOne(BuildContext context){
-
-       return Container(
-        height: 300.0,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-        color: Colors.white),
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Container(
-                      height: 150.0,
-                    ),
-                    Container(
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
-                         gradient: LinearGradient(
-                              stops: [0.2,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft),),
-
-                    ),
-                    Positioned(
-                      top: 50.0,
-                      left: 94.0,
-                      child: Container(
-                        height: 90,
-                        width: 90,
-                        padding: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(45),
-                          
-                          // border: Border.all(
-                          //   color: Colors.white,
-                          //   style: BorderStyle.solid,
-                          //   width: 2.0,
-                          // ),
-                          image: DecorationImage(
-                            image: AssetImage("asset/img/logo.png"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text("Rider is Registered.",
-                  style: TextStyle(
-                    color: Color(0xFF0C375B),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20.0,
-                    fontFamily: 'Gilroy-light'
-                  ),
-                  
-                  ),),
-                  SizedBox(height: 25.0,),
-                  Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[         
-                RaisedButton(
-                  color:Color(0xFF0C375B),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: () {
-                      Navigator.of(context).pop();
-                      },   
-                      
-                  child: Text ( "OK", style :TextStyle(
-                  color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12.0,
-                              fontFamily: 'OpenSans'
-                ),),),
-                  ],
-                ), 
-              ],
-          ),
-        ),
-      );
-
-
-    }
-    void viewMapo(){
+ void viewMapo(){
 
   showModalBottomSheet(
     isDismissible: true,
@@ -831,11 +422,9 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
                         double lng = result.geometry.location.lng;
                         print("the Bilat is $lat and Oten is $lng");
                         setState(() {
-                          // 
                         lats = lat;
                         longs = lng;
                         });
-                        // print(lats+"-"+longs);
                         Navigator.pop(context);
                         }
                     ),
@@ -846,8 +435,7 @@ String googleKey = "AIzaSyCdnmS1dtMXFTu5JHnJluRmEyyRU-sPZFk";
 
   });
   
-}
-
+} 
 }
 
 class NCard extends StatelessWidget {
@@ -863,15 +451,12 @@ class NCard extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
       child: Container(
-        height: 50.0,
+        height: 55.0,
         width: MediaQuery.of(context).size.width,
-        // decoration: BoxDecoration(
-        //   color: Color(0xFF0C375B),
-        //   borderRadius: BorderRadius.all(Radius.circular(40))
-        // ),
-        // padding: EdgeInsets.symmetric(horizontal: 15,vertical: 7),
-        // decoration: eBox,
-        decoration: eBoxDecorationStyle,
+         decoration:BoxDecoration(
+                color: Colors.white,
+            borderRadius: BorderRadius.circular(25.0),
+            border: Border.all(width: 1, color: Color(0xFF0F75BB) ,),),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Row(
@@ -890,7 +475,6 @@ class NCard extends StatelessWidget {
                         maxLines: 2,
                         style: TextStyle(
                           color: pureblue,
-                          fontWeight: FontWeight.w700,
                           fontSize: 16.0,
                           fontFamily: 'Gilroy-light'
                         ),),
