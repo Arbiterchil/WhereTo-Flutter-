@@ -942,7 +942,7 @@ var checkVal = localStorage.getBool('check');
                              SizedBox(height: 20,),
                              Container(
                              height: 50.0,
-                             width: 120,
+                             width: MediaQuery.of(context).size.width,
                              decoration: BoxDecoration(
                                border: Border.all(
                                  width: 1,
@@ -957,6 +957,7 @@ var checkVal = localStorage.getBool('check');
                                  Padding(
                                    padding: const EdgeInsets.only(top: 12),
                                    child:  Text(totals == null ? "..." : "₱ $totals",
+                                    overflow: TextOverflow.ellipsis,
                                                   style: TextStyle(
                                                   color: pureblue,
                                                   fontSize: 18.0,
