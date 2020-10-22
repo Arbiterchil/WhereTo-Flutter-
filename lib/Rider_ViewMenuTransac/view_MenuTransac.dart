@@ -26,10 +26,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewMenuOnTransac extends StatefulWidget {
   
-  
+  final String getID;
 
   // const ViewMenuOnTransac({this.getID});
-  final String getID;
   final String gotTotal;
   final String deliverTo;
   final String restaurantName;
@@ -466,204 +465,204 @@ var checkVal = localStorage.getBool('check');
 
   
   
-  Widget bodyAll(){
-      return StreamBuilder<RiderDetailsResponse>(
-      stream: riderStreamDetails.subject.stream,
-      builder: (context,AsyncSnapshot<RiderDetailsResponse> snaphot){
-         if(snaphot.hasData){
-            if(snaphot.data.error !=null && snaphot.data.error.length > 0){
-                return _errorTempMessage(snaphot.data.error);
-            }
-              return _view(snaphot.data);
-        }else if(snaphot.hasError){
-              return _errorTempMessage(snaphot.error);
-        }else{
-              return _loading();
-        }
+//   Widget bodyAll(){
+//       return StreamBuilder<RiderDetailsResponse>(
+//       stream: riderStreamDetails.subject.stream,
+//       builder: (context,AsyncSnapshot<RiderDetailsResponse> snaphot){
+//          if(snaphot.hasData){
+//             if(snaphot.data.error !=null && snaphot.data.error.length > 0){
+//                 return _errorTempMessage(snaphot.data.error);
+//             }
+//               return _view(snaphot.data);
+//         }else if(snaphot.hasError){
+//               return _errorTempMessage(snaphot.error);
+//         }else{
+//               return _loading();
+//         }
       
-      });
-  }
+//       });
+//   }
 
-  Widget _view(RiderDetailsResponse response){
-    List<RiderDetailsTransac> riderDetailsTransac = response.responseDetail;
-      if(riderDetailsTransac.length == 0){
-        return Center(
-          child: Icon(Icons.clear,color: wheretoDark,size: 50,),
-        );
-      }else{
-        return ListView.builder(
-          itemCount: riderDetailsTransac.length,
-          itemBuilder: (context,index){
-            return 
-          Column(
-            children: [
-              Container(
-              height: 190,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [BoxShadow( spreadRadius: 2.2,blurRadius: 2.2,color: wheretoDark.withOpacity(0.2))],
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight:Radius.circular(15),
-                )
-              ),
-              child: Stack(
-                overflow: Overflow.visible,
-                children: [
-                    Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 20,bottom: 20,top: 10),
-                                  child: Container(
-                                    height: 28,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: 4,
-                                          width: 90,
-                                          decoration: BoxDecoration(
-                                            color: wheretoDark,
-                                            borderRadius: BorderRadius.circular(20),
-                                          ),
-                                        ),
-                                        SizedBox(height: 4,),
-                                         Container(
-                                          height: 4,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                            color: wheretoDark,
-                                            borderRadius: BorderRadius.circular(20),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                    Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 20,top:10,bottom: 10),
-                                  child: GestureDetector(
-                                    onTap: (){
+//   Widget _view(RiderDetailsResponse response){
+//     List<RiderDetailsTransac> riderDetailsTransac = response.responseDetail;
+//       if(riderDetailsTransac.length == 0){
+//         return Center(
+//           child: Icon(Icons.clear,color: wheretoDark,size: 50,),
+//         );
+//       }else{
+//         return ListView.builder(
+//           itemCount: riderDetailsTransac.length,
+//           itemBuilder: (context,index){
+//             return 
+//           Column(
+//             children: [
+//               Container(
+//               height: 190,
+//               width: MediaQuery.of(context).size.width,
+//               decoration: BoxDecoration(
+//                 color: Colors.white,
+//                 boxShadow: [BoxShadow( spreadRadius: 2.2,blurRadius: 2.2,color: wheretoDark.withOpacity(0.2))],
+//                 borderRadius: BorderRadius.only(
+//                   bottomLeft: Radius.circular(15),
+//                   bottomRight:Radius.circular(15),
+//                 )
+//               ),
+//               child: Stack(
+//                 overflow: Overflow.visible,
+//                 children: [
+//                     Align(
+//                                 alignment: Alignment.centerLeft,
+//                                 child: Padding(
+//                                   padding: const EdgeInsets.only(left: 20,bottom: 20,top: 10),
+//                                   child: Container(
+//                                     height: 28,
+//                                     child: Column(
+//                                       crossAxisAlignment: CrossAxisAlignment.start,
+//                                       children: [
+//                                         Container(
+//                                           height: 4,
+//                                           width: 90,
+//                                           decoration: BoxDecoration(
+//                                             color: wheretoDark,
+//                                             borderRadius: BorderRadius.circular(20),
+//                                           ),
+//                                         ),
+//                                         SizedBox(height: 4,),
+//                                          Container(
+//                                           height: 4,
+//                                           width: 40,
+//                                           decoration: BoxDecoration(
+//                                             color: wheretoDark,
+//                                             borderRadius: BorderRadius.circular(20),
+//                                           ),
+//                                         )
+//                                       ],
+//                                     ),
+//                                   ),
+//                                 ),
+//                               ),
+//                     Align(
+//                                 alignment: Alignment.topLeft,
+//                                 child: Padding(
+//                                   padding: const EdgeInsets.only(left: 20,top:10,bottom: 10),
+//                                   child: GestureDetector(
+//                                     onTap: (){
 
-                                    },
-                                    child: Icon(
-                                      Icons.clear,
-                                      size: 45,
-                                      color: wheretoDark,
-                                    ),
-                                  ),
-                                  ),
-                              ),
-                    Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 10,top: 15) ,
-                                  child: Container(
-                                    height: 90,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 80,
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(riderDetailsTransac[index].name,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                color: wheretoDark,
-                                                fontFamily: "Gilroy-ExtraBold",
-                                                fontSize: 30                                      ),
-                                              ),
-                                              SizedBox(height: 5,),
-                                               Text("Customer",
-                                              style: TextStyle(
-                                                color: wheretoDark,
-                                                fontFamily: "Gilroy-light",
-                                                fontSize: 16                                      ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 80,
-                                          width: 80,
-                                          padding: EdgeInsets.all(2.0),
+//                                     },
+//                                     child: Icon(
+//                                       Icons.clear,
+//                                       size: 45,
+//                                       color: wheretoDark,
+//                                     ),
+//                                   ),
+//                                   ),
+//                               ),
+//                     Align(
+//                                 alignment: Alignment.bottomCenter,
+//                                 child: Padding(
+//                                   padding: const EdgeInsets.only(bottom: 10,top: 15) ,
+//                                   child: Container(
+//                                     height: 90,
+//                                     width: MediaQuery.of(context).size.width,
+//                                     child: Row(
+//                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                       children: [
+//                                         Container(
+//                                           height: 80,
+//                                           child: Column(
+//                                             mainAxisAlignment: MainAxisAlignment.start,
+//                                             crossAxisAlignment: CrossAxisAlignment.start,
+//                                             children: [
+//                                               Text(riderDetailsTransac[index].name,
+//                                               overflow: TextOverflow.ellipsis,
+//                                               style: TextStyle(
+//                                                 color: wheretoDark,
+//                                                 fontFamily: "Gilroy-ExtraBold",
+//                                                 fontSize: 30                                      ),
+//                                               ),
+//                                               SizedBox(height: 5,),
+//                                                Text("Customer",
+//                                               style: TextStyle(
+//                                                 color: wheretoDark,
+//                                                 fontFamily: "Gilroy-light",
+//                                                 fontSize: 16                                      ),
+//                                               ),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                         Container(
+//                                           height: 80,
+//                                           width: 80,
+//                                           padding: EdgeInsets.all(2.0),
                                           
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.all(
-                                              color: wheretoDark,
-                                              width: 2
-                                            ),
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Container(
-                                            height: 70,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                image: AssetImage("asset/img/logo.png")
-                                              ),
-                                            ),
-                                          ),
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+//                                           decoration: BoxDecoration(
+//                                             color: Colors.white,
+//                                             border: Border.all(
+//                                               color: wheretoDark,
+//                                               width: 2
+//                                             ),
+//                                             shape: BoxShape.circle,
+//                                           ),
+//                                           child: Container(
+//                                             height: 70,
+//                                             width: 70,
+//                                             decoration: BoxDecoration(
+//                                               shape: BoxShape.circle,
+//                                               image: DecorationImage(
+//                                                 image: AssetImage("asset/img/logo.png")
+//                                               ),
+//                                             ),
+//                                           ),
+//                                           ),
+//                                       ],
+//                                     ),
+//                                   ),
+//                                 ),
+//                               ),
 
 
-                ],
-              ),
+//                 ],
+//               ),
     
-      ),
-              SizedBox(height: 15,),
+//       ),
+//               SizedBox(height: 15,),
               
-            ],
-          );
-          });
-      }
-  }
+//             ],
+//           );
+//           });
+//       }
+//   }
 
 
-Widget _errorTempMessage(String error){
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Comback Later.")
-              ],
-            ),
-          );
-}
-  Widget _loading(){
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-                  height: 25.0,
-                  width: 25.0,
-                  child:  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
-                    strokeWidth: 4.0,
-                  ),
-                ),
-          ],
+// Widget _errorTempMessage(String error){
+//           return Center(
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: <Widget>[
+//                 Text("Comback Later.")
+//               ],
+//             ),
+//           );
+// }
+//   Widget _loading(){
+//       return Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             SizedBox(
+//                   height: 25.0,
+//                   width: 25.0,
+//                   child:  CircularProgressIndicator(
+//                     valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+//                     strokeWidth: 4.0,
+//                   ),
+//                 ),
+//           ],
 
 
-        ),
-      );
-    }
+//         ),
+//       );
+//     }
 
   @override
   Widget build(BuildContext context) {

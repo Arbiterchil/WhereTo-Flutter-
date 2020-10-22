@@ -45,7 +45,7 @@ class MenuGet {
         categoryId: json["categoryId"],
         menuName: json["menuName"],
         description: json["description"],
-        price: double.parse(json["price"]),
+        price: json["price"].toDouble(),
         markUpPercentage: double.parse(json["markUpPercentage"]),
         timesBought: json["timesBought"],
         imagePath: json["imagePath"],
