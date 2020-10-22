@@ -14,7 +14,7 @@ class NewRestaurantResponse {
   json.cast<Map<String,dynamic>>()
   .map((e) =>
    new NeWRestaurant.fromJson(e))
-   .toList(),error = "" ;
+  .toList(),error = "" ;
     
 
   NewRestaurantResponse.withError(String errorvalue)

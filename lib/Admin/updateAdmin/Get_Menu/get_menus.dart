@@ -30,7 +30,7 @@ class MenuGet {
     int categoryId;
     String menuName;
     String description;
-    int price;
+    double price;
     double markUpPercentage;
     int timesBought;
     String imagePath;
@@ -45,7 +45,7 @@ class MenuGet {
         categoryId: json["categoryId"],
         menuName: json["menuName"],
         description: json["description"],
-        price: json["price"],
+        price: double.parse(json["price"]),
         markUpPercentage: double.parse(json["markUpPercentage"]),
         timesBought: json["timesBought"],
         imagePath: json["imagePath"],
@@ -61,7 +61,7 @@ class MenuGet {
         "categoryId": categoryId,
         "menuName": menuName,
         "description": description,
-        "price": price,
+        "price": price.toDouble(),
         "markUpPercentage": markUpPercentage.toDouble(),
         "timesBought": timesBought,
         "imagePath": imagePath,
