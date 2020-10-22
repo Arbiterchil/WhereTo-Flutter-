@@ -465,7 +465,7 @@ class _MyNewViewOrderState extends State<MyNewViewOrder> {
                                 onTap: () {
                                   
                                     Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
+                                    MaterialPageRoute(builder: (context) {
                                     return ReceiptWidget(
                                       transactID:
                                           snapshot.data[index].id.toString(),
