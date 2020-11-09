@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:WhereTo/A_loadingSimpe/adminDialogCity.dart';
 import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
+import 'package:WhereTo/Admin/Admin_Biew/adminViewfin.dart';
 import 'package:WhereTo/Admin/Restaurant.dart';
 import 'package:WhereTo/Admin/Rider_viewRemit/view_RemitImages.dart';
 import 'package:WhereTo/Admin/r_source.dart';
@@ -198,7 +199,27 @@ class _AdminDashState extends State<AdminDash> {
                                     color: wheretoDark,
                                     ),
                                   ),
-                                  SizedBox(width: 20,),
+                                  SizedBox(width: 10,),
+                                  GestureDetector(
+                                    onTap: (){
+                                           var ok  = UserGetPref().idSearch;
+                              if(ok != null ){
+                                 Navigator.pushReplacement(context,
+                new MaterialPageRoute(builder: (context) => AdminViewer()));
+                 print("have");
+                               }else{ showDialog(context: context,
+                                        barrierDismissible: true,
+                                        builder: (context) =>AdminLocationCity(),
+                                        );
+                                        print("none");
+                               }
+                                    },
+                                    child: Icon( Icons.remove_red_eye_sharp,
+                                    size: 30,
+                                    color: wheretoDark,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10,),
                                 Expanded(
                                   // child: GestureDetector(
                                   //   onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  EnterChoseFirst() )),
@@ -520,7 +541,7 @@ class _AdminDashState extends State<AdminDash> {
                     ),
                   ),
                 ),
-                
+                SizedBox(height: 10,),
               
               ],
             ),

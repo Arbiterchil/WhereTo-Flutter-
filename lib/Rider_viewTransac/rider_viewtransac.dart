@@ -6,6 +6,7 @@ import 'package:WhereTo/Admin/A_Rider_Remain/rider_remainView.dart';
 import 'package:WhereTo/Rider_MonkeyBar/rider_bottom.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/view_MenuTransac.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
+import 'package:WhereTo/modules/OtherFeatures/Shared_pref/getpref.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -50,8 +51,7 @@ var totalAll;
 
 
   void menuTrans() async {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      var idfromSave = localStorage.getString('menuplustrans');
+      int idfromSave = UserGetPref().idMenuplusP;
       setState(() {
         if(idfromSave !=null){
           mine = true;
@@ -127,7 +127,7 @@ List idsComming = [];
                               height: 50,
                               width: 140,
                               decoration: BoxDecoration(
-                                color: pureblue,
+                                color: wheretoDark,
                               ),
                               child: Center(
                                 child: Text("Go to Previous.",
@@ -233,19 +233,21 @@ List idsComming = [];
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context){
                                                         return ViewMenuOnTransac(
-                                                          getID:v[index].id.toString(),
+                                                          getID:v[index].id,
                                                           // reslats: v[index].restoLatitude,
                                                           // reslongs: v[index].restoLongitude,
                                                           // dellats: v[index].transLatitude,
                                                           // dellongs: v[index].transLongitude,
-                                                          restaurantName: v[index].restaurantName,
-                                                          deviceID: v[index].deviceId,
-                                                          riderID: v[index].riderId.toString(),
-                                                          deliveryCharge: v[index].deliveryCharge.toString(),
-                                                          nametran:  v[index].name,
-                                                          contactNumber : v[index].contactNumber.toString(),
-                                                          playerId: v[index].deviceId,
-                                                          user_coor: v[index].deliveryAddress,
+
+                                                          // restaurantName: v[index].restaurantName,
+                                                          // deviceID: v[index].deviceId,
+                                                          // riderID: v[index].riderId.toString(),
+                                                          // deliveryCharge: v[index].deliveryCharge.toString(),
+                                                          // nametran:  v[index].name,
+                                                          // contactNumber : v[index].contactNumber.toString(),
+                                                          // playerId: v[index].deviceId,
+                                                          // user_coor: v[index].deliveryAddress,
+
                                                           // user_coor :  v[index].restoLatitude.toString()+","+v[index].restoLongitude.toString()
                                                           );
                                                       }));

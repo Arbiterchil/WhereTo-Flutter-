@@ -11,6 +11,7 @@ String riderDetailsTransacToJson(List<RiderDetailsTransac> data) => json.encode(
 class RiderDetailsTransac {
     RiderDetailsTransac({
         this.id,
+        this.restaurantId,
         this.name,
         this.contactNumber,
         this.barangayName,
@@ -24,6 +25,7 @@ class RiderDetailsTransac {
     });
 
     int id;
+    int restaurantId;
     String name;
     String contactNumber;
     String barangayName;
@@ -31,12 +33,13 @@ class RiderDetailsTransac {
     String deliveryAddress;
     String createdAt;
     String deviceId;
-    dynamic riderId;
+    int riderId;
     int status;
     int deliveryCharge;
 
     factory RiderDetailsTransac.fromJson(Map<String, dynamic> json) => RiderDetailsTransac(
         id: json["id"],
+        restaurantId: json["restaurantId"],
         name: json["name"],
         contactNumber: json["contactNumber"],
         barangayName: json["barangayName"],
@@ -51,6 +54,7 @@ class RiderDetailsTransac {
 
     Map<String, dynamic> toJson() => {
         "id": id,
+        "restaurantId": restaurantId,
         "name": name,
         "contactNumber": contactNumber,
         "barangayName": barangayName,

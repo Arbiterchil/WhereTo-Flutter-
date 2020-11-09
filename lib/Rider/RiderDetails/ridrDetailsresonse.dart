@@ -13,7 +13,9 @@ class RiderDetailsResponse{
   : responseDetail = 
   json.cast<Map<String,dynamic>>()
   .map((e) => new RiderDetailsTransac.fromJson(e))
-  .toList(),error = "";
+  .toList(),
+  
+  error = "";
 
   RiderDetailsResponse.withError(String errors)
   : responseDetail = List()

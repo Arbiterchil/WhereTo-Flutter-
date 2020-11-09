@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserGetPref{
@@ -12,9 +11,12 @@ factory UserGetPref(){
 }
 UserGetPref._ctor();
 SharedPreferences _prefs;
+
 init() async{
   _prefs = await SharedPreferences.getInstance();
 }
+
+
 get getUserDataJson{
   var data =   _prefs.getString('user') ?? '';
   var user = json.decode(data);
@@ -60,6 +62,32 @@ Future userDataSave(String paging){
 }
 
 //drea na part na dungagan nako....
+
+Future riderMenuTrans(int id){
+  return _prefs.setInt('menuplustrans', id);
+}
+
+//drea na part na dungagan nako sa Rider na Part....
+
+remove(){
+  return _prefs.remove('menuplustrans');
+}
+
+//drea na part na dungagan sa rider pud
+
+Future riderRestaurantId(int idRes){
+  return _prefs.setInt('restauranId',idRes);
+}
+
+get restaurntIdEdit{
+  var getRa = _prefs.getInt('restauranId');
+  return getRa;
+}
+
+get idMenuplusP{
+  var number = _prefs.getInt('menuplustrans');
+  return number;
+}
 
 get userGetPage{
   var page = _prefs.getString('page');

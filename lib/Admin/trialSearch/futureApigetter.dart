@@ -8,6 +8,8 @@ class FutureGetter{
 PublishSubject<List<FilteringMenuTrial>> _pub = PublishSubject();
 Stream<List<FilteringMenuTrial>> get sinkstream => _pub.stream;
 
+
+
 Future getMenuAll(String id,String term) async{
 final fin = await ApiCall().getRestarant('/getAllMenu/$id');
 List<FilteringMenuTrial> searching = filteringMenuTrialFromJson(fin.body);
@@ -16,6 +18,7 @@ var filterMenu = searching.where((element) => element.menuName.contains(term) ||
 || element.categoryName.contains(term) || element.categoryName.toLowerCase().contains(term) || element.categoryName.toUpperCase().contains(term)).toList();
 _pub.sink.add(filterMenu);
 }
+
 
 void dispose(){
   _pub.close();
