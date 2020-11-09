@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:WhereTo/Admin/Admin_Biew/adminView.dart';
 import 'package:WhereTo/Admin/Admin_Biew/adminView_Stream.dart';
 import 'package:WhereTo/Admin/Admin_Biew/adminviewResonponse.dart';
+import 'package:WhereTo/Admin/Admin_Biew/meniFinB.dart';
 import 'package:WhereTo/Admin/admin_dash.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/getMenu/getMenuPerTransaction.dart';
 import 'package:WhereTo/Rider_ViewMenuTransac/getMenu/getMenuResponseTran.dart';
@@ -30,7 +31,7 @@ class _AdminViewerState extends State<AdminViewer> {
   @override
   void dispose() {
     adminviewStreamer..drainStream();
-    getMenuStreamTransDet..drainStreamDet();
+    // getMenuStreamTransDet..drainStreamDet();
     super.dispose();
   }
 
@@ -38,33 +39,33 @@ var totalAll;
 double priceTotal = 0;
 var totals;
 
- getTotalPrice(int id) async{
+//  getTotalPrice(int id) async{
 
 
-final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/$id');                     
-                              var body = json.decode(response.body);
-                              for(var body in body){
-                                  RiverMenu riverMenu = RiverMenu(
-                                    menuName: body["menuName"],
-                              description: body["description"],
-                              totalPrice: body["totalPrice"].toDouble(),
-                              id: body["id"],
-                              quantity: body["quantity"],
-                                  );
-                                  List prices =  [riverMenu.totalPrice];
-                                  List quans =  [riverMenu.quantity];
-                                  for(var i = 0 ; i < prices.length; i++){
-                                    for(var x = 0 ; x < quans.length ; x++){
-                                        totalAll = prices[i]*quans[x];
-                                      List all =  [totalAll]; 
-                                      for(var z = 0 ; z < all.length; z++){
-                                            priceTotal = priceTotal+all[z];                                           
-                                      }
-                                  }
-                                  }           
-                              }
+// final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/$id');                     
+//                               var body = json.decode(response.body);
+//                               for(var body in body){
+//                                   RiverMenu riverMenu = RiverMenu(
+//                                     menuName: body["menuName"],
+//                               description: body["description"],
+//                               totalPrice: body["totalPrice"].toDouble(),
+//                               id: body["id"],
+//                               quantity: body["quantity"],
+//                                   );
+//                                   List prices =  [riverMenu.totalPrice];
+//                                   List quans =  [riverMenu.quantity];
+//                                   for(var i = 0 ; i < prices.length; i++){
+//                                     for(var x = 0 ; x < quans.length ; x++){
+//                                         totalAll = prices[i]*quans[x];
+//                                       List all =  [totalAll]; 
+//                                       for(var z = 0 ; z < all.length; z++){
+//                                             priceTotal = priceTotal+all[z];                                           
+//                                       }
+//                                   }
+//                                   }           
+//                               }
                             
-}
+// }
 
   @override
   Widget build(BuildContext context) {
@@ -149,118 +150,127 @@ final response = await ApiCall().viewMenuTransac('/getMenuPerTransaction/$id');
           itemCount: ads.length,
           scrollDirection: Axis.vertical,
           itemBuilder: (con,index){
-            getMenuStreamTransDet..getMenuTransacDetails(ads[index].id);
-            getTotalPrice(ads[index].id);  
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.indigo.withOpacity(0.2),
-                borderRadius: BorderRadius.all(Radius.circular(15)),
+            // getMenuStreamTransDet..getMenuTransacDetails(ads[index].id);
+            // getTotalPrice(ads[index].id);  
+            return GestureDetector(
+              onTap: () => showDialog(context: context,
+              barrierDismissible: false,
+              builder: (context)=>MenuForAdminView(id: ads[index].id,)
               ),
               child: Padding(
-                padding: const EdgeInsets.only(left: 15,right: 15,top: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Rider Name:',
-                    style: TextStyle(
-                      color:Colors.indigo,
-                      fontFamily: 'Gilroy-light',
-                      fontSize: 12
-                      ),),
-                    SizedBox(height: 5,),
-                    Text(ads[index].name,
-                    style: TextStyle(
-                      color:Colors.indigo,
-                      fontFamily: 'Gilroy-ExtraBold',
-                      fontSize: 14
-                      ),),
-                    SizedBox(height: 10,),
-                   
-                    Text('Restaurant Name:',
-                    style: TextStyle(
-                      color:Colors.indigo,
-                      fontFamily: 'Gilroy-light',
-                      fontSize: 12
-                      ),),
-                    SizedBox(height: 5,),
-                    Text(ads[index].restaurantName,
-                    style: TextStyle(
-                      color:Colors.indigo,
-                      fontFamily: 'Gilroy-ExtraBold',
-                      fontSize: 14
-                      ),),
-                    SizedBox(height: 10,),
-
-                    Text('Delivery Charge:',
-                    style: TextStyle(
-                      color:Colors.indigo,
-                      fontFamily: 'Gilroy-light',
-                      fontSize: 12
-                      ),),
-                    SizedBox(height: 5,),
-                    Text(ads[index].deliveryCharge.toString(),
-                    style: TextStyle(
-                      color:Colors.indigo,
-                      fontFamily: 'Gilroy-ExtraBold',
-                      fontSize: 14
-                      ),),
-                    SizedBox(height: 10,),
-
-                    Text('Baranggay:',
-                    style: TextStyle(
-                      color:Colors.indigo,
-                      fontFamily: 'Gilroy-light',
-                      fontSize: 12
-                      ),),
-                    SizedBox(height: 5,),
-                    Text(ads[index].barangayName,
-                    style: TextStyle(
-                      color:Colors.indigo,
-                      fontFamily: 'Gilroy-ExtraBold',
-                      fontSize: 14
-                      ),),
-                    SizedBox(height: 10,),
-
-                    Text('Delivery Address Name:',
-                    style: TextStyle(
-                      color:Colors.indigo,
-                      fontFamily: 'Gilroy-light',
-                      fontSize: 12
-                      ),),
-                    SizedBox(height: 5,),
-                    Container(
-                      child: SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        child: Text(ads[index].deliveryAddress,
+                padding: const EdgeInsets.only(top: 15),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.indigo.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15,right: 15,top: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Rider Name:',
+                        style: TextStyle(
+                          color:Colors.indigo,
+                          fontFamily: 'Gilroy-light',
+                          fontSize: 12
+                          ),),
+                        SizedBox(height: 5,),
+                        Text(ads[index].name,
                         style: TextStyle(
                           color:Colors.indigo,
                           fontFamily: 'Gilroy-ExtraBold',
                           fontSize: 14
                           ),),
-                      ),
+                        SizedBox(height: 10,),
+                       
+                        Text('Restaurant Name:',
+                        style: TextStyle(
+                          color:Colors.indigo,
+                          fontFamily: 'Gilroy-light',
+                          fontSize: 12
+                          ),),
+                        SizedBox(height: 5,),
+                        Text(ads[index].restaurantName,
+                        style: TextStyle(
+                          color:Colors.indigo,
+                          fontFamily: 'Gilroy-ExtraBold',
+                          fontSize: 14
+                          ),),
+                        SizedBox(height: 10,),
+
+                        Text('Delivery Charge:',
+                        style: TextStyle(
+                          color:Colors.indigo,
+                          fontFamily: 'Gilroy-light',
+                          fontSize: 12
+                          ),),
+                        SizedBox(height: 5,),
+                        Text(ads[index].deliveryCharge.toString(),
+                        style: TextStyle(
+                          color:Colors.indigo,
+                          fontFamily: 'Gilroy-ExtraBold',
+                          fontSize: 14
+                          ),),
+                        SizedBox(height: 10,),
+
+                        Text('Baranggay:',
+                        style: TextStyle(
+                          color:Colors.indigo,
+                          fontFamily: 'Gilroy-light',
+                          fontSize: 12
+                          ),),
+                        SizedBox(height: 5,),
+                        Text(ads[index].barangayName,
+                        style: TextStyle(
+                          color:Colors.indigo,
+                          fontFamily: 'Gilroy-ExtraBold',
+                          fontSize: 14
+                          ),),
+                        SizedBox(height: 10,),
+
+                        Text('Delivery Address Name:',
+                        style: TextStyle(
+                          color:Colors.indigo,
+                          fontFamily: 'Gilroy-light',
+                          fontSize: 12
+                          ),),
+                        SizedBox(height: 5,),
+                        Container(
+                          child: SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            child: Text(ads[index].deliveryAddress,
+                            style: TextStyle(
+                              color:Colors.indigo,
+                              fontFamily: 'Gilroy-ExtraBold',
+                              fontSize: 14
+                              ),),
+                          ),
+                        ),
+                        SizedBox(height: 15,),
+
+                        // StreamBuilder<GetMenuPertransactionResponse>(
+                        //   stream: getMenuStreamTransDet.subject.stream,
+                        //   builder: (cons,AsyncSnapshot<GetMenuPertransactionResponse> snapshot){
+                        //     if(snapshot.hasData){
+                        //     if(snapshot.data.error != null && snapshot.data.error.length > 0){
+                        //       return buildWidgetError(snapshot.data.error);
+                        //     }
+                        //     return buildWidgetViewMenu(snapshot.data);
+                        //   }else if(snapshot.hasError){
+                        //      return buildWidgetError(snapshot.data.error); 
+                        //   }else{
+                        //       return buildWidgetLoad();
+                        //   }
+                        //   }),
+
+                      ],
                     ),
-                    SizedBox(height: 15,),
-
-                    StreamBuilder<GetMenuPertransactionResponse>(
-                      stream: getMenuStreamTransDet.subject.stream,
-                      builder: (cons,AsyncSnapshot<GetMenuPertransactionResponse> snapshot){
-                        if(snapshot.hasData){
-                        if(snapshot.data.error != null && snapshot.data.error.length > 0){
-                          return buildWidgetError(snapshot.data.error);
-                        }
-                        return buildWidgetViewMenu(snapshot.data);
-                      }else if(snapshot.hasError){
-                         return buildWidgetError(snapshot.data.error); 
-                      }else{
-                          return buildWidgetLoad();
-                      }
-                      }),
-
-                  ],
+                    ),
                 ),
-                ),
+              ),
             );
           }),
       );
