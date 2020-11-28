@@ -4,6 +4,8 @@ import 'dart:ui';
 
 import 'package:WhereTo/A_loadingSimpe/adminDialogCity.dart';
 import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
+import 'package:WhereTo/Admin/AddCityfran/city_forms.dart';
+import 'package:WhereTo/Admin/AddCityfran/formEditbaran/baraneditform.dart';
 import 'package:WhereTo/Admin/Admin_Biew/adminViewfin.dart';
 import 'package:WhereTo/Admin/Restaurant.dart';
 import 'package:WhereTo/Admin/Rider_viewRemit/view_RemitImages.dart';
@@ -370,7 +372,7 @@ class _AdminDashState extends State<AdminDash> {
                 Visibility(
                   visible: icon2,
                   child: Container(
-                    height: 410,
+                    height: 510,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20),
                       child: GridView.count(
@@ -535,7 +537,107 @@ class _AdminDashState extends State<AdminDash> {
                               ),
                               onPressed: () => showDialogFam(UserGetPref().getUserDataJson['id'].toString())),
                           ),
-                          
+                           Container(
+                            height: 100,
+                            width: 100,
+                            child: RaisedButton(
+                              splashColor: Colors.indigo[300],
+                              color: wheretoDark,
+                               child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.location_city_rounded,
+                                      size: 80,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(height: 8,),
+                                    Text("Add City",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Gilroy-light',
+                                      fontSize: 12
+                                    ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(15)),
+                              ),
+                              onPressed: () => Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_)=> SeacrhFormCitywithAdd())
+                              // PageRouteBuilder(
+                              //   transitionDuration: Duration(seconds: 1),
+                              //   transitionsBuilder: (context,animation,animationtime,child){
+                              //     animation = CurvedAnimation(
+                              //       parent: animation,
+                              //       curve: Curves.elasticInOut,
+                              //     );
+                              //     return ScaleTransition(
+                              //       alignment: Alignment.bottomLeft,
+                              //       scale: animation,
+                              //       child: child,
+                              //       );
+                              //   },
+                              //   pageBuilder: (context,animation,animationtime){
+                              //     return SeacrhFormCitywithAdd(); 
+                              //   }),
+                              )
+                              )
+                          ),
+
+                          Container(
+                            height: 100,
+                            width: 100,
+                            child: RaisedButton(
+                              splashColor: Colors.indigo[300],
+                              color: wheretoDark,
+                               child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.track_changes_rounded,
+                                      size: 80,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(height: 8,),
+                                    Text("Edit Charges",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Gilroy-light',
+                                      fontSize: 12
+                                    ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(15)),
+                              ),
+                              onPressed: () => Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_)=> BaranggaySearchChrage())
+                              // PageRouteBuilder(
+                              //   transitionDuration: Duration(seconds: 1),
+                              //   transitionsBuilder: (context,animation,animationtime,child){
+                              //     animation = CurvedAnimation(
+                              //       parent: animation,
+                              //       curve: Curves.elasticInOut,
+                              //     );
+                              //     return ScaleTransition(
+                              //       alignment: Alignment.bottomLeft,
+                              //       scale: animation,
+                              //       child: child,
+                              //       );
+                              //   },
+                              //   pageBuilder: (context,animation,animationtime){
+                              //     return SeacrhFormCitywithAdd(); 
+                              //   }),
+                              )
+                              )
+                          ),
                         ],
                         ),
                     ),

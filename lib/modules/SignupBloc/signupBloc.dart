@@ -23,6 +23,7 @@ class SignUpBlocDick extends Object with Validators{
  
 
 
+
  
  Stream<String> get email => emailControlDicky.stream.transform(validateEmail);
  Stream<String> get name => nameControlDicky.stream.transform(validTextinput);
@@ -60,6 +61,7 @@ class SignUpBlocDick extends Object with Validators{
 
     
   }
+
 
   signUpUser(
     String file,

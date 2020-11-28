@@ -32,7 +32,7 @@ final validatePassword =
   });
 final validTextinput = 
   StreamTransformer<String,String>.fromHandlers(handleData: (input,sink){
-    if(input.length > 3){
+    if(input.length > 2){
       sink.add(input);
     }else{
       sink.addError('Please Enter More than 3 Characters');
