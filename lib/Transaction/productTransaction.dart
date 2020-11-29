@@ -508,6 +508,8 @@ class _TransactionListState extends State<TransactionList> {
                                                           userLng: userLng,
                                                           )));
                                                    }
+                                                  print(widget.baranggay);
+                                                  print(userBaranggay);
                                                         // var distance = new Distance();
                                                         
                                                         // final double km = distance.as(LengthUnit.Kilometer,

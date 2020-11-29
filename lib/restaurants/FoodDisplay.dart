@@ -54,7 +54,7 @@ class _FoodDisplayState extends State<FoodDisplay> {
                 if (snapshot.hasData) {
                   if (snapshot.data.length > 0) {
                     return ListView.builder(
-                        cacheExtent: 9999,
+                        cacheExtent: 100,
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {

@@ -8,20 +8,20 @@ class ComputationFee{
     double restoCharge = 0;
     double userCharge = 0;
     double totalOrder = 0;
-    // final barangay = await ApiCall().getData('/getBarangayList');
-    // List<BarangayList> barangayResponse = barangayListFromJson(barangay.body);
-    // String barangayname;
-    // var istrue = false;
-    // for (int z = 0; z < barangayResponse.length; z++) {
-    //   if (barangayResponse[z].id.toString().contains(barangayID)) {
-    //     barangayname = barangayResponse[z].barangayName;
-    //     istrue = true;
-    //     break;
-    //   }
+    final barangay = await ApiCall().getData('/getBarangayList');
+    List<BarangayList> barangayResponse = barangayListFromJson(barangay.body);
+    String barangayname;
+    var istrue = false;
+    for (int z = 0; z < barangayResponse.length; z++) {
+      if (barangayResponse[z].id.toString().contains(barangayID)) {
+        barangayname = barangayResponse[z].barangayName;
+        istrue = true;
+        break;
+      }
       
-    // }
-    String barangayname =barangayID;
-    // if (istrue) {
+    }
+   
+    if (istrue) {
       if (barangayWidget.isNotEmpty) { 
         if (barangayWidget.contains("Magugpo")) {
             restoCharge = 30;
@@ -91,6 +91,31 @@ class ComputationFee{
           
             restoCharge = 20;
           
+        }else if(barangayWidget.contains("Maco")) {
+
+            restoCharge = 100;
+        }else if(barangayWidget.contains("Asuncion")) {
+
+            restoCharge = 100;
+        }else if(barangayWidget.contains("Dujali")) {
+
+            restoCharge = 100;
+        }else if(barangayWidget.contains("Sto. Tomas")) {
+
+            restoCharge = 180;
+        }else if(barangayWidget.contains("Kapalong")) {
+
+            restoCharge = 180;
+
+        }else if(barangayWidget.contains("New Corella")) {
+
+            restoCharge = 150;
+        }else if(barangayWidget.contains("Mawab")) {
+
+            restoCharge = 150;
+        }else if(barangayWidget.contains("Mabini")) {
+
+            restoCharge = 150;
         }
       }
       if (barangayname.isNotEmpty) {
@@ -166,9 +191,41 @@ class ComputationFee{
          
             userCharge = 20;
          
+        }else if (barangayname.contains("Maco")) {
+         
+            userCharge = 100;
+         
+        }else if (barangayname.contains("Asuncion")) {
+         
+            userCharge = 100;
+         
+        }else if (barangayname.contains("Dujali")) {
+         
+            userCharge = 100;
+         
+        }else if (barangayname.contains("Sto. Tomas")) {
+         
+            userCharge = 180;
+         
+        }else if (barangayname.contains("Kapalong")) {
+         
+            userCharge = 180;
+         
+        }else if (barangayname.contains("New Corella")) {
+         
+            userCharge = 150;
+         
+        }else if (barangayname.contains("Mawab")) {
+         
+            userCharge = 150;
+         
+        }else if (barangayname.contains("Mabini")) {
+         
+            userCharge = 150;
+         
         }
       }
-    // }
+    }
     if (barangayWidget.contains("Magugpo") &&
         barangayname.contains("Magugpo")) {
         totalOrder = 30;
