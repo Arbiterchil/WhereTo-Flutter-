@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
 import 'package:WhereTo/Admin/Restaurant.dart';
+import 'package:WhereTo/Admin/updateAdmin/Delete/delete.dart';
 import 'package:WhereTo/Admin/updateAdmin/Get_Menu/get_MenuStream.dart';
 import 'package:WhereTo/Admin/updateAdmin/Get_Menu/get_menuResponse.dart';
 import 'package:WhereTo/Admin/updateAdmin/Get_Menu/get_menus.dart';
@@ -9,6 +11,7 @@ import 'package:WhereTo/Admin/updateAdmin/text_editor.dart';
 import 'package:WhereTo/api/api.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -161,11 +164,11 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
   }
 
 
-  delteMenu() async{
-    await ApiCall().makeMenuFeatured('/deleteMenu/${widget.menuId}');
-    print("delete Success");
-    Navigator.pop(context);
-  }
+  // delteMenu() async{
+  //   await ApiCall().makeMenuFeatured('/deleteMenu/${widget.menuId}');
+  //   print("delete Success");
+  //   Navigator.pop(context);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +218,23 @@ class _MenuUpdateNewTwoState extends State<MenuUpdateNewTwo> {
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: GestureDetector(
-                                      onTap: () => delteMenu(),
+                                      onTap: () => showDialog(
+      barrierDismissible: false,
+      context: (context),
+      builder: (context) 
+      =>
+       DialogForAll(
+        widgets: SpinKitPumpingHeart(color: wheretoDark,size: 80,),
+        labelHeader: "Delete Menu?",
+        message: "Did you really decide to delete this Menu?",
+        buttTitle1: "YES",
+        buttTitle2: "NO",
+        noFunc: ()=>Navigator.pop(context),
+        yesFunc: () => deleteResMen..deleteMenuChosen(context, widget.menuId)
+        ,
+        showorNot1: true,
+        showorNot2: true,
+      ),),
                                       child: Container(
                                         height: 50,
                                         width: 50,

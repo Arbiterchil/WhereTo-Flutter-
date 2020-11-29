@@ -40,6 +40,7 @@ class _SearchforAdminState extends State<SearchforAdmin> {
     futureTrial..getMenuAll(UserGetPref().idSearch, fromAdminSearch);
   }
   
+  
   @override
   Widget build(BuildContext context) {
     return Padding(

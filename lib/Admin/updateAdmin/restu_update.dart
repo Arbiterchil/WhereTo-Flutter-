@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:WhereTo/A_loadingSimpe/dialog_singleStyle.dart';
+import 'package:WhereTo/Admin/updateAdmin/Delete/delete.dart';
 import 'package:WhereTo/Admin/updateAdmin/Get_Restaurant/get_Restaurant.dart';
 import 'package:WhereTo/Admin/updateAdmin/Get_Restaurant/get_RestaurantResponse.dart';
 import 'package:WhereTo/Admin/updateAdmin/Get_Restaurant/get_RestaurantStream.dart';
@@ -9,6 +11,7 @@ import 'package:WhereTo/api/api.dart';
 import 'package:WhereTo/google_maps/coordinates_converter.dart';
 import 'package:cloudinary_client/cloudinary_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -432,13 +435,13 @@ void viewMapo(){
     });
   }
 
-  void makeInActveRestu() async{
+  // void makeInActveRestu() async{
 
 
-      var del = await ApiCall().deleteRestaurant('/deleteRestaurant/${widget.restaurantId}');
-      print(del.body);
-      _showDial("InActive Restaurant Success.");
-  }
+  //     var del = await ApiCall().deleteRestaurant('/deleteRestaurant/${widget.restaurantId}');
+  //     print(del.body);
+  //     _showDial("InActive Restaurant Success.");
+  // }
 
   @override
   void dispose() {
@@ -506,9 +509,23 @@ void viewMapo(){
                                     Align(
                                       alignment: Alignment.centerRight,
                                       child: GestureDetector(
-                                        onTap: () {
-                                                _showDialogDelete("Are You Sure Want to make it In Active?"); 
-                                        },
+                                        onTap: () =>
+                                        showDialog(
+      barrierDismissible: false,
+      context: (context),
+      builder: (context) 
+      =>
+       DialogForAll(
+        widgets: SpinKitPumpingHeart(color: wheretoDark,size: 80,),
+        labelHeader: "Delete Restaurant?",
+        message: "Did you really decide to delete this Restaurant?",
+        buttTitle1: "YES",
+        buttTitle2: "NO",
+        noFunc: ()=>Navigator.pop(context),
+        yesFunc: () => deleteResMen..deleteRestuChosen(context, widget.restaurantId),
+        showorNot1: true,
+        showorNot2: true,
+      ),),
                                         child: Container(
                                           height: 50,
                                           width: 50,
@@ -1406,111 +1423,111 @@ void viewMapo(){
     },);
 }
 
-void _showDialogDelete( String message){
-  showDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: (BuildContext context){
-      return Dialog(
-             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: Container(
-        height: 300.0,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-        color: Colors.white),
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Container(
-                      height: 150.0,
-                    ),
-                    Container(
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
-                         gradient: LinearGradient(
-                              stops: [0.2,4],
-                              colors: 
-                              [
-                                Color(0xFF0C375B),
-                                Color(0xFF176DB5)
-                              ],
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft),),
+// void _showDialogDelete( String message){
+//   showDialog(
+//     context: context,
+//     barrierDismissible: true,
+//     builder: (BuildContext context){
+//       return Dialog(
+//              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
+//       ),
+//       elevation: 0,
+//       backgroundColor: Colors.transparent,
+//       child: Container(
+//         height: 300.0,
+//         width: MediaQuery.of(context).size.width,
+//         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+//         color: Colors.white),
+//         child: SingleChildScrollView(
+//           physics: AlwaysScrollableScrollPhysics(),
+//           child: Column(
+//               children: <Widget>[
+//                 Stack(
+//                   children: <Widget>[
+//                     Container(
+//                       height: 150.0,
+//                     ),
+//                     Container(
+//                       height: 100.0,
+//                       decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10),),
+//                          gradient: LinearGradient(
+//                               stops: [0.2,4],
+//                               colors: 
+//                               [
+//                                 Color(0xFF0C375B),
+//                                 Color(0xFF176DB5)
+//                               ],
+//                               begin: Alignment.topRight,
+//                               end: Alignment.bottomLeft),),
 
-                    ),
-                    Positioned(
-                      top: 50.0,
-                      left: 94.0,
-                      child: Container(
-                        height: 90,
-                        width: 90,
-                        padding: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(45),
-                          image: DecorationImage(
-                            image: AssetImage("asset/img/logo.png"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(message,
-                  style: TextStyle(
-                    color: Color(0xFF0C375B),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14.0,
-                    fontFamily: 'OpenSans'
-                  ),
+//                     ),
+//                     Positioned(
+//                       top: 50.0,
+//                       left: 94.0,
+//                       child: Container(
+//                         height: 90,
+//                         width: 90,
+//                         padding: EdgeInsets.all(10.0),
+//                         decoration: BoxDecoration(
+//                           color: Colors.white,
+//                           borderRadius: BorderRadius.circular(45),
+//                           image: DecorationImage(
+//                             image: AssetImage("asset/img/logo.png"),
+//                             fit: BoxFit.cover,
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//                 Padding(
+//                   padding: const EdgeInsets.all(15.0),
+//                   child: Text(message,
+//                   style: TextStyle(
+//                     color: Color(0xFF0C375B),
+//                     fontWeight: FontWeight.w700,
+//                     fontSize: 14.0,
+//                     fontFamily: 'OpenSans'
+//                   ),
                   
-                  ),),
-                  SizedBox(height: 25.0,),
-                  Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[     
-                FlatButton(
-                  color: Colors.white,
-                  shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: (){
-                    Navigator.pop(context);
-                  },
-                  child: Text ( "No", style :TextStyle(
-                  color: pureblue,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12.0,
-                              fontFamily: 'OpenSans'
-                ),),
-                ),
-                RaisedButton(
-                  color:Color(0xFF0C375B),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  onPressed: makeInActveRestu,                         
-                  child: Text ( "Yes", style :TextStyle(
-                  color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12.0,
-                              fontFamily: 'OpenSans'
-                ),),),
-                  ],
-                ), 
-              ],
-          ),
-        ),
-      ),
-    ); 
-    },);
-}
+//                   ),),
+//                   SizedBox(height: 25.0,),
+//                   Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                   children: <Widget>[     
+//                 FlatButton(
+//                   color: Colors.white,
+//                   shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+//                   onPressed: (){
+//                     Navigator.pop(context);
+//                   },
+//                   child: Text ( "No", style :TextStyle(
+//                   color: pureblue,
+//                               fontWeight: FontWeight.w700,
+//                               fontSize: 12.0,
+//                               fontFamily: 'OpenSans'
+//                 ),),
+//                 ),
+//                 RaisedButton(
+//                   color:Color(0xFF0C375B),
+//                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+//                   onPressed: makeInActveRestu,                         
+//                   child: Text ( "Yes", style :TextStyle(
+//                   color: Colors.white,
+//                               fontWeight: FontWeight.w700,
+//                               fontSize: 12.0,
+//                               fontFamily: 'OpenSans'
+//                 ),),),
+//                   ],
+//                 ), 
+//               ],
+//           ),
+//         ),
+//       ),
+//     ); 
+//     },);
+// }
 
 }
 

@@ -11,10 +11,11 @@ String retieveAlltransacToJson(List<RetieveAlltransac> data) => json.encode(List
 class RetieveAlltransac {
     RetieveAlltransac({
         this.id,
+        this.restaurantId,
         this.name,
         this.contactNumber,
-        this.barangayName,
         this.restaurantName,
+        this.barangayName,
         this.deliveryAddress,
         this.createdAt,
         this.deviceId,
@@ -24,25 +25,27 @@ class RetieveAlltransac {
     });
 
     int id;
+    int restaurantId;
     String name;
     String contactNumber;
-    String barangayName;
     String restaurantName;
+    String barangayName;
     String deliveryAddress;
-    DateTime createdAt;
+    String createdAt;
     String deviceId;
-    dynamic riderId;
+    int riderId;
     int status;
     int deliveryCharge;
 
     factory RetieveAlltransac.fromJson(Map<String, dynamic> json) => RetieveAlltransac(
         id: json["id"],
+        restaurantId: json["restaurantId"],
         name: json["name"],
         contactNumber: json["contactNumber"],
-        barangayName: json["barangayName"],
         restaurantName: json["restaurantName"],
+        barangayName: json["barangayName"],
         deliveryAddress: json["deliveryAddress"],
-        createdAt: DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"],
         deviceId: json["deviceId"],
         riderId: json["riderId"],
         status: json["status"],
@@ -51,12 +54,13 @@ class RetieveAlltransac {
 
     Map<String, dynamic> toJson() => {
         "id": id,
+        "restaurantId": restaurantId,
         "name": name,
         "contactNumber": contactNumber,
-        "barangayName": barangayName,
         "restaurantName": restaurantName,
+        "barangayName": barangayName,
         "deliveryAddress": deliveryAddress,
-        "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt,
         "deviceId": deviceId,
         "riderId": riderId,
         "status": status,

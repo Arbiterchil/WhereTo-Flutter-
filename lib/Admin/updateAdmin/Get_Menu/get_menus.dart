@@ -8,6 +8,7 @@ MenuGet menuGetFromJson(String str) => MenuGet.fromJson(json.decode(str));
 
 String menuGetToJson(MenuGet data) => json.encode(data.toJson());
 
+
 class MenuGet {
     MenuGet({
         this.id,
